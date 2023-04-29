@@ -6,8 +6,17 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+    <ItemGroup>
+      <Folder Include="Repositries\" />
+    <Folder Include="Entities\" />
+  </ItemGroup>
+
   <ItemGroup>
-    <Folder Include="Repositries\" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.16" />
   </ItemGroup>
 
 </Project>
