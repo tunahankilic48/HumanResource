@@ -12,35 +12,29 @@ namespace HumanResource.Infrastructure.EntitiesConfig
             builder.Property(x => x.Id)
                 .HasColumnOrder(1);
 
-            builder.Property(x => x.Name) //ToDo: adress çoka çok mu olmalı yoksa bire bir yapıp name mi silinmeli
-                .IsRequired(true)
-                .IsUnicode(true)
-                .HasColumnType("NVARCHAR(50)")
-                .HasColumnOrder(2);
-
             builder.Property(x => x.Description)
                 .IsRequired(true)
                 .IsUnicode(true)
                 .HasColumnType("NVARCHAR(MAX)")
-                .HasColumnOrder(3);
+                .HasColumnOrder(2);
 
             builder.Property(x => x.PostCode)
                 .IsRequired(false)
-                .HasColumnOrder(4);
+                .HasColumnOrder(3);
 
             builder.Property(x => x.DistrictId)
                 .IsRequired(true)
-                .HasColumnOrder(5);
+                .HasColumnOrder(4);
 
             builder.Property(x => x.UserId)
                 .IsRequired(true)
-                .HasColumnOrder(6);
+                .HasColumnOrder(5);
 
             //Foreign Key
 
             builder.HasOne(x => x.User)
                 .WithOne(x => x.Address)
-                .OnDelete(Microsoft.EntityFrameworkCore.DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Restrict);
 
             base.Configure(builder);
         }

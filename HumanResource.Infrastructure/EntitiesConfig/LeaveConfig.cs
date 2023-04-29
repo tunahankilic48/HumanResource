@@ -1,15 +1,10 @@
 ﻿using HumanResource.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HumanResource.Infrastructure.EntitiesConfig
 {
-	internal class LeaveConfig : BaseEntityConfig<Leave>
+    internal class LeaveConfig : BaseEntityConfig<Leave>
 	{
 		public override void Configure(EntityTypeBuilder<Leave> builder)
 		{
@@ -46,7 +41,9 @@ namespace HumanResource.Infrastructure.EntitiesConfig
 			builder.HasOne(x => x.LeaveType)
 			   .WithMany(x => x.Leaves)
 			   .HasForeignKey(x => x.LeaveTypeId)
-							   .OnDelete(DeleteBehavior.Restrict);
+				.OnDelete(DeleteBehavior.Restrict);
+
+			base.Configure(builder);
 
 		}
 	}

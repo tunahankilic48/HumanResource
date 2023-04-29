@@ -1,24 +1,61 @@
 ﻿using HumanResource.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HumanResource.Infrastructure.EntitiesConfig
 {
-    internal class StatuConfig : BaseEntityConfig<Statu>
+    internal class StatuConfig : IEntityTypeConfiguration<Statu>
     {
-        public override void Configure(EntityTypeBuilder<Statu> builder)
+        public void Configure(EntityTypeBuilder<Statu> builder)
         {
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Name).IsRequired(true);
 
+            //Foreign Key
+            builder.HasMany(x => x.LeaveTypes)
+               .WithOne(x => x.Statu)
+               .HasForeignKey(x => x.StatuId)
+               .OnDelete(DeleteBehavior.Restrict);
 
+            builder.HasMany(x => x.AppUsers)
+               .WithOne(x => x.Statu)
+               .HasForeignKey(x => x.StatuId)
+               .OnDelete(DeleteBehavior.Restrict);
 
+            builder.HasMany(x => x.Leaves)
+               .WithOne(x => x.Statu)
+               .HasForeignKey(x => x.StatuId)
+               .OnDelete(DeleteBehavior.Restrict);
 
-            base.Configure(builder);
+            builder.HasMany(x => x.Advances)
+               .WithOne(x => x.Statu)
+               .HasForeignKey(x => x.StatuId)
+               .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasMany(x => x.Departments)
+               .WithOne(x => x.Statu)
+               .HasForeignKey(x => x.StatuId)
+               .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasMany(x => x.Addresses)
+               .WithOne(x => x.Statu)
+               .HasForeignKey(x => x.StatuId)
+               .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasMany(x => x.Cities)
+                .WithOne(x => x.Statu)
+                .HasForeignKey(x => x.StatuId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasMany(x => x.Districts)
+                .WithOne(x => x.Statu)
+                .HasForeignKey(x => x.StatuId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasMany(x => x.BloodTypes)
+                .WithOne(x => x.Statu)
+                .HasForeignKey(x => x.StatuId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

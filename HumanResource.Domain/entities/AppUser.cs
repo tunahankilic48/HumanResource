@@ -25,7 +25,9 @@ namespace HumanResource.Domain.Entities
         public Department Department { get; set; }
         public BloodType BloodType { get; set; }
         public AppUser Manager { get; set; }
+        public List<AppUser> Employees { get; set; }
         public Address Address { get; set; }
+        public List<Advance> Advances { get; set; }
 
 
 

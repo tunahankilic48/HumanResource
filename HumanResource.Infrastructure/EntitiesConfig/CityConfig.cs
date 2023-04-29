@@ -6,7 +6,7 @@ namespace HumanResource.Infrastructure.EntitiesConfig
 {
     internal class CityConfig : BaseEntityConfig<City>
     {
-        public void Configure(EntityTypeBuilder<City> builder)
+        public override void Configure(EntityTypeBuilder<City> builder)
         {
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id)
@@ -23,7 +23,9 @@ namespace HumanResource.Infrastructure.EntitiesConfig
             builder.HasMany(x => x.Districts)
                 .WithOne(x => x.City)
                 .HasForeignKey(x => x.CityId)
-                .OnDelete(Microsoft.EntityFrameworkCore.DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Restrict);
+
+            base.Configure(builder);
         }
     }
 }

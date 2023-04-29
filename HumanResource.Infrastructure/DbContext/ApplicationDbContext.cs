@@ -1,4 +1,5 @@
 ﻿using HumanResource.Domain.Entities;
+using HumanResource.Infrastructure.EntitiesConfig;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
