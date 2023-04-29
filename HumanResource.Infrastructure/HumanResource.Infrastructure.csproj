@@ -7,8 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Entities\" />
-    <Folder Include="Repositries\" />
+    <Folder Include="DbContext\" />
+    <Folder Include="EntitiesConfig\" />
+    <Folder Include="Repositories\" />
   </ItemGroup>
 
 </Project>
