@@ -2,7 +2,7 @@
 
 namespace HumanResource.Domain.Repositries
 {
-    public interface IAppUserRepository : IBaseRepository<AppUser>
+    public interface ICityRepository : IBaseRepository<City>
     {
     }
 }
