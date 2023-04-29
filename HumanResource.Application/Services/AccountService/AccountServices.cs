@@ -1,25 +1,19 @@
 ﻿using AutoMapper;
-using HumanResource.Application.Models.DTOs.AppUserDTO;
+using HumanResource.Application.Models.DTOs.AccountDTO;
 using HumanResource.Domain.Entities;
 using HumanResource.Domain.Repositries;
 using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Net.Mime.MediaTypeNames;
 
-namespace HumanResource.Application.Services.AppUserServices
+namespace HumanResource.Application.Services.AccountServices
 {
-    public class AppUserServices : IAppUserServices
+    public class AccountServices : IAccountServices
     {
         private readonly IAppUserRepository _appUserRepository;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly UserManager<AppUser> _userManager;
         private readonly IMapper _mapper;
 
-        public AppUserServices(IAppUserRepository appUserRepository, SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, IMapper mapper)
+        public AccountServices(IAppUserRepository appUserRepository, SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, IMapper mapper)
         {
             _appUserRepository = appUserRepository;
             _signInManager = signInManager;

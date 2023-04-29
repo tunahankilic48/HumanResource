@@ -1,11 +1,4 @@
-﻿using HumanResource.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HumanResource.Application.Models.DTOs.AppUserDTO
+﻿namespace HumanResource.Application.Models.DTOs.AccountDTO
 {
     public class RegisterDTO
     {
