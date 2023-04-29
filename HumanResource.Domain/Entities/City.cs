@@ -10,7 +10,8 @@ namespace HumanResource.Domain.Entities
 	{
 		public int Id { get; set; }
 		public string Name { get; set; }
-		public int AppUserId { get; set; }
-		public AppUser AppUser { get; set; }
+		
+
+		public List<District> Districts { get; set; }
 	}
 }
