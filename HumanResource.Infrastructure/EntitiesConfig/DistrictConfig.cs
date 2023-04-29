@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace HumanResource.Infrastructure.EntitiesConfig
 {
-    internal class DistrictConfig : IEntityTypeConfiguration<District>
+    internal class DistrictConfig : BaseEntityConfig<District>
     {
         public void Configure(EntityTypeBuilder<District> builder)
         {
