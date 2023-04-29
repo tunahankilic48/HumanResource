@@ -13,10 +13,10 @@ namespace HumanResource.Domain.Entities
         public string Description { get; set; }
         public int PostCode { get; set; }
         public int DistrictId { get; set; }
-        public Guid AppUserId { get; set; }
+        public Guid UserId { get; set; }
 
         //navigation
         public District District { get; set; }
-        public AppUser AppUser { get; set; }
+        public AppUser User { get; set; }
     }
 }
