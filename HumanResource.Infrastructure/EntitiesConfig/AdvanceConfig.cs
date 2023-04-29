@@ -1,11 +1,6 @@
 ﻿using HumanResource.Domain.Entities;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace HumanResource.Infrastructure.EntitiesConfig
 {
@@ -14,10 +9,23 @@ namespace HumanResource.Infrastructure.EntitiesConfig
         public override void Configure(EntityTypeBuilder<Advance> builder)
         {
             builder.HasKey(x => x.Id);
+            builder.Property(x => x.Id).HasColumnOrder(1);
 
-            builder.HasOne(x => x.AppUser) // Advance in appuser ile ilişkisi
+            builder.Property(x => x.Amount)
+                .IsRequired(true)
+                .HasColumnOrder(2);
+
+            builder.Property(x => x.NumberOfInstallments)
+                .IsRequired(false)
+                .HasColumnOrder(3);
+
+            builder.Property(x => x.UserId)
+                .IsRequired(true)
+                .HasColumnOrder(4);
+
+            builder.HasOne(x => x.User) // Advance in appuser ile ilişkisi
                 .WithMany(x => x.Advances)
-                .HasForeignKey(x => x.AppUserId)
+                .HasForeignKey(x => x.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
 
 
