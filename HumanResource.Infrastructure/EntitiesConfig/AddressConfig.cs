@@ -12,7 +12,7 @@ namespace HumanResource.Infrastructure.EntitiesConfig
             builder.Property(x => x.Id)
                 .HasColumnOrder(1);
 
-            builder.Property(x => x.Name)
+            builder.Property(x => x.Name) //ToDo: adress çoka çok mu olmalı yoksa bire bir yapıp name mi silinmeli
                 .IsRequired(true)
                 .IsUnicode(true)
                 .HasColumnType("NVARCHAR(50)")
