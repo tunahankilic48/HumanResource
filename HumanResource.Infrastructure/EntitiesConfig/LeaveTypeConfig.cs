@@ -21,10 +21,10 @@ namespace HumanResource.Infrastructure.EntitiesConfig
 			builder.Property(x => x.Name)
 				.IsRequired(true)
 				.IsUnicode(true)
-				.HasColumnType("nvarchar(max)")
+				.HasColumnType("nvarchar(30)")
 				.HasColumnOrder(2);
 
-
+			base.Configure(builder);
 			
 		}
 	}
