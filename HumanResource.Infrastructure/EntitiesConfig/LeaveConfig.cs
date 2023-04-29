@@ -38,6 +38,11 @@ namespace HumanResource.Infrastructure.EntitiesConfig
 					.IsRequired(true)
 					.HasColumnOrder(5);
 
+			builder.Property(x => x.UserId)
+					.IsRequired(true)
+					.HasColumnOrder(6);
+
+			//Foreign Key
 			builder.HasOne(x => x.LeaveType)
 			   .WithMany(x => x.Leaves)
 			   .HasForeignKey(x => x.LeaveTypeId)
