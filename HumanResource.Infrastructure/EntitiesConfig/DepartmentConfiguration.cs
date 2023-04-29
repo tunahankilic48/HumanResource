@@ -15,12 +15,17 @@ namespace HumanResource.Infrastructure.EntitiesConfig
 			builder.Property(x => x.Name)
 				.IsRequired(true)
 				.IsUnicode(true)
-				.HasMaxLength(255)
+				.HasMaxLength(50)
 				.HasColumnOrder(2);
 
 			builder.Property(x => x.StatuId)
 				.IsRequired(true)
 				.HasColumnOrder(3);
+
+			// Foreign Key
+			builder.HasMany(x => x.Users)
+                .WithOne(x => x.Department)
+                .HasForeignKey(x => x.DepartmentId);
 
 			base.Configure(builder);
 		}
