@@ -32,10 +32,10 @@ namespace HumanResource.Infrastructure.EntitiesConfig
 
             //Foreign Key
 
-            builder.HasOne(x => x.AppUser)
+            builder.HasOne<AppUser>(x => x.AppUser)
                 .WithOne(x => x.Address)
-                .HasForeignKey<AppUser>(x => x.AddressId)
-                .HasPrincipalKey<Address>(x => x.AppUserId);
+                .HasForeignKey<Address>(x => x.AppUserId);
+                
 
             base.Configure(builder);
         }

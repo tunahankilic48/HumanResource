@@ -28,9 +28,9 @@ namespace HumanResource.Infrastructure.EntitiesConfig
                 .HasColumnType("date")
                 .HasColumnOrder(4);
 
-            builder.Property(x => x.AddressId)
-                .IsRequired(true)
-                .HasColumnOrder(5);
+            //builder.Property(x => x.AddressId)
+            //    .IsRequired(true)
+            //    .HasColumnOrder(5);
 
             builder.Property(x => x.DepartmentId)
                 .IsRequired(true)
