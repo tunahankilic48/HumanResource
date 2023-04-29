@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HumanResource.Domain.Entities
 {
-	public class Leave
+	public class Leave : IBaseEntity
 	{
 		public int Id { get; set; }
 		public DateTime StartDate { get; set; }
@@ -14,11 +14,9 @@ namespace HumanResource.Domain.Entities
 		public DateTime ReturnDate { get; set; }
 		public int LeaveTypeId { get; set; }
 		public Guid UserId { get; set; }
-		public Guid SubstituteColleagueId { get; set; }
 
 		//Navigation Property
 		public LeaveType LeaveType { get; set; }
 		public AppUser User { get; set; }
-		public AppUser SubstituteColleague { get; set; }
 	}
 }
