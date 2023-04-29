@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace HumanResource.Infrastructure.EntitiesConfig
 {
-    internal class AddressConfig : IEntityTypeConfiguration<Address>
+    internal class AddressConfig : BaseEntityConfig<Address>
     {
         public void Configure(EntityTypeBuilder<Address> builder)
         {
@@ -41,6 +41,8 @@ namespace HumanResource.Infrastructure.EntitiesConfig
             builder.HasOne(x => x.User)
                 .WithOne(x => x.Address)
                 .OnDelete(Microsoft.EntityFrameworkCore.DeleteBehavior.Restrict);
+
+            base.Configure(builder);
         }
     }
 }
