@@ -9,6 +9,7 @@
   <ItemGroup>
     <Folder Include="IoC\" />
     <Folder Include="Mapping\" />
+    <Folder Include="Models\VMs\" />
   </ItemGroup>
 
   <ItemGroup>

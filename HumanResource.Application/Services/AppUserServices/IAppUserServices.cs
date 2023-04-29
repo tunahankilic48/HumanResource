@@ -15,5 +15,8 @@ namespace HumanResource.Application.Services.AppUserServices
         Task<UpdateProfileDTO> GetByUserName(string userName);
         Task UpdateUser(UpdateProfileDTO model);
         Task LogOut();
+        //ToDo : personelin izin taleplerini listeleyecek metod 
+        //ToDo : personelin avans taleplerini listeleyecek metod 
+        //ToDo : personelin genel bilgilerini görmek için bir metod eklenebilir. (VM'de kullanabilmek için)
     }
 }

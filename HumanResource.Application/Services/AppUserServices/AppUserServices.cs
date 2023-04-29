@@ -1,4 +1,5 @@
-﻿using HumanResource.Application.Models.DTOs.AppUserDTO;
+﻿using AutoMapper;
+using HumanResource.Application.Models.DTOs.AppUserDTO;
 using HumanResource.Domain.Entities;
 using HumanResource.Domain.Repositries;
 using Microsoft.AspNetCore.Identity;
@@ -16,21 +17,22 @@ namespace HumanResource.Application.Services.AppUserServices
         private readonly IAppUserRepository _appUserRepository;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly UserManager<AppUser> _userManager;
+        private readonly IMapper _mapper;
 
-        public AppUserServices(IAppUserRepository appUserRepository, SignInManager<AppUser> signInManager, UserManager<AppUser> userManager)
+        public AppUserServices(IAppUserRepository appUserRepository, SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, IMapper mapper)
         {
             _appUserRepository = appUserRepository;
             _signInManager = signInManager;
             _userManager = userManager;
+            _mapper = mapper;
         }
         public async Task<UpdateProfileDTO> GetByUserName(string userName)
         {
             UpdateProfileDTO result = await _appUserRepository.GetFilteredFirstOrDefault(
             select: x => new UpdateProfileDTO
             {
-               // id = x.Id,
+                Id = x.Id,
                 UserName = x.UserName,
-                Password = x.PasswordHash,
                 Email = x.Email
             },
             where: x => x.UserName == userName);
@@ -50,10 +52,9 @@ namespace HumanResource.Application.Services.AppUserServices
 
         public async Task<IdentityResult> Register(RegisterDTO model)
         {
-            AppUser user = new AppUser();
-            user.UserName = model.UserName;
-            user.Email = model.Email;
-            user.CreatedDate = model.CreateDate;
+            AppUser user = _mapper.Map<AppUser>(model);
+
+
             IdentityResult result = await _userManager.CreateAsync(user, model.Password);
 
             if(result.Succeeded)
@@ -65,7 +66,7 @@ namespace HumanResource.Application.Services.AppUserServices
 
         public async Task UpdateUser(UpdateProfileDTO model)
         {
-            AppUser user = await _appUserRepository.GetDefault(x => x.UserName == model.UserName);
+            AppUser user = await _appUserRepository.GetDefault(x => x.Id == model.Id);
 
             if (model.Password != null)
             {

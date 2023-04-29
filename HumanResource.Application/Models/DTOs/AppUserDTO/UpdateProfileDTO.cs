@@ -8,11 +8,12 @@ namespace HumanResource.Application.Models.DTOs.AppUserDTO
 {
     public class UpdateProfileDTO
     {
-        public string id { get; set; }
+        public Guid Id { get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }
         public string ConfirmPassword { get; set; }
         public string Email { get; set; }
-        public DateTime CreateDate { get; set; }
+        public DateTime ModifiedDate { get; set; }
+        //ToDo : Data Anotation eklenecek
     }
 }
