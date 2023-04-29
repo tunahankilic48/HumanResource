@@ -26,15 +26,16 @@ namespace HumanResource.Infrastructure.EntitiesConfig
                 .IsRequired(true)
                 .HasColumnOrder(4);
 
-            builder.Property(x => x.UserId)
+            builder.Property(x => x.AppUserId)
                 .IsRequired(true)
                 .HasColumnOrder(5);
 
             //Foreign Key
 
-            builder.HasOne(x => x.User)
+            builder.HasOne(x => x.AppUser)
                 .WithOne(x => x.Address)
-                .OnDelete(DeleteBehavior.Restrict);
+                .HasForeignKey<AppUser>(x => x.AddressId)
+                .HasPrincipalKey<Address>(x => x.AppUserId);
 
             base.Configure(builder);
         }
