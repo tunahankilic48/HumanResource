@@ -19,5 +19,6 @@ namespace HumanResource.Domain.Entities
 		public List<Leave> Leaves { get; set; }
 		public List<Advance> Advances { get; set; }
 		public List<Department> Departments { get; set; }
+
 	}
 }
