@@ -13,10 +13,10 @@ namespace HumanResource.Infrastructure.EntitiesConfig
     {
         public virtual void Configure(EntityTypeBuilder<T> builder)
         {
-            builder.Property(x => x.CreatedDate).IsRequired(true);
-            builder.Property(x => x.DeletedDate).IsRequired(false);
-            builder.Property(x => x.ModifiedDate).IsRequired(false);
-            builder.Property(x => x.Statu).IsRequired(true);
+            builder.Property(x => x.CreatedDate).IsRequired(true).HasColumnType("smalldatetime");
+            builder.Property(x => x.DeletedDate).IsRequired(false).HasColumnType("smalldatetime");
+            builder.Property(x => x.ModifiedDate).IsRequired(false).HasColumnType("smalldatetime");
+            builder.Property(x => x.StatuId).IsRequired(true);
         }
     }
 }
