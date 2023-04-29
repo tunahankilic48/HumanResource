@@ -25,7 +25,6 @@ namespace HumanResource.Infrastructure.EntitiesConfig
                 .HasColumnOrder(3);
 
             builder.Property(x=>x.BirthDate)
-                .IsRequired(false)
                 .HasColumnType("date")
                 .HasColumnOrder(4);
 

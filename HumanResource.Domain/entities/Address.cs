@@ -12,7 +12,7 @@ namespace HumanResource.Domain.Entities
         public string Description { get; set; }
         public int PostCode { get; set; }
         public int DistrictId { get; set; }
-        public Guid UserId { get; set; }
+        public Guid AppUserId { get; set; }
 
         public int StatuId { get; set; }
         public DateTime CreatedDate { get; set; }
@@ -23,6 +23,6 @@ namespace HumanResource.Domain.Entities
 
         //Navigation Property
         public District District { get; set; }
-        public AppUser User { get; set; }
+        public AppUser AppUser { get; set; }
     }
 }

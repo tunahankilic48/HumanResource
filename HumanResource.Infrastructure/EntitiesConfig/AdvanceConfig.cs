@@ -16,7 +16,6 @@ namespace HumanResource.Infrastructure.EntitiesConfig
                 .HasColumnOrder(2);
 
             builder.Property(x => x.NumberOfInstallments)
-                .IsRequired(false)
                 .HasColumnOrder(3);
 
             builder.Property(x => x.UserId)

@@ -31,16 +31,16 @@ namespace HumanResource.Infrastructure.DbContext
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new AdvanceConfig())
+            modelBuilder.ApplyConfiguration(new AddressConfig())
+                        .ApplyConfiguration(new AdvanceConfig())
+                        .ApplyConfiguration(new AppUserConfig())
+                        .ApplyConfiguration(new BloodTypeConfig())
+                        .ApplyConfiguration(new CityConfig())
                         .ApplyConfiguration(new DepartmentConfig())
+                        .ApplyConfiguration(new DistrictConfig())
                         .ApplyConfiguration(new LeaveConfig())
                         .ApplyConfiguration(new LeaveTypeConfig())
-                        .ApplyConfiguration(new StatuConfig())
-                        .ApplyConfiguration(new AddressConfig())
-                        .ApplyConfiguration(new AddressConfig())
-                        .ApplyConfiguration(new CityConfig())
-                        .ApplyConfiguration(new DistrictConfig())
-                        .ApplyConfiguration(new BloodTypeConfig());
+                        .ApplyConfiguration(new StatuConfig());
 
             foreach (var foreignKey in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
             {
