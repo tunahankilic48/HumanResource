@@ -37,9 +37,9 @@ namespace HumanResource.Infrastructure.DbContext
                         .ApplyConfiguration(new StatuConfig())
                         .ApplyConfiguration(new AddressConfig())
                         .ApplyConfiguration(new AddressConfig())
-                        .ApplyConfiguration(new City())
-                        .ApplyConfiguration(new District())
-                        .ApplyConfiguration(new BloodType());
+                        .ApplyConfiguration(new CityConfig())
+                        .ApplyConfiguration(new DistrictConfig())
+                        .ApplyConfiguration(new BloodTypeConfig());
 
             foreach (var foreignKey in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
             {
