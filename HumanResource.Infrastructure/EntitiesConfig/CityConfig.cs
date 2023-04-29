@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace HumanResource.Infrastructure.EntitiesConfig
 {
-    internal class CityConfig : IEntityTypeConfiguration<City>
+    internal class CityConfig : BaseEntityConfig<City>
     {
         public void Configure(EntityTypeBuilder<City> builder)
         {
