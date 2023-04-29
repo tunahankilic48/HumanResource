@@ -12,11 +12,6 @@ namespace HumanResource.Domain.Entities
 		public int Id { get; set; }
 		public decimal Amount { get; set; }
 		public int NumberOfInstallments	{ get; set; }
-		public DateTime CreatedDate { get; set; }
-		public DateTime? ModifiedDate { get; set; }
-		public DateTime? DeletedDate { get; set; }
-		public int StatuId { get; set; }
-		public Statu Statu { get; set; }
 		public Guid EmployeeId { get; set; }
 
 		//NAvigation Property
