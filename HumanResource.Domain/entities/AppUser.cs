@@ -7,19 +7,25 @@ using System.Threading.Tasks;
 
 namespace HumanResource.Domain.Entities
 {
-    public class AppUser : IdentityUser<Guid>
+    public class AppUser : IdentityUser<Guid>, IBaseEntity
     {
-        public int Id { get; set; }
+
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string Mail { get; set; }
-        public string Password { get; set; }
-        public string TelNo { get; set; }
-        public int addressId { get; set; }
-        public string departman { get; set; }
-        public DateTime WorkStartDate { get; set; }
-        public string adminFirstName { get; set; }
-        public string adminLastName { get; set; }
+        public int AddressId { get; set; } // ToDo: Güncellenecek
+        public int DepartmentId { get; set; }
+        public DateTime RecruitmentDate { get; set; }
+        public DateTime BirthDate { get; set; }
+        public int BloodTypeId { get; set; }
+        public Guid ManagerId { get; set; }
+
+        //Navigation Properties
+        public Department Department { get; set; }
+        public BloodType BloodType { get; set; }
+        public AppUser Manager { get; set; }
+        // ToDo: Addres eklendikten sonra navigasyonu eklenecek 
+
+
 
     }
 }
