@@ -80,6 +80,7 @@ namespace HumanResource.Application.Services.AppUserServices
                 if (isUserMailExists == null)
                     await _userManager.SetEmailAsync(user, model.Email);
             }
+            //ToDo : UserName değiştirilebilir şekilde eklenecek
         }
     }
 }
