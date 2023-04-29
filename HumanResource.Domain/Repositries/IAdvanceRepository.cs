@@ -1,6 +1,8 @@
-﻿namespace HumanResource.Domain.Repositries
+﻿using HumanResource.Domain.Entities;
+
+namespace HumanResource.Domain.Repositries
 {
-    internal interface IAdvanceRepository : IBaseRepository<Advance>
+    public interface IAdvanceRepository : IBaseRepository<Advance>
     {
     }
 }
