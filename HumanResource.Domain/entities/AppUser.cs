@@ -7,7 +7,7 @@ namespace HumanResource.Domain.Entities
 
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public int AddressId { get; set; } 
+        //public int AddressId { get; set; }
         public int DepartmentId { get; set; }
         public DateTime RecruitmentDate { get; set; }
         public DateTime BirthDate { get; set; }
