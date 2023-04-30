@@ -5,17 +5,17 @@ namespace HumanResource.Application.Models.DTOs.AccountDTO
 {
     public class RegisterDTO
     {
-        [StringLength(20, ErrorMessage = "Kullanıcı Adını 20 karakterden fazla giremezsiniz"), Required(ErrorMessage = "Bu alanı girmek zorunludur"), Display(Name = "Kullanıcı Adı")]
+        [MinLength(6, ErrorMessage = "Kullanıcı Adınız 6 karakterden az giremezsiniz"), Required(ErrorMessage = "Bu alanı girmek zorunludur"), Display(Name = "Kullanıcı Adı")]
         public string UserName { get; set; }
-        [StringLength(30, ErrorMessage = "Adınız 30 karakterden fazla giremezsiniz"), Required(ErrorMessage = "Bu alanı girmek zorunludur"), Display(Name = "Adı")]
+        [StringLength(30, ErrorMessage = "Adınız 30 karakterden fazla giremezsiniz"), Required(ErrorMessage = "Bu alanı girmek zorunludur"), Display(Name = "Ad")]
         public string FirstName { get; set; }
-        [StringLength(30, ErrorMessage = "Soyadınız 30 karakterden fazla giremezsiniz"), Required(ErrorMessage = "Bu alanı girmek zorunludur"), Display(Name = "Soyadı")]
+        [StringLength(50, ErrorMessage = "Soyadınız 50 karakterden fazla giremezsiniz"), Required(ErrorMessage = "Bu alanı girmek zorunludur"), Display(Name = "Soyad")]
         public string LastName { get; set; }
-        [StringLength(13, ErrorMessage = "Şifreniz 13 karakterden fazla giremezsiniz"), Required(ErrorMessage = "Bu alanı girmek zorunludur"), Display(Name = "Şifre")]
+        [MinLength(6, ErrorMessage = "Şifreniz 6 karakterden az giremezsiniz"), Required(ErrorMessage = "Bu alanı girmek zorunludur"), Display(Name = "Şifre"), DataType(DataType.Password)]
         public string Password { get; set; }
-        [Compare("Password", ErrorMessage ="Şifreniz uyuşmuyor")]
+        [Compare("Password", ErrorMessage ="Şifreniz uyuşmuyor"), DataType(DataType.Password)]
         public string ConfirmPassword { get; set; }
-        [ Required(ErrorMessage = "Bu alanı girmek zorunludur"), Display(Name = "E-Posta")]
+        [ Required(ErrorMessage = "Bu alanı girmek zorunludur"), Display(Name = "E-Posta"), DataType(DataType.EmailAddress)]
         public string Email { get; set; }
         //public Statu MSyProperty { get; set; }
         public DateTime CreateDate => DateTime.Now;
