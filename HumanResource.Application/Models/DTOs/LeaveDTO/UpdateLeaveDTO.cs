@@ -14,28 +14,28 @@ namespace HumanResource.Application.Models.DTOs.LeaveDTO
         public int Id { get; set; }
         public Guid UserId { get; set; }
 
-        [Required(ErrorMessage = "Başlangıç Tarihi giriniz")]
-        [Display(Name ="İzin Başlangıç tarihi")]
+        [Required(ErrorMessage = "Başlangıç Tarihi Boş Geçilemez.")]
+        [Display(Name ="İzin Başlangıç Tarihi")]
         [DataType(DataType.Date)]
 
         public DateTime StartDate { get; set; }
 
-        [Required(ErrorMessage = "Bitiş Tarihi giriniz")]
-        [Display(Name = "İzin Bitiş tarihi")]
+        [Required(ErrorMessage = "Bitiş Tarihi Boş Geçilemez.")]
+        [Display(Name = "İzin Bitiş Tarihi")]
         [DataType(DataType.Date)]
 
         public DateTime EndDate { get; set; }
 
-        [Required(ErrorMessage = "İşe dönüş Tarihinizi giriniz")]
-        [Display(Name = "İzinden Dönüş tarihi")]
+        [Required(ErrorMessage = "İşe dönüş Tarihi Boş Geçilemez.")]
+        [Display(Name = "İşe Dönüş Tarihi")]
         [DataType(DataType.Date)]
 
         public DateTime ReturnDate { get; set; }
 
-        [Required(ErrorMessage = "LeaveType tipinde olmalı")]
+        [Required(ErrorMessage = "İzin Türü Boş Geçilemez.")]
         public int LeaveTypeId { get; set; }
 
         //public Statu Statu { get; set; }
-        //Data Anno
+
     }
 }
