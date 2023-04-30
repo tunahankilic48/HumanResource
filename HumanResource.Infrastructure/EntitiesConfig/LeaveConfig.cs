@@ -29,13 +29,17 @@ namespace HumanResource.Infrastructure.EntitiesConfig
 					.HasColumnType("date")
 					.HasColumnOrder(4);
 
-			builder.Property(x => x.LeaveTypeId)
+            builder.Property(x => x.LeavePeriod)
 					.IsRequired(true)
 					.HasColumnOrder(5);
 
-			builder.Property(x => x.UserId)
+            builder.Property(x => x.LeaveTypeId)
 					.IsRequired(true)
 					.HasColumnOrder(6);
+
+			builder.Property(x => x.UserId)
+					.IsRequired(true)
+					.HasColumnOrder(7);
 
 			//Foreign Key
 			builder.HasOne(x => x.LeaveType)
