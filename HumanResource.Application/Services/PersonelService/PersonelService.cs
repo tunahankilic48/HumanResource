@@ -45,9 +45,9 @@ namespace HumanResource.Application.Services.PersonelService
                    CreatedDate = x.CreatedDate
 
                },
-               where: x => x.User.UserName == name,
-               orderby: null,
-               include: x => x.Include(x=>x.User)
+               where: x => x.User.UserName == name && x.Statu.Name == "Onay Bekleyen",// Sorulacaklar arasında
+               orderby: x=>x.OrderByDescending(x=>x.CreatedDate),
+               include: x => x.Include(x => x.User)
                );
 
             return personelLeaveRequests;
@@ -65,8 +65,8 @@ namespace HumanResource.Application.Services.PersonelService
                   LeaveType = x.LeaveType.Name
 
               },
-              where: x => x.User.UserName == name,
-              orderby: null,
+              where: x => x.User.UserName == name && x.Statu.Name == "Onay Bekleyen",// Sorulacaklar arasında
+              orderby: x => x.OrderByDescending(x => x.CreatedDate),
               include: x => x.Include(x => x.LeaveType).Include(x=>x.User)
               );
 

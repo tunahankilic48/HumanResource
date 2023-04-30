@@ -6,10 +6,13 @@ namespace HumanResource.Application.Models.VMs.PersonelVM
     {
         [Display(Name ="İzin Başlangıç Tarihi")]
         public DateTime StartDate { get; set; }
+
         [Display(Name = "İzin Bitiş Tarihi")]
         public DateTime EndDate { get; set; }
-        [Display(Name = "GEri Dönüş Tarihi")]
+
+        [Display(Name = "Geri Dönüş Tarihi")]
         public DateTime ReturnDate { get; set; }
+
         [Display(Name ="İzin Sebebi")]
         public string LeaveType { get; set; }
     }

@@ -4,7 +4,7 @@ namespace HumanResource.Application.Models.VMs.PersonelVM
 {
     internal class PersonelAdvanceRequestsVM
     {
-        [Display(Name ="Amount")]
+        [Display(Name ="Miktar")]
         public decimal Amount { get; set; }
 
         [Display(Name ="Taksit miktarı")]
