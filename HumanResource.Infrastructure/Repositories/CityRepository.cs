@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace HumanResource.Infrastructure.Repositories
 {
-    internal class CityRepository : BaseRepository<City>
+    public class CityRepository : BaseRepository<City>
     {
         public CityRepository(ApplicationDbContext context) : base(context)
         {
