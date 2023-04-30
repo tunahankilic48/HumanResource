@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace HumanResource.Infrastructure.Repositories
 {
-    internal class BloodTypeRepository : BaseRepository<BloodType>
+    public class BloodTypeRepository : BaseRepository<BloodType>
     {
         public BloodTypeRepository(ApplicationDbContext context) : base(context)
         {
