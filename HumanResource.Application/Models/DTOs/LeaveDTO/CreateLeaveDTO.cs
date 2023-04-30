@@ -20,7 +20,7 @@ namespace HumanResource.Application.Models.DTOs.LeaveDTO
 
         public DateTime StartDate { get; set; }
 
-        [Required(ErrorMessage = "Bitiş Tarihi Boş Girilemez.")]
+        [Required(ErrorMessage = "Bitiş Tarihi Boş Geçilemez.")]
         [Display(Name = "İzin Bitiş Tarihi")]
         [DataType(DataType.Date)]
         
