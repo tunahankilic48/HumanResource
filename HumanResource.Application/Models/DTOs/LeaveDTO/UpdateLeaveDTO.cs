@@ -36,6 +36,7 @@ namespace HumanResource.Application.Models.DTOs.LeaveDTO
         public int LeaveTypeId { get; set; }
 
         //public Statu Statu { get; set; }
+        //ToDo: Attribute eklenecek datetime ile alakalı
 
     }
 }
