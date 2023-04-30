@@ -74,7 +74,13 @@ namespace HumanResource.Application.Services.AccountServices
                 if (isUserMailExists == null)
                     await _userManager.SetEmailAsync(user, model.Email);
             }
-            //ToDo : UserName değiştirilebilir şekilde eklenecek
+            if (model.UserName != null)
+            {
+                AppUser isUserNameExists = await _userManager.FindByNameAsync(model.UserName);
+                if (isUserNameExists == null)
+                    await _userManager.SetUserNameAsync(user, model.UserName);
+            }
+            
         }
     }
 }
