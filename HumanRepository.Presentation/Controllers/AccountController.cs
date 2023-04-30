@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HumanRepository.Presentation.Controllers
 {
+    [Authorize]
     public class AccountController : Controller
     {
         private readonly IAccountServices _accountServices;
@@ -12,23 +13,23 @@ namespace HumanRepository.Presentation.Controllers
         {
             _accountServices = accountServices;
         }
-        [AllowAnonymous] // --> Kimliği doğrulanmamış kullanıcıların tek tek eylemlere erişmesine izin vermek için özniteliğini de kullanabilirsiniz
+        [AllowAnonymous] 
         public IActionResult Register()
         {
-            if(User.Identity.IsAuthenticated/*Kimlik doğrulanıp doğrulanmadığını kontrol eder*/) return RedirectToAction("Index");
+            if(User.Identity.IsAuthenticated) return RedirectToAction("Index");//ToDo : kendi sayfasına = personel control altındaki index sayfasına gidecek (Area)
 
            return View();
         }
-        [AllowAnonymous, HttpPost]
+        [AllowAnonymous, HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterDTO model)
         {
             if(ModelState.IsValid)
             {
                 var result = await _accountServices.Register(model);
 
-                if(result.Succeeded) return RedirectToAction("Index");
+                if(result.Succeeded) return RedirectToAction("Index");//ToDo : kendi sayfasına = personel control altındaki index sayfasına gidecek (Area)
 
-                foreach(var item in result.Errors)
+                foreach (var item in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty,item.Description);
                     TempData["Error"] = "Yanlış birşeyler var";
@@ -40,48 +41,48 @@ namespace HumanRepository.Presentation.Controllers
         [AllowAnonymous]
         public IActionResult Login(string returnUrl = "/")
         {
-            if (User.Identity.IsAuthenticated /*Kimlik doğrulanıp doğrulanmadığını kontrol eder*/) return RedirectToAction("Index");
+            if (User.Identity.IsAuthenticated) return RedirectToAction("Index");//ToDo : kendi sayfasına = personel control altındaki index sayfasına gidecek (Area)
 
             ViewData["ReturnUrl"] = returnUrl;
 
             return View();
         }
-        [AllowAnonymous, HttpPost]
-        public async Task<IActionResult> Login(LoginDTO login, string returnUrl)
+        [AllowAnonymous, HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login(LoginDTO model, string returnUrl)
         {
             if (ModelState.IsValid)
             {
-                var result = await _accountServices.Login(login);
+                var result = await _accountServices.Login(model);
 
-                if (result.Succeeded) return RedirectToAction(returnUrl);
+                if (result.Succeeded) return RedirectToLocal(returnUrl);
 
                 ModelState.AddModelError("", "Geçersiz giriş");
             }
-            return View();
+            return View(model);
         }
         
         public async Task<IActionResult> LogOut()
         {
             await _accountServices.LogOut();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index");//ToDo : kendi sayfasına = personel control altındaki index sayfasına gidecek (Area)
         }
         public async Task<IActionResult> Edit(string userName)
         {
             return View(await _accountServices.GetByUserName(userName));
         }
 
-        [HttpPost]
+        [HttpPost,ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(UpdateProfileDTO model)
         {
             if (ModelState.IsValid)
             {
                 await _accountServices.UpdateUser(model);
-                return RedirectToAction("detail");
+                return RedirectToAction("detail");//ToDo : kendi sayfasına = personel control altındaki index sayfasına gidecek (Area)
             }
-            return RedirectToAction("edit");
+            return View(model);
         }
 
-        public async Task<IActionResult> Details(string UserName)
+        public async Task<IActionResult> Details(string UserName)//ToDo : personelde mi yoksa account ta mı olacak bu action
         {
             return View(await _accountServices.GetByUserName(UserName));
         }
@@ -97,7 +98,5 @@ namespace HumanRepository.Presentation.Controllers
                 return RedirectToAction("index", "");
             }
         }
-
-        //ToDo : her action metodun cshtml(Razzor View'e oluşturulacak)
     }
 }
