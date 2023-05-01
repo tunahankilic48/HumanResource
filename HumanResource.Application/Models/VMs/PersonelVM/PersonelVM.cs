@@ -11,6 +11,7 @@ namespace HumanResource.Application.Models.VMs.PersonelVM
         public string LastName { get; set; }
 
         [Display(Name = "Departman")]
-        public string Department { get; set; }        
+        public string Department { get; set; }
+        public string FullName { get; set; }
     }
 }

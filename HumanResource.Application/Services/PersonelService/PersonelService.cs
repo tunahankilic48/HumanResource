@@ -29,7 +29,8 @@ namespace HumanResource.Application.Services.PersonelService
                {
                    FirstName = x.FirstName,
                    LastName = x.LastName,
-                   Department = x.Department.Name
+                   Department = x.Department.Name,
+                   FullName = x.FirstName + " " + x.LastName
                },
                where: x => x.UserName == userName,
                orderby: null,
