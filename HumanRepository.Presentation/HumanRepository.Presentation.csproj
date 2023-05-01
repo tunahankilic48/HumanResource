@@ -12,11 +12,18 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.13" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\HumanResource.Application\HumanResource.Application.csproj" />
     <ProjectReference Include="..\HumanResource.Infrastructure\HumanResource.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Personel\Data\" />
+    <Folder Include="Areas\Personel\Models\" />
+    <Folder Include="Areas\Personel\Views\" />
   </ItemGroup>
 
 </Project>

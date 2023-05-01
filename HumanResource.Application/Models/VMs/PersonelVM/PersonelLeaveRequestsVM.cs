@@ -2,7 +2,7 @@
 
 namespace HumanResource.Application.Models.VMs.PersonelVM
 {
-    internal class PersonelLeaveRequestsVM
+    public class PersonelLeaveRequestsVM
     {
         [Display(Name ="İzin Başlangıç Tarihi")]
         public DateTime StartDate { get; set; }

@@ -2,11 +2,12 @@
 
 namespace HumanResource.Application.Services.PersonelService
 {
-    internal interface IPersonelService
+    public interface IPersonelService
     {
         Task<List<PersonelLeaveRequestsVM>> GetPersonelLeaveRequests(string name);
         Task<List<PersonelAdvanceRequestsVM>> GetPersonelAdvanceRequests(string name);
         Task<PersonelVM> GetPersonel(string userName);
+        Task<Guid> GetPersonelId(string name);
 
     }
 }

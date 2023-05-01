@@ -4,15 +4,10 @@ using HumanResource.Application.Models.VMs.LeaveVM;
 using HumanResource.Domain.Entities;
 using HumanResource.Domain.Repositries;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HumanResource.Application.Services.LeaveServices
 {
-    internal class LeaveService : ILeaveService
+    public class LeaveService : ILeaveService
     {
         private readonly ILeaveRepository _leaveRepository;
         private readonly IMapper _mapper;
