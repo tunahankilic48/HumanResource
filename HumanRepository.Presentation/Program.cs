@@ -1,3 +1,6 @@
+using Autofac.Extensions.DependencyInjection;
+using Autofac;
+using HumanResource.Application.IoC;
 using HumanResource.Domain.Entities;
 using HumanResource.Infrastructure.DbContext;
 using Microsoft.AspNetCore.Identity;
@@ -6,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
 builder.Services.AddDbContext<ApplicationDbContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))); // Connection string will be taken from appsettings.json file
 
@@ -22,7 +25,15 @@ builder.Services.AddIdentity<AppUser, IdentityRole<Guid>>(options =>
     options.Password.RequireLowercase = true;
     options.Password.RequiredLength = 6;
     options.Password.RequireNonAlphanumeric = true;
-}).AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders(); 
+}).AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
+
+
+builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
+
+builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
+{
+    builder.RegisterModule(new DependencyResolver());
+}); // Dependency injection için kullanýlan container burada implimente edildi.
 
 var app = builder.Build();
 
