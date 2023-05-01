@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using HumanResource.Application.Models.DTOs.AccountDTO;
+using HumanResource.Application.Models.DTOs.AdvanceDTOs;
+using HumanResource.Application.Models.DTOs.LeaveDTO;
 using HumanResource.Domain.Entities;
 
 namespace HumanResource.Application.Mapping

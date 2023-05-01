@@ -4,15 +4,10 @@ using HumanResource.Application.Models.VMs.AdvanceVMs;
 using HumanResource.Domain.Entities;
 using HumanResource.Domain.Repositries;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HumanResource.Application.Services.AdvanceService
 {
-	public class AdvanceService : IAdvanceService
+    public class AdvanceService : IAdvanceService
 	{
 		private readonly IAdvanceRepository _advanceRepository;
 		private readonly IAppUserRepository _appUserRepository;
@@ -56,11 +51,6 @@ namespace HumanResource.Application.Services.AdvanceService
 				include: x => x.Include(x => x.User)
 				);
 			return advances;
-		}
-
-		public Task<AdvanceDetailsVM> GetAdvancesDetails(int id)
-		{
-			throw new NotImplementedException();
 		}
 
 

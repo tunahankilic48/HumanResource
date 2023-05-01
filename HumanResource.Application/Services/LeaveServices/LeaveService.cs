@@ -55,12 +55,12 @@ namespace HumanResource.Application.Services.LeaveServices
                     EndDate = x.EndDate,
                     ReturnDate = x.ReturnDate,
                     LeavePeriod = x.LeavePeriod,
-                    LeaveTypeId = x.Leave.Name
+                    LeaveType = x.LeaveType.Name
                 },
 
                 where: x => x.User.Id == id,
                 orderby: x => x.OrderByDescending(x => x.CreatedDate),
-                include: x => x.Include(x => x.User).Include(x=>x.Leave)
+                include: x => x.Include(x => x.User).Include(x=>x.LeaveType)
                 );
 
             return comments;

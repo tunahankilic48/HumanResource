@@ -1,6 +1,8 @@
 ﻿using Autofac;
 using AutoMapper;
 using HumanResource.Application.Services.AccountServices;
+using HumanResource.Application.Services.AdvanceService;
+using HumanResource.Application.Services.LeaveServices;
 using HumanResource.Application.Services.PersonelService;
 using HumanResource.Domain.Repositries;
 using HumanResource.Infrastructure.Repositories;
