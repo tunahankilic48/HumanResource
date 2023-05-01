@@ -1,15 +1,8 @@
-﻿using HumanResource.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace HumanResource.Application.Models.DTOs.LeaveDTO
 {
-    internal class UpdateLeaveDTO
+    public class UpdateLeaveDTO
     {
         public int Id { get; set; }
         public Guid UserId { get; set; }

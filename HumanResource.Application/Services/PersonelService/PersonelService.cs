@@ -1,21 +1,25 @@
 ﻿using HumanResource.Application.Models.VMs.PersonelVM;
 using HumanResource.Domain.Entities;
 using HumanResource.Domain.Repositries;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace HumanResource.Application.Services.PersonelService
 {
-    internal class PersonelService : IPersonelService
+    public class PersonelService : IPersonelService
     {
         private readonly IAppUserRepository _userRepository;
         private readonly ILeaveRepository _leaveRepository;
         private readonly IAdvanceRepository _advanceRepository;
+        private readonly UserManager<AppUser> _userManager;
 
-        public PersonelService(IAppUserRepository userRepository, ILeaveRepository leaveRepository, IAdvanceRepository advanceRepository)
+
+        public PersonelService(IAppUserRepository userRepository, ILeaveRepository leaveRepository, IAdvanceRepository advanceRepository, UserManager<AppUser> userManager)
         {
             _userRepository = userRepository;
             _leaveRepository = leaveRepository;
             _advanceRepository = advanceRepository;
+            _userManager = userManager;
         }
 
         public async Task<PersonelVM> GetPersonel(string userName)
@@ -54,6 +58,13 @@ namespace HumanResource.Application.Services.PersonelService
 
         }
 
+        public async Task<Guid> GetPersonelId(string name)
+        {
+            AppUser user = await _userManager.FindByNameAsync(name);
+            return user.Id;
+
+        }
+
         public async Task<List<PersonelLeaveRequestsVM>> GetPersonelLeaveRequests(string name)
         {
             var personelLeaveRequests = await _leaveRepository.GetFilteredList(
@@ -72,5 +83,7 @@ namespace HumanResource.Application.Services.PersonelService
 
             return personelLeaveRequests;
         }
+
+
     }
 }

@@ -2,7 +2,7 @@
 
 namespace HumanResource.Application.Models.VMs.PersonelVM
 {
-    internal class PersonelAdvanceRequestsVM
+    public class PersonelAdvanceRequestsVM
     {
         [Display(Name ="Miktar")]
         public decimal Amount { get; set; }

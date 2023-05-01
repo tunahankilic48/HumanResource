@@ -1,15 +1,9 @@
 ﻿using HumanResource.Application.Models.DTOs.LeaveDTO;
 using HumanResource.Application.Models.VMs.LeaveVM;
-using HumanResource.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HumanResource.Application.Services.LeaveServices
 {
-    internal interface ILeaveService
+    public interface ILeaveService
     {
 
         Task Create(CreateLeaveDTO model);
