@@ -15,7 +15,6 @@ namespace HumanResource.Application.Services.AdvanceService
 		Task Delete(int id);
 		Task<UpdateAdvanceDTO> GetById(int id);
 		//Task<List<AdvanceVM>> GetAdvances();
-		Task<AdvanceDetailsVM> GetAdvancesDetails(int id);
 		Task<List<AdvanceVM>> GetAdvancesForPersonel(Guid id);
 	}
 }
