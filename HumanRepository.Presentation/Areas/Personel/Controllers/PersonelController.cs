@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HumanRepository.Presentation.Areas.Personel.Controllers
 {
     [Authorize]
+    [Area("personel")]
     public class PersonelController : Controller
     {
         private readonly IPersonelService _personelService;
@@ -24,6 +25,7 @@ namespace HumanRepository.Presentation.Areas.Personel.Controllers
         {
             ViewBag.AdvanceRequests = await _personelService.GetPersonelAdvanceRequests(User.Identity.Name);
             ViewBag.LeaveRequests = await _personelService.GetPersonelLeaveRequests(User.Identity.Name);
+            ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
             return View();
         }
 
