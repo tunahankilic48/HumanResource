@@ -16,7 +16,7 @@ namespace HumanResource.Infrastructure.EntitiesConfig
             builder.Property(x => x.CreatedDate).IsRequired(true).HasColumnType("smalldatetime");
             builder.Property(x => x.DeletedDate).IsRequired(false).HasColumnType("smalldatetime");
             builder.Property(x => x.ModifiedDate).IsRequired(false).HasColumnType("smalldatetime");
-            builder.Property(x => x.StatuId).IsRequired(true);
+            builder.Property(x => x.StatuId).IsRequired(false);
         }
     }
 }

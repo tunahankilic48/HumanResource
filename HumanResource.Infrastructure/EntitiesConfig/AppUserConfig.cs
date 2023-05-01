@@ -25,6 +25,7 @@ namespace HumanResource.Infrastructure.EntitiesConfig
                 .HasColumnOrder(3);
 
             builder.Property(x=>x.BirthDate)
+                .IsRequired(false)
                 .HasColumnType("date")
                 .HasColumnOrder(4);
 
@@ -33,15 +34,15 @@ namespace HumanResource.Infrastructure.EntitiesConfig
             //    .HasColumnOrder(5);
 
             builder.Property(x => x.DepartmentId)
-                .IsRequired(true)
+                .IsRequired(false)
                 .HasColumnOrder(6);
 
             builder.Property(x => x.BloodTypeId)
-                .IsRequired(true)
+                .IsRequired(false)
                 .HasColumnOrder(7);
 
             builder.Property(x => x.ManagerId)
-                .IsRequired(true)
+                .IsRequired(false)
                 .HasColumnOrder(8);
 
             

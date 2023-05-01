@@ -52,7 +52,7 @@ namespace HumanResource.Infrastructure.Migrations
                     b.Property<int>("PostCode")
                         .HasColumnType("int");
 
-                    b.Property<int>("StatuId")
+                    b.Property<int?>("StatuId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -93,7 +93,7 @@ namespace HumanResource.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasColumnOrder(3);
 
-                    b.Property<int>("StatuId")
+                    b.Property<int?>("StatuId")
                         .HasColumnType("int");
 
                     b.Property<Guid>("UserId")
@@ -119,11 +119,11 @@ namespace HumanResource.Infrastructure.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("BirthDate")
+                    b.Property<DateTime?>("BirthDate")
                         .HasColumnType("date")
                         .HasColumnOrder(4);
 
-                    b.Property<int>("BloodTypeId")
+                    b.Property<int?>("BloodTypeId")
                         .HasColumnType("int")
                         .HasColumnOrder(7);
 
@@ -137,7 +137,7 @@ namespace HumanResource.Infrastructure.Migrations
                     b.Property<DateTime?>("DeletedDate")
                         .HasColumnType("smalldatetime");
 
-                    b.Property<int>("DepartmentId")
+                    b.Property<int?>("DepartmentId")
                         .HasColumnType("int")
                         .HasColumnOrder(6);
 
@@ -168,7 +168,7 @@ namespace HumanResource.Infrastructure.Migrations
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<Guid>("ManagerId")
+                    b.Property<Guid?>("ManagerId")
                         .HasColumnType("uniqueidentifier")
                         .HasColumnOrder(8);
 
@@ -192,13 +192,13 @@ namespace HumanResource.Infrastructure.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("RecruitmentDate")
+                    b.Property<DateTime?>("RecruitmentDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("StatuId")
+                    b.Property<int?>("StatuId")
                         .HasColumnType("int");
 
                     b.Property<bool>("TwoFactorEnabled")
@@ -250,7 +250,7 @@ namespace HumanResource.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("StatuId")
+                    b.Property<int?>("StatuId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -284,7 +284,7 @@ namespace HumanResource.Infrastructure.Migrations
                         .HasColumnType("NVARCHAR(30)")
                         .HasColumnOrder(2);
 
-                    b.Property<int>("StatuId")
+                    b.Property<int?>("StatuId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -319,7 +319,7 @@ namespace HumanResource.Infrastructure.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasColumnOrder(2);
 
-                    b.Property<int>("StatuId")
+                    b.Property<int?>("StatuId")
                         .HasColumnType("int")
                         .HasColumnOrder(3);
 
@@ -358,7 +358,7 @@ namespace HumanResource.Infrastructure.Migrations
                         .HasColumnType("NVARCHAR(50)")
                         .HasColumnOrder(2);
 
-                    b.Property<int>("StatuId")
+                    b.Property<int?>("StatuId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -389,9 +389,13 @@ namespace HumanResource.Infrastructure.Migrations
                         .HasColumnType("date")
                         .HasColumnOrder(3);
 
-                    b.Property<int>("LeaveTypeId")
+                    b.Property<int>("LeavePeriod")
                         .HasColumnType("int")
                         .HasColumnOrder(5);
+
+                    b.Property<int>("LeaveTypeId")
+                        .HasColumnType("int")
+                        .HasColumnOrder(6);
 
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("smalldatetime");
@@ -404,12 +408,12 @@ namespace HumanResource.Infrastructure.Migrations
                         .HasColumnType("date")
                         .HasColumnOrder(2);
 
-                    b.Property<int>("StatuId")
+                    b.Property<int?>("StatuId")
                         .HasColumnType("int");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier")
-                        .HasColumnOrder(6);
+                        .HasColumnOrder(7);
 
                     b.HasKey("Id");
 
@@ -446,7 +450,7 @@ namespace HumanResource.Infrastructure.Migrations
                         .HasColumnType("nvarchar(30)")
                         .HasColumnOrder(2);
 
-                    b.Property<int>("StatuId")
+                    b.Property<int?>("StatuId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -630,8 +634,7 @@ namespace HumanResource.Infrastructure.Migrations
                     b.HasOne("HumanResource.Domain.Entities.Statu", "Statu")
                         .WithMany("Addresses")
                         .HasForeignKey("StatuId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("AppUser");
 
@@ -645,8 +648,7 @@ namespace HumanResource.Infrastructure.Migrations
                     b.HasOne("HumanResource.Domain.Entities.Statu", "Statu")
                         .WithMany("Advances")
                         .HasForeignKey("StatuId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("HumanResource.Domain.Entities.AppUser", "User")
                         .WithMany("Advances")
@@ -682,8 +684,7 @@ namespace HumanResource.Infrastructure.Migrations
                     b.HasOne("HumanResource.Domain.Entities.Statu", "Statu")
                         .WithMany("AppUsers")
                         .HasForeignKey("StatuId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("BloodType");
 
@@ -699,8 +700,7 @@ namespace HumanResource.Infrastructure.Migrations
                     b.HasOne("HumanResource.Domain.Entities.Statu", "Statu")
                         .WithMany("BloodTypes")
                         .HasForeignKey("StatuId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Statu");
                 });
@@ -710,8 +710,7 @@ namespace HumanResource.Infrastructure.Migrations
                     b.HasOne("HumanResource.Domain.Entities.Statu", "Statu")
                         .WithMany("Cities")
                         .HasForeignKey("StatuId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Statu");
                 });
@@ -721,8 +720,7 @@ namespace HumanResource.Infrastructure.Migrations
                     b.HasOne("HumanResource.Domain.Entities.Statu", "Statu")
                         .WithMany("Departments")
                         .HasForeignKey("StatuId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Statu");
                 });
@@ -738,8 +736,7 @@ namespace HumanResource.Infrastructure.Migrations
                     b.HasOne("HumanResource.Domain.Entities.Statu", "Statu")
                         .WithMany("Districts")
                         .HasForeignKey("StatuId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("City");
 
@@ -757,8 +754,7 @@ namespace HumanResource.Infrastructure.Migrations
                     b.HasOne("HumanResource.Domain.Entities.Statu", "Statu")
                         .WithMany("Leaves")
                         .HasForeignKey("StatuId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("HumanResource.Domain.Entities.AppUser", "User")
                         .WithMany()
@@ -778,8 +774,7 @@ namespace HumanResource.Infrastructure.Migrations
                     b.HasOne("HumanResource.Domain.Entities.Statu", "Statu")
                         .WithMany("LeaveTypes")
                         .HasForeignKey("StatuId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Statu");
                 });

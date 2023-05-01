@@ -58,7 +58,8 @@ namespace HumanRepository.Presentation.Controllers
             {
                 var result = await _accountServices.Login(model);
 
-                if (result.Succeeded) return RedirectToLocal(returnUrl);
+                if (result.Succeeded) 
+                    return RedirectToLocal(returnUrl);
 
                 ModelState.AddModelError("", "Geçersiz giriş");
             }
