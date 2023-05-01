@@ -67,7 +67,7 @@ namespace HumanResource.Infrastructure.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    StatuId = table.Column<int>(type: "int", nullable: false),
+                    StatuId = table.Column<int>(type: "int", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "smalldatetime", nullable: false),
                     ModifiedDate = table.Column<DateTime>(type: "smalldatetime", nullable: true),
                     DeletedDate = table.Column<DateTime>(type: "smalldatetime", nullable: true)
@@ -90,7 +90,7 @@ namespace HumanResource.Infrastructure.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "NVARCHAR(30)", nullable: false),
-                    StatuId = table.Column<int>(type: "int", nullable: false),
+                    StatuId = table.Column<int>(type: "int", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "smalldatetime", nullable: false),
                     ModifiedDate = table.Column<DateTime>(type: "smalldatetime", nullable: true),
                     DeletedDate = table.Column<DateTime>(type: "smalldatetime", nullable: true)
@@ -113,7 +113,7 @@ namespace HumanResource.Infrastructure.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    StatuId = table.Column<int>(type: "int", nullable: false),
+                    StatuId = table.Column<int>(type: "int", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "smalldatetime", nullable: false),
                     ModifiedDate = table.Column<DateTime>(type: "smalldatetime", nullable: true),
                     DeletedDate = table.Column<DateTime>(type: "smalldatetime", nullable: true)
@@ -136,7 +136,7 @@ namespace HumanResource.Infrastructure.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(30)", nullable: false),
-                    StatuId = table.Column<int>(type: "int", nullable: false),
+                    StatuId = table.Column<int>(type: "int", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "smalldatetime", nullable: false),
                     ModifiedDate = table.Column<DateTime>(type: "smalldatetime", nullable: true),
                     DeletedDate = table.Column<DateTime>(type: "smalldatetime", nullable: true)
@@ -160,7 +160,7 @@ namespace HumanResource.Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "NVARCHAR(50)", nullable: false),
                     CityId = table.Column<int>(type: "int", nullable: false),
-                    StatuId = table.Column<int>(type: "int", nullable: false),
+                    StatuId = table.Column<int>(type: "int", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "smalldatetime", nullable: false),
                     ModifiedDate = table.Column<DateTime>(type: "smalldatetime", nullable: true),
                     DeletedDate = table.Column<DateTime>(type: "smalldatetime", nullable: true)
@@ -189,12 +189,12 @@ namespace HumanResource.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    BirthDate = table.Column<DateTime>(type: "date", nullable: false),
-                    DepartmentId = table.Column<int>(type: "int", nullable: false),
-                    BloodTypeId = table.Column<int>(type: "int", nullable: false),
-                    ManagerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    RecruitmentDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    StatuId = table.Column<int>(type: "int", nullable: false),
+                    BirthDate = table.Column<DateTime>(type: "date", nullable: true),
+                    DepartmentId = table.Column<int>(type: "int", nullable: true),
+                    BloodTypeId = table.Column<int>(type: "int", nullable: true),
+                    ManagerId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    RecruitmentDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    StatuId = table.Column<int>(type: "int", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "smalldatetime", nullable: false),
                     ModifiedDate = table.Column<DateTime>(type: "smalldatetime", nullable: true),
                     DeletedDate = table.Column<DateTime>(type: "smalldatetime", nullable: true),
@@ -252,7 +252,7 @@ namespace HumanResource.Infrastructure.Migrations
                     PostCode = table.Column<int>(type: "int", nullable: false),
                     DistrictId = table.Column<int>(type: "int", nullable: false),
                     AppUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    StatuId = table.Column<int>(type: "int", nullable: false),
+                    StatuId = table.Column<int>(type: "int", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "smalldatetime", nullable: false),
                     ModifiedDate = table.Column<DateTime>(type: "smalldatetime", nullable: true),
                     DeletedDate = table.Column<DateTime>(type: "smalldatetime", nullable: true)
@@ -289,7 +289,7 @@ namespace HumanResource.Infrastructure.Migrations
                     Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     NumberOfInstallments = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    StatuId = table.Column<int>(type: "int", nullable: false),
+                    StatuId = table.Column<int>(type: "int", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "smalldatetime", nullable: false),
                     ModifiedDate = table.Column<DateTime>(type: "smalldatetime", nullable: true),
                     DeletedDate = table.Column<DateTime>(type: "smalldatetime", nullable: true)
@@ -405,9 +405,10 @@ namespace HumanResource.Infrastructure.Migrations
                     StartDate = table.Column<DateTime>(type: "date", nullable: false),
                     EndDate = table.Column<DateTime>(type: "date", nullable: false),
                     ReturnDate = table.Column<DateTime>(type: "date", nullable: false),
+                    LeavePeriod = table.Column<int>(type: "int", nullable: false),
                     LeaveTypeId = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    StatuId = table.Column<int>(type: "int", nullable: false),
+                    StatuId = table.Column<int>(type: "int", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "smalldatetime", nullable: false),
                     ModifiedDate = table.Column<DateTime>(type: "smalldatetime", nullable: true),
                     DeletedDate = table.Column<DateTime>(type: "smalldatetime", nullable: true)

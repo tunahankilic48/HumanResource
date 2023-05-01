@@ -19,7 +19,7 @@ namespace HumanResource.Infrastructure.EntitiesConfig
 				.HasColumnOrder(2);
 
 			builder.Property(x => x.StatuId)
-				.IsRequired(true)
+				.IsRequired(false)
 				.HasColumnOrder(3);
 
 			// Foreign Key
