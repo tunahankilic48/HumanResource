@@ -1,0 +1,59 @@
+﻿@model RegisterDTO
+<!DOCTYPE html>
+
+<div class="container">
+	<div class="row justify-content-center">
+
+		<div class="col-lg-5">
+			<div class="card o-hidden border-0 shadow-lg my-5">
+				<div class="card-body p-0">
+
+					<div class="row">
+
+						<div class="p-5">
+							<div class="text-center">
+								<h1 class="h4 text-gray-900 mb-4">Hesap Oluştur!</h1>
+							</div>
+							<form class="user" asp-controller="account" asp-action="register">
+								<div class="form-group">
+									<input asp-for="UserName" class="form-control form-control-user"  placeholder="Kullanıcı Adı">
+								</div>
+								<div class="form-group row">
+									<div class="col-sm-6 mb-3 mb-sm-0">
+										<input asp-for="FirstName" class="form-control form-control-user"  placeholder="Ad">
+									</div>
+									<div class="col-sm-6">
+										<input asp-for="LastName" class="form-control form-control-user"  placeholder="Soyad">
+									</div>
+								</div>
+								<div class="form-group">
+									<input asp-for="Email" class="form-control form-control-user"  placeholder="Email Adres">
+								</div>
+								<div class="form-group row">
+									<div class="col-sm-6 mb-3 mb-sm-0">
+										<input asp-for="Password" class="form-control form-control-user"  placeholder="Şifre">
+									</div>
+									<div class="col-sm-6">
+										<input asp-for="ConfirmPassword" class="form-control form-control-user"  placeholder="Şifre Doğrula">
+									</div>
+								</div>
+								<button class="btn btn-primary btn-user btn-block" type="submit">
+									Hesap Oluştur
+								</button>
+								
+							</form>
+							<hr>
+							<div class="text-center">
+								<a class="small" href="forgot-password.html">Şifremi Unuttum</a>
+							</div>
+							<div class="text-center">
+								<a class="small" asp-action="login" asp-controller="account">Hesabınız varsa giriş yapmak için tıklayın!</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
