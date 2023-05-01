@@ -14,11 +14,11 @@ namespace HumanResource.Domain.Entities
         public int DistrictId { get; set; }
         public Guid AppUserId { get; set; }
 
-        public int StatuId { get; set; }
+        public int? StatuId { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public DateTime? DeletedDate { get; set; }
-        public Statu Statu { get; set; }
+        public Statu? Statu { get; set; }
 
 
         //Navigation Property

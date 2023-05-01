@@ -16,20 +16,23 @@ namespace HumanRepository.Presentation.Controllers
         [AllowAnonymous] 
         public IActionResult Register()
         {
-            if(User.Identity.IsAuthenticated) return RedirectToAction("Index");//ToDo : kendi sayfasına = personel control altındaki index sayfasına gidecek (Area)
+            if(User.Identity.IsAuthenticated) 
+                return RedirectToAction("index", "personel", new { Area = "personel" });
 
-           return View();
+			return View();
         }
         [AllowAnonymous, HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterDTO model)
         {
             if(ModelState.IsValid)
             {
+
                 var result = await _accountServices.Register(model);
 
-                if(result.Succeeded) return RedirectToAction("Index");//ToDo : kendi sayfasına = personel control altındaki index sayfasına gidecek (Area)
+                if(result.Succeeded)
+                    return RedirectToAction("index", "personel", new { Area = "personel" });
 
-                foreach (var item in result.Errors)
+				foreach (var item in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty,item.Description);
                     TempData["Error"] = "Yanlış birşeyler var";
@@ -41,9 +44,10 @@ namespace HumanRepository.Presentation.Controllers
         [AllowAnonymous]
         public IActionResult Login(string returnUrl = "/")
         {
-            if (User.Identity.IsAuthenticated) return RedirectToAction("Index");//ToDo : kendi sayfasına = personel control altındaki index sayfasına gidecek (Area)
+            if (User.Identity.IsAuthenticated) 
+                return RedirectToAction("index", "personel", new { Area = "personel" });
 
-            ViewData["ReturnUrl"] = returnUrl;
+			ViewData["ReturnUrl"] = returnUrl;
 
             return View();
         }
@@ -64,7 +68,7 @@ namespace HumanRepository.Presentation.Controllers
         public async Task<IActionResult> LogOut()
         {
             await _accountServices.LogOut();
-            return RedirectToAction("Index");//ToDo : kendi sayfasına = personel control altındaki index sayfasına gidecek (Area)
+            return RedirectToAction("login");
         }
         public async Task<IActionResult> Edit(string userName)
         {
