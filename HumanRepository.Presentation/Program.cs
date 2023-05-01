@@ -21,10 +21,10 @@ builder.Services.AddIdentity<AppUser, IdentityRole<Guid>>(options =>
 
     options.User.RequireUniqueEmail = true;
 
-    options.Password.RequireUppercase = true;
-    options.Password.RequireLowercase = true;
+    options.Password.RequireUppercase = false;
+    options.Password.RequireLowercase = false;
     options.Password.RequiredLength = 6;
-    options.Password.RequireNonAlphanumeric = true;
+    options.Password.RequireNonAlphanumeric = false;
 }).AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 
 

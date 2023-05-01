@@ -18,7 +18,7 @@ namespace HumanResource.Application.Models.DTOs.AccountDTO
         [ Required(ErrorMessage = "Bu alanı girmek zorunludur"), Display(Name = "E-Posta"), DataType(DataType.EmailAddress)]
         public string Email { get; set; }
         //public Statu MSyProperty { get; set; }
-        public DateTime CreateDate => DateTime.Now;
+        public DateTime CreatedDate => DateTime.Now;
 
         //ToDo : statu eklenebilir
     }
