@@ -54,26 +54,100 @@
     </div>
 </div>
 
+@*ToDo : popuplar işlev kazandırılacak, izin türü enum yapılabilir, id nasıl taşınacak çözülecek*@
+
+<a class="btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#updateLeaveModal">İzni Güncelle</a>@*ToDo : Pop up eklenecek*@
+<a class="btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#deleteLeaveModal">İzni Sil</a>@*ToDo : Pop up eklenecek*@
+
 <!-- Scroll to Top Button-->
 <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
 </a>
 
-<!-- Logout Modal-->
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
+<div class="modal fade" id="createLeaveModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
+                <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                <a class="btn btn-primary" href="login.html">Logout</a>
+            <div class="modal-body">
+                <form asp-action="create" asp-controller="leave">
+                    <div class="row d-flex justify-content-center mt-3">
+
+                        <div class="col-lg-10">
+                           
+                            <label class="form-label">Leave Start Date</label>
+                            <input class="form-control" name="StartDate" type="date">
+
+                            <label class="form-label">Leave End Date</label>
+                            <input class="form-control" name="EndDate" type="date">
+
+                            <label class="form-label">Return Date</label>
+                            <input class="form-control" name="ReturnDate" type="date">
+
+                        </div>
+                    </div>
+
+                    <div class="form-group d-flex justify-content-end mt-3">
+                        <input type="submit" value="Create" class="btn btn-primary" />
+                        <div class="col-lg-1"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="updateLeaveModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="create" asp-controller="leave">
+                    <div class="row d-flex justify-content-center mt-3">
+
+                        <div class="col-lg-10">
+
+                            <label class="form-label">Leave Start Date</label>
+                            <input class="form-control" name="StartDate" type="date">
+
+                            <label class="form-label">Leave End Date</label>
+                            <input class="form-control" name="EndDate" type="date">
+
+                            <label class="form-label">Return Date</label>
+                            <input class="form-control" name="ReturnDate" type="date">
+
+                        </div>
+                    </div>
+
+                    <div class="form-group d-flex justify-content-end mt-3">
+                        <input type="submit" value="Update" class="btn btn-primary" />
+                        <div class="col-lg-1"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteLeaveModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Aru you sure deleting leave request</p>
+
+                <a class="btn btn-danger m-2 col-lg-2" asp-action="delete" asp-controller="delete">Delete</a>
+                <a class="btn btn-primary m-2 col-lg-2" asp-action="leaves" asp-controller="personel">Vazgeç</a>
+
             </div>
         </div>
     </div>
