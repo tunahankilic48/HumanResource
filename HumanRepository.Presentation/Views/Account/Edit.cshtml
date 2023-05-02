@@ -1,0 +1,79 @@
+﻿@model UpdateProfileDTO
+<!DOCTYPE html>
+
+<div class="container">
+	<div class="row justify-content-center">
+
+		<div class="col-lg-5">
+			<div class="card o-hidden border-0 shadow-lg my-5">
+				<div class="card-body p-0">
+
+					<div class="row">
+
+						<div class="p-5">
+							<div class="text-center">
+								<h1 class="h4 text-gray-900 mb-4">Hesap Bilgileri Güncelleme</h1>
+							</div>
+							<form class="user" asp-controller="account" asp-action="edit" method="post">
+								<input type="hidden" asp-for="Id" />
+								<div class="form-group">
+									<label asp-for="Id">@Html.DisplayNameFor(x=>x.Id)</label>
+									<input asp-for="Id" class="form-control" disabled>
+								</div>
+								<div class="form-group">
+									<label asp-for="UserName">@Html.DisplayNameFor(x=>x.UserName)</label>
+									<input asp-for="UserName" class="form-control">
+								</div>
+								<div class="form-group">
+									<label asp-for="Email">@Html.DisplayNameFor(x=>x.Email)</label>
+									<input asp-for="Email" class="form-control">
+								</div>
+								<div class="form-group row">
+									<div class="col-sm-6 mb-3 mb-sm-0">
+										<label asp-for="Password">@Html.DisplayNameFor(x=>x.Password)</label>
+										<input asp-for="Password" class="form-control">
+									</div>
+									<div class="col-sm-6">
+										<label asp-for="ConfirmPassword">@Html.DisplayNameFor(x=>x.ConfirmPassword)</label>
+										<input asp-for="ConfirmPassword" class="form-control">
+									</div>
+									<span asp-validation-for="DepartmentId" class="text-danger"></span>
+									<div class="form-group">
+										<label asp-for="DepartmentId">Department</label>
+										<select asp-for="DepartmentId" class="custom-select" asp-items="@(new SelectList(Model.Departments,"Id","Name"))">
+											<option>Please select a Department</option>
+										</select>
+									</div>
+									<div class="form-group">
+										<label asp-for="BloodTypeId">Department</label>
+										<select asp-for="BloodTypeId" class="custom-select" asp-items="@(new SelectList(Model.BloodTypes,"Id","Name"))">
+											<option>Please select a Blood Type</option>
+										</select>
+									</div>
+									<div class="form-group">
+										<label asp-for="ManagerId">Department</label>
+										<select asp-for="ManagerId" class="custom-select" asp-items="@(new SelectList(Model.Managers,"Id","Name"))">
+											<option>Please select a Manager</option>
+										</select>
+									</div>
+									
+								</div>
+								<button class="btn btn-primary btn-user btn-block" type="submit">
+									Hesap Bilgilerini Güncelle
+								</button>
+
+							</form>
+							<hr>
+
+							<div class="text-center">
+								<button asp-controller="account" asp-action="RedirectToLocal" type="submit" class="btn btn-success">Geri Dön</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+

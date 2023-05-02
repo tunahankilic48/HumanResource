@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using HumanResource.Domain.Entities;
+using System.ComponentModel.DataAnnotations;
 using System.Xml.Linq;
 
 namespace HumanResource.Application.Models.DTOs.AccountDTO
@@ -15,6 +16,16 @@ namespace HumanResource.Application.Models.DTOs.AccountDTO
         [Required(ErrorMessage = "Bu alanı girmek zorunludur"), Display(Name = "E-Posta"), DataType(DataType.EmailAddress)]
         public string Email { get; set; }
         public DateTime ModifiedDate { get; set; }
-        
-    }
+		public int? DepartmentId { get; set; }
+		public DateTime? RecruitmentDate { get; set; }
+		public DateTime? BirthDate { get; set; }
+		public int? BloodTypeId { get; set; }
+		public Guid? ManagerId { get; set; }
+		public List<Department> Departments { get; set; }
+		public List<BloodType> BloodTypes { get; set; }
+		public List<AppUser> Managers { get; set; }
+		
+
+
+	}
 }
