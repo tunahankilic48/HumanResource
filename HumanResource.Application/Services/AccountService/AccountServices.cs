@@ -81,6 +81,7 @@ namespace HumanResource.Application.Services.AccountServices
                     await _userManager.SetUserNameAsync(user, model.UserName);
             }
             
+            
         }
     }
 }
