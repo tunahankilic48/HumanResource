@@ -63,7 +63,8 @@ namespace HumanRepository.Presentation.Controllers
 
                 ModelState.AddModelError("", "Geçersiz giriş");
             }
-            return View(model);
+			ViewData["ReturnUrl"] = returnUrl;
+			return View(model);
         }
         
         public async Task<IActionResult> LogOut()
