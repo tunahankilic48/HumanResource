@@ -7,9 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HumanResource.Domain", "Hum
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HumanResource.Infrastructure", "HumanResource.Infrastructure\HumanResource.Infrastructure.csproj", "{C59C557C-D0E9-44D6-95EC-65FECA867E7B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HumanResource.Application", "HumanResource.Application\HumanResource.Application.csproj", "{C9A16B34-CB61-4786-9610-FDD8D6DC643F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HumanResource.Application", "HumanResource.Application\HumanResource.Application.csproj", "{C9A16B34-CB61-4786-9610-FDD8D6DC643F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HumanRepository.Presentation", "HumanRepository.Presentation\HumanRepository.Presentation.csproj", "{EC029AA7-2ED7-4DE4-BC6E-F64F064A3425}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HumanResource.Presentation", "HumanRepository.Presentation\HumanResource.Presentation.csproj", "{EC029AA7-2ED7-4DE4-BC6E-F64F064A3425}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

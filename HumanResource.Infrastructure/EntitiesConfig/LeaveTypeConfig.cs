@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace HumanResource.Infrastructure.EntitiesConfig
 {
-	internal class LeaveTypeConfig : BaseEntityConfig<LeaveType>
+	internal class LeaveTypeConfig : IEntityTypeConfiguration<LeaveType>
 	{
-		public override void Configure(EntityTypeBuilder<LeaveType> builder)
+		public void Configure(EntityTypeBuilder<LeaveType> builder)
 		{
 
 			builder.HasKey(x => x.Id);
@@ -24,7 +24,6 @@ namespace HumanResource.Infrastructure.EntitiesConfig
 				.HasColumnType("nvarchar(30)")
 				.HasColumnOrder(2);
 
-			base.Configure(builder);
 			
 		}
 	}

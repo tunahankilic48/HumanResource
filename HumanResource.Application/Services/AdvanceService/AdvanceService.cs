@@ -2,6 +2,7 @@
 using HumanResource.Application.Models.DTOs.AdvanceDTOs;
 using HumanResource.Application.Models.VMs.AdvanceVMs;
 using HumanResource.Domain.Entities;
+using HumanResource.Domain.Enums;
 using HumanResource.Domain.Repositries;
 using Microsoft.EntityFrameworkCore;
 

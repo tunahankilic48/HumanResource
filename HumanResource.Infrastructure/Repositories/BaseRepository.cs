@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 
 namespace HumanResource.Infrastructure.Repositories
 {
-    public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class, IBaseEntity
+    public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class
     {
         private readonly ApplicationDbContext _context;
         protected DbSet<TEntity> _table;

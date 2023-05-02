@@ -12,10 +12,6 @@ namespace HumanResource.Infrastructure.EntitiesConfig
             builder.Property(x => x.Name).IsRequired(true);
 
             //Foreign Key
-            builder.HasMany(x => x.LeaveTypes)
-               .WithOne(x => x.Statu)
-               .HasForeignKey(x => x.StatuId)
-               .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasMany(x => x.AppUsers)
                .WithOne(x => x.Statu)
@@ -52,10 +48,6 @@ namespace HumanResource.Infrastructure.EntitiesConfig
                 .HasForeignKey(x => x.StatuId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasMany(x => x.BloodTypes)
-                .WithOne(x => x.Statu)
-                .HasForeignKey(x => x.StatuId)
-                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

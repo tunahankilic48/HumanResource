@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 
 namespace HumanResource.Domain.Repositries
 {
-    public interface IBaseRepository<TEntity> where TEntity : class, IBaseEntity
+    public interface IBaseRepository<TEntity> where TEntity : class
     {
         Task<TResult> GetFilteredFirstOrDefault<TResult>(
      Expression<Func<TEntity, TResult>> select,
