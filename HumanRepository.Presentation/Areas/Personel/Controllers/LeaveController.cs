@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace HumanRepository.Presentation.Areas.Personel.Controllers
+namespace HumanResource.Presentation.Areas.Personel.Controllers
 {
     [Authorize]
     [Area("personel")]

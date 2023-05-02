@@ -3,7 +3,7 @@ using HumanResource.Application.Services.AccountServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace HumanRepository.Presentation.Controllers
+namespace HumanResource.Presentation.Controllers
 {
     [Authorize]
     public class AccountController : Controller

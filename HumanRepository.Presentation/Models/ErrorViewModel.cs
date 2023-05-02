@@ -1,4 +1,4 @@
-namespace HumanRepository.Presentation.Models
+namespace HumanResource.Presentation.Models
 {
     public class ErrorViewModel
     {

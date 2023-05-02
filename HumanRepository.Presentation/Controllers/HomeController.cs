@@ -1,8 +1,8 @@
-﻿using HumanRepository.Presentation.Models;
+﻿using HumanResource.Presentation.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace HumanRepository.Presentation.Controllers
+namespace HumanResource.Presentation.Controllers
 {
     public class HomeController : Controller
     {

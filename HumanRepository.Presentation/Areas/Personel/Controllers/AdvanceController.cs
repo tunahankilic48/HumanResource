@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 using System.Net.Http;
 using System.Text;
 
-namespace HumanRepository.Presentation.Areas.Personel.Controllers
+namespace HumanResource.Presentation.Areas.Personel.Controllers
 {
     public class AdvanceController : Controller
     {

@@ -8,7 +8,7 @@
     }
   },
   "profiles": {
-    "HumanRepository.Presentation": {
+    " .Presentation": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
