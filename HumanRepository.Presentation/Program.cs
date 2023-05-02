@@ -5,6 +5,7 @@ using HumanResource.Domain.Entities;
 using HumanResource.Infrastructure.DbContext;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using HumanResource.Infrastructure.SeedData;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -53,6 +54,8 @@ app.UseRouting();
 app.UseAuthentication();
 
 app.UseAuthorization();
+
+SeedData.Seed(app);
 
 app.MapControllerRoute(
   name: "areas",

@@ -4,19 +4,16 @@
 	{
 		public int Id { get; set; }
 		public string Name { get; set; }
-		public DateTime CreatedDate { get; set; }
-		public DateTime? ModifiedDate { get; set; }
-		public DateTime? DeletedDate { get; set; }
+        public int StatuEnumId { get; set; }
+
 
 		public List<AppUser> AppUsers { get; set; }
-		public List<LeaveType> LeaveTypes { get; set; }
 		public List<Leave> Leaves { get; set; }
 		public List<Advance> Advances { get; set; }
 		public List<Department> Departments { get; set; }
 		public List<Address> Addresses { get; set; }
 		public List<City> Cities { get; set; }
 		public List<District> Districts { get; set; }
-		public List<BloodType> BloodTypes { get; set; }
 
 
 	}

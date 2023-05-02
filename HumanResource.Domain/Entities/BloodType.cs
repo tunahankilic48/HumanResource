@@ -1,22 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore.Query.Internal;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HumanResource.Domain.Entities
+﻿namespace HumanResource.Domain.Entities
 {
-	public class BloodType : IBaseEntity
+    public class BloodType
 	{
 		public int Id { get; set; }
 		public string Name { get; set; }
-		
-        public int? StatuId { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public DateTime? ModifiedDate { get; set; }
-        public DateTime? DeletedDate { get; set; }
-        public Statu? Statu { get; set; }
+        public int BloodTypeEnumId { get; set; }
+
 
 		//Navigation Property
 		public List<AppUser> Users { get; set; }
