@@ -20,6 +20,8 @@ namespace HumanResource.Application.Models.DTOs.AdvanceDTOs
 		public DateTime CreateDate => DateTime.Now;
 		public Guid UserId { get; set; }
 
+		public List<AppUser>? Users { get; set; }// sonradan eklendi 
+
 		//public int StatuId { get; set; }
 		//ToDo: Tarih kısıtlaması için attibute yazılacak.
 
