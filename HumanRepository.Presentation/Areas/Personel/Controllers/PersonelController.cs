@@ -31,11 +31,13 @@ namespace HumanRepository.Presentation.Areas.Personel.Controllers
 
         public async Task<IActionResult> Advances()
         {
+            ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
             return View(await _advanceService.GetAdvancesForPersonel(await _personelService.GetPersonelId(User.Identity.Name)));
         }
 
         public async Task<IActionResult> Leaves()
         {
+            ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
             return View(await _leaveservice.GetLeavesForPersonel(await _personelService.GetPersonelId(User.Identity.Name)));
         }
     }
