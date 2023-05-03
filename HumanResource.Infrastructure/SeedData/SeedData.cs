@@ -23,7 +23,6 @@ namespace HumanResource.Infrastructure.SeedData
                     
                     foreach (var item in Enum.GetValues(typeof(Status)))
                     {
-
                         Statu statu = new Statu ();
                         statu.Name = item.ToString();
                         statu.StatuEnumId = item.GetHashCode();
@@ -38,7 +37,7 @@ namespace HumanResource.Infrastructure.SeedData
 
                 if (!context.BloodTypes.Any())
                 {
-                    foreach (var item in Enum.GetValues(typeof(Status)))
+                    foreach (var item in Enum.GetValues(typeof(BloodTypes)))
                     {
 
                         BloodType bloodType = new BloodType();
@@ -53,7 +52,7 @@ namespace HumanResource.Infrastructure.SeedData
 
                 if (!context.LeaveTypes.Any())
                 {
-                    foreach (var item in Enum.GetValues(typeof(Status)))
+                    foreach (var item in Enum.GetValues(typeof(LeaveTypes)))
                     {
 
                         LeaveType leaveType = new LeaveType();

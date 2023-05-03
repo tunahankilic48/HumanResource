@@ -216,6 +216,7 @@
 
     <!-- Bootstrap core JavaScript-->
     <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/media/jquery/jquery.min.js"></script>
     <script src="~/media/bootstrap/js/bootstrap.bundle.min.js"></script>
 
@@ -236,6 +237,7 @@
     <script src="~/media/js/chart-pie-demo.js"></script>
     <script src="https://kit.fontawesome.com/40d871c6c3.js" crossorigin="anonymous"></script>
 
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 
 </html>
