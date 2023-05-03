@@ -10,7 +10,7 @@ namespace HumanResource.Application.Services.AdvanceService
 {
 	public interface IAdvanceService
 	{
-		Task Create(CreateAdvanceDTO model);
+		Task Create(CreateAdvanceDTO model,string UserName);
 		Task Update(UpdateAdvanceDTO model);
 		Task Delete(int id);
 		Task<UpdateAdvanceDTO> GetById(int id);

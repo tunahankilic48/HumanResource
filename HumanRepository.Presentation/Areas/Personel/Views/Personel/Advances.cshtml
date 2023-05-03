@@ -4,9 +4,39 @@
 <div class="container-fluid">
 
     <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800 mb-3">Avanslar</h1>
+    <h1 class="h3 mb-2 text-gray-800 mb-3">Advances</h1>
+    @*Avans oluştur*@
+    <a class="btn btn-primary m-2 col-lg-2" data-bs-toggle="modal" data-bs-target="#createAdvanceModal">Create Advances</a> <form runat="server">
+        <a class="btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#createAdvanceModal">Advance Create</a>
 
-    <a class="btn btn-primary m-2 col-lg-2" data-bs-toggle="modal" data-bs-target="#createAdvanceModal">Avans Oluştur</a>@*ToDo : Pop up eklenecek*@
+        <div id="createAdvanceModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Advance Create</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <b>ID</b><input type="text" itemid="txtid">
+                        </div><div class="form-group">
+                            <b>Amount</b><input type="number" itemid="txtamount">
+                        </div><div class="form-group">
+                            <b>NumberOfInstallments</b><input type="number" itemid="txtTaksitSayisi">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-warning" data-dismiss="modal">Create</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+    @*Avans oluştur*@
 
     <!-- DataTales Example -->
     <div class="card shadow mb-4 w-50 col-lg-8 col-md-10 col-sm-12">
@@ -32,11 +62,70 @@
                         {
 
                             <tr>
+                                <td>@item.Id</td>
                                 <td>@item.Amount</td>
                                 <td>@item.NumberOfInstallments</td>
                                 <td>
-                                    <a class="btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#updateAdvanceModal">Avans Güncelle</a>@*ToDo : Pop up eklenecek*@
-                                    <a class="btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#deleteAdvanceModal">Avans Sil</a>@*ToDo : Pop up eklenecek*@
+@*Avans Güncelle*@
+                                    <form runat="server">
+                                        <a class="btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#updateAdvanceModal">Advances Update</a>
+
+                                        <div id="updateAdvanceModal" class="modal fade" role="dialog">
+                                            <div class="modal-dialog">
+
+                                                <!-- Modal content-->
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                        <h4 class="modal-title">Advance Update</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="form-group">
+                                                            <b>ID</b><input type="text" itemid="txtid">
+                                                        </div><div class="form-group">
+                                                            <b>Amount</b><input type="number" itemid="txtamount">
+                                                        </div><div class="form-group">
+                                                            <b>NumberOfInstallments</b><input type="number" itemid="txtTaksitSayisi">
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-warning" data-dismiss="modal">Update</button>
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+@*Avans Güncelle*@
+                                    </form>
+                                    <a class="btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#deleteAdvanceModal">Advances Delete</a>
+@*Avans sil*@
+                        <form runat="server">
+                            <a class="btn btnprimarym-2"databstoggle="modal"databstarget="#deleteAdvanceModal">AdvancDelete<a>
+
+                            <div id="deleteAdvanceModal" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
+
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                        <h4 class="modal-title">Advance Create</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="form-group">
+                                                            <b>ID</b><input type="text" itemid="txtid">
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-warning" data-dismiss="modal">Delete</button>
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+@*Avans sil*@
                                 </td>
                             </tr>
 
