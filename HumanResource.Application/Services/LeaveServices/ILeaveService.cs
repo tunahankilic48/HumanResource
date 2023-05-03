@@ -6,12 +6,11 @@ namespace HumanResource.Application.Services.LeaveServices
     public interface ILeaveService
     {
 
-        Task Create(CreateLeaveDTO model);
-        Task Update(UpdateLeaveDTO model);
+        Task<bool> Create(CreateLeaveDTO model, string userName);
+        Task<bool> Update(UpdateLeaveDTO model);
         Task Delete(int id);
         Task<UpdateLeaveDTO> GetById(int id);
 
-        //Task<List<LeaveVM>> GetLeaves();
         Task<List<LeaveVM>> GetLeavesForPersonel(Guid id);
 
 

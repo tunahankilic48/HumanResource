@@ -1,4 +1,6 @@
 ﻿using HumanResource.Application.Extensions;
+using HumanResource.Domain.Entities;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel.DataAnnotations;
 
 namespace HumanResource.Application.Models.DTOs.LeaveDTO
@@ -6,30 +8,33 @@ namespace HumanResource.Application.Models.DTOs.LeaveDTO
     public class UpdateLeaveDTO
     {
         public int Id { get; set; }
-        public Guid UserId { get; set; }
 
-        [Required(ErrorMessage = "Başlangıç Tarihi Boş Geçilemez.")]
-        [Display(Name ="İzin Başlangıç Tarihi")]
+        public Guid UserId { get; set; }
+        public DateTime ModifiedDate => DateTime.Now;
+        public DateTime CreatedDate { get; set; }
+
+        [Required(ErrorMessage = "Leave start date cannot be null.")]
+        [Display(Name = "Leave Start Date")]
         [DataType(DataType.Date)]
-        [StartDate]
+        [StartDate(ErrorMessage = "Start date must be greater than today.")]
         public DateTime StartDate { get; set; }
 
-        [Required(ErrorMessage = "Bitiş Tarihi Boş Geçilemez.")]
-        [Display(Name = "İzin Bitiş Tarihi")]
+        [Required(ErrorMessage = "Leave end date cannot be null.")]
+        [Display(Name = "Leave End Date")]
         [DataType(DataType.Date)]
-        [StartDate]
+        [StartDate(ErrorMessage = "End date must be greater than today.")]
         public DateTime EndDate { get; set; }
 
-        [Required(ErrorMessage = "İşe dönüş Tarihi Boş Geçilemez.")]
-        [Display(Name = "İşe Dönüş Tarihi")]
+        [Required(ErrorMessage = "Return date cannot be null.")]
+        [Display(Name = "Return Date")]
         [DataType(DataType.Date)]
-        [StartDate]
+        [StartDate(ErrorMessage = "Return date must be greater than today.")]
         public DateTime ReturnDate { get; set; }
 
-        [Required(ErrorMessage = "İzin Türü Boş Geçilemez.")]
+        [Required(ErrorMessage = "Leave Type cannot be null.")]
+        [Display(Name = "Leave Type")]
         public int LeaveTypeId { get; set; }
-
-        //public Statu Statu { get; set; }
-
+        [ValidateNever]
+        public int StatuId { get; set; }
     }
 }

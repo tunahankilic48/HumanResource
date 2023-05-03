@@ -1,6 +1,4 @@
-﻿using HumanResource.Domain.Entities;
-using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 
 namespace HumanResource.Application.Extensions
@@ -9,13 +7,11 @@ namespace HumanResource.Application.Extensions
     {
         protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
         {
-            Leave izin = value as Leave;
-            if(izin.StartDate <= DateTime.Now)
+            DateTime date = (DateTime)value;
+            if(date < DateTime.Now)
             {
-                return new ValidationResult("Bugünden önceki bir tarihten izin alamazsınız");
+                return new ValidationResult("Selected date must be greater than today.");
             }
-
-            //return base.IsValid(value, validationContext);
 
             return ValidationResult.Success;
         }
