@@ -7,22 +7,22 @@ namespace HumanResource.Application.Models.VMs.LeaveVM
     {
         public int Id { get; set; }
 
-        [Display(Name = "İzin Oluşturulma Tarihi")]
+        [Display(Name = "Leave Created Date")]
         public string CreatedDate { get; set; }
 
-        [Display(Name = "İzin Başlangıç Tarihi")]
+        [Display(Name = "Leave Start Date")]
         public string StartDate { get; set; }
 
-        [Display(Name = "İzin Bitiş Tarihi")]
+        [Display(Name = "Leave End Date")]
         public string EndDate { get; set; }
 
-        [Display(Name = "İşe Dönüş Tarihi")]
+        [Display(Name = "Leave Return Date")]
         public string ReturnDate { get; set; }
-        [Display(Name = "İzin Süresi")]
+
+        [Display(Name = "Leave Period")]
         public int LeavePeriod { get; set; }
-        [Display(Name = "İzin Türü")]
+        [Display(Name = "Leave Type")]
         public string LeaveType { get; set; }
 
-        //public Statu Statu { get; set; }
     }
 }
