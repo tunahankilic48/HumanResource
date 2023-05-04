@@ -21,7 +21,7 @@ namespace HumanResource.Application.Services.AdvanceService
 			_appUserRepository = appUserRepository;
 		}
 
-		public async Task Create(CreateAdvanceDTO model)
+		public async Task Create(CreateAdvanceDTO model,string userName)
 		{
 			Advance advance = _mapper.Map<Advance>(model);
 			await _advanceRepository.Add(advance);
