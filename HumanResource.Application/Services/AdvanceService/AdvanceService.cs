@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using HumanResource.Application.Models.DTOs.AdvanceDTOs;
 using HumanResource.Application.Models.VMs.AdvanceVMs;
+using HumanResource.Application.Models.VMs.LeaveVM;
+using HumanResource.Application.Services.PersonelService;
 using HumanResource.Domain.Entities;
 using HumanResource.Domain.Enums;
 using HumanResource.Domain.Repositries;
@@ -13,18 +15,23 @@ namespace HumanResource.Application.Services.AdvanceService
 		private readonly IAdvanceRepository _advanceRepository;
 		private readonly IAppUserRepository _appUserRepository;
 		private readonly IMapper _mapper;
+		private readonly IPersonelService _personelService;
 
-		public AdvanceService(IAdvanceRepository advanceRepository, IMapper mapper, IAppUserRepository appUserRepository)
-		{
-			_advanceRepository = advanceRepository;
-			_mapper = mapper;
-			_appUserRepository = appUserRepository;
-		}
+        public AdvanceService(IAdvanceRepository advanceRepository, IMapper mapper, IAppUserRepository appUserRepository, IPersonelService personelService)
+        {
+            _advanceRepository = advanceRepository;
+            _mapper = mapper;
+            _appUserRepository = appUserRepository;
+            _personelService = personelService;
+        }
 
-		public async Task Create(CreateAdvanceDTO model,string userName)
+        public async Task<bool> Create(CreateAdvanceDTO model,string userName)
 		{
-			Advance advance = _mapper.Map<Advance>(model);
-			await _advanceRepository.Add(advance);
+            model.Statu.Name = Status.AwatingApproval.ToString();
+            model.Statu.StatuEnumId = Status.AwatingApproval.GetHashCode();
+            Advance advance = _mapper.Map<Advance>(model);
+            advance.UserId = await _personelService.GetPersonelId(userName);
+            return await _advanceRepository.Add(advance);
 		}
 
 
@@ -33,7 +40,8 @@ namespace HumanResource.Application.Services.AdvanceService
 			Advance advance = await _advanceRepository.GetDefault(x => x.Id == id);
 			if (advance != null)
 			{
-				advance.DeletedDate = DateTime.Now;
+                advance.StatuId = Status.Deleted.GetHashCode();
+                advance.DeletedDate = DateTime.Now;
 				await _advanceRepository.Delete(advance);
 			}
 		}
@@ -47,10 +55,10 @@ namespace HumanResource.Application.Services.AdvanceService
 					Amount = x.Amount,
 					NumberOfInstallments = x.NumberOfInstallments
 				},
-				where: x => x.User.Id == id,
+				where: x => x.User.Id == id && x.StatuId != Status.Deleted.GetHashCode(),
 				orderby: x => x.OrderByDescending(x => x.CreatedDate),
-				include: x => x.Include(x => x.User)
-				);
+				include: x => x.Include(x => x.User).Include(x => x.Statu)
+                );
 			return advances;
 		}
 
@@ -58,18 +66,13 @@ namespace HumanResource.Application.Services.AdvanceService
 		public async Task<UpdateAdvanceDTO> GetById(int id)
 		{
 			Advance advance = await _advanceRepository.GetDefault(x => x.Id == id);
-			var model = _mapper.Map<UpdateAdvanceDTO>(advance);
-			return model;
-
+			return _mapper.Map<UpdateAdvanceDTO>(advance);
 		}
 
-		public async Task Update(UpdateAdvanceDTO model)
+		public async Task<bool> Update(UpdateAdvanceDTO model)
 		{
-			if (model != null)
-			{
-				var advance = _mapper.Map<Advance>(model);
-				await _advanceRepository.Update(advance);
-			}
+				Advance advance = _mapper.Map<Advance>(model);
+				return await _advanceRepository.Update(advance);
 		}
 	}
 }
