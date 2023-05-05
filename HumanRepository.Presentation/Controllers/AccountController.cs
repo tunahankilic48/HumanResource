@@ -43,7 +43,7 @@ namespace HumanResource.Presentation.Controllers
 				foreach (var item in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty,item.Description);
-                    TempData["Error"] = "Yanlış birşeyler var";
+                    TempData["Error"] = "there is something wrong";
                 }
             }
             return View(model);
@@ -69,7 +69,7 @@ namespace HumanResource.Presentation.Controllers
                 if (result.Succeeded) 
                     return RedirectToLocal(returnUrl);
 
-                ModelState.AddModelError("", "Geçersiz giriş");
+                ModelState.AddModelError("", "Invalid login");
             }
 			ViewData["ReturnUrl"] = returnUrl;
 			return View(model);
