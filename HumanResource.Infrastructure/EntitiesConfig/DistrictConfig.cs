@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace HumanResource.Infrastructure.EntitiesConfig
 {
-    internal class DistrictConfig : BaseEntityConfig<District>
+    internal class DistrictConfig : IEntityTypeConfiguration<District>
     {
-        public override void Configure(EntityTypeBuilder<District> builder)
+        public void Configure(EntityTypeBuilder<District> builder)
         {
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id)
@@ -30,7 +30,6 @@ namespace HumanResource.Infrastructure.EntitiesConfig
                 .HasForeignKey(x => x.DistrictId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            base.Configure(builder);
         }
     }
 }

@@ -13,6 +13,7 @@ namespace HumanResource.Domain.Entities
         public DateTime? BirthDate { get; set; }
         public int? BloodTypeId { get; set; }
         public Guid? ManagerId { get; set; }
+        public string? ImagePath { get; set; }
 
         public int? StatuId { get; set; }
         public DateTime CreatedDate { get; set; }
@@ -22,12 +23,12 @@ namespace HumanResource.Domain.Entities
 
 
         //Navigation Properties
-        public Department Department { get; set; }
-        public BloodType BloodType { get; set; }
-        public AppUser Manager { get; set; }
-        public List<AppUser> Employees { get; set; }
-        public Address Address { get; set; }
-        public List<Advance> Advances { get; set; }
+        public Department? Department { get; set; }
+        public BloodType? BloodType { get; set; }
+        public AppUser? Manager { get; set; }
+        public List<AppUser>? Employees { get; set; }
+        public Address? Address { get; set; }
+        public List<Advance>? Advances { get; set; }
 
 
 

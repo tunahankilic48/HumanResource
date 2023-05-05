@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HumanResource.Domain.Entities
+﻿namespace HumanResource.Domain.Entities
 {
     public class Address : IBaseEntity
     {
         public int Id { get; set; }
-        public string Description { get; set; }
+        public string? Description { get; set; }
         public int PostCode { get; set; }
-        public int DistrictId { get; set; }
+        public int? DistrictId { get; set; }
         public Guid AppUserId { get; set; }
 
         public int? StatuId { get; set; }
@@ -22,7 +16,7 @@ namespace HumanResource.Domain.Entities
 
 
         //Navigation Property
-        public District District { get; set; }
-        public AppUser AppUser { get; set; }
+        public District? District { get; set; }
+        public AppUser? AppUser { get; set; }
     }
 }

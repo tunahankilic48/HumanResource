@@ -29,7 +29,7 @@ namespace HumanResource.Application.Services.PersonelService
                {
                    FirstName = x.FirstName,
                    LastName = x.LastName,
-                   //Department = x.Department.Name, ToDo : Department olmadığı için şu an için null çekiyor o sebeple departman eklendikten sonra güncellenecek
+                   Image = x.ImagePath == null ? "/media/images/noImage.png" : x.ImagePath,
                    FullName = x.FirstName + " " + x.LastName
                },
                where: x => x.UserName == userName,

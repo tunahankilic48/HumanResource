@@ -34,7 +34,7 @@ namespace HumanResource.Infrastructure.Repositories
             return await Save() > 0;
         }
 
-        public async Task<TEntity> GetDefault(Expression<Func<TEntity, bool>> expression)
+        public virtual async Task<TEntity> GetDefault(Expression<Func<TEntity, bool>> expression)
         {
             return await _table.FirstOrDefaultAsync(expression);
         }

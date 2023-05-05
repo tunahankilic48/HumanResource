@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using AutoMapper;
 using HumanResource.Application.Services.AccountServices;
+using HumanResource.Application.Services.AddressService;
 using HumanResource.Application.Services.AdvanceService;
 using HumanResource.Application.Services.LeaveServices;
 using HumanResource.Application.Services.PersonelService;
@@ -28,6 +29,7 @@ namespace HumanResource.Application.IoC
             builder.RegisterType<PersonelService>().As<IPersonelService>().InstancePerLifetimeScope();
             builder.RegisterType<LeaveService>().As<ILeaveService>().InstancePerLifetimeScope();
             builder.RegisterType<AdvanceService>().As<IAdvanceService>().InstancePerLifetimeScope();
+            builder.RegisterType<AddressService>().As<IAddressService>().InstancePerLifetimeScope();
 
             #region AutoMapper
             builder.Register(context => new MapperConfiguration(cfg =>
