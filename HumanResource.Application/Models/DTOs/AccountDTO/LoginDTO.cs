@@ -4,9 +4,9 @@ namespace HumanResource.Application.Models.DTOs.AccountDTO
 {
     public class LoginDTO
     {
-        [MinLength(6, ErrorMessage = "Kullanıcı Adı 6 karakterden az giremezsiniz"), Required(ErrorMessage ="Bu alanı girmek zorunludur"), Display(Name = "Kullanıcı Adı")]
+        [MinLength(6, ErrorMessage = "Username cannot enter less than 6 characters"), Required(ErrorMessage = "This field is required"), Display(Name = "UserName")]
         public string UserNameOrEmail { get; set; }
-        [MinLength(6, ErrorMessage = "Şifreniz 6 karakterden az giremezsiniz"), Required(ErrorMessage = "Bu alanı girmek zorunludur"), Display(Name = "Şifre"), DataType(DataType.Password)]
+        [MinLength(6, ErrorMessage = "Username cannot enter less than 6 characters"), Required(ErrorMessage = "This field is required"), Display(Name = "Password"), DataType(DataType.Password)]
         public string Password { get; set; }
        
         
