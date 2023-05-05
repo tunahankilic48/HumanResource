@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HumanResource.Infrastructure.EntitiesConfig
 {
-	internal class DepartmentConfig : BaseEntityConfig<Department>
+	internal class DepartmentConfig : IEntityTypeConfiguration<Department>
 	{
-		public override void Configure(EntityTypeBuilder<Department> builder)
+		public void Configure(EntityTypeBuilder<Department> builder)
 		{
 			builder.HasKey(x => x.Id);
 			builder.Property(x => x.Id)
@@ -18,16 +18,11 @@ namespace HumanResource.Infrastructure.EntitiesConfig
 				.HasMaxLength(50)
 				.HasColumnOrder(2);
 
-			builder.Property(x => x.StatuId)
-				.IsRequired(false)
-				.HasColumnOrder(3);
-
 			// Foreign Key
 			builder.HasMany(x => x.Users)
                 .WithOne(x => x.Department)
                 .HasForeignKey(x => x.DepartmentId);
 
-			base.Configure(builder);
 		}
 	}
 }

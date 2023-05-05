@@ -28,25 +28,10 @@ namespace HumanResource.Infrastructure.EntitiesConfig
                .HasForeignKey(x => x.StatuId)
                .OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasMany(x => x.Departments)
-               .WithOne(x => x.Statu)
-               .HasForeignKey(x => x.StatuId)
-               .OnDelete(DeleteBehavior.Restrict);
-
             builder.HasMany(x => x.Addresses)
                .WithOne(x => x.Statu)
                .HasForeignKey(x => x.StatuId)
                .OnDelete(DeleteBehavior.Restrict);
-
-            builder.HasMany(x => x.Cities)
-                .WithOne(x => x.Statu)
-                .HasForeignKey(x => x.StatuId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            builder.HasMany(x => x.Districts)
-                .WithOne(x => x.Statu)
-                .HasForeignKey(x => x.StatuId)
-                .OnDelete(DeleteBehavior.Restrict);
 
         }
     }

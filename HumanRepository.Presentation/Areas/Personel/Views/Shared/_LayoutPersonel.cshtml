@@ -42,16 +42,22 @@
                     <span>İnsan Kaynakları</span>@*ToDo : Uygulama adı konulabilir*@
                 </a>
             </li>
-                
+
             <!-- Divider -->
             <hr class="sidebar-divider">
 
             <!-- Heading -->
             <div class="sidebar-heading">
-                
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item ms-3">
+                <a class="nav-link collapsed" asp-area="" asp-controller="account" asp-action="profile">
+                    <i class="fa-solid fa-address-card"></i>
+                    <span>Profile</span>
+                </a>
+            </li>
+
             <li class="nav-item ms-3">
                 <a class="nav-link collapsed" asp-area="personel" asp-controller="personel" asp-action="leaves">
                     <i class="fa-solid fa-person-through-window"></i>
@@ -67,7 +73,7 @@
                 </a>
             </li>
 
-            
+
 
         </ul>
         <!-- End of Sidebar -->
@@ -125,7 +131,7 @@
                             </div>
                         </li>
 
-                        
+
 
                         <div class="topbar-divider d-none d-sm-block"></div>
 
@@ -133,9 +139,9 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">@((ViewBag.Personel).FullName)</span> @*ToDo : Personelin adı gelecek*@
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">@((ViewBag.Personel).FullName)</span>
                                 <img class="img-profile rounded-circle"
-                                     src="img/undraw_profile.svg"> @*ToDo : Personel resmi olacak ise o gelecek yoksa silinecek*@
+                                     src="@((ViewBag.Personel).Image)"> @*ToDo : Personel resmi olacak ise o gelecek yoksa silinecek*@
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
