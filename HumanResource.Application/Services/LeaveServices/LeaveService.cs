@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using HumanResource.Application.Models.DTOs.LeaveDTO;
+using HumanResource.Application.Models.VMs.AdvanceVMs;
 using HumanResource.Application.Models.VMs.LeaveVM;
 using HumanResource.Application.Services.PersonelService;
 using HumanResource.Domain.Entities;
@@ -36,9 +37,12 @@ namespace HumanResource.Application.Services.LeaveServices
         public async Task Delete(int id)
         {
             Leave leave = await _leaveRepository.GetDefault(x => x.Id == id);
-            leave.StatuId =Status.Deleted.GetHashCode();
-            leave.DeletedDate = DateTime.Now;
-            await _leaveRepository.Delete(leave);
+            if (leave != null)
+            {
+                leave.StatuId = Status.Deleted.GetHashCode();
+                leave.DeletedDate = DateTime.Now;
+                await _leaveRepository.Delete(leave);
+            }
         }
 
         public async Task<UpdateLeaveDTO> GetById(int id)
