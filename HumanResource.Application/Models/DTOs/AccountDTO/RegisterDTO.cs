@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using HumanResource.Domain.Entities;
+using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 using System.Xml.Linq;
 
 namespace HumanResource.Application.Models.DTOs.AccountDTO
@@ -19,6 +21,7 @@ namespace HumanResource.Application.Models.DTOs.AccountDTO
         public string Email { get; set; }
         //public Statu MSyProperty { get; set; }
         public DateTime CreatedDate => DateTime.Now;
+        public AppUser User { get; set; }
 
         //ToDo : statu eklenebilir
     }

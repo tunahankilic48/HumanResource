@@ -1,7 +1,13 @@
 ﻿using HumanResource.Application.Models.DTOs.AccountDTO;
 using HumanResource.Application.Services.AccountServices;
+using HumanResource.Application.Services.PersonelService;
+using HumanResource.Domain.Entities;
+using HumanResource.Domain.Repositries;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Policy;
 
 namespace HumanResource.Presentation.Controllers
 {
@@ -9,15 +15,18 @@ namespace HumanResource.Presentation.Controllers
     public class AccountController : Controller
     {
         private readonly IAccountServices _accountServices;
-        public AccountController(IAccountServices accountServices)
-        {
-            _accountServices = accountServices;
-        }
-        [AllowAnonymous] 
+        private readonly IEmailSender _emailSender;
+		private readonly UserManager<AppUser> _userManager;
+		public AccountController(IAccountServices accountServices, IEmailSender emailSender)
+		{
+			_accountServices = accountServices;
+			_emailSender = emailSender;
+		}
+		[AllowAnonymous] 
         public IActionResult Register()
         {
             if(User.Identity.IsAuthenticated) 
-                return RedirectToAction("index", "personel", new { Area = "personel" });
+                return RedirectToAction("login", "account");
 
 			return View();
         }
@@ -26,11 +35,17 @@ namespace HumanResource.Presentation.Controllers
         {
             if(ModelState.IsValid)
             {
-
-                var result = await _accountServices.Register(model);
+                var code = await _userManager.GenerateEmailConfirmationTokenAsync(model.User);
+				var url = Url.Action("ConfirmedEmail", "Account", new
+				{  //bu kısım url oluşturuyor.
+					userId = model.User.Id,
+					token = code
+				});
+				await _emailSender.SendEmailAsync(model.Email, "Lütfen hesabınız onaylayınız", $"Lütfen email hesabınızı onaylanmak için linke <a href='https://localhost:44317{url}'>tıklayınız</a> ");
+				var result = await _accountServices.Register(model);
 
                 if(result.Succeeded)
-                    return RedirectToAction("index", "personel", new { Area = "personel" });
+                    return RedirectToAction("login", "account");
 
 				foreach (var item in result.Errors)
                 {
