@@ -12,22 +12,22 @@ namespace HumanResource.Application.Models.DTOs.AdvanceDTOs
 	public class UpdateAdvanceDTO
 	{
 		public int Id { get; set; }
-		[Required(ErrorMessage = "Miktar alanı boş geçilemez!")]
-		[Range(0,99999.99, ErrorMessage = "Lütfen 0-99999,99 arasında giriş yapınız.")]
-		public decimal Amount { get; set; }
-		
-		[Required(ErrorMessage = "Taksit alanı boş geçilemez!")]
-		[Range(0,10, ErrorMessage="Lütfen 0-10 arasında giriniz.")]
-		public int NumberOfInstallments { get; set; }
+        [Required(ErrorMessage = "Amount field cannot be empty!")]
+        [Range(0, 99999.99, ErrorMessage = "Please enter between 0-99999.99!")]
+        public decimal Amount { get; set; }
+
+        [Required(ErrorMessage = "Installment field cannot be empty!")]
+        [Range(0, 20, ErrorMessage = "Please enter between 0-20.")]
+        public int NumberOfInstallments { get; set; }
 
         public DateTime ModifiedDate => DateTime.Now;
 
-        [Required(ErrorMessage = "Güncelleme tarihi boş geçilemez!"), DataType(DataType.DateTime)]
-		public DateTime CreatedDate { get; set; }
-		public Guid UserId { get; set; }
+        [Required(ErrorMessage = "Update date cannot be blank!"), DataType(DataType.DateTime)]
+        public DateTime CreatedDate { get; set; }
+        public Guid UserId { get; set; }
         [ValidateNever]
         public int StatuId { get; set; }
 
-		//ToDo: Tarih kısıtlaması için attibute yazılacak.
-	}
+        //ToDo: Tarih kısıtlaması için attibute yazılacak.
+    }
 }

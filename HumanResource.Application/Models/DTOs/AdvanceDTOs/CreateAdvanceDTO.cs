@@ -16,19 +16,19 @@ namespace HumanResource.Application.Models.DTOs.AdvanceDTOs
 			Statu = new Statu();
 		}
 
-		[Required(ErrorMessage = "Miktar alanı boş geçilemez!")]
-		[Range(0,99999.99, ErrorMessage = "Lütfen 0-99999,99 arasında giriş yapınız.")]
-		public decimal Amount { get; set; }
-		
-		[Required(ErrorMessage = "Taksit alanı boş geçilemez!")]
-		[Range(0,20, ErrorMessage="Lütfen 0-20 arasında giriniz.")]
-		public int NumberOfInstallments { get; set; }
-		public DateTime CreatedDate => DateTime.Now;
-		public Guid UserId { get; set; }
+        [Required(ErrorMessage = "Amount field cannot be empty!")]
+        [Range(0, 99999.99, ErrorMessage = "Please enter between 0-99999.99!")]
+        public decimal Amount { get; set; }
+
+        [Required(ErrorMessage = "Installment field cannot be empty!")]
+        [Range(0, 20, ErrorMessage = "Please enter between 0-20.")]
+        public int NumberOfInstallments { get; set; }
+        public DateTime CreatedDate => DateTime.Now;
+        public Guid UserId { get; set; }
 
 
 
-		[ValidateNever]
+        [ValidateNever]
         public Statu Statu { get; set; }
         //ToDo: Tarih kısıtlaması için attibute yazılacak.
 
