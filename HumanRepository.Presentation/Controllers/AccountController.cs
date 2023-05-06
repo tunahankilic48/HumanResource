@@ -2,15 +2,12 @@
 using HumanResource.Application.Services.AccountServices;
 using HumanResource.Application.Services.AddressService;
 using HumanResource.Application.Services.PersonelService;
-using HumanResource.Application.Services.PersonelService;
 using HumanResource.Domain.Entities;
-using HumanResource.Domain.Repositries;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Security.Policy;
 
 
 namespace HumanResource.Presentation.Controllers
@@ -21,20 +18,16 @@ namespace HumanResource.Presentation.Controllers
         private readonly IAccountServices _accountServices;
         private readonly IPersonelService _personelService;
         private readonly IAddressService _addressService;
-        public AccountController(IAccountServices accountServices, IPersonelService personelService, IAddressService addressService)
+        private readonly IEmailSender _emailSender;
+		private readonly UserManager<AppUser> _userManager;
+        public AccountController(IAccountServices accountServices, IPersonelService personelService, IAddressService addressService, IEmailSender emailSender)
         {
             _accountServices = accountServices;
             _personelService = personelService;
             _addressService = addressService;
-        }
-        [AllowAnonymous] 
-        private readonly IEmailSender _emailSender;
-		private readonly UserManager<AppUser> _userManager;
-		public AccountController(IAccountServices accountServices, IEmailSender emailSender)
-		{
-			_accountServices = accountServices;
 			_emailSender = emailSender;
 		}
+    
 		[AllowAnonymous] 
         public IActionResult Register()
         {
