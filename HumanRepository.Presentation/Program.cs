@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using HumanResource.Infrastructure.SeedData;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using HumanResource.Application.Services.EmailSenderService;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using HumanResource.Application.Models.VMs.EmailVM;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,7 +22,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(x => x.UseSqlServer(builder.
 
 builder.Services.AddIdentity<AppUser, IdentityRole<Guid>>(options =>
 {
-    options.SignIn.RequireConfirmedEmail = false;
+    options.SignIn.RequireConfirmedEmail = true;
     options.SignIn.RequireConfirmedPhoneNumber = false;
     options.SignIn.RequireConfirmedAccount = false;
 
@@ -34,7 +36,20 @@ builder.Services.AddIdentity<AppUser, IdentityRole<Guid>>(options =>
     
 }).AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 
-builder.Services.AddSingleton<IEmailSender, EmailSender>();
+//builder.Services.AddAuthentication(options =>
+//{
+//    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+//    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+//    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+//});
+
+var emailConfig = builder.Configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>();
+builder.Services.AddSingleton(emailConfig);
+builder.Services.AddScoped<IEmailService, EmailService>();
+
+
+
+//builder.Services.AddSingleton<IEmailSender, EmailSender>();
 
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 
