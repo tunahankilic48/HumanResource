@@ -21,7 +21,7 @@ namespace HumanResource.Application.Models.DTOs.AccountDTO
         public string Email { get; set; }
         //public Statu MSyProperty { get; set; }
         public DateTime CreatedDate => DateTime.Now;
-        public AppUser User { get; set; }
+       // public AppUser User { get; set; }
 
         //ToDo : statu eklenebilir
     }

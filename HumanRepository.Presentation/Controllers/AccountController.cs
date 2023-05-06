@@ -41,13 +41,13 @@ namespace HumanResource.Presentation.Controllers
         {
             if(ModelState.IsValid)
             {
-                var code = await _userManager.GenerateEmailConfirmationTokenAsync(model.User);
-				var url = Url.Action("ConfirmedEmail", "Account", new
-				{  //bu kısım url oluşturuyor.
-					userId = model.User.Id,
-					token = code
-				});
-				await _emailSender.SendEmailAsync(model.Email, "Lütfen hesabınız onaylayınız", $"Lütfen email hesabınızı onaylanmak için linke <a href='https://localhost:44317{url}'>tıklayınız</a> ");
+    //            var code = await _userManager.GenerateEmailConfirmationTokenAsync(model.User);
+				//var url = Url.Action("ConfirmedEmail", "Account", new
+				//{  //bu kısım url oluşturuyor.
+				//	userId = model.User.Id,
+				//	token = code
+				//});
+				//await _emailSender.SendEmailAsync(model.Email, "Lütfen hesabınız onaylayınız", $"Lütfen email hesabınızı onaylanmak için linke <a href='https://localhost:44317{url}'>tıklayınız</a> ");
 				var result = await _accountServices.Register(model);
 
                 if(result.Succeeded)
