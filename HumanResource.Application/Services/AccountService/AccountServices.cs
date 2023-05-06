@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using HumanResource.Application.Models.DTOs.AccountDTO;
+using HumanResource.Application.Models.VMs.PersonelVM;
 using HumanResource.Domain.Entities;
 using HumanResource.Domain.Repositries;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Win32;
 using Image = SixLabors.ImageSharp.Image;
 
 namespace HumanResource.Application.Services.AccountServices
@@ -28,6 +30,21 @@ namespace HumanResource.Application.Services.AccountServices
             _cityRepository = cityRepository;
             _departmentRepository = departmentRepository;
         }
+
+        public async Task<IdentityResult> ConfirmEmail(string token, string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+
+            if (user != null)
+            {
+                var result = await _userManager.ConfirmEmailAsync(user, token);
+                return result;
+            }
+            return IdentityResult.Failed();
+
+
+        }
+
         public async Task<UpdateProfileDTO> GetByUserName(string userName)
         {
             UpdateProfileDTO result = await _appUserRepository.GetFilteredFirstOrDefault(
@@ -71,18 +88,28 @@ namespace HumanResource.Application.Services.AccountServices
             await _signInManager.SignOutAsync();
         }
 
-        public async Task<IdentityResult> Register(RegisterDTO model)
+        public async Task<RegisterVM> Register(RegisterDTO model)
         {
             AppUser user = _mapper.Map<AppUser>(model);
 
 
             IdentityResult result = await _userManager.CreateAsync(user, model.Password);
-
+            RegisterVM register = new RegisterVM();
             if (result.Succeeded)
             {
-                await _signInManager.SignInAsync(user, isPersistent: false);
+
+                var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                register.Email = user.Email;
+                register.Token = token;
+                register.Result = result;
+                //await _signInManager.SignInAsync(user, isPersistent: false);
             }
-            return result;
+            else
+            {
+
+                register.Result = result;
+            }
+            return register;
         }
 
         public async Task UpdateUser(UpdateProfileDTO model)
@@ -130,7 +157,7 @@ namespace HumanResource.Application.Services.AccountServices
                         Description = model.AddressDescription,
                         DistrictId = model.DistrictId,
                     };
-                    
+
                 }
                 else
                 {

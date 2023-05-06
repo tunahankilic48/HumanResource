@@ -14,6 +14,33 @@
 							<div class="text-center">
 								<h1 class="h4 text-gray-900 mb-4">Hesap Oluştur!</h1>
 							</div>
+
+							@if (TempData["ErrorConformation"] != null)
+							{
+								<ul class="list-group">
+
+									
+										<li class="p-1 text-danger">
+										@TempData["ErrorConformation"]
+										</li>
+									
+								</ul>
+							}
+
+							@if (TempData["Conformation"] != null)
+							{
+								<ul class="list-group">
+
+									@foreach (var item in TempData["Error"] as Array)
+									{
+										<li class="p-1 text-danger">
+											@item
+										</li>
+									}
+								</ul>
+
+							}
+
 							<form class="user" asp-controller="account" asp-action="register" method="post">
 								<div class="form-group">
 									<input asp-for="UserName" class="form-control form-control-user"  placeholder="Kullanıcı Adı">

@@ -16,6 +16,29 @@
                                 <div class="text-center">
                                     <h1 class="h4 text-gray-900 mb-4">Human Resource</h1>
                                 </div>
+
+                                @if (TempData["Conformation"] != null)
+                                {
+                                    <ul class="list-group">
+                                     
+                                            <li class="p-1 text-success">
+                                                @TempData["Conformation"]
+                                            </li>
+                                    </ul>
+
+                                }
+
+                                @if (TempData["SuccessConformation"] != null)
+                                {
+                                    <ul class="list-group">
+
+                                        <li class="p-1 text-success">
+                                            @TempData["SuccessConformation"]
+                                        </li>
+                                    </ul>
+
+                                }
+
                                 <form class="user" asp-action="login" asp-controller="account" asp-route-returnUrl="@ViewData["ReturnUrl"]">
                                    
                                     <div class="form-group">
