@@ -4,14 +4,15 @@ namespace HumanResource.Application.Models.VMs.PersonelVM
 {
     public class PersonelLeaveRequestsVM
     {
+        public int Id { get; set; }
         [Display(Name ="İzin Başlangıç Tarihi")]
-        public DateTime StartDate { get; set; }
+        public string StartDate { get; set; }
 
         [Display(Name = "İzin Bitiş Tarihi")]
-        public DateTime EndDate { get; set; }
+        public string EndDate { get; set; }
 
         [Display(Name = "Geri Dönüş Tarihi")]
-        public DateTime ReturnDate { get; set; }
+        public string ReturnDate { get; set; }
 
         [Display(Name ="İzin Sebebi")]
         public string LeaveType { get; set; }

@@ -4,6 +4,7 @@ namespace HumanResource.Application.Models.VMs.PersonelVM
 {
     public class PersonelAdvanceRequestsVM
     {
+        public int Id { get; set; }
         [Display(Name ="Miktar")]
         public decimal Amount { get; set; }
 
