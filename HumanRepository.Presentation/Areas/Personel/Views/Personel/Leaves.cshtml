@@ -39,9 +39,9 @@
 <div class="container-fluid">
 
     <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800 mb-3">İzinler</h1>
+    <h1 class="h3 mb-2 text-gray-800 mb-3">Leaves</h1>
 
-    <a class="btn btn-primary m-2 col-lg-2" data-bs-toggle="modal" data-bs-target="#createLeaveModal">İzin Oluştur</a>
+    <a class="btn btn-primary m-2 col-lg-2" data-bs-toggle="modal" data-bs-target="#createLeaveModal">Create Leave</a>
 
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
@@ -50,19 +50,19 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>@Html.DisplayNameFor(x=>x.StartDate)</th>
-                            <th>@Html.DisplayNameFor(x=>x.EndDate)</th>
-                            <th>@Html.DisplayNameFor(x=>x.ReturnDate)</th>
-                            <th>@Html.DisplayNameFor(x=>x.LeaveType)</th>
+                            <th class="text-center">@Html.DisplayNameFor(x=>x.StartDate)</th>
+                            <th class="text-center">@Html.DisplayNameFor(x=>x.EndDate)</th>
+                            <th class="text-center">@Html.DisplayNameFor(x=>x.ReturnDate)</th>
+                            <th class="text-center">@Html.DisplayNameFor(x=>x.LeaveType)</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tfoot>
                         <tr>
-                            <th>@Html.DisplayNameFor(x=>x.StartDate)</th>
-                            <th>@Html.DisplayNameFor(x=>x.EndDate)</th>
-                            <th>@Html.DisplayNameFor(x=>x.ReturnDate)</th>
-                            <th>@Html.DisplayNameFor(x=>x.LeaveType)</th>
+                            <th class="text-center">@Html.DisplayNameFor(x=>x.StartDate)</th>
+                            <th class="text-center">@Html.DisplayNameFor(x=>x.EndDate)</th>
+                            <th class="text-center">@Html.DisplayNameFor(x=>x.ReturnDate)</th>
+                            <th class="text-center">@Html.DisplayNameFor(x=>x.LeaveType)</th>
                             <th></th>
                         </tr>
                     </tfoot>
@@ -70,17 +70,16 @@
                         @foreach (var item in Model)
                         {
 
-                            <tr>
-                                <td>@item.StartDate</td>
-                                <td>@item.EndDate</td>
-                                <td>@item.ReturnDate</td>
-                                <td>@item.LeaveType</td>
-                                <td>
+                            <tr class="align-middle">
+                                <td class="text-center">@item.StartDate</td>
+                                <td class="text-center">@item.EndDate</td>
+                                <td class="text-center">@item.ReturnDate</td>
+                                <td class="text-center">@item.LeaveType</td>
+                                <td class="d-flex justify-content-around">
                                     @*<a class="btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#updateLeaveModal" data-id="@item.Id">İzni Güncelle</a>*@
                                     <a class="btn btn-primary m-2" asp-action="update" asp-controller="leave" asp-route-id="@item.Id">Update Leave</a>
                                     <button type="button" class="btn btn-danger m-2" data-bs-toggle="modal" data-bs-target="#deleteLeaveModal" data-bs-whatever="@item.Id">Delete Leave</button>
 
-                                    
                                 </td>
                             </tr>
 

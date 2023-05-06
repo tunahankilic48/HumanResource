@@ -57,7 +57,7 @@ namespace HumanResource.Application.Models.DTOs.AccountDTO
         public int? DistrictId { get; set; }
 
         [Display(Name = ("Address Description"))]
-        public string AddressDescription { get; set; }
+        public string? AddressDescription { get; set; }
 
         [ValidateNever]
         public IFormFile? Image { get; set; }

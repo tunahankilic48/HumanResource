@@ -1,5 +1,6 @@
 ﻿using HumanResource.Application.Models.VMs.PersonelVM;
 using HumanResource.Domain.Entities;
+using HumanResource.Domain.Enums;
 using HumanResource.Domain.Repositries;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -45,12 +46,13 @@ namespace HumanResource.Application.Services.PersonelService
             var personelLeaveRequests = await _advanceRepository.GetFilteredList(
                select: x => new PersonelAdvanceRequestsVM()
                {
+                   Id = x.Id,
                    Amount = x.Amount,
                    NumberOfInstallments = x.NumberOfInstallments,
                    CreatedDate = x.CreatedDate
 
                },
-               where: x => x.User.UserName == name && x.Statu.Name == "Onay Bekleyen",// Sorulacaklar arasında
+               where: x => x.User.UserName == name && x.Statu.Name == Status.AwatingApproval.ToString(),
                orderby: x=>x.OrderByDescending(x=>x.CreatedDate),
                include: x => x.Include(x => x.User)
                );
@@ -71,13 +73,14 @@ namespace HumanResource.Application.Services.PersonelService
             var personelLeaveRequests = await _leaveRepository.GetFilteredList(
               select: x => new PersonelLeaveRequestsVM()
               {
-                  StartDate = x.StartDate,
-                  EndDate = x.EndDate,
-                  ReturnDate = x.ReturnDate,
+                  Id = x.Id,
+                  StartDate = x.StartDate.ToShortDateString(),
+                  EndDate = x.EndDate.ToShortDateString(),
+                  ReturnDate = x.ReturnDate.ToShortDateString(),
                   LeaveType = x.LeaveType.Name
 
               },
-              where: x => x.User.UserName == name && x.Statu.Name == "Onay Bekleyen",// Sorulacaklar arasında
+              where: x => x.User.UserName == name && x.Statu.Name == Status.AwatingApproval.ToString(),
               orderby: x => x.OrderByDescending(x => x.CreatedDate),
               include: x => x.Include(x => x.LeaveType).Include(x=>x.User)
               );
