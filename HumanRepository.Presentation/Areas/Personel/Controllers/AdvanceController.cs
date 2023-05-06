@@ -1,17 +1,13 @@
 ﻿using HumanResource.Application.Models.DTOs.AdvanceDTOs;
-using HumanResource.Application.Models.DTOs.LeaveDTO;
-using HumanResource.Application.Models.VMs.AdvanceVMs;
 using HumanResource.Application.Services.AdvanceService;
-using HumanResource.Application.Services.LeaveServices;
 using HumanResource.Application.Services.PersonelService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Newtonsoft.Json;
-using System.Net.Http;
-using System.Text;
 
 namespace HumanResource.Presentation.Areas.Personel.Controllers
 {
+    [Authorize]
+    [Area("personel")]
     public class AdvanceController : Controller
     {
         private readonly IAdvanceService _advanceService;
@@ -23,22 +19,23 @@ namespace HumanResource.Presentation.Areas.Personel.Controllers
             _advanceService = advanceService;
         }
 
+
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateAdvanceDTO model)
         {
-            //if (ModelState.IsValid)
-            //{
-            //    var result = await _advanceService.Create(model, User.Identity.Name);
-            //    if (result)
-            //    {
-            //        TempData["success"] = "advance request was created successfully.";
-            //        return RedirectToAction("advances", "personel", new { Area = "personel" });
-            //    }
-            //    else
-            //    {
-            //        TempData["error"] = "Something goes wrong, Leave request could not be created.";
-            //    }
-            //}
+            if (ModelState.IsValid)
+            {
+                var result = await _advanceService.Create(model, User.Identity.Name);
+                if (result)
+                {
+                    TempData["success"] = "advance request was created successfully.";
+                    return RedirectToAction("advances", "personel", new { Area = "personel" });
+                }
+                else
+                {
+                    TempData["error"] = "Something goes wrong, Advance request could not be created.";
+                }
+            }
             List<string> errors = new List<string>();
             foreach (var item in ModelState.Values.SelectMany(x => x.Errors))
             {
@@ -58,19 +55,19 @@ namespace HumanResource.Presentation.Areas.Personel.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Update(UpdateAdvanceDTO model)
         {
-            //if (ModelState.IsValid)
-            //{
-            //    var result = await _advanceService.Update(model);
-            //    if (result)
-            //    {
-            //        TempData["success"] = "advance request was created successfully.";
-            //        return RedirectToAction("advances", "personel", new { Area = "personel" });
-            //    }
-            //    else
-            //    {
-            //        TempData["error"] = "Something goes wrong, Leave request could not be created.";
-            //    }
-            //}
+            if (ModelState.IsValid)
+            {
+                var result = await _advanceService.Update(model);
+                if (result)
+                {
+                    TempData["success"] = "advance request was created successfully.";
+                    return RedirectToAction("advances", "personel", new { Area = "personel" });
+                }
+                else
+                {
+                    TempData["error"] = "Something goes wrong, Advance request could not be created.";
+                }
+            }
 
 
             ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);

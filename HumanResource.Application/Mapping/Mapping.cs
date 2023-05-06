@@ -11,6 +11,7 @@ namespace HumanResource.Application.Mapping
         public Mapping()
         {
             CreateMap<AppUser, RegisterDTO>().ReverseMap();
+            CreateMap<AppUser, UpdateProfileDTO>().ReverseMap();
 
             CreateMap<Leave, CreateLeaveDTO>().ReverseMap();
             CreateMap<Leave, UpdateLeaveDTO>().ReverseMap();

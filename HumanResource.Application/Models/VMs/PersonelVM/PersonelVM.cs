@@ -10,8 +10,8 @@ namespace HumanResource.Application.Models.VMs.PersonelVM
         [Display(Name = "Soyisim")]
         public string LastName { get; set; }
 
-        [Display(Name = "Departman")]
-        public string Department { get; set; }
+        [Display(Name = "Image")]
+        public string Image { get; set; }
         public string FullName { get; set; }
     }
 }

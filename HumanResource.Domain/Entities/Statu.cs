@@ -10,10 +10,7 @@
 		public List<AppUser> AppUsers { get; set; }
 		public List<Leave> Leaves { get; set; }
 		public List<Advance> Advances { get; set; }
-		public List<Department> Departments { get; set; }
 		public List<Address> Addresses { get; set; }
-		public List<City> Cities { get; set; }
-		public List<District> Districts { get; set; }
 
 
 	}

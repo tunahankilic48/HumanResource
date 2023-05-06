@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace HumanResource.Infrastructure.EntitiesConfig
 {
-    internal class CityConfig : BaseEntityConfig<City>
+    internal class CityConfig : IEntityTypeConfiguration<City>
     {
-        public override void Configure(EntityTypeBuilder<City> builder)
+        public void Configure(EntityTypeBuilder<City> builder)
         {
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id)
@@ -25,7 +25,6 @@ namespace HumanResource.Infrastructure.EntitiesConfig
                 .HasForeignKey(x => x.CityId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            base.Configure(builder);
         }
     }
 }

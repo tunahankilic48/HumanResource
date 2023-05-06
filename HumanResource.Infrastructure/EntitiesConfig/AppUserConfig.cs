@@ -45,7 +45,10 @@ namespace HumanResource.Infrastructure.EntitiesConfig
                 .IsRequired(false)
                 .HasColumnOrder(8);
 
-            
+            builder.Property(x => x.UserName)
+                .HasMaxLength(30);
+
+
             //Foreign Key
             builder.HasOne(x=>x.Manager)
                     .WithMany(x=>x.Employees)

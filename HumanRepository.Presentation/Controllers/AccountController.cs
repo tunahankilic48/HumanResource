@@ -1,5 +1,7 @@
 ﻿using HumanResource.Application.Models.DTOs.AccountDTO;
 using HumanResource.Application.Services.AccountServices;
+using HumanResource.Application.Services.AddressService;
+using HumanResource.Application.Services.PersonelService;
 using HumanResource.Application.Services.PersonelService;
 using HumanResource.Domain.Entities;
 using HumanResource.Domain.Repositries;
@@ -7,7 +9,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Security.Policy;
+
 
 namespace HumanResource.Presentation.Controllers
 {
@@ -15,6 +19,15 @@ namespace HumanResource.Presentation.Controllers
     public class AccountController : Controller
     {
         private readonly IAccountServices _accountServices;
+        private readonly IPersonelService _personelService;
+        private readonly IAddressService _addressService;
+        public AccountController(IAccountServices accountServices, IPersonelService personelService, IAddressService addressService)
+        {
+            _accountServices = accountServices;
+            _personelService = personelService;
+            _addressService = addressService;
+        }
+        [AllowAnonymous] 
         private readonly IEmailSender _emailSender;
 		private readonly UserManager<AppUser> _userManager;
 		public AccountController(IAccountServices accountServices, IEmailSender emailSender)
@@ -50,7 +63,7 @@ namespace HumanResource.Presentation.Controllers
 				foreach (var item in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty,item.Description);
-                    TempData["Error"] = "Yanlış birşeyler var";
+                    TempData["Error"] = "there is something wrong";
                 }
             }
             return View(model);
@@ -76,7 +89,7 @@ namespace HumanResource.Presentation.Controllers
                 if (result.Succeeded) 
                     return RedirectToLocal(returnUrl);
 
-                ModelState.AddModelError("", "Geçersiz giriş");
+                ModelState.AddModelError("", "Invalid login");
             }
 			ViewData["ReturnUrl"] = returnUrl;
 			return View(model);
@@ -87,26 +100,35 @@ namespace HumanResource.Presentation.Controllers
             await _accountServices.LogOut();
             return RedirectToAction("login");
         }
-        public async Task<IActionResult> Edit(string userName)
+        public async Task<IActionResult> Profile()
         {
-            return View(await _accountServices.GetByUserName(userName));
+            ViewBag.Cities = new SelectList(await _addressService.GetCities(), "Id", "Name");
+            ViewBag.Districts = new SelectList(await _addressService.GetDistricts(), "Id", "Name");
+            ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
+            return View(await _accountServices.GetByUserName(User.Identity.Name));
         }
 
         [HttpPost,ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(UpdateProfileDTO model)
+        public async Task<IActionResult> Profile(UpdateProfileDTO model)
         {
             if (ModelState.IsValid)
             {
                 await _accountServices.UpdateUser(model);
-                return RedirectToAction("detail");//ToDo : kendi sayfasına = personel control altındaki index sayfasına gidecek (Area)
+                return RedirectToAction("profile");
             }
+            ViewBag.Cities = new SelectList(await _addressService.GetCities(), "Id", "Name");
+            ViewBag.Districts = new SelectList(await _addressService.GetDistricts(), "Id", "Name");
+            ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
             return View(model);
         }
-
-        public async Task<IActionResult> Details(string UserName)//ToDo : personelde mi yoksa account ta mı olacak bu action
+        [HttpGet]
+        public async Task<JsonResult> setDropDrownList(int id)
         {
-            return View(await _accountServices.GetByUserName(UserName));
+            var districts = await _addressService.GetDistricts(id);
+            return Json(districts);
         }
+
+
 
         private IActionResult RedirectToLocal(string returnUrl = "/")
         {
