@@ -9,11 +9,11 @@ namespace HumanResource.Application.Models.VMs.AdvanceVMs
 {
 	public class AdvanceVM
 	{
-		public int Id { get; set; }
-		[Display(Name = "Miktar")]
-		public decimal Amount { get; set; }
-		[Display(Name = "Taksit Sayısı")]
-		public int NumberOfInstallments { get; set; }
-		
-	}
+        public int Id { get; set; }
+        [Display(Name = "Amount")]
+        public decimal Amount { get; set; }
+        [Display(Name = "Number Of Installments")]
+        public int NumberOfInstallments { get; set; }
+
+    }
 }
