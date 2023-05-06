@@ -6,6 +6,8 @@ using HumanResource.Infrastructure.DbContext;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using HumanResource.Infrastructure.SeedData;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using HumanResource.Application.Services.EmailSenderService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +15,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
 builder.Services.AddDbContext<ApplicationDbContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))); // Connection string will be taken from appsettings.json file
+
+
 
 builder.Services.AddIdentity<AppUser, IdentityRole<Guid>>(options =>
 {
@@ -26,8 +30,11 @@ builder.Services.AddIdentity<AppUser, IdentityRole<Guid>>(options =>
     options.Password.RequireLowercase = false;
     options.Password.RequiredLength = 6;
     options.Password.RequireNonAlphanumeric = false;
+
+    
 }).AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 
+builder.Services.AddSingleton<IEmailSender, EmailSender>();
 
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 
