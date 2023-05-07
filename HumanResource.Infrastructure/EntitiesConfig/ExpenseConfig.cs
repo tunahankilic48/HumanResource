@@ -28,16 +28,30 @@ namespace HumanResource.Infrastructure.EntitiesConfig
             builder.Property(x => x.ShortDescription)
                 .IsRequired(true)
                 .HasColumnOrder(4)
-                .HasMaxLength(70);
+                .HasMaxLength(30);
+                
 
             builder.Property(x => x.LongDescription)
                 .IsRequired(false)
-                .HasColumnOrder(5);
+                .HasColumnOrder(5)
+                .HasColumnType("NVARCHAR(MAX)");
 
             builder.Property(x => x.ExpenseDate)
                 .IsRequired(true)
                 .HasColumnType("Date")
                 .HasColumnOrder(6);
+
+            builder.Property(x => x.Amount)
+                .IsRequired(true)
+                .HasColumnOrder(7);
+
+            builder.Property(x => x.CurrencyTypeId)
+                .IsRequired(true)
+                .HasColumnOrder(8);
+
+            builder.Property(x => x.ExpenseTypeId)
+                .IsRequired(true)
+                .HasColumnOrder(9);
 
             builder.HasOne<AppUser>(x => x.User)
                 .WithMany(x => x.Expenses)

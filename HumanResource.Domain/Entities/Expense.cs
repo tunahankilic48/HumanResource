@@ -16,15 +16,16 @@ namespace HumanResource.Domain.Entities
         /*************************************************************************/
         public int Id { get; set; }
         public int UserId { get; set; }
-        public ExpenseType ExpenseType { get; set; }
+        public decimal Amount { get; set; }
+        public int CurrencyTypeId { get; set; }
         public DateTime ExpenseDate { get; set; }
         public string LongDescription { get; set; }
         public string ShortDescription { get; set; }
         public int ExpenseTypeId { get; set; }
         /*************************************************************************/
         //Navigation
-
+        public CurrencyType CurrencyType { get; set; }
+        public ExpenseType ExpenseType { get; set; }
         public AppUser User { get; set; }
-        public List<Department> Departments { get; set; } //çoka çok ilişki olabilir
     }
 }
