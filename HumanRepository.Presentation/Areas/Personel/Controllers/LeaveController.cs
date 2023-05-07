@@ -8,6 +8,7 @@ namespace HumanResource.Presentation.Areas.Personel.Controllers
 {
     [Authorize]
     [Area("personel")]
+    [Authorize(Roles = "CompanyManager, Employee")]
     public class LeaveController : Controller
     {
         private readonly ILeaveService _leaveService;

@@ -5,7 +5,6 @@ using HumanResource.Domain.Entities;
 using HumanResource.Domain.Repositries;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Win32;
 using Image = SixLabors.ImageSharp.Image;
 
 namespace HumanResource.Application.Services.AccountServices
@@ -13,22 +12,17 @@ namespace HumanResource.Application.Services.AccountServices
     public class AccountServices : IAccountServices
     {
         private readonly IAppUserRepository _appUserRepository;
-        private readonly IDistrictRepository _districtRepository;
-        private readonly ICityRepository _cityRepository;
-        private readonly IDepartmentRepository _departmentRepository;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly UserManager<AppUser> _userManager;
         private readonly IMapper _mapper;
 
-        public AccountServices(IAppUserRepository appUserRepository, SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, IMapper mapper, IDistrictRepository districtRepository, ICityRepository cityRepository, IDepartmentRepository departmentRepository)
+        public AccountServices(IAppUserRepository appUserRepository, SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, IMapper mapper)
         {
+            _appUserRepository = appUserRepository;
             _appUserRepository = appUserRepository;
             _signInManager = signInManager;
             _userManager = userManager;
             _mapper = mapper;
-            _districtRepository = districtRepository;
-            _cityRepository = cityRepository;
-            _departmentRepository = departmentRepository;
         }
 
         public async Task<IdentityResult> ConfirmEmail(string token, string email)
@@ -92,17 +86,15 @@ namespace HumanResource.Application.Services.AccountServices
         {
             AppUser user = _mapper.Map<AppUser>(model);
 
-
+            await _userManager.AddToRoleAsync(user, "Employee");
             IdentityResult result = await _userManager.CreateAsync(user, model.Password);
             RegisterVM register = new RegisterVM();
             if (result.Succeeded)
             {
-
                 var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                 register.Email = user.Email;
                 register.Token = token;
                 register.Result = result;
-                //await _signInManager.SignInAsync(user, isPersistent: false);
             }
             else
             {

@@ -8,6 +8,7 @@ namespace HumanResource.Presentation.Areas.Personel.Controllers
 {
     [Authorize]
     [Area("personel")]
+    [Authorize(Roles = "CompanyManager, Employee")]
     public class PersonelController : Controller
     {
         private readonly IPersonelService _personelService;

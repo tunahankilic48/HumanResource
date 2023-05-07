@@ -8,6 +8,7 @@ namespace HumanResource.Presentation.Areas.Personel.Controllers
 {
     [Authorize]
     [Area("personel")]
+    [Authorize(Roles = "CompanyManager, Employee")]
     public class AdvanceController : Controller
     {
         private readonly IAdvanceService _advanceService;

@@ -3,6 +3,8 @@ using HumanResource.Domain.Entities;
 using HumanResource.Domain.Enums;
 using HumanResource.Infrastructure.DbContext;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace HumanResource.Infrastructure.SeedData
@@ -99,6 +101,71 @@ namespace HumanResource.Infrastructure.SeedData
 
                     department = departmentFaker.Generate(30);
                     await context.Departments.AddRangeAsync(department);
+                    await context.SaveChangesAsync();
+
+                }
+
+                if (!context.Roles.Any())
+                {
+                    var roleStore = new RoleStore<IdentityRole<Guid>, ApplicationDbContext, Guid>(context);
+
+                    await roleStore.CreateAsync(new IdentityRole<Guid>() { Name = "SiteAdmin", NormalizedName = "SiteAdmin" });
+                    await roleStore.CreateAsync(new IdentityRole<Guid>() { Name = "CompanyManager", NormalizedName = "CompanyManager" });
+                    await roleStore.CreateAsync(new IdentityRole<Guid>() { Name = "Employee", NormalizedName = "Employee" });
+                    await context.SaveChangesAsync();
+                }
+
+                if (!context.Users.Any())
+                {
+                    var passwordHasher = new PasswordHasher<AppUser>();
+
+                    AppUser companyManager = new AppUser
+                    {
+                        FirstName="company",
+                        LastName="manager",
+                        UserName = "companyManager",
+                        NormalizedUserName = "companyManager",
+                        Email = "companyManager@gmail.com",
+                        ImagePath = "/images/noImage.png",
+                        CreatedDate = DateTime.Now,
+                        EmailConfirmed=true,
+                        LockoutEnabled=true,
+                        TwoFactorEnabled=false,
+                        PhoneNumberConfirmed=false,
+                    };
+
+                    var hashed = passwordHasher.HashPassword(companyManager, "123456");
+                    companyManager.PasswordHash = hashed;
+
+                    var companyManagerStore = new UserStore<AppUser, IdentityRole<Guid>, ApplicationDbContext, Guid>(context);
+
+                    await companyManagerStore.CreateAsync(companyManager);
+                    await companyManagerStore.AddToRoleAsync(companyManager, "CompanyManager");
+                    await context.SaveChangesAsync();
+
+
+                    AppUser employee = new AppUser
+                    {
+                        FirstName = "employee",
+                        LastName = "employee",
+                        UserName = "employee",
+                        NormalizedUserName = "employee",
+                        Email = "employee@gmail.com",
+                        ImagePath = "/images/noImage.png",
+                        CreatedDate = DateTime.Now,
+                        EmailConfirmed = true,
+                        LockoutEnabled = true,
+                        TwoFactorEnabled = false,
+                        PhoneNumberConfirmed = false,
+                    };
+
+                    var hashedCustomer = passwordHasher.HashPassword(employee, "123456");
+                    employee.PasswordHash = hashedCustomer;
+
+                    var employeeStore = new UserStore<AppUser, IdentityRole<Guid>, ApplicationDbContext, Guid>(context);
+
+                    await employeeStore.CreateAsync(employee);
+                    await employeeStore.AddToRoleAsync(employee, "Employee");
                     await context.SaveChangesAsync();
 
                 }
