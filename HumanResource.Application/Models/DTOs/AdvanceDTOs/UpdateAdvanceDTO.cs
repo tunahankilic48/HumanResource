@@ -14,6 +14,7 @@ namespace HumanResource.Application.Models.DTOs.AdvanceDTOs
 		public int Id { get; set; }
         [Required(ErrorMessage = "Amount field cannot be empty!")]
         [Range(0, 99999.99, ErrorMessage = "Please enter between 0-99999.99!")]
+        [RegularExpression(@"^\d+$", ErrorMessage = "No letters or symbols can be entered!")]
         public decimal Amount { get; set; }
 
         [Required(ErrorMessage = "Installment field cannot be empty!")]

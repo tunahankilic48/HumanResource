@@ -7,6 +7,7 @@
         <input type="hidden" asp-for="StatuId" />
         <input type="hidden" asp-for="CreatedDate" />
         <div class="col-lg-10">
+            <h1>Update Advance</h1>
             <div class="form-group">
                 <label asp-for="Amount" class="form-label">Amount</label>
                 <input asp-for="Amount" class="form-control" type="text">
@@ -14,8 +15,8 @@
             </div>
 
             <div class="form-group">
-                <label asp-for="NumberOfInstallments" class="form-label">NumberOfInstallments</label>
-                <input asp-for="NumberOfInstallments" class="form-control" type="text">
+                <label asp-for="NumberOfInstallments" class="form-label">Number Of Installments</label>
+                <input asp-for="NumberOfInstallments" class="form-control" type="number">
                 <span class="text-danger" asp-validation-for="NumberOfInstallments"></span>
             </div>
 

@@ -2,7 +2,7 @@
 
 @if (TempData["modelError"] is not null)
 {
-    <div class="alert alert-dismissible alert-danger">
+    <div class="ms-2 alert alert-dismissible alert-danger">
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         <h4 class="alert-heading">Something goes wrong!</h4>
 
@@ -20,7 +20,7 @@
 
 @if (TempData["error"] is not null)
 {
-    <div class="alert alert-dismissible alert-danger">
+    <div class="ms-2 alert alert-dismissible alert-danger">
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         <h4 class="alert-heading">Something goes wrong!</h4>
         <p class="mb-0">@TempData["error"]</p>
@@ -29,7 +29,7 @@
 
 @if (TempData["success"] is not null)
 {
-    <div class="alert alert-dismissible alert-success">
+    <div class="ms-2 alert alert-dismissible alert-success">
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         <h4 class="alert-heading">Successfully</h4>
         <p class="mb-0">@TempData["success"]</p>
@@ -44,7 +44,7 @@
     <a class="btn btn-primary m-2 col-lg-2" data-bs-toggle="modal" data-bs-target="#createAdvanceModal">Create Advance</a>
 
     <!-- DataTales Example -->
-    <div class="card shadow mb-4">
+    <div class="ms-2 card shadow mb-4">
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
