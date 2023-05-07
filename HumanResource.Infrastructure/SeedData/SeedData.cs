@@ -132,6 +132,7 @@ namespace HumanResource.Infrastructure.SeedData
                         LockoutEnabled=true,
                         TwoFactorEnabled=false,
                         PhoneNumberConfirmed=false,
+                        SecurityStamp = Guid.NewGuid().ToString("D")
                     };
 
                     var hashed = passwordHasher.HashPassword(companyManager, "123456");
@@ -157,6 +158,7 @@ namespace HumanResource.Infrastructure.SeedData
                         LockoutEnabled = true,
                         TwoFactorEnabled = false,
                         PhoneNumberConfirmed = false,
+                        SecurityStamp = Guid.NewGuid().ToString("D")
                     };
 
                     var hashedCustomer = passwordHasher.HashPassword(employee, "123456");

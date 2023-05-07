@@ -162,5 +162,24 @@ namespace HumanResource.Application.Services.AccountServices
             await _userManager.UpdateAsync(user);
 
         }
+
+        public async Task<IList<string>> GetUserRole(string userName)
+        {
+            AppUser user = await _userManager.FindByNameAsync(userName);
+            var result = await _userManager.GetRolesAsync(user);
+            return result;
+        }
+
+        public async Task<bool> IsCompanyManager(string userName)
+        {
+            var roles = await GetUserRole(userName);
+
+            foreach (var role in roles)
+            {
+                if (role == "CompanyManager")
+                    return true;
+            }
+            return false;
+        }
     }
 }
