@@ -23,11 +23,6 @@ namespace HumanResource.Infrastructure.EntitiesConfig
 				.HasColumnType("nvarchar(50)")
 				.HasColumnOrder(2);
 
-			builder.Property(x => x.Currency)
-				.IsRequired(true)
-				.IsUnicode(true)
-				.HasColumnType("nvarchar(3)")
-				.HasColumnOrder(3);
 
 		}
 	}
