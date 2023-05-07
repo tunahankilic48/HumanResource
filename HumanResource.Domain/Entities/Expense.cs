@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HumanResource.Domain.Entities
 {
-    public class Expence : IBaseEntity
+    public class Expense : IBaseEntity
     {
         public int? StatuId { get ; set ; }
         public DateTime CreatedDate { get; set; }
@@ -16,8 +16,8 @@ namespace HumanResource.Domain.Entities
         /*************************************************************************/
         public int Id { get; set; }
         public int UserId { get; set; }
-        public ExpenceType ExpenceType { get; set; }
-        public DateTime ExpenceDate { get; set; }
+        public ExpenseType ExpenseType { get; set; }
+        public DateTime ExpenseDate { get; set; }
         public string LongDescription { get; set; }
         public string ShortDescription { get; set; }
         /*************************************************************************/

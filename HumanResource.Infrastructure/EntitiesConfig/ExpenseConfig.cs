@@ -9,15 +9,15 @@ using System.Threading.Tasks;
 
 namespace HumanResource.Infrastructure.EntitiesConfig
 {
-    public class ExpenceConfig : BaseEntityConfig<Expence>
+    public class ExpenseConfig : BaseEntityConfig<Expense>
     {
-        public void Configure(EntityTypeBuilder<Expence> builder)
+        public void Configure(EntityTypeBuilder<Expense> builder)
         {
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id)
                 .HasColumnOrder(1);
 
-            builder.Property(x => x.ExpenceType)
+            builder.Property(x => x.ExpenseType)
                 .IsRequired(true)
                 .HasColumnOrder(2);
 
@@ -34,13 +34,13 @@ namespace HumanResource.Infrastructure.EntitiesConfig
                 .IsRequired(false)
                 .HasColumnOrder(5);
 
-            builder.Property(x => x.ExpenceDate)
+            builder.Property(x => x.ExpenseDate)
                 .IsRequired(true)
                 .HasColumnType("Date")
                 .HasColumnOrder(6);
 
             builder.HasOne<AppUser>(x => x.User)
-                .WithMany(x => x.Expences)
+                .WithMany(x => x.Expenses)
                 .HasForeignKey(x => x.UserId);
 
     

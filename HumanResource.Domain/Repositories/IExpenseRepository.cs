@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace HumanResource.Domain.Repositories
 {
-    public interface IExpenceRepository : IBaseRepository<Expence>
+    public interface IExpenseRepository : IBaseRepository<Expense>
     {
     }
 }

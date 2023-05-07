@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace HumanResource.Infrastructure.Repositories
 {
-    public class ExpenceRepository : BaseRepository<Expence>, IExpenceRepository
+    public class ExpenseRepository : BaseRepository<Expense>, IExpenseRepository
     {
-        public ExpenceRepository(ApplicationDbContext context) : base(context)
+        public ExpenseRepository(ApplicationDbContext context) : base(context)
         {
 
         }
