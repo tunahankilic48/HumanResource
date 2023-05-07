@@ -27,6 +27,7 @@ namespace HumanResource.Infrastructure.DbContext
         public DbSet<City> Cities { get; set; }
         public DbSet<District> Districts { get; set; }
         public DbSet<BloodType> BloodTypes { get; set; }
+        public DbSet<ExpenseType> ExpenseTypes { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -40,7 +41,8 @@ namespace HumanResource.Infrastructure.DbContext
                         .ApplyConfiguration(new DistrictConfig())
                         .ApplyConfiguration(new LeaveConfig())
                         .ApplyConfiguration(new LeaveTypeConfig())
-                        .ApplyConfiguration(new StatuConfig());
+                        .ApplyConfiguration(new StatuConfig())
+                        .ApplyConfiguration(new ExpenseTypeConfig());
 
             foreach (var foreignKey in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
             {
