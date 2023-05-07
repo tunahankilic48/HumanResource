@@ -40,8 +40,8 @@ namespace HumanResource.Infrastructure.DbContext
                         .ApplyConfiguration(new DepartmentConfig())
                         .ApplyConfiguration(new DistrictConfig())
                         .ApplyConfiguration(new LeaveConfig())
-                        .ApplyConfiguration(new LeaveTypeConfig())
                         .ApplyConfiguration(new StatuConfig())
+                        .ApplyConfiguration(new LeaveTypeConfig())
                         .ApplyConfiguration(new ExpenseConfig());
 
             foreach (var foreignKey in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
