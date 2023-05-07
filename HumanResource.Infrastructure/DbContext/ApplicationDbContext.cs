@@ -42,6 +42,7 @@ namespace HumanResource.Infrastructure.DbContext
                         .ApplyConfiguration(new LeaveConfig())
                         .ApplyConfiguration(new LeaveTypeConfig())
                         .ApplyConfiguration(new StatuConfig())
+                        .ApplyConfiguration(new ExpenseConfig())
                         .ApplyConfiguration(new ExpenseTypeConfig())
 						.ApplyConfiguration(new CurrencyTypeConfig());
 
