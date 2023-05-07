@@ -28,7 +28,7 @@ namespace HumanResource.Infrastructure.DbContext
         public DbSet<District> Districts { get; set; }
         public DbSet<BloodType> BloodTypes { get; set; }
         public DbSet<ExpenseType> ExpenseTypes { get; set; }
-
+        public DbSet<CurrencyType> CurrencyTypes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -42,9 +42,10 @@ namespace HumanResource.Infrastructure.DbContext
                         .ApplyConfiguration(new LeaveConfig())
                         .ApplyConfiguration(new LeaveTypeConfig())
                         .ApplyConfiguration(new StatuConfig())
-                        .ApplyConfiguration(new ExpenseTypeConfig());
+                        .ApplyConfiguration(new ExpenseTypeConfig())
+						.ApplyConfiguration(new CurrencyTypeConfig());
 
-            foreach (var foreignKey in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+			foreach (var foreignKey in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
             {
                 foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
             }

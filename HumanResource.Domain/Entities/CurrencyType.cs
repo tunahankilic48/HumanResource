@@ -6,14 +6,13 @@ using System.Threading.Tasks;
 
 namespace HumanResource.Domain.Entities
 {
-	public class ExpenseType
+	public class CurrencyType
 	{
 		public int Id { get; set; }
 		public string Name { get; set; }
-		
-		public int ExpenseTypeEnumId { get; set; }
+		public int CurrencyTypeEnumId { get; set; }
 
-		//Navigation Property
+		//Navigatiojn Property
 		public List<Expense> Expenses { get; set; }
 	}
 }
