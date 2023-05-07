@@ -53,7 +53,7 @@
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item ms-3">
                 <a class="nav-link collapsed" asp-area="personel" asp-controller="personel" asp-action="index">
-                    <i class="fa-solid fa-address-card"></i>
+                    <i class="fa-solid fa-house-user"></i>
                     <span>Home</span>
                 </a>
             </li>
@@ -79,6 +79,30 @@
                     <span>Advances</span>
                 </a>
             </li>
+
+            @if (User.IsInRole("CompanyManager"))
+            {
+                <li class="nav-item ms-3">
+                    <a class="nav-link collapsed" asp-area="personel" asp-controller="companymanager" asp-action="ToDo : yazılacak">
+                        <i class="fa-solid fa-person-walking-luggage"></i>
+                        <span>Employees</span>
+                    </a>
+                </li>
+
+                <li class="nav-item ms-3">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                       aria-expanded="true" aria-controls="collapseTwo">
+                        <i class="fas fa-fw fa-cog"></i>
+                        <span>Definitions</span>
+                    </a>
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <a class="collapse-item" asp-area="personel" asp-controller="companymanager" asp-action="ToDo : yazılacak">Departments</a>
+                            <a class="collapse-item" asp-area="personel" asp-controller="companymanager" asp-action="ToDo : yazılacak">Titles</a>
+                        </div>
+                    </div>
+                </li>
+            }
 
 
 
@@ -178,7 +202,7 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/media/jquery/jquery.min.js"></script>
-    <script src="~/media/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/media/bootstrap/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
     <script src="~/media/jquery/jquery.easing.min.js"></script>
