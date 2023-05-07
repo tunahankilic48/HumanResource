@@ -53,11 +53,12 @@ namespace HumanResource.Infrastructure.EntitiesConfig
                 .IsRequired(true)
                 .HasColumnOrder(9);
 
-            builder.HasOne<AppUser>(x => x.User)
+            builder.HasOne(x => x.CurrencyType)
                 .WithMany(x => x.Expenses)
-                .HasForeignKey(x => x.UserId);
+                .HasForeignKey(x => x.CurrencyTypeId)
+                .OnDelete(DeleteBehavior.Restrict);
 
-    
+
             base.Configure(builder);
             
         }

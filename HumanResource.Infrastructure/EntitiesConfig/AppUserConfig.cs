@@ -58,6 +58,10 @@ namespace HumanResource.Infrastructure.EntitiesConfig
                     .WithMany(x => x.Users)
                     .HasForeignKey(x => x.BloodTypeId);
 
+            builder.HasMany(x => x.Expenses)
+                    .WithOne(x => x.User)
+                    .HasForeignKey(x => x.ExpenseTypeId);
+
 
             base.Configure(builder);
         }

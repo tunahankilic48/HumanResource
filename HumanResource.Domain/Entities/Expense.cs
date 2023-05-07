@@ -15,7 +15,7 @@ namespace HumanResource.Domain.Entities
         public Statu? Statu { get; set; }
         /*************************************************************************/
         public int Id { get; set; }
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
         public decimal Amount { get; set; }
         public int CurrencyTypeId { get; set; }
         public DateTime ExpenseDate { get; set; }
