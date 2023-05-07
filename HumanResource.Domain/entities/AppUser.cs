@@ -29,6 +29,7 @@ namespace HumanResource.Domain.Entities
         public List<AppUser>? Employees { get; set; }
         public Address? Address { get; set; }
         public List<Advance>? Advances { get; set; }
+        public List<Expence>? Expences { get; set; }
 
 
 
