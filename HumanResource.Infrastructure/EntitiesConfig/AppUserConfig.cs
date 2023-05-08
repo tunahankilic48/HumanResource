@@ -60,7 +60,7 @@ namespace HumanResource.Infrastructure.EntitiesConfig
 
             builder.HasMany(x => x.Expenses)
                     .WithOne(x => x.User)
-                    .HasForeignKey(x => x.ExpenseTypeId);
+                    .HasForeignKey(x => x.UserId);
 
 
             base.Configure(builder);

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using HumanResource.Application.Models.DTOs.AccountDTO;
 using HumanResource.Application.Models.DTOs.AdvanceDTOs;
+using HumanResource.Application.Models.DTOs.DepartmentDTOs;
 using HumanResource.Application.Models.DTOs.LeaveDTO;
 using HumanResource.Domain.Entities;
 
@@ -18,6 +19,9 @@ namespace HumanResource.Application.Mapping
 
             CreateMap<Advance, CreateAdvanceDTO>().ReverseMap();
             CreateMap<Advance, UpdateAdvanceDTO>().ReverseMap();
+
+            CreateMap<Department, CreateDepartmentDTO>().ReverseMap();
+            CreateMap<Department, UpdateDepartmentDTO>().ReverseMap();
 
         }
     }

@@ -83,7 +83,7 @@
             @if (User.IsInRole("CompanyManager"))
             {
                 <li class="nav-item ms-3">
-                    <a class="nav-link collapsed" asp-area="personel" asp-controller="companymanager" asp-action="ToDo : yazılacak">
+                    <a class="nav-link collapsed" asp-area="CompanyManager" asp-controller="companymanager" asp-action="ToDo : yazılacak">
                         <i class="fa-solid fa-person-walking-luggage"></i>
                         <span>Employees</span>
                     </a>
@@ -97,8 +97,8 @@
                     </a>
                     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" asp-area="personel" asp-controller="companymanager" asp-action="ToDo : yazılacak">Departments</a>
-                            <a class="collapse-item" asp-area="personel" asp-controller="companymanager" asp-action="ToDo : yazılacak">Titles</a>
+                            <a class="collapse-item" asp-area="CompanyManager" asp-controller="companymanager" asp-action="departments">Departments</a>
+                            <a class="collapse-item" asp-area="CompanyManager" asp-controller="companymanager" asp-action="ToDo : yazılacak">Titles</a>
                         </div>
                     </div>
                 </li>

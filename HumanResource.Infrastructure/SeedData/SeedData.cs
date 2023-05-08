@@ -97,9 +97,10 @@ namespace HumanResource.Infrastructure.SeedData
                 if (!context.Departments.Any())
                 {
                     var departmentFaker = new Faker<Department>()
-                        .RuleFor(x => x.Name, y => y.Company.CompanyName());
+                        .RuleFor(x => x.Name, y => y.Company.CompanyName())
+                        .RuleFor(x=>x.StatuId, y=> Status.Active.GetHashCode());
 
-                    department = departmentFaker.Generate(30);
+                    department = departmentFaker.Generate(5);
                     await context.Departments.AddRangeAsync(department);
                     await context.SaveChangesAsync();
 
