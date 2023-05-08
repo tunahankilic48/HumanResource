@@ -62,7 +62,7 @@ namespace HumanResource.Application.Services.ExpenseService
             var masraflar = await _expenseRepository.GetFilteredList(
                 select: x=> new ExpenseVM()
                 {
-                    id = x.Id,
+                    Id = x.Id,
                     ExpenseDate = x.ExpenseDate,
                     UserId = x.UserId,
                     Amount = x.Amount,

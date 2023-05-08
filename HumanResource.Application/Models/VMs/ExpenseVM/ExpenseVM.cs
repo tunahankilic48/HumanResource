@@ -10,7 +10,7 @@ namespace HumanResource.Application.Models.VMs.ExpenseVM
 {
     public class ExpenseVM
     {
-        public int id { get; set; }
+        public int Id { get; set; }
 
         [Display(Name = "Expense Created Date")]
         public DateTime ExpenseDate { get; set; }
