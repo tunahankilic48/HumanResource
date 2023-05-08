@@ -7,5 +7,6 @@ namespace HumanResource.Application.Services.CompanyManagerService
     {
         Task<List<EmployeeVM>> GetEmployees();
         Task<List<DepartmentVM>> GetDepartments();
+        Task<List<TitleVM>> GetTitles();
     }
 }
