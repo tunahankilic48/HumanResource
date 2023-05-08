@@ -11,6 +11,7 @@
 		public List<Leave> Leaves { get; set; }
 		public List<Advance> Advances { get; set; }
 		public List<Address> Addresses { get; set; }
+		public List<Department> Departments { get; set; }
 
 
 	}

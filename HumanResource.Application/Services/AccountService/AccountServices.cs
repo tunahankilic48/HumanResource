@@ -86,8 +86,8 @@ namespace HumanResource.Application.Services.AccountServices
         {
             AppUser user = _mapper.Map<AppUser>(model);
 
-            await _userManager.AddToRoleAsync(user, "Employee");
             IdentityResult result = await _userManager.CreateAsync(user, model.Password);
+            await _userManager.AddToRoleAsync(user, "Employee");
             RegisterVM register = new RegisterVM();
             if (result.Succeeded)
             {
