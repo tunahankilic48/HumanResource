@@ -1,39 +1,39 @@
-﻿using HumanResource.Application.Models.DTOs.DepartmentDTOs;
+﻿using HumanResource.Application.Models.DTOs.TitleDTOs;
 using HumanResource.Application.Services.DepartmentService;
 using HumanResource.Application.Services.PersonelService;
+using HumanResource.Application.Services.TitleService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HumanResource.Presentation.Areas.CompanyManager.Controllers
 {
     [Area("CompanyManager")]
-    [Authorize(Roles ="CompanyManager")]
-    public class DepartmentController : Controller
+    [Authorize(Roles = "CompanyManager")]
+    public class TitleController : Controller
     {
-        public readonly IDepartmentService _departmentService;
+        public readonly ITitleService _titleService;
         public readonly IPersonelService _personelService;
 
-        public DepartmentController(IDepartmentService departmentService, IPersonelService personelService)
+        public TitleController(ITitleService titleService, IPersonelService personelService)
         {
-            _departmentService = departmentService;
+            _titleService = titleService;
             _personelService = personelService;
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(CreateDepartmentDTO model)
+        public async Task<IActionResult> Create(CreateTitleDTO model)
         {
-
             if (ModelState.IsValid)
             {
-                var result = await _departmentService.Create(model, User.Identity.Name);
+                var result = await _titleService.Create(model, User.Identity.Name);
                 if (result)
                 {
-                    TempData["success"] = "Department was created successfully.";
-                    return RedirectToAction("departments", "companymanager", new { Area = "companymanager" });
+                    TempData["success"] = "Title was created successfully.";
+                    return RedirectToAction("titles", "companymanager", new { Area = "companymanager" });
                 }
                 else
                 {
-                    TempData["error"] = "Something goes wrong, Leave request could not be created.";
+                    TempData["error"] = "Something goes wrong, Title could not be created.";
                 }
             }
             List<string> errors = new List<string>();
@@ -42,46 +42,43 @@ namespace HumanResource.Presentation.Areas.CompanyManager.Controllers
                 errors.Add(item.ErrorMessage);
             }
             TempData["modelError"] = errors.ToArray();
-            return RedirectToAction("departments", "companymanager", new { Area = "companymanager" });
+            return RedirectToAction("titles", "companymanager", new { Area = "companymanager" });
         }
 
         public async Task<IActionResult> Update(int id)
         {
             ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
-            return View(await _departmentService.GetById(id));
+            return View(await _titleService.GetById(id));
         }
 
-
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<IActionResult> Update(UpdateDepartmentDTO model)
+        public async Task<IActionResult> Update(UpdateTitleDTO model)
         {
             if (ModelState.IsValid)
             {
-                var result = await _departmentService.Update(model);
+                var result = await _titleService.Update(model);
                 if (result)
                 {
-                    TempData["success"] = "Department was created successfully.";
-                    return RedirectToAction("departments", "companymanager", new { Area = "companymanager" });
+                    TempData["success"] = "Title was created successfully.";
+                    return RedirectToAction("titles", "companymanager", new { Area = "companymanager" });
                 }
                 else
                 {
-                    TempData["error"] = "Something goes wrong, Department could not be created.";
+                    TempData["error"] = "Something goes wrong, Title could not be created.";
                 }
             }
-
 
             ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
             return View(model);
         }
 
-
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(IFormCollection collection)
         {
             int id = int.Parse(collection["id"]);
-            await _departmentService.Delete(id);
-            TempData["success"] = "Department was deleted succesfully.";
-            return RedirectToAction("departments", "companymanager", new { Area = "companymanager" });
+            await _titleService.Delete(id);
+            TempData["success"] = "Title was deleted succesfully.";
+            return RedirectToAction("titles", "companymanager", new { Area = "companymanager" });
         }
     }
 }

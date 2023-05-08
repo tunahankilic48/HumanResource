@@ -46,23 +46,16 @@ namespace HumanResource.Presentation.Areas.CompanyManager.Controllers
         {
             ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
             return View(await _companyManagerService.GetDepartments());
-        }
-
-        public async Task<IActionResult> CreateTitle()
+        }     
+        
+        
+        public async Task<IActionResult> Titles()
         {
-            return View();
+            ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
+            return View(await _companyManagerService.GetTitles());
         }
 
 
-        public async Task<IActionResult> UpdateTitle()
-        {
-            return View();
-        }
-
-        public async Task<IActionResult> DeleteTitle()
-        {
-            return View();
-        }
 
     }
 }
