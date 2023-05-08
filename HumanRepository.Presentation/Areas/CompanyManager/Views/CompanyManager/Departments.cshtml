@@ -6,14 +6,14 @@
 
 @if (TempData["modelError"] is not null)
 {
-    <div class="ms-2 alert alert-dismissible alert-danger">
+    <div class="ms-4 me-4 alert alert-dismissible alert-danger ps-0">
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        <h4 class="alert-heading">Something goes wrong!</h4>
+        <h4 class="alert-heading ms-0 ps-1">Something goes wrong!</h4>
 
         <ul class="list-group">
             @foreach (var item in TempData["modelError"] as Array)
             {
-                <li class="p-1">
+                <li class="p-1 ms-4">
                     @item
                 </li>
             }
@@ -24,16 +24,16 @@
 
 @if (TempData["error"] is not null)
 {
-    <div class="ms-2 alert alert-dismissible alert-danger">
+    <div class="ms-4 me-4 alert alert-dismissible alert-danger ps-0">
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        <h4 class="alert-heading">Something goes wrong!</h4>
+        <h4 class="alert-heading ms-4 ps-0">Something goes wrong!</h4>
         <p class="mb-0">@TempData["error"]</p>
     </div>
 }
 
 @if (TempData["success"] is not null)
 {
-    <div class="ms-2 alert alert-dismissible alert-success">
+    <div class="ms-4 me-4 alert alert-dismissible alert-success">
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         <h4 class="alert-heading">Successfully</h4>
         <p class="mb-0">@TempData["success"]</p>

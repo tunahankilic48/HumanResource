@@ -9,13 +9,13 @@
         <div class="col-lg-10">
             <h1>Update Advance</h1>
             <div class="form-group">
-                <label asp-for="Amount" class="form-label">Amount</label>
+                <label asp-for="Amount" class="form-label">@Html.DisplayNameFor(x=>x.Amount)</label>
                 <input asp-for="Amount" class="form-control" type="text">
                 <span class="text-danger" asp-validation-for="Amount"></span>
             </div>
 
             <div class="form-group">
-                <label asp-for="NumberOfInstallments" class="form-label">Number Of Installments</label>
+                <label asp-for="NumberOfInstallments" class="form-label">@Html.DisplayNameFor(x=>x.NumberOfInstallments)</label>
                 <input asp-for="NumberOfInstallments" class="form-control" type="number">
                 <span class="text-danger" asp-validation-for="NumberOfInstallments"></span>
             </div>
@@ -28,3 +28,20 @@
         <div class="col-lg-1"></div>
     </div>
 </form>
+
+@section Scripts{
+    <script>
+        function myFunction(id) {
+            Number.prototype.formatMoney = function (c, d, t) {
+                var n = this,
+                    c = isNaN(c = Math.abs(c)) ? 2 : c,
+                    d = d == undefined ? "." : d,
+                    t = t == undefined ? "," : t,
+                    s = n < 0 ? "-" : "",
+                    i = parseInt(n = Math.abs(+n || 0).toFixed(c)) + "",
+                    j = (j = i.length) > 3 ? j % 3 : 0;
+                return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(d{3})(?=d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+            };
+        }
+    </script>
+}
