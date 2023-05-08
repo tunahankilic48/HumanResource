@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HumanResource.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230506201717_first")]
+    [Migration("20230508165108_first")]
     partial class first
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -205,6 +205,9 @@ namespace HumanResource.Infrastructure.Migrations
                     b.Property<int?>("StatuId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("TitleId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
@@ -229,6 +232,8 @@ namespace HumanResource.Infrastructure.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.HasIndex("StatuId");
+
+                    b.HasIndex("TitleId");
 
                     b.ToTable("AspNetUsers", (string)null);
                 });
@@ -273,6 +278,29 @@ namespace HumanResource.Infrastructure.Migrations
                     b.ToTable("Cities");
                 });
 
+            modelBuilder.Entity("HumanResource.Domain.Entities.CurrencyType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnOrder(1);
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("CurrencyTypeEnumId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .IsUnicode(true)
+                        .HasColumnType("nvarchar(3)")
+                        .HasColumnOrder(2);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CurrencyTypes");
+                });
+
             modelBuilder.Entity("HumanResource.Domain.Entities.Department", b =>
                 {
                     b.Property<int>("Id")
@@ -289,7 +317,12 @@ namespace HumanResource.Infrastructure.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasColumnOrder(2);
 
+                    b.Property<int>("StatuId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("StatuId");
 
                     b.ToTable("Departments");
                 });
@@ -319,6 +352,85 @@ namespace HumanResource.Infrastructure.Migrations
                     b.HasIndex("CityId");
 
                     b.ToTable("Districts");
+                });
+
+            modelBuilder.Entity("HumanResource.Domain.Entities.Expense", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("smalldatetime");
+
+                    b.Property<int>("CurrencyTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("smalldatetime");
+
+                    b.Property<DateTime>("ExpenseDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ExpenseTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("LongDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("smalldatetime");
+
+                    b.Property<string>("ShortDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("StatuId")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CurrencyTypeId");
+
+                    b.HasIndex("ExpenseTypeId");
+
+                    b.HasIndex("StatuId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Expenses");
+                });
+
+            modelBuilder.Entity("HumanResource.Domain.Entities.ExpenseType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnOrder(1);
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("ExpenseTypeEnumId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .IsUnicode(true)
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnOrder(2);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ExpenseTypes");
                 });
 
             modelBuilder.Entity("HumanResource.Domain.Entities.Leave", b =>
@@ -418,6 +530,31 @@ namespace HumanResource.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Status");
+                });
+
+            modelBuilder.Entity("HumanResource.Domain.Entities.Title", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnOrder(1);
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .IsUnicode(true)
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnOrder(2);
+
+                    b.Property<int>("StatuId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StatuId");
+
+                    b.ToTable("Titles");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
@@ -616,11 +753,29 @@ namespace HumanResource.Infrastructure.Migrations
                         .HasForeignKey("StatuId")
                         .OnDelete(DeleteBehavior.Restrict);
 
+                    b.HasOne("HumanResource.Domain.Entities.Title", "Title")
+                        .WithMany("Users")
+                        .HasForeignKey("TitleId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.Navigation("BloodType");
 
                     b.Navigation("Department");
 
                     b.Navigation("Manager");
+
+                    b.Navigation("Statu");
+
+                    b.Navigation("Title");
+                });
+
+            modelBuilder.Entity("HumanResource.Domain.Entities.Department", b =>
+                {
+                    b.HasOne("HumanResource.Domain.Entities.Statu", "Statu")
+                        .WithMany("Departments")
+                        .HasForeignKey("StatuId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("Statu");
                 });
@@ -634,6 +789,40 @@ namespace HumanResource.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("City");
+                });
+
+            modelBuilder.Entity("HumanResource.Domain.Entities.Expense", b =>
+                {
+                    b.HasOne("HumanResource.Domain.Entities.CurrencyType", "CurrencyType")
+                        .WithMany("Expenses")
+                        .HasForeignKey("CurrencyTypeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HumanResource.Domain.Entities.ExpenseType", "ExpenseType")
+                        .WithMany("Expenses")
+                        .HasForeignKey("ExpenseTypeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HumanResource.Domain.Entities.Statu", "Statu")
+                        .WithMany()
+                        .HasForeignKey("StatuId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("HumanResource.Domain.Entities.AppUser", "User")
+                        .WithMany("Expenses")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("CurrencyType");
+
+                    b.Navigation("ExpenseType");
+
+                    b.Navigation("Statu");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("HumanResource.Domain.Entities.Leave", b =>
@@ -660,6 +849,17 @@ namespace HumanResource.Infrastructure.Migrations
                     b.Navigation("Statu");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("HumanResource.Domain.Entities.Title", b =>
+                {
+                    b.HasOne("HumanResource.Domain.Entities.Statu", "Statu")
+                        .WithMany("Titles")
+                        .HasForeignKey("StatuId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Statu");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -720,6 +920,8 @@ namespace HumanResource.Infrastructure.Migrations
                     b.Navigation("Advances");
 
                     b.Navigation("Employees");
+
+                    b.Navigation("Expenses");
                 });
 
             modelBuilder.Entity("HumanResource.Domain.Entities.BloodType", b =>
@@ -732,6 +934,11 @@ namespace HumanResource.Infrastructure.Migrations
                     b.Navigation("Districts");
                 });
 
+            modelBuilder.Entity("HumanResource.Domain.Entities.CurrencyType", b =>
+                {
+                    b.Navigation("Expenses");
+                });
+
             modelBuilder.Entity("HumanResource.Domain.Entities.Department", b =>
                 {
                     b.Navigation("Users");
@@ -740,6 +947,11 @@ namespace HumanResource.Infrastructure.Migrations
             modelBuilder.Entity("HumanResource.Domain.Entities.District", b =>
                 {
                     b.Navigation("Addresses");
+                });
+
+            modelBuilder.Entity("HumanResource.Domain.Entities.ExpenseType", b =>
+                {
+                    b.Navigation("Expenses");
                 });
 
             modelBuilder.Entity("HumanResource.Domain.Entities.LeaveType", b =>
@@ -755,7 +967,16 @@ namespace HumanResource.Infrastructure.Migrations
 
                     b.Navigation("AppUsers");
 
+                    b.Navigation("Departments");
+
                     b.Navigation("Leaves");
+
+                    b.Navigation("Titles");
+                });
+
+            modelBuilder.Entity("HumanResource.Domain.Entities.Title", b =>
+                {
+                    b.Navigation("Users");
                 });
 #pragma warning restore 612, 618
         }

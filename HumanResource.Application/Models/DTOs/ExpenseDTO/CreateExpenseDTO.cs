@@ -17,9 +17,14 @@ namespace HumanResource.Application.Models.DTOs.ExpenseDTO
             Statu = new Statu();
         }
         public Guid UserId { get; set; }
-        public DateTime ExpenseDate => DateTime.Now;
+		public DateTime CreatedDate => DateTime.Now;
 
-        [Required(ErrorMessage = "Spend amount cannot be empty")]
+		[Required(ErrorMessage = "Expense date cannot be null.")]
+		[Display(Name = "Expense Date")]
+		[DataType(DataType.Date)]
+		public DateTime ExpenseDate { get; set; }
+
+		[Required(ErrorMessage = "Spend amount cannot be empty")]
         [Display(Name = "Spending amount")]
         public Decimal Amount { get; set; }
 
@@ -30,6 +35,10 @@ namespace HumanResource.Application.Models.DTOs.ExpenseDTO
         [Required(ErrorMessage = "Expense Type cannot be null.")]
         [Display(Name = "Expense Type")]
         public int ExpenseTypeId { get; set; }
+
+		[Required(ErrorMessage = "Currency Type cannot be null.")]
+		[Display(Name = "Currency Type")]
+		public int CurrencyTypeId { get; set; }
 
 
         [ValidateNever]
