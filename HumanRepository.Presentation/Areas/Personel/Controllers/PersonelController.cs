@@ -1,4 +1,5 @@
 ﻿using HumanResource.Application.Services.AdvanceService;
+using HumanResource.Application.Services.ExpenseService;
 using HumanResource.Application.Services.LeaveServices;
 using HumanResource.Application.Services.PersonelService;
 using Microsoft.AspNetCore.Authorization;
@@ -13,12 +14,13 @@ namespace HumanResource.Presentation.Areas.Personel.Controllers
         private readonly IPersonelService _personelService;
         private readonly IAdvanceService _advanceService;
         private readonly ILeaveService _leaveservice;
-
-        public PersonelController(IPersonelService personelService, IAdvanceService advanceService, ILeaveService leaveservice)
+        private readonly IExpenseServices _expenseServices;
+        public PersonelController(IPersonelService personelService, IAdvanceService advanceService, ILeaveService leaveservice, IExpenseServices expenseServices)
         {
             _personelService = personelService;
             _advanceService = advanceService;
             _leaveservice = leaveservice;
+            _expenseServices = expenseServices;
         }
 
         public async Task<IActionResult> Index()
@@ -41,6 +43,12 @@ namespace HumanResource.Presentation.Areas.Personel.Controllers
 
             ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
             return View(await _leaveservice.GetLeavesForPersonel(await _personelService.GetPersonelId(User.Identity.Name)));
+        }
+
+        public async Task<IActionResult> Expenses()
+        {
+            ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
+            return View(await _expenseServices.GetExpenseForPersonel(await _personelService.GetPersonelId(User.Identity.Name)));
         }
     }
 }
