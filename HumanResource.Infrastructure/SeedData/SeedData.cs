@@ -23,6 +23,8 @@ namespace HumanResource.Infrastructure.SeedData
                 List<City> city = new List<City>();
                 List<District> district = new List<District>();
                 List<Department> department = new List<Department>();
+                List<CurrencyType> currencyTypes = new List<CurrencyType>();
+                List<ExpenseType> expenseTypes = new List<ExpenseType>();
 
                 if (!context.Status.Any())
                 {
@@ -68,6 +70,36 @@ namespace HumanResource.Infrastructure.SeedData
                     }
 
                     await context.LeaveTypes.AddRangeAsync(LeaveTypes);
+                    await context.SaveChangesAsync();
+                }
+
+                if (!context.CurrencyTypes.Any())
+                {
+                    foreach (var item in Enum.GetValues(typeof(CurrencyTypes)))
+                    {
+
+                        CurrencyType currencyType = new CurrencyType();
+                        currencyType.Name = item.ToString();
+                        currencyType.CurrencyTypeEnumId = item.GetHashCode();
+                        currencyTypes.Add(currencyType);
+                    }
+
+                    await context.CurrencyTypes.AddRangeAsync(currencyTypes);
+                    await context.SaveChangesAsync();
+                }
+
+                if (!context.ExpenseTypes.Any())
+                {
+                    foreach (var item in Enum.GetValues(typeof(ExpenseTypes)))
+                    {
+
+                        ExpenseType expenseType = new ExpenseType();
+                        expenseType.Name = item.ToString();
+                        expenseType.ExpenseTypeEnumId = item.GetHashCode();
+                        expenseTypes.Add(expenseType);
+                    }
+
+                    await context.ExpenseTypes.AddRangeAsync(expenseTypes);
                     await context.SaveChangesAsync();
                 }
 

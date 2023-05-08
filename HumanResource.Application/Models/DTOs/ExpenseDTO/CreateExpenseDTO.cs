@@ -31,6 +31,9 @@ namespace HumanResource.Application.Models.DTOs.ExpenseDTO
         [Required(ErrorMessage = "Description field cannot be null.")]
         [Display(Name = "Short Description")]
         public string ShortDescription { get; set; }
+        [Required(ErrorMessage = "Description field cannot be null.")]
+        [Display(Name = "Long Description")]
+        public string LongDescription { get; set; }
 
         [Required(ErrorMessage = "Expense Type cannot be null.")]
         [Display(Name = "Expense Type")]

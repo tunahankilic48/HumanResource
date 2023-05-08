@@ -6,6 +6,8 @@ namespace HumanResource.Application.Services.PersonelService
     {
         Task<List<PersonelLeaveRequestsVM>> GetPersonelLeaveRequests(string name);
         Task<List<PersonelAdvanceRequestsVM>> GetPersonelAdvanceRequests(string name);
+        Task<List<PersonelExpenseRequestsVM>> GetPersonelExpenseRequests(string name);
+
         Task<PersonelVM> GetPersonel(string userName);
         Task<Guid> GetPersonelId(string name);
 

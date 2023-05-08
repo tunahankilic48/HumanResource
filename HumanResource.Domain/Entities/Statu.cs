@@ -14,6 +14,8 @@
 		public List<Department> Departments { get; set; }
 		public List<Title> Titles { get; set; }
 
+		public List<Expense> Expenses { get; set; }
+
 
 	}
 }

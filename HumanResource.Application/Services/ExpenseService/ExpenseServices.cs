@@ -32,6 +32,8 @@ namespace HumanResource.Application.Services.ExpenseService
 
         public async Task<bool> Create(CreateExpenseDTO model, string UserName)
         {
+            model.Statu.Name = Status.AwatingApproval.ToString();
+            model.Statu.StatuEnumId = Status.AwatingApproval.GetHashCode();
             Expense expense = _mapper.Map<Expense>(model);
             expense.UserId = await _personelService.GetPersonelId(UserName);
             return await _expenseRepository.Add(expense);
@@ -40,12 +42,13 @@ namespace HumanResource.Application.Services.ExpenseService
         public async Task Delete(int id)
         {
             Expense expense = await _expenseRepository.GetDefault(x => x.Id == id);
-            if(expense == null)
+            if (expense == null)
             {
                 throw new Exception("No expenditure has been entered!");
             }
             else
             {
+                expense.StatuId = Status.Deleted.GetHashCode();
                 expense.DeletedDate = DateTime.Now;
                 await _expenseRepository.Delete(expense);
             }
@@ -59,25 +62,26 @@ namespace HumanResource.Application.Services.ExpenseService
 
         public async Task<List<ExpenseVM>> GetExpenseForPersonel(Guid id)
         {
-            var masraflar = await _expenseRepository.GetFilteredList(
-                select: x=> new ExpenseVM()
+            var expenses = await _expenseRepository.GetFilteredList(
+                select: x => new ExpenseVM()
                 {
                     Id = x.Id,
-                    ExpenseDate = x.ExpenseDate,
+                    ExpenseDate = x.ExpenseDate.ToShortDateString(),
                     UserId = x.UserId,
                     Amount = x.Amount,
                     CurrencyTypeId = x.CurrencyTypeId,
+                    CurrencyType = x.CurrencyType.Name,
                     ShortDescription = x.ShortDescription,
+                    LongDescription = x.LongDescription,
                     ExpenseTypeId = x.ExpenseTypeId,
                     ExpenseType = x.ExpenseType.Name
                 },
-
                 where: x => x.User.Id == id && x.StatuId != Status.Deleted.GetHashCode(),
                 orderby: x => x.OrderByDescending(x => x.CreatedDate),
-                include: x => x.Include(x => x.User).Include(x => x.ExpenseType)
+                include: x => x.Include(x => x.User).Include(x => x.ExpenseType).Include(x => x.CurrencyType)
                 );
 
-            return masraflar;
+            return expenses;
         }
 
         public async Task<bool> Update(UpdateExpenseDTO model)

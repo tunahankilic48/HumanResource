@@ -58,6 +58,10 @@ namespace HumanResource.Infrastructure.EntitiesConfig
                 .HasForeignKey(x => x.CurrencyTypeId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            builder.HasOne(x => x.ExpenseType)
+                .WithMany(x => x.Expenses)
+                .HasForeignKey(x => x.ExpenseTypeId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             base.Configure(builder);
             

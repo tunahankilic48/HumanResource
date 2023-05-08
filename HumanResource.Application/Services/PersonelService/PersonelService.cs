@@ -1,6 +1,7 @@
 ﻿using HumanResource.Application.Models.VMs.PersonelVM;
 using HumanResource.Domain.Entities;
 using HumanResource.Domain.Enums;
+using HumanResource.Domain.Repositories;
 using HumanResource.Domain.Repositries;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -13,14 +14,15 @@ namespace HumanResource.Application.Services.PersonelService
         private readonly ILeaveRepository _leaveRepository;
         private readonly IAdvanceRepository _advanceRepository;
         private readonly UserManager<AppUser> _userManager;
+        private readonly IExpenseRepository _expenseRepository;
 
-
-        public PersonelService(IAppUserRepository userRepository, ILeaveRepository leaveRepository, IAdvanceRepository advanceRepository, UserManager<AppUser> userManager)
+        public PersonelService(IAppUserRepository userRepository, ILeaveRepository leaveRepository, IAdvanceRepository advanceRepository, UserManager<AppUser> userManager, IExpenseRepository expenseRepository)
         {
             _userRepository = userRepository;
             _leaveRepository = leaveRepository;
             _advanceRepository = advanceRepository;
             _userManager = userManager;
+            _expenseRepository = expenseRepository;
         }
 
         public async Task<PersonelVM> GetPersonel(string userName)
@@ -43,7 +45,7 @@ namespace HumanResource.Application.Services.PersonelService
 
         public async Task<List<PersonelAdvanceRequestsVM>> GetPersonelAdvanceRequests(string name)
         {
-            var personelLeaveRequests = await _advanceRepository.GetFilteredList(
+            var personelAdvanceRequests = await _advanceRepository.GetFilteredList(
                select: x => new PersonelAdvanceRequestsVM()
                {
                    Id = x.Id,
@@ -53,12 +55,33 @@ namespace HumanResource.Application.Services.PersonelService
 
                },
                where: x => x.User.UserName == name && x.Statu.Name == Status.AwatingApproval.ToString(),
-               orderby: x=>x.OrderByDescending(x=>x.CreatedDate),
+               orderby: x => x.OrderByDescending(x => x.CreatedDate),
                include: x => x.Include(x => x.User)
                );
 
-            return personelLeaveRequests;
+            return personelAdvanceRequests;
 
+        }
+
+        public async Task<List<PersonelExpenseRequestsVM>> GetPersonelExpenseRequests(string name)
+        {
+            var personelExpenseRequests = await _expenseRepository.GetFilteredList(
+             select: x => new PersonelExpenseRequestsVM()
+             {
+                 Id = x.Id,
+                 ExpenseDate = x.ExpenseDate,
+                 Amount = x.Amount,
+                 CurrencyType = x.CurrencyType.Name,
+                 LongDescription = x.LongDescription,
+                 ShortDescription = x.ShortDescription,
+                 ExpenseType = x.ExpenseType.Name
+             },
+             where: x => x.User.UserName == name && x.Statu.Name == Status.AwatingApproval.ToString(),
+             orderby: x => x.OrderByDescending(x => x.CreatedDate),
+             include: x => x.Include(x => x.ExpenseType).Include(x => x.User).Include(x=>x.CurrencyType)
+             );
+
+            return personelExpenseRequests;
         }
 
         public async Task<Guid> GetPersonelId(string name)
@@ -82,7 +105,7 @@ namespace HumanResource.Application.Services.PersonelService
               },
               where: x => x.User.UserName == name && x.Statu.Name == Status.AwatingApproval.ToString(),
               orderby: x => x.OrderByDescending(x => x.CreatedDate),
-              include: x => x.Include(x => x.LeaveType).Include(x=>x.User)
+              include: x => x.Include(x => x.LeaveType).Include(x => x.User)
               );
 
             return personelLeaveRequests;
