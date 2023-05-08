@@ -5,6 +5,7 @@ using HumanResource.Application.Services.AddressService;
 using HumanResource.Application.Services.AdvanceService;
 using HumanResource.Application.Services.CompanyManagerService;
 using HumanResource.Application.Services.DepartmentService;
+using HumanResource.Application.Services.ExpenseService;
 using HumanResource.Application.Services.LeaveServices;
 using HumanResource.Application.Services.PersonelService;
 using HumanResource.Application.Services.TitleService;
@@ -29,6 +30,7 @@ namespace HumanResource.Application.IoC
             builder.RegisterType<LeaveRepository>().As<ILeaveRepository>().InstancePerLifetimeScope();
             builder.RegisterType<LeaveTypeRepository>().As<ILeaveTypeRepository>().InstancePerLifetimeScope();
             builder.RegisterType<TitleRepository>().As<ITitleRepository>().InstancePerLifetimeScope();
+            builder.RegisterType<ExpenseRepository>().As<IExpenseRepository>().InstancePerLifetimeScope();
 
             builder.RegisterType<AccountServices>().As<IAccountServices>().InstancePerLifetimeScope();
             builder.RegisterType<PersonelService>().As<IPersonelService>().InstancePerLifetimeScope();
@@ -38,6 +40,9 @@ namespace HumanResource.Application.IoC
             builder.RegisterType<DepartmentService>().As<IDepartmentService>().InstancePerLifetimeScope();
             builder.RegisterType<CompanyManagerService>().As<ICompanyManagerService>().InstancePerLifetimeScope();
             builder.RegisterType<TitleService>().As<ITitleService>().InstancePerLifetimeScope();
+            builder.RegisterType<ExpenseServices>().As<IExpenseServices>().InstancePerLifetimeScope();
+
+
 
             #region AutoMapper
             builder.Register(context => new MapperConfiguration(cfg =>

@@ -1,13 +1,19 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Bogus.DataSets;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace HumanResource.Application.Models.VMs.ExpenseVM
+namespace HumanResource.Application.Models.VMs.PersonelVM
 {
-    public class ExpenseVM
+    public class PersonelExpenseRequestsVM
     {
         public int Id { get; set; }
 
         [Display(Name = "Expense Created Date")]
-        public string ExpenseDate { get; set; }
+        public DateTime ExpenseDate { get; set; }
 
         [Display(Name = "owner of the expense")]
         public Guid UserId { get; set; }
@@ -19,6 +25,7 @@ namespace HumanResource.Application.Models.VMs.ExpenseVM
         public int CurrencyTypeId { get; set; }
         [Display(Name = "Currency Type")]
         public string CurrencyType { get; set; }
+
         [Display(Name = "Expense Long Description")]
         public string LongDescription { get; set; }
         [Display(Name = "Expense Short Description")]
@@ -27,5 +34,6 @@ namespace HumanResource.Application.Models.VMs.ExpenseVM
         public int ExpenseTypeId { get; set; }
         [Display(Name = "Expense Type")]
         public string ExpenseType { get; set; }
+        public DateTime CreatedDate { get; set; }
     }
 }

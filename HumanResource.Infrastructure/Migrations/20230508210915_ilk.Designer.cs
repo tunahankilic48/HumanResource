@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HumanResource.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230508165108_first")]
-    partial class first
+    [Migration("20230508210915_ilk")]
+    partial class ilk
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -806,7 +806,7 @@ namespace HumanResource.Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("HumanResource.Domain.Entities.Statu", "Statu")
-                        .WithMany()
+                        .WithMany("Expenses")
                         .HasForeignKey("StatuId")
                         .OnDelete(DeleteBehavior.Restrict);
 
@@ -968,6 +968,8 @@ namespace HumanResource.Infrastructure.Migrations
                     b.Navigation("AppUsers");
 
                     b.Navigation("Departments");
+
+                    b.Navigation("Expenses");
 
                     b.Navigation("Leaves");
 

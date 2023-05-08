@@ -804,7 +804,7 @@ namespace HumanResource.Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("HumanResource.Domain.Entities.Statu", "Statu")
-                        .WithMany()
+                        .WithMany("Expenses")
                         .HasForeignKey("StatuId")
                         .OnDelete(DeleteBehavior.Restrict);
 
@@ -966,6 +966,8 @@ namespace HumanResource.Infrastructure.Migrations
                     b.Navigation("AppUsers");
 
                     b.Navigation("Departments");
+
+                    b.Navigation("Expenses");
 
                     b.Navigation("Leaves");
 

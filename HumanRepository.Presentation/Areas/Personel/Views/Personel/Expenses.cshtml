@@ -38,9 +38,9 @@
 <div class="container-fluid">
 
     <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800 ms-1">Advances</h1>
+    <h1 class="h3 mb-2 text-gray-800 ms-1">Expenses</h1>
 
-    <a class="btn btn-primary m-2 col-lg-2 ms-1" data-bs-toggle="modal" data-bs-target="#createAdvanceModal">Create Advance</a>
+    <a class="btn btn-primary m-2 col-lg-2 ms-1" data-bs-toggle="modal" data-bs-target="#createExpenseModal">Create Expense</a>
 
     <!-- DataTales Example -->
     <div class="ms-1 card shadow mb-1">
@@ -50,6 +50,7 @@
                     <thead>
                         <tr>
                             <th class="text-center">@Html.DisplayNameFor(x=>x.Amount)</th>
+                            <th class="text-center">@Html.DisplayNameFor(x=>x.CurrencyType)</th>
                             <th class="text-center">@Html.DisplayNameFor(x=>x.ExpenseDate)</th>
                             <th class="text-center">@Html.DisplayNameFor(x=>x.ExpenseType)</th>
                             <th class="text-center">@Html.DisplayNameFor(x=>x.ShortDescription)</th>
@@ -60,6 +61,7 @@
                     <tfoot>
                         <tr>
                             <th class="text-center">@Html.DisplayNameFor(x=>x.Amount)</th>
+                            <th class="text-center">@Html.DisplayNameFor(x=>x.CurrencyType)</th>
                             <th class="text-center">@Html.DisplayNameFor(x=>x.ExpenseDate)</th>
                             <th class="text-center">@Html.DisplayNameFor(x=>x.ExpenseType)</th>
                             <th class="text-center">@Html.DisplayNameFor(x=>x.ShortDescription)</th>
@@ -73,6 +75,7 @@
 
                             <tr>
                                 <td class="text-center">@item.Amount</td>
+                                <td class="text-center">@item.CurrencyType</td>
                                 <td class="text-center">@item.ExpenseDate</td>
                                 <td class="text-center">@item.ExpenseType</td>
                                 <td class="text-center">@item.ShortDescription</td>
@@ -100,7 +103,7 @@
 </a>
 
 
-<partial name="~/Areas/Personel/Views/PartialViews/_partialCreateExpenses.cshtml" model="new CreateExpenseDTO()"></partial>
+<partial name="~/Areas/Personel/Views/PartialViews/_partialCreateExpense.cshtml" model="new CreateExpenseDTO()"></partial>
 
 @*<partial name="~/Areas/Personel/Views/PartialViews/_partialUpdateExpenses.cshtml" model="new UpdateAdvanceDTO()">*@
 
@@ -118,7 +121,7 @@
                 <form asp-action="delete" asp-controller="expense">
                     <input id="deleteExpenseInput" class="deleteExpense" type="hidden" name="id" />
                     <button id="delete" class="btn btn-danger m-2" type="submit">Delete</button>
-                    <a class="btn btn-primary m-2" asp-action="expenses" asp-controller="personel">Back to the List</a>
+                    <a class="btn btn-primary m-2" asp-action="expense" asp-controller="personel">Back to the List</a>
                 </form>
             </div>
         </div>

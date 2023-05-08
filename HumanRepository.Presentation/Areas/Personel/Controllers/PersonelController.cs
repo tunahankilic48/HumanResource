@@ -27,6 +27,7 @@ namespace HumanResource.Presentation.Areas.Personel.Controllers
         {
             ViewBag.AdvanceRequests = await _personelService.GetPersonelAdvanceRequests(User.Identity.Name);
             ViewBag.LeaveRequests = await _personelService.GetPersonelLeaveRequests(User.Identity.Name);
+            ViewBag.ExpenseRequests = await _personelService.GetPersonelExpenseRequests(User.Identity.Name);
             ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
             return View();
         }

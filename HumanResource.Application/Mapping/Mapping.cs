@@ -2,6 +2,7 @@
 using HumanResource.Application.Models.DTOs.AccountDTO;
 using HumanResource.Application.Models.DTOs.AdvanceDTOs;
 using HumanResource.Application.Models.DTOs.DepartmentDTOs;
+using HumanResource.Application.Models.DTOs.ExpenseDTO;
 using HumanResource.Application.Models.DTOs.LeaveDTO;
 using HumanResource.Application.Models.DTOs.TitleDTOs;
 using HumanResource.Domain.Entities;
@@ -26,6 +27,9 @@ namespace HumanResource.Application.Mapping
 
             CreateMap<Title, CreateTitleDTO>().ReverseMap();
             CreateMap<Title, UpdateTitleDTO>().ReverseMap();
+
+            CreateMap<Expense, CreateExpenseDTO>().ReverseMap();
+            CreateMap<Expense, UpdateExpenseDTO>().ReverseMap();
 
         }
     }
