@@ -1,15 +1,13 @@
-using Autofac.Extensions.DependencyInjection;
 using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using HumanResource.Application.IoC;
+using HumanResource.Application.Models.VMs.EmailVM;
+using HumanResource.Application.Services.EmailSenderService;
 using HumanResource.Domain.Entities;
 using HumanResource.Infrastructure.DbContext;
+using HumanResource.Infrastructure.SeedData;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using HumanResource.Infrastructure.SeedData;
-using Microsoft.AspNetCore.Identity.UI.Services;
-using HumanResource.Application.Services.EmailSenderService;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using HumanResource.Application.Models.VMs.EmailVM;
 
 var builder = WebApplication.CreateBuilder(args);
 

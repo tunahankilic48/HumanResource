@@ -1,5 +1,4 @@
 ﻿using HumanResource.Application.Models.DTOs.DepartmentDTOs;
-using HumanResource.Application.Models.DTOs.LeaveDTO;
 
 namespace HumanResource.Application.Services.DepartmentService
 {

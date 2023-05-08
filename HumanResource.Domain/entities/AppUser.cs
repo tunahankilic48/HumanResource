@@ -12,6 +12,7 @@ namespace HumanResource.Domain.Entities
         public DateTime? RecruitmentDate { get; set; }
         public DateTime? BirthDate { get; set; }
         public int? BloodTypeId { get; set; }
+        public int? TitleId { get; set; }
         public Guid? ManagerId { get; set; }
         public string? ImagePath { get; set; }
 
@@ -30,6 +31,7 @@ namespace HumanResource.Domain.Entities
         public Address? Address { get; set; }
         public List<Advance>? Advances { get; set; }
         public List<Expense>? Expenses { get; set; }
+        public Title? Title { get; set; }
 
 
 

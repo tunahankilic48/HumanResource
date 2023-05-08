@@ -7,6 +7,8 @@ using HumanResource.Application.Services.CompanyManagerService;
 using HumanResource.Application.Services.DepartmentService;
 using HumanResource.Application.Services.LeaveServices;
 using HumanResource.Application.Services.PersonelService;
+using HumanResource.Application.Services.TitleService;
+using HumanResource.Domain.Repositories;
 using HumanResource.Domain.Repositries;
 using HumanResource.Infrastructure.Repositories;
 
@@ -26,6 +28,7 @@ namespace HumanResource.Application.IoC
             builder.RegisterType<DistrictRepository>().As<IDistrictRepository>().InstancePerLifetimeScope();
             builder.RegisterType<LeaveRepository>().As<ILeaveRepository>().InstancePerLifetimeScope();
             builder.RegisterType<LeaveTypeRepository>().As<ILeaveTypeRepository>().InstancePerLifetimeScope();
+            builder.RegisterType<TitleRepository>().As<ITitleRepository>().InstancePerLifetimeScope();
 
             builder.RegisterType<AccountServices>().As<IAccountServices>().InstancePerLifetimeScope();
             builder.RegisterType<PersonelService>().As<IPersonelService>().InstancePerLifetimeScope();
@@ -34,6 +37,7 @@ namespace HumanResource.Application.IoC
             builder.RegisterType<AddressService>().As<IAddressService>().InstancePerLifetimeScope();
             builder.RegisterType<DepartmentService>().As<IDepartmentService>().InstancePerLifetimeScope();
             builder.RegisterType<CompanyManagerService>().As<ICompanyManagerService>().InstancePerLifetimeScope();
+            builder.RegisterType<TitleService>().As<ITitleService>().InstancePerLifetimeScope();
 
             #region AutoMapper
             builder.Register(context => new MapperConfiguration(cfg =>

@@ -23,6 +23,7 @@ namespace HumanResource.Infrastructure.DbContext
         public DbSet<BloodType> BloodTypes { get; set; }
         public DbSet<ExpenseType> ExpenseTypes { get; set; }
         public DbSet<CurrencyType> CurrencyTypes { get; set; }
+        public DbSet<Title> Titles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -38,7 +39,8 @@ namespace HumanResource.Infrastructure.DbContext
                         .ApplyConfiguration(new StatuConfig())
                         .ApplyConfiguration(new ExpenseConfig())
                         .ApplyConfiguration(new ExpenseTypeConfig())
-						.ApplyConfiguration(new CurrencyTypeConfig());
+                        .ApplyConfiguration(new CurrencyTypeConfig())
+                        .ApplyConfiguration(new TitleConfig());
 
 			foreach (var foreignKey in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
             {
