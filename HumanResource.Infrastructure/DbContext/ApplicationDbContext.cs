@@ -24,6 +24,7 @@ namespace HumanResource.Infrastructure.DbContext
         public DbSet<ExpenseType> ExpenseTypes { get; set; }
         public DbSet<CurrencyType> CurrencyTypes { get; set; }
         public DbSet<Title> Titles { get; set; }
+        public DbSet<Expense> Expenses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
