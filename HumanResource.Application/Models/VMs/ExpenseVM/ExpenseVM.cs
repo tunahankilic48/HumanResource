@@ -1,0 +1,35 @@
+﻿using Bogus.DataSets;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace HumanResource.Application.Models.VMs.ExpenseVM
+{
+    public class ExpenseVM
+    {
+        public int id { get; set; }
+
+        [Display(Name = "Expense Created Date")]
+        public DateTime ExpenseDate { get; set; }
+
+        [Display(Name = "owner of the expense")]
+        public Guid UserId { get; set; }
+
+        [Display(Name = "amount of expenditure")]
+        public decimal Amount { get; set; }
+
+        [Display(Name = "Expense Currency Type")]
+        public int CurrencyTypeId { get; set; }
+        [Display(Name = "Expense Long Description")]
+        public string LongDescription { get; set; }
+        [Display(Name = "Expense Short Description")]
+        public string ShortDescription { get; set; }
+        [Display(Name = "Expense Type ID")]
+        public int ExpenseTypeId { get; set; }
+        [Display(Name = "Expense Type")]
+        public string ExpenseType { get; set; }
+    }
+}
