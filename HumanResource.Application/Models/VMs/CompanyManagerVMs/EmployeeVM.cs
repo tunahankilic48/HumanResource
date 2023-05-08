@@ -4,6 +4,7 @@ namespace HumanResource.Application.Models.VMs.CompanyManagerVMs
 {
     public class EmployeeVM
     {
+        public Guid Id { get; set; }
         [Display(Name = "Full Name")]
         public string FullName { get; set; }
 

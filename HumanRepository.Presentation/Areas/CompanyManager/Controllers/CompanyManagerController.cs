@@ -1,4 +1,5 @@
-﻿using HumanResource.Application.Services.CompanyManagerService;
+﻿using HumanResource.Application.Models.DTOs.CompanyManagerDTO;
+using HumanResource.Application.Services.CompanyManagerService;
 using HumanResource.Application.Services.PersonelService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -18,26 +19,37 @@ namespace HumanResource.Presentation.Areas.CompanyManager.Controllers
             _personelService = personelService;
         }
 
-        public async Task<IActionResult> ListEmployee()
+        public async Task<IActionResult> Employees()
         {
+            ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
+            return View(await _companyManagerService.GetEmployees());
+        }
 
+
+        public async Task<IActionResult> Create()
+        {
+            ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
+            return View();
+        }
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(CreateEmployeeDTO model)
+        {
             return View();
         }
 
 
-        public async Task<IActionResult> AddEmployee()
+        public async Task<IActionResult> Update(Guid id)
+        {
+            return View();
+        }
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> Update()
         {
             return View();
         }
 
-
-        public async Task<IActionResult> UpdateEmployee()
-        {
-            return View();
-        }
-
-
-        public async Task<IActionResult> DeleteEmployee()
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(Guid id)
         {
             return View();
         }
