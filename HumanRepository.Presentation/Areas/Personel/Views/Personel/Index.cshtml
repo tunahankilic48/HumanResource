@@ -1,10 +1,11 @@
 ﻿<div class="row d-flex justify-content-start">
+    <h3 class="card-header bg-dark text-white border-3">Personel Leave</h3>
     @foreach (var item in ViewBag.LeaveRequests)
     {
         <div class="card m-3 col-lg-3 p-0">
             <a class="nav-link" asp-area="personel" asp-controller="leave" asp-action="update" asp-route-id="@(item.Id)">
 
-                <h3 class="card-header bg-info text-white">Personel Leaves</h3>
+                <h3 class="card-header bg-info text-white">Personel Leave</h3>
 
                 <ul class="list-group list-group-flush ">
                     <li class="list-group-item   border-bottom border-warning"><strong>Start Date:</strong> @(item.StartDate)</li>
@@ -29,12 +30,13 @@
 
 
 <div class="row d-flex justify-content-start">
+    <h3 class="card-header bg-dark text-white border-3">Personel Advance</h3>
     @foreach (var item in ViewBag.AdvanceRequests)
     {
         <div class="card m-3 col-lg-3 p-0">
             <a class="nav-link" asp-area="personel" asp-controller="advance" asp-action="update" asp-route-id="@(item.Id)">
 
-                <h3 class="card-header bg-info text-white">Personel Advances</h3>
+                <h3 class="card-header bg-info text-white">Personel Advance</h3>
 
                 <ul class="list-group list-group-flush ">
                     <li class="list-group-item  border-bottom border-warning">

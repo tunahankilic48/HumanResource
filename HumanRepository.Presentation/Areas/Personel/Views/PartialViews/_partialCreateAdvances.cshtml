@@ -14,19 +14,13 @@
                         <div class="col-lg-10">
                             <div class="form-group">
                                 <label asp-for="Amount" class="form-label">Amount</label>
-                                <input asp-for="Amount" id="ondalik" class="form-control" type="text" placeholder="Amount">
+                                <input asp-for="Amount" id="id" class="form-control" pattern="\d*" type="text" placeholder="Amount">
                                 <span asp-validation-for="Amount"></span>
                             </div>
 
                             <div class="form-group">
                                 <label asp-for="NumberOfInstallments" class="form-label">Number Of Installments</label>
-                                <select asp-for="NumberOfInstallments" class="form-control">
-                                    <option>Please Choose Number of Installments</option>
-                                    @for (int i = 1; i <= 20; i++)
-                                    {
-                                        <option value="@i">@i</option>
-                                    }
-                                </select>
+                                <input asp-for="NumberOfInstallments" class="form-control" type="number">
                                 <span asp-validation-for="NumberOfInstallments"></span>
                             </div>
 
@@ -45,61 +39,17 @@
 
 @section Scripts{
     <script>
-        (function ($, undefined)
-
-                                    "use strict";
-
-        // When ready.
-        $(function () {
-
-            var $ondalik = $("#ondalik");
-            var $input = $form.find("input");
-
-            $input.on("keyup", function (event) {
-
-
-                // When user select text in the document, also abort.
-                var selection = window.getSelection().toString();
-                if (selection !== '') {
-                    return;
-                }
-
-                // When the arrow keys are pressed, abort.
-                if ($.inArray(event.keyCode, [38, 40, 37, 39]) !== -1) {
-                    return;
-                }
-
-
-                var $this = $(this);
-
-                // Get the value.
-                var input = $this.val();
-
-                var input = input.replace(/[\D\s\._\-]+/g, "");
-                input = input ? parseInt(input, 10) : 0;
-
-                $this.val(function () {
-                    return (input === 0) ? "" : input.toLocaleString("en-US");
-                });
-            });
-
-            /**
-             * ==================================
-             * When Form Submitted
-             * ==================================
-             */
-            $ondalik.on("submit", function (event) {
-
-                var $this = $(this);
-                var arr = $this.serializeArray();
-
-                for (var i = 0; i < arr.length; i++) {
-                    arr[i].value = arr[i].value.replace(/[($)\s\._\-]+/g, ''); // Sanitize the values.
-                };
-
-                console.log(arr);
-
-                event.preventDefault();
-            })(jQuery);
+        function myFunction(id) {
+            Number.prototype.formatMoney = function (c, d, t) {
+                var n = this,
+                    c = isNaN(c = Math.abs(c)) ? 2 : c,
+                    d = d == undefined ? "." : d,
+                    t = t == undefined ? "," : t,
+                    s = n < 0 ? "-" : "",
+                    i = parseInt(n = Math.abs(+n || 0).toFixed(c)) + "",
+                    j = (j = i.length) > 3 ? j % 3 : 0;
+                return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(d{3})(?=d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+            };
+        }
     </script>
-    }
+}

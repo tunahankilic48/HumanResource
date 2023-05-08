@@ -18,7 +18,7 @@ namespace HumanResource.Application.Models.DTOs.AdvanceDTOs
         public decimal Amount { get; set; }
 
         [Required(ErrorMessage = "Installment field cannot be empty!")]
-        [Range(0, 20, ErrorMessage = "Please enter between 0-20.")]
+        [Range(0, 10, ErrorMessage = "Please enter between 0-10.")]
         public int NumberOfInstallments { get; set; }
 
         public DateTime ModifiedDate => DateTime.Now;
