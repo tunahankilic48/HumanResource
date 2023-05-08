@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using HumanResource.Application.Models.DTOs.AdvanceDTOs;
 using HumanResource.Application.Models.VMs.AdvanceVMs;
-using HumanResource.Application.Models.VMs.LeaveVM;
 using HumanResource.Application.Services.PersonelService;
 using HumanResource.Domain.Entities;
 using HumanResource.Domain.Enums;
