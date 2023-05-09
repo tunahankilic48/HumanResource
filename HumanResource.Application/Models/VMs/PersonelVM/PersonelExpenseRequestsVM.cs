@@ -13,7 +13,7 @@ namespace HumanResource.Application.Models.VMs.PersonelVM
         public int Id { get; set; }
 
         [Display(Name = "Expense Created Date")]
-        public DateTime ExpenseDate { get; set; }
+        public string ExpenseDate { get; set; }
 
         [Display(Name = "owner of the expense")]
         public Guid UserId { get; set; }

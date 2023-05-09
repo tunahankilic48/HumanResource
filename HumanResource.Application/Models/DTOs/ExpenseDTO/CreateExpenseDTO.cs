@@ -1,5 +1,7 @@
 ﻿using Bogus.DataSets;
+using HumanResource.Application.Extensions;
 using HumanResource.Domain.Entities;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System;
 using System.Collections.Generic;
@@ -17,14 +19,14 @@ namespace HumanResource.Application.Models.DTOs.ExpenseDTO
             Statu = new Statu();
         }
         public Guid UserId { get; set; }
-		public DateTime CreatedDate => DateTime.Now;
+        public DateTime CreatedDate => DateTime.Now;
 
-		[Required(ErrorMessage = "Expense date cannot be null.")]
-		[Display(Name = "Expense Date")]
-		[DataType(DataType.Date)]
-		public DateTime ExpenseDate { get; set; }
+        [Required(ErrorMessage = "Expense date cannot be null.")]
+        [Display(Name = "Expense Date")]
+        [DataType(DataType.Date), EndDate]
+        public DateTime ExpenseDate { get; set; }
 
-		[Required(ErrorMessage = "Spend amount cannot be empty")]
+        [Required(ErrorMessage = "Spend amount cannot be empty")]
         [Display(Name = "Spending amount")]
         public Decimal Amount { get; set; }
 
@@ -39,9 +41,9 @@ namespace HumanResource.Application.Models.DTOs.ExpenseDTO
         [Display(Name = "Expense Type")]
         public int ExpenseTypeId { get; set; }
 
-		[Required(ErrorMessage = "Currency Type cannot be null.")]
-		[Display(Name = "Currency Type")]
-		public int CurrencyTypeId { get; set; }
+        [Required(ErrorMessage = "Currency Type cannot be null.")]
+        [Display(Name = "Currency Type")]
+        public int CurrencyTypeId { get; set; }
 
 
         [ValidateNever]
