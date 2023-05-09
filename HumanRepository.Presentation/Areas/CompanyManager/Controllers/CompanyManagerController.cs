@@ -1,5 +1,6 @@
 ﻿using HumanResource.Application.Models.DTOs.CompanyManagerDTO;
 using HumanResource.Application.Models.VMs.EmailVM;
+using HumanResource.Application.Services.AccountServices;
 using HumanResource.Application.Services.AddressService;
 using HumanResource.Application.Services.CompanyManagerService;
 using HumanResource.Application.Services.EmailSenderService;
@@ -18,13 +19,15 @@ namespace HumanResource.Presentation.Areas.CompanyManager.Controllers
         private readonly IPersonelService _personelService;
         private readonly IAddressService _addressService;
         private readonly IEmailService _emailService;
+        private readonly IAccountServices _accountService;
 
-        public CompanyManagerController(ICompanyManagerService companyManagerService, IPersonelService personelService, IAddressService addressService, IEmailService emailService)
+        public CompanyManagerController(ICompanyManagerService companyManagerService, IPersonelService personelService, IAddressService addressService, IEmailService emailService, IAccountServices accountService)
         {
             _companyManagerService = companyManagerService;
             _personelService = personelService;
             _addressService = addressService;
             _emailService = emailService;
+            _accountService = accountService;
         }
 
         public async Task<IActionResult> Employees()
@@ -82,12 +85,30 @@ namespace HumanResource.Presentation.Areas.CompanyManager.Controllers
 
         public async Task<IActionResult> Update(Guid id)
         {
-            return View();
+            ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
+            ViewBag.Departments = new SelectList(await _companyManagerService.GetDepartments(), "Id", "Name");
+            ViewBag.Titles = new SelectList(await _companyManagerService.GetTitles(), "Id", "Name");
+            ViewBag.CompanyManagers = new SelectList(await _companyManagerService.GetCompanyManagers(), "Id", "FullName");
+            ViewBag.Cities = new SelectList(await _addressService.GetCities(), "Id", "Name");
+            ViewBag.Districts = new SelectList(await _addressService.GetDistricts(), "Id", "Name");
+            return View(await _companyManagerService.GetByUserName(id));
         }
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<IActionResult> Update()
+        public async Task<IActionResult> Update(UpdateEmployeeDTO model)
         {
-            return View();
+            if (ModelState.IsValid)
+            {
+                await _companyManagerService.UpdateEmployee(model);
+                return RedirectToAction("employees");
+            }
+
+            ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
+            ViewBag.Departments = new SelectList(await _companyManagerService.GetDepartments(), "Id", "Name");
+            ViewBag.Titles = new SelectList(await _companyManagerService.GetTitles(), "Id", "Name");
+            ViewBag.CompanyManagers = new SelectList(await _companyManagerService.GetCompanyManagers(), "Id", "FullName");
+            ViewBag.Cities = new SelectList(await _addressService.GetCities(), "Id", "Name");
+            ViewBag.Districts = new SelectList(await _addressService.GetDistricts(), "Id", "Name");
+            return View(model);
         }
 
         [HttpPost, ValidateAntiForgeryToken]

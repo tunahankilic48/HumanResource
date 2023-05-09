@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using HumanResource.Application.Models.DTOs.AccountDTO;
 using HumanResource.Application.Models.DTOs.CompanyManagerDTO;
 using HumanResource.Application.Models.VMs.CompanyManagerVMs;
 using HumanResource.Application.Models.VMs.PersonelVM;
@@ -30,6 +31,36 @@ namespace HumanResource.Application.Services.CompanyManagerService
             _personelService = personelService;
         }
 
+        public async Task<UpdateEmployeeDTO> GetByUserName(Guid id)
+        {
+            UpdateEmployeeDTO result = await _appUserRepository.GetFilteredFirstOrDefault(
+            select: x => new UpdateEmployeeDTO
+            {
+                Id = x.Id,
+                FirstName = x.FirstName,
+                LastName = x.LastName,
+                UserName = x.UserName,
+                Email = x.Email,
+                PhoneNumber = x.PhoneNumber,
+                CityId = x.Address.District.CityId,
+                DistrictId = x.Address.DistrictId,
+                AddressDescription = x.Address.Description,
+                BloodTypeId = x.BloodTypeId,
+                DepartmentId = x.DepartmentId,
+                BirthDate = x.BirthDate,
+                RecruitmentDate = x.RecruitmentDate,
+                ManagerId = x.ManagerId,
+                ImagePath = x.ImagePath,
+                TitleId = x.TitleId
+            },
+            where: x => x.Id == id,
+            orderby: null,
+            include: x => x.Include(x => x.Address).Include(x => x.Address.District)
+            );
+
+
+            return result;
+        }
         public async Task<CreateEmployeeVM> CreateEmployee(CreateEmployeeDTO model)
         {
             AppUser newEmployee = _mapper.Map<AppUser>(model);
@@ -130,7 +161,8 @@ namespace HumanResource.Application.Services.CompanyManagerService
                   Id = x.Id,
                   FullName = x.FirstName + " " + x.LastName,
                   DepartmentName = x.Department.Name,
-                  Title = x.Title.Name
+                  Title = x.Title.Name,
+                  UserName = x.UserName
 
               },
               where: x => x.StatuId == Status.Active.GetHashCode(),
@@ -169,6 +201,72 @@ namespace HumanResource.Application.Services.CompanyManagerService
                 }
             }
             return false;
+        }
+
+        public async Task UpdateEmployee(UpdateEmployeeDTO model)
+        {
+            AppUser user = await _appUserRepository.GetDefault(x => x.Id == model.Id);
+
+            if (model.Password != null)
+            {
+                user.PasswordHash = _userManager.PasswordHasher.HashPassword(user, model.Password);
+            }
+
+            if (model.Email != null)
+            {
+                AppUser isUserMailExists = await _userManager.FindByEmailAsync(model.Email);
+                if (isUserMailExists == null)
+                    await _userManager.SetEmailAsync(user, model.Email);
+            }
+            if (model.UserName != null)
+            {
+                AppUser isUserNameExists = await _userManager.FindByNameAsync(model.UserName);
+                if (isUserNameExists == null)
+                    await _userManager.SetUserNameAsync(user, model.UserName);
+            }
+            if (model.Image != null)
+            {
+                using var image = Image.Load(model.Image.OpenReadStream());
+
+                Guid guid = Guid.NewGuid();
+                image.Save($"wwwroot/media/images/{guid}.jpg");
+
+                user.ImagePath = $"/media/images/{guid}.jpg";
+            }
+            else
+                user.ImagePath = model.ImagePath;
+            user.BirthDate = model.BirthDate;
+            user.BloodTypeId = model.BloodTypeId;
+            user.FirstName = model.FirstName;
+            user.LastName = model.LastName;
+            user.PhoneNumber = model.PhoneNumber;
+            user.DepartmentId = model.DepartmentId;
+            user.RecruitmentDate = model.RecruitmentDate;
+            user.ManagerId = model.ManagerId;
+            user.TitleId = model.TitleId;
+            
+
+            if (model.DistrictId != 0 && model.CityId != 0)
+            {
+                if (user.Address == null)
+                {
+                    user.Address = new Address()
+                    {
+                        CreatedDate = DateTime.Now,
+                        Description = model.AddressDescription,
+                        DistrictId = model.DistrictId,
+                    };
+
+                }
+                else
+                {
+                    user.Address.ModifiedDate = DateTime.Now;
+                    user.Address.DistrictId = model.DistrictId;
+                    user.Address.Description = model.AddressDescription;
+                }
+            }
+
+            await _userManager.UpdateAsync(user);
         }
     }
 }
