@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+﻿using HumanResource.Application.Extensions;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel.DataAnnotations;
 
 namespace HumanResource.Application.Models.DTOs.ExpenseDTO
@@ -7,6 +8,7 @@ namespace HumanResource.Application.Models.DTOs.ExpenseDTO
     {
         public int Id { get; set; }
         public Guid UserId { get; set; }
+        [EndDate]
         public DateTime ExpenseDate { get; set; }
         public DateTime CreatedDate => DateTime.Now;
 

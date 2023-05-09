@@ -8,18 +8,18 @@
                 <h3 class="card-header bg-info text-white">Personel Leave</h3>
 
                 <ul class="list-group list-group-flush ">
-                    <li class="list-group-item   border-bottom border-warning"><strong>Start Date:</strong> @(item.StartDate)</li>
+                    <li class="list-group-item   border-bottom border-warning"><strong>Start Date: </strong> @(item.StartDate)</li>
                     <li class="list-group-item  border-bottom border-warning">
-                        <strong>End Date:</strong>
+                        <strong>End Date: </strong>
                         @(item.EndDate)
 
                     </li>
                     <li class="list-group-item  border-bottom border-warning">
-                        <strong>Return Date:</strong> @(item.ReturnDate)
+                        <strong>Return Date: </strong> @(item.ReturnDate)
 
                     </li>
                     <li class="list-group-item  border-bottom border-warning">
-                        <strong>Leave Type:</strong> @(item.LeaveType)
+                        <strong>Leave Type: </strong> @(item.LeaveType)
 
                     </li>
                 </ul>
@@ -40,12 +40,12 @@
 
                 <ul class="list-group list-group-flush ">
                     <li class="list-group-item  border-bottom border-warning">
-                        <strong>Created Date:</strong> @(item.CreatedDate)
+                        <strong>Created Date:  </strong> @(item.CreatedDate)
 
                     </li>
-                    <li class="list-group-item   border-bottom border-warning"><strong>Amount:</strong> @(item.Amount)</li>
+                    <li class="list-group-item   border-bottom border-warning"><strong>Amount: </strong> @(item.Amount)</li>
                     <li class="list-group-item  border-bottom border-warning">
-                        <strong>Number Of Installments:</strong>
+                        <strong>Number Of Installments: </strong>
                         @(item.NumberOfInstallments)
 
                     </li>
@@ -65,10 +65,10 @@
                 <h3 class="card-header bg-info text-white">Personel Expense</h3>
 
                 <ul class="list-group list-group-flush ">
-                    <li class="list-group-item  border-bottom border-warning"><strong>Amount:</strong> @(item.Amount)</li>
-                    <li class="list-group-item  border-bottom border-warning"><strong>Currency Type:</strong> @(item.CurrencyType)</li>
-                    <li class="list-group-item  border-bottom border-warning"><strong>Expense Date:</strong>@(item.ExpenseDate)</li>
-                    <li class="list-group-item  border-bottom border-warning"><strong>Short Description:</strong>@(item.ShortDescription)</li>
+                    <li class="list-group-item  border-bottom border-warning"><strong>Expense Date:  </strong>@(item.ExpenseDate)</li>
+                    <li class="list-group-item  border-bottom border-warning"><strong>Amount: </strong> @(item.Amount) @(item.CurrencyType)</li>
+                    @*<li class="list-group-item  border-bottom border-warning"><strong>Currency Type:</strong> @(item.CurrencyType)</li>*@
+                    <li class="list-group-item  border-bottom border-warning"><strong>Short Description:  </strong>@(item.ShortDescription)</li>
                 </ul>
             </a>
         </div>

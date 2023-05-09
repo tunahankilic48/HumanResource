@@ -7,12 +7,6 @@ using HumanResource.Domain.Enums;
 using HumanResource.Domain.Repositories;
 using HumanResource.Domain.Repositries;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace HumanResource.Application.Services.ExpenseService
 {

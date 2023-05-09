@@ -69,7 +69,7 @@ namespace HumanResource.Application.Services.PersonelService
              select: x => new PersonelExpenseRequestsVM()
              {
                  Id = x.Id,
-                 ExpenseDate = x.ExpenseDate,
+                 ExpenseDate = x.ExpenseDate.ToShortDateString(),
                  Amount = x.Amount,
                  CurrencyType = x.CurrencyType.Name,
                  LongDescription = x.LongDescription,
