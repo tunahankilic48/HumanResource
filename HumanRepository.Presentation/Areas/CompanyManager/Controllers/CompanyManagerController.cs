@@ -112,9 +112,12 @@ namespace HumanResource.Presentation.Areas.CompanyManager.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(Guid id)
+        public async Task<IActionResult> Delete(IFormCollection collection)
         {
-            return View();
+            Guid id = Guid.Parse(collection["id"]);
+            await _companyManagerService.Delete(id);
+            TempData["success"] = "Employee was deleted succesfully.";
+            return RedirectToAction("employees", "companymanager", new { Area = "companymanager" });
         }
 
         public async Task<IActionResult> Departments()

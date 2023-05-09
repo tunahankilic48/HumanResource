@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using HumanResource.Application.Models.DTOs.AccountDTO;
 using HumanResource.Application.Models.DTOs.CompanyManagerDTO;
 using HumanResource.Application.Models.VMs.CompanyManagerVMs;
 using HumanResource.Application.Models.VMs.PersonelVM;
@@ -8,6 +7,7 @@ using HumanResource.Domain.Entities;
 using HumanResource.Domain.Enums;
 using HumanResource.Domain.Repositories;
 using HumanResource.Domain.Repositries;
+using HumanResource.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -267,6 +267,17 @@ namespace HumanResource.Application.Services.CompanyManagerService
             }
 
             await _userManager.UpdateAsync(user);
+        }
+
+        public async Task Delete(Guid id)
+        {
+            AppUser leave = await _appUserRepository.GetDefault(x => x.Id == id);
+            if (leave != null)
+            {
+                leave.StatuId = Status.Deleted.GetHashCode();
+                leave.DeletedDate = DateTime.Now;
+                await _appUserRepository.Delete(leave);
+            }
         }
     }
 }
