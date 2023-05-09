@@ -50,7 +50,7 @@ namespace HumanResource.Presentation.Controllers
 					
 					var conformationLink = Url.Action("ConfirmEmail", "Account", new { token = result.Token, email = result.Email }, Request.Scheme);
 
-					var message = new Message(new string[] { result.Email! }, "Conformation Email Link", conformationLink!);
+					var message = new Message(result.Email, "Conformation Email Link", $"Welcome to our human resources platform. Please click the link to activate your account. {conformationLink!}");
 					_emailService.SendEmail(message);
 
 					TempData["Conformation"] = "Please check your mailbox and verify your email!";
