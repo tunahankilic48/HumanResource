@@ -1,6 +1,7 @@
 ﻿using HumanResource.Application.Models.VMs.EmailVM;
-using MailKit.Net.Smtp;
-using MimeKit;
+
+using System.Net;
+using System.Net.Mail;
 
 namespace HumanResource.Application.Services.EmailSenderService
 {
@@ -19,15 +20,17 @@ namespace HumanResource.Application.Services.EmailSenderService
             Send(emailMessage);
         }
 
-        public void Send(MimeMessage mailMessage)
+        public void Send(MailMessage mailMessage)
         {
-            using (var client = new SmtpClient())
+            using (var client = new SmtpClient(_configuration.SmtpServer, _configuration.Port))
             {
                 try
                 {
-                    client.Connect(_configuration.SmtpServer, _configuration.Port, true);
-                    client.AuthenticationMechanisms.Remove("XOAUTH2");
-                    client.Authenticate(_configuration.Username, _configuration.Password);
+                    client.UseDefaultCredentials = false;
+                    client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                    client.Credentials = new NetworkCredential( _configuration.From, _configuration.Password);
+                    client.EnableSsl = true;
+
 
                     client.Send(mailMessage);
                 }
@@ -36,18 +39,18 @@ namespace HumanResource.Application.Services.EmailSenderService
 
                     throw;
                 }
-                client.Disconnect(true);
-                client.Dispose();
+
             }
         }
 
-        public MimeMessage CreateEmailMessage(Message message)
+        public MailMessage CreateEmailMessage(Message message)
         {
-            var emailMessage = new MimeMessage();
-            emailMessage.From.Add(new MailboxAddress("email", _configuration.From));
-            emailMessage.To.AddRange(message.To);
+            var emailMessage = new MailMessage();
+            emailMessage.From = new MailAddress(_configuration.From);
+            emailMessage.To.Add(message.To);
             emailMessage.Subject = message.Subject;
-            emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Text) { Text = message.Content };
+            emailMessage.Body = message.Content;
+
             return emailMessage;
         }
     }
