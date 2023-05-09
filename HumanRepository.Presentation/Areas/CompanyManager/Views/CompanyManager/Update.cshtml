@@ -1,0 +1,231 @@
+﻿@model UpdateEmployeeDTO
+
+@{
+    Layout = "~/Areas/Personel/Views/Shared/_LayoutPersonel.cshtml";
+}
+
+@if (TempData["error"] is not null)
+{
+    <div class="ms-4 me-4 alert alert-dismissible alert-danger ps-0">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <h4 class="alert-heading ms-4 ps-0">Something goes wrong!</h4>
+        <p class="mb-0">@TempData["error"]</p>
+    </div>
+}
+
+
+
+<h1 class="m-0 font-weight-bold text-primary mb-4">Create Employee</h1>
+<form asp-action="update" asp-controller="companymanager" asp-area="CompanyManager" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                </div>
+                <div class="card-body">
+                    <div class="row d-flex justify-content-center">
+
+                        <div class="col-lg-10">
+                            <input asp-for="Id" type="hidden" />
+                            <div class="form-group">
+                                <label asp-for="FirstName" class="form-label">@Html.DisplayNameFor(x=>x.FirstName)</label>
+                                <input asp-for="FirstName" class="form-control">
+                                <span class="text-danger" asp-validation-for="FirstName"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="LastName" class="form-label">@Html.DisplayNameFor(x=>x.LastName)</label>
+                                <input asp-for="LastName" class="form-control">
+                                <span class="text-danger" asp-validation-for="LastName"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="UserName" class="form-label">@Html.DisplayNameFor(x=>x.UserName)</label>
+                                <input asp-for="UserName" class="form-control">
+                                <span class="text-danger" asp-validation-for="UserName"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="Email" class="form-label">@Html.DisplayNameFor(x=>x.Email)</label>
+                                <input asp-for="Email" class="form-control">
+                                <span class="text-danger" asp-validation-for="Email"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="Password" class="form-label">@Html.DisplayNameFor(x=>x.Password)</label>
+                                <input asp-for="Password" class="form-control">
+                                <span class="text-danger" asp-validation-for="Password"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="ConfirmPassword" class="form-label">@Html.DisplayNameFor(x=>x.ConfirmPassword)</label>
+                                <input asp-for="ConfirmPassword" class="form-control">
+                                <span class="text-danger" asp-validation-for="ConfirmPassword"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="PhoneNumber" class="form-label">@Html.DisplayNameFor(x=>x.PhoneNumber)</label>
+                                <input asp-for="PhoneNumber" class="form-control" type="tel">
+                                <span class="text-danger" asp-validation-for="PhoneNumber"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="DepartmentId" class="form-label">@Html.DisplayNameFor(x=>x.DepartmentId)</label>
+                                <select asp-for="DepartmentId" class="custom-select" asp-items="@ViewBag.Departments">
+                                    <option value="0">Please select a Department</option>
+                                </select>
+                                <span class="text-danger" asp-validation-for="DepartmentId"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="Image" class="form-label">Select Image</label>
+                                <input asp-for="Image" type="file" class="form-control">
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-lg-6">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                </div>
+                <div class="card-body">
+
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-lg-10">
+
+                            <div class="form-group">
+                                <label asp-for="TitleId" class="form-label">@Html.DisplayNameFor(x=>x.TitleId)</label>
+                                <select asp-for="TitleId" class="custom-select" asp-items="@ViewBag.Titles">
+                                    <option value="0">Please select a Title</option>
+                                </select>
+                                <span class="text-danger" asp-validation-for="TitleId"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="BloodTypeId" class="form-label">@Html.DisplayNameFor(x=>x.BloodTypeId)</label>
+                                <select asp-for="BloodTypeId" class="custom-select" asp-items="@Html.GetEnumSelectList<BloodTypeEnumVM>()">
+                                    <option value="">Please select a Leave Type</option>
+                                </select>
+                                <span class="text-danger" asp-validation-for="BloodTypeId"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="BirthDate" class="form-label">@Html.DisplayNameFor(x=>x.BirthDate)</label>
+                                <input asp-for="BirthDate" class="form-control" type="date">
+                                <span class="text-danger" asp-validation-for="BirthDate"></span>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label asp-for="RecruitmentDate" class="form-label">@Html.DisplayNameFor(x=>x.RecruitmentDate)</label>
+                                <input asp-for="RecruitmentDate" class="form-control" type="date">
+                                <span class="text-danger" asp-validation-for="RecruitmentDate"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="ManagerId" class="form-label">@Html.DisplayNameFor(x=>x.ManagerId)</label>
+                                <select asp-for="ManagerId" class="custom-select" asp-items="@ViewBag.CompanyManagers">
+                                    <option value="0">Please select a Title</option>
+                                </select>
+                                <span class="text-danger" asp-validation-for="ManagerId"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="CityId" class="form-label">@Html.DisplayNameFor(x=>x.CityId)</label>
+                                <select asp-for="CityId" class="custom-select" id="cityList" asp-items="@ViewBag.Cities">
+                                    <option value="0">Please select a City</option>
+                                </select>
+                                <span class="text-danger" asp-validation-for="CityId"></span>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label asp-for="DistrictId" class="form-label">@Html.DisplayNameFor(x=>x.DistrictId)</label>
+                                <select asp-for="DistrictId" class="custom-select" id="districtList" asp-items="@ViewBag.Districts" disabled>
+                                    <option value="0">Please select a city firstly</option>
+                                </select>
+                                <span class="text-danger" asp-validation-for="DistrictId"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="AddressDescription" class="form-label">@Html.DisplayNameFor(x=>x.AddressDescription)</label>
+                                <textarea asp-for="AddressDescription" class="form-control" style="height:115px" rows="8"></textarea>
+                                <span class="text-danger" asp-validation-for="AddressDescription"></span>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="form-group d-flex justify-content-end mt-1 ">
+        <input type="submit" value="Create Employee" class="btn btn-primary" style="width:200px" />
+    </div>
+</form>
+
+
+
+@section Scripts{
+
+
+    <script type="text/javascript">
+        $(function () {
+
+            $('#cityList').change(function () {
+
+                var cityId = $(this).val();
+
+                if (cityId != null && cityId != '') {
+                    $.ajax({
+                        type: "GET",
+                        url: "https://localhost:7006/" + "Account/setDropDrownList" + "/" + cityId,
+                        datatype: "Json",
+                        success: function (districts) {
+
+                            $("#districtList").empty();
+                            //for (var i = 0; i <data.length; i++){
+                            //    $('#districtList2').append("<option value='" + data[i].Id + "'>" + data[i].Name + "</options>");
+                            //}
+                            $("#districtList").removeAttr("disabled");
+
+                            $.each(districts, function () {
+                                $('#districtList').append('<option value=' + this.id + '>' + this.name + '</option>');
+                            });
+                            //$.each(districts, function (index, district) {
+                            //        $('#districtList2').append($('<option/>', {
+                            //            value: district.Id,
+                            //            text: district.Name
+                            //        }));
+                            //    });
+                        },
+                        error: function () {
+                            /*Bu metod ile Ajax işlemi başarısız
+                            olursa eğer hata mesajı verebiliyoruz.*/
+                            alert("Hata");
+                        },
+                        beforeSend: function () {
+                            /*Burada ise Form Post edilmeden önce
+                            işlemler yapılabilir.Örnek olarak Loading, yükleniyor vs..*/
+                        },
+                        complete: function () {
+                            /*Burada ise Form Post edildikten sonra
+                            işlemler yapılabilir.Örnek olarak yükleme tamamlandı vs..*/
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+
+
+}

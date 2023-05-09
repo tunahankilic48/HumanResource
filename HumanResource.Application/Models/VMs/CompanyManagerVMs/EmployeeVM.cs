@@ -7,6 +7,8 @@ namespace HumanResource.Application.Models.VMs.CompanyManagerVMs
         public Guid Id { get; set; }
         [Display(Name = "Full Name")]
         public string FullName { get; set; }
+        [Display(Name = "User Name")]
+        public string UserName { get; set; }
 
         [Display(Name ="Department")]
         public string DepartmentName { get; set; }
