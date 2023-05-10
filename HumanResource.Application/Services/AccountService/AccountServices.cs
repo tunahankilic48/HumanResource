@@ -45,22 +45,26 @@ namespace HumanResource.Application.Services.AccountServices
             select: x => new UpdateProfileDTO
             {
                 Id = x.Id,
+                FirstName = x.FirstName,
+                LastName = x.LastName,
                 UserName = x.UserName,
                 Email = x.Email,
-                RecruitmentDate = x.RecruitmentDate,
-                BirthDate = x.BirthDate,
-                ManagerName = x.Manager.FirstName + " " + x.Manager.LastName,
-                DepartmentName = x.Department.Name,
-                BloodTypeId = x.BloodTypeId,
+                PhoneNumber = x.PhoneNumber,
                 CityId = x.Address.District.CityId,
                 DistrictId = x.Address.DistrictId,
                 AddressDescription = x.Address.Description,
+                BloodTypeId = x.BloodTypeId,
+                DepartmentName = x.Department.Name,
+                BirthDate = x.BirthDate,
+                RecruitmentDate = x.RecruitmentDate,
+                ManagerName = x.Manager.FirstName + " " + x.Manager.LastName,
                 ImagePath = x.ImagePath,
-                FullName = x.FirstName + " " + x.LastName
+                FullName = x.FirstName + " " + x.LastName,
+                TitleName = x.Title.Name
             },
             where: x => x.UserName == userName,
             orderby: null,
-            include: x => x.Include(x => x.Manager).Include(x => x.Department).Include(x => x.Address).Include(x => x.Address.District)
+            include: x => x.Include(x => x.Manager).Include(x => x.Department).Include(x => x.Address).Include(x => x.Address.District).Include(x=>x.Title)
             );
 
 
@@ -69,10 +73,16 @@ namespace HumanResource.Application.Services.AccountServices
 
         public async Task<SignInResult> Login(LoginDTO model)
         {
-            var user = await _userManager.FindByEmailAsync(model.UserNameOrEmail);
-            if (user != null)
+            var userEmail = await _userManager.FindByEmailAsync(model.UserNameOrEmail);
+            var userName = await _userManager.FindByNameAsync(model.UserNameOrEmail);
+            if(userEmail == null && userName == null)
             {
-                return await _signInManager.PasswordSignInAsync(user.UserName, model.Password, false, false);
+                return SignInResult.Failed;
+            }
+
+            if (userEmail != null)
+            {
+                return await _signInManager.PasswordSignInAsync(userEmail.UserName, model.Password, false, false);
             }
             return await _signInManager.PasswordSignInAsync(model.UserNameOrEmail, model.Password, false, false);
         }
@@ -136,6 +146,9 @@ namespace HumanResource.Application.Services.AccountServices
             }
             else
                 user.ImagePath = model.ImagePath;
+            user.FirstName = model.FirstName; 
+            user.LastName = model.LastName;
+            user.PhoneNumber = model.PhoneNumber;
             user.BirthDate = model.BirthDate;
             user.BloodTypeId = model.BloodTypeId;
 

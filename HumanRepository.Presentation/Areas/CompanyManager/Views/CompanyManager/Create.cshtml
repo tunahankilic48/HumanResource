@@ -146,7 +146,7 @@
                                 <textarea asp-for="AddressDescription" class="form-control" style="height:115px" rows="8"></textarea>
                                 <span class="text-danger" asp-validation-for="AddressDescription"></span>
                             </div>
-
+                            <input id="url" type="hidden" value="@(ViewBag.BaseUrl)" />
                         </div>
                     </div>
 
@@ -171,11 +171,12 @@
             $('#cityList').change(function () {
 
                 var cityId = $(this).val();
+                var baseUrl = $('#url').val();
 
                 if (cityId != null && cityId != '') {
                     $.ajax({
                         type: "GET",
-                        url: "https://localhost:7006/" + "Account/setDropDrownList" + "/" + cityId,
+                        url: baseUrl + "/account/setDropDownList/" + cityId,
                         datatype: "Json",
                         success: function (districts) {
 

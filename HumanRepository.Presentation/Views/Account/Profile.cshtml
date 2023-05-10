@@ -1,10 +1,23 @@
 ﻿@model UpdateProfileDTO
 
+
 @{
     Layout = "~/Areas/Personel/Views/Shared/_LayoutPersonel.cshtml";
 }
+
+@if (TempData["error"] is not null)
+{
+    <div class="ms-4 me-4 alert alert-dismissible alert-danger ps-0">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <h4 class="alert-heading ms-4 ps-0">Something goes wrong!</h4>
+        <p class="mb-0">@TempData["error"]</p>
+    </div>
+}
+
+
+
 <h1 class="m-0 font-weight-bold text-primary mb-4">@Model.FullName</h1>
-<form asp-action="Profile" asp-controller="account" enctype="multipart/form-data">
+<form asp-action="profile" asp-controller="account" asp-area="" enctype="multipart/form-data">
     <div class="row">
         <div class="col-lg-6">
             <div class="card shadow mb-4">
@@ -12,10 +25,14 @@
                 </div>
                 <div class="card-body">
                     <div class="row d-flex justify-content-center">
-                        <input type="hidden" asp-for="Id" />
-
 
                         <div class="col-lg-10">
+                            <input asp-for="Id" type="hidden" />
+                            <input asp-for="DepartmentName" type="hidden" />
+                            <input asp-for="TitleName" type="hidden" />
+                            <input asp-for="ManagerName" type="hidden" />
+                            <input asp-for="RecruitmentDate" type="hidden" />
+
                             @if (!String.IsNullOrEmpty(Model.ImagePath))
                             {
                                 <img src="@Model.ImagePath" class="rounded-circle mx-auto d-block" style="height:250px " />
@@ -27,8 +44,19 @@
                             }
 
                             <div class="form-group">
-                                <label asp-for="Image" class="form-label mt-4">Select Image</label>
+                                <label asp-for="Image" class="form-label">Select Image</label>
                                 <input asp-for="Image" type="file" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="FirstName" class="form-label">@Html.DisplayNameFor(x=>x.FirstName)</label>
+                                <input asp-for="FirstName" class="form-control">
+                                <span class="text-danger" asp-validation-for="FirstName"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="LastName" class="form-label">@Html.DisplayNameFor(x=>x.LastName)</label>
+                                <input asp-for="LastName" class="form-control">
+                                <span class="text-danger" asp-validation-for="LastName"></span>
                             </div>
 
                             <div class="form-group">
@@ -55,6 +83,12 @@
                                 <span class="text-danger" asp-validation-for="ConfirmPassword"></span>
                             </div>
 
+                            <div class="form-group">
+                                <label asp-for="PhoneNumber" class="form-label">@Html.DisplayNameFor(x=>x.PhoneNumber)</label>
+                                <input asp-for="PhoneNumber" class="form-control" type="tel">
+                                <span class="text-danger" asp-validation-for="PhoneNumber"></span>
+                            </div>
+
                         </div>
                     </div>
 
@@ -70,22 +104,28 @@
                 <div class="card-body">
 
                     <div class="row d-flex justify-content-center">
-                        <input type="hidden" asp-for="Id" />
                         <div class="col-lg-10">
-
-
-                            <div class="form-group">
-                                <label asp-for="BirthDate" class="form-label">@Html.DisplayNameFor(x=>x.BirthDate)</label>
-                                <input asp-for="BirthDate" class="form-control" type="date">
-                                <span class="text-danger" asp-validation-for="BirthDate"></span>
-                            </div>
 
                             <div class="form-group">
                                 <label asp-for="RecruitmentDate" class="form-label">@Html.DisplayNameFor(x=>x.RecruitmentDate)</label>
                                 <input asp-for="RecruitmentDate" class="form-control" type="date" disabled>
-                                <input asp-for="RecruitmentDate" type="hidden">
-                                <span class="text-danger" asp-validation-for="RecruitmentDate"></span>
                             </div>
+
+                            <div class="form-group">
+                                <label asp-for="DepartmentName" class="form-label">@Html.DisplayNameFor(x=>x.DepartmentName)</label>
+                                <input asp-for="DepartmentName" class="form-control" disabled>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="TitleName" class="form-label">@Html.DisplayNameFor(x=>x.TitleName)</label>
+                                <input asp-for="TitleName" class="form-control" disabled>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="ManagerName" class="form-label">@Html.DisplayNameFor(x=>x.ManagerName)</label>
+                                <input asp-for="ManagerName" class="form-control" disabled>
+                            </div>
+
 
                             <div class="form-group">
                                 <label asp-for="BloodTypeId" class="form-label">@Html.DisplayNameFor(x=>x.BloodTypeId)</label>
@@ -96,14 +136,13 @@
                             </div>
 
                             <div class="form-group">
-                                <label asp-for="DepartmentName" class="form-label">@Html.DisplayNameFor(x=>x.DepartmentName)</label>
-                                <input asp-for="DepartmentName" class="form-control" disabled>
-                                <input asp-for="DepartmentName" type="hidden">
-                                <span class="text-danger" asp-validation-for="DepartmentName"></span>
+                                <label asp-for="BirthDate" class="form-label mt-1">@Html.DisplayNameFor(x=>x.BirthDate)</label>
+                                <input asp-for="BirthDate" class="form-control" type="date">
+                                <span class="text-danger" asp-validation-for="BirthDate"></span>
                             </div>
 
                             <div class="form-group">
-                                <label asp-for="CityId" class="form-label">@Html.DisplayNameFor(x=>x.CityId)</label>
+                                <label asp-for="CityId" class="form-label mt-1">@Html.DisplayNameFor(x=>x.CityId)</label>
                                 <select asp-for="CityId" class="custom-select" id="cityList" asp-items="@ViewBag.Cities">
                                     <option value="0">Please select a City</option>
                                 </select>
@@ -112,20 +151,20 @@
 
 
                             <div class="form-group">
-                                <label asp-for="DistrictId" class="form-label">@Html.DisplayNameFor(x=>x.DistrictId)</label>
-                                <select asp-for="DistrictId" class="custom-select" id="districtList" asp-items="@ViewBag.Districts" disabled> 
+                                <label asp-for="DistrictId" class="form-label mt-1">@Html.DisplayNameFor(x=>x.DistrictId)</label>
+                                <select asp-for="DistrictId" class="custom-select" id="districtList" asp-items="@ViewBag.Districts" disabled>
                                     <option value="0">Please select a city firstly</option>
                                 </select>
                                 <span class="text-danger" asp-validation-for="DistrictId"></span>
                             </div>
 
                             <div class="form-group">
-                                <label asp-for="AddressDescription" class="form-label">@Html.DisplayNameFor(x=>x.AddressDescription)</label>
-                                <textarea asp-for="AddressDescription" class="form-control" style="height:115px" rows="8"></textarea>
+                                <label asp-for="AddressDescription" class="form-label mt-2">@Html.DisplayNameFor(x=>x.AddressDescription)</label>
+                                <textarea asp-for="AddressDescription" class="form-control" rows="7" style="resize:none"></textarea>
                                 <span class="text-danger" asp-validation-for="AddressDescription"></span>
                             </div>
 
-
+                            <input id="url" type="hidden" asp-for="BaseUrl" />
                         </div>
                     </div>
 
@@ -140,7 +179,6 @@
 </form>
 
 
-
 @section Scripts{
 
 
@@ -150,11 +188,12 @@
             $('#cityList').change(function () {
 
                 var cityId = $(this).val();
+                var baseUrl = $('#url').val();
 
                 if (cityId != null && cityId != '') {
                     $.ajax({
                         type: "GET",
-                        url: "https://localhost:7006/" + "Account/setDropDrownList" + "/" + cityId,
+                        url: baseUrl + "/account/setDropDownList/" + cityId,
                         datatype: "Json",
                         success: function (districts) {
 
