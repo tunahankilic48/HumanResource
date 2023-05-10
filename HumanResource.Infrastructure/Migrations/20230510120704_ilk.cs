@@ -148,17 +148,51 @@ namespace HumanResource.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Companies",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CompanyName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TaxNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TelephoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    NumberOfEmployee = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TaxOfficeName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    StatuId = table.Column<int>(type: "int", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "smalldatetime", nullable: false),
+                    ModifiedDate = table.Column<DateTime>(type: "smalldatetime", nullable: true),
+                    DeletedDate = table.Column<DateTime>(type: "smalldatetime", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Companies", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Companies_Status_StatuId",
+                        column: x => x.StatuId,
+                        principalTable: "Status",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Departments",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    StatuId = table.Column<int>(type: "int", nullable: false)
+                    StatuId = table.Column<int>(type: "int", nullable: false),
+                    CompanyId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Departments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Departments_Companies_CompanyId",
+                        column: x => x.CompanyId,
+                        principalTable: "Companies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Departments_Status_StatuId",
                         column: x => x.StatuId,
@@ -174,11 +208,18 @@ namespace HumanResource.Infrastructure.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(50)", nullable: false),
-                    StatuId = table.Column<int>(type: "int", nullable: false)
+                    StatuId = table.Column<int>(type: "int", nullable: false),
+                    CompanyId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Titles", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Titles_Companies_CompanyId",
+                        column: x => x.CompanyId,
+                        principalTable: "Companies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Titles_Status_StatuId",
                         column: x => x.StatuId,
@@ -200,6 +241,7 @@ namespace HumanResource.Infrastructure.Migrations
                     ManagerId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     RecruitmentDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     TitleId = table.Column<int>(type: "int", nullable: true),
+                    CompanyId = table.Column<int>(type: "int", nullable: true),
                     ImagePath = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     StatuId = table.Column<int>(type: "int", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "smalldatetime", nullable: false),
@@ -236,6 +278,12 @@ namespace HumanResource.Infrastructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
+                        name: "FK_AspNetUsers_Companies_CompanyId",
+                        column: x => x.CompanyId,
+                        principalTable: "Companies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
                         name: "FK_AspNetUsers_Departments_DepartmentId",
                         column: x => x.DepartmentId,
                         principalTable: "Departments",
@@ -264,6 +312,7 @@ namespace HumanResource.Infrastructure.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PostCode = table.Column<int>(type: "int", nullable: false),
                     DistrictId = table.Column<int>(type: "int", nullable: true),
+                    CompanyId = table.Column<int>(type: "int", nullable: true),
                     AppUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     StatuId = table.Column<int>(type: "int", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "smalldatetime", nullable: false),
@@ -277,6 +326,12 @@ namespace HumanResource.Infrastructure.Migrations
                         name: "FK_Addresses_AspNetUsers_AppUserId",
                         column: x => x.AppUserId,
                         principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Addresses_Companies_CompanyId",
+                        column: x => x.CompanyId,
+                        principalTable: "Companies",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -503,6 +558,13 @@ namespace HumanResource.Infrastructure.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Addresses_CompanyId",
+                table: "Addresses",
+                column: "CompanyId",
+                unique: true,
+                filter: "[CompanyId] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Addresses_DistrictId",
                 table: "Addresses",
                 column: "DistrictId");
@@ -560,6 +622,11 @@ namespace HumanResource.Infrastructure.Migrations
                 column: "BloodTypeId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_CompanyId",
+                table: "AspNetUsers",
+                column: "CompanyId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_AspNetUsers_DepartmentId",
                 table: "AspNetUsers",
                 column: "DepartmentId");
@@ -585,6 +652,16 @@ namespace HumanResource.Infrastructure.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Companies_StatuId",
+                table: "Companies",
+                column: "StatuId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Departments_CompanyId",
+                table: "Departments",
+                column: "CompanyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Departments_StatuId",
@@ -630,6 +707,11 @@ namespace HumanResource.Infrastructure.Migrations
                 name: "IX_Leaves_UserId",
                 table: "Leaves",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Titles_CompanyId",
+                table: "Titles",
+                column: "CompanyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Titles_StatuId",
@@ -695,6 +777,9 @@ namespace HumanResource.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "Titles");
+
+            migrationBuilder.DropTable(
+                name: "Companies");
 
             migrationBuilder.DropTable(
                 name: "Status");
