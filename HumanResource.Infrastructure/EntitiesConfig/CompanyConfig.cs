@@ -19,13 +19,18 @@ namespace HumanResource.Infrastructure.EntitiesConfig
                 .IsRequired(true)
                 .HasColumnOrder(3);
 
-            builder.Property(x => x.TelephoneNumber)
+            builder.Property(x => x.PhoneNumber)
                 .IsRequired(true)
                 .HasColumnOrder(4);
 
             builder.Property(x => x.NumberOfEmployee)
                 .IsRequired(true)
                 .HasColumnOrder(5);
+
+            builder.Property(x => x.ImagePath)
+                .IsRequired(true)
+                .HasColumnOrder(6);
+
             // Foreign Key
 
             builder.HasMany(x => x.Departments)
