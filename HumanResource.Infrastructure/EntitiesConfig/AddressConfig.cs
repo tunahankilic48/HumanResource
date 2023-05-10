@@ -30,12 +30,18 @@ namespace HumanResource.Infrastructure.EntitiesConfig
                 .IsRequired(true)
                 .HasColumnOrder(5);
 
-            //Foreign Key
+            builder.Property(x => x.CompanyId)
+                .IsRequired(true)
+                .HasColumnOrder(6);
 
+            //Foreign Key
             builder.HasOne<AppUser>(x => x.AppUser)
                 .WithOne(x => x.Address)
                 .HasForeignKey<Address>(x => x.AppUserId);
-                
+
+            builder.HasOne<Company>(x => x.Company)
+               .WithOne(x => x.Address)
+               .HasForeignKey<Address>(x => x.CompanyId);
 
             base.Configure(builder);
         }

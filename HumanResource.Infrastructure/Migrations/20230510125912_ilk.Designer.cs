@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HumanResource.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230508210915_ilk")]
+    [Migration("20230510125912_ilk")]
     partial class ilk
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,6 +34,9 @@ namespace HumanResource.Infrastructure.Migrations
 
                     b.Property<Guid>("AppUserId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<int?>("CompanyId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("smalldatetime");
@@ -60,6 +63,10 @@ namespace HumanResource.Infrastructure.Migrations
 
                     b.HasIndex("AppUserId")
                         .IsUnique();
+
+                    b.HasIndex("CompanyId")
+                        .IsUnique()
+                        .HasFilter("[CompanyId] IS NOT NULL");
 
                     b.HasIndex("DistrictId");
 
@@ -127,6 +134,9 @@ namespace HumanResource.Infrastructure.Migrations
                     b.Property<int?>("BloodTypeId")
                         .HasColumnType("int")
                         .HasColumnOrder(7);
+
+                    b.Property<int?>("CompanyId")
+                        .HasColumnType("int");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -219,6 +229,8 @@ namespace HumanResource.Infrastructure.Migrations
 
                     b.HasIndex("BloodTypeId");
 
+                    b.HasIndex("CompanyId");
+
                     b.HasIndex("DepartmentId");
 
                     b.HasIndex("ManagerId");
@@ -278,6 +290,63 @@ namespace HumanResource.Infrastructure.Migrations
                     b.ToTable("Cities");
                 });
 
+            modelBuilder.Entity("HumanResource.Domain.Entities.Company", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnOrder(1);
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("CompanyName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnOrder(2);
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("smalldatetime");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("smalldatetime");
+
+                    b.Property<string>("ImagePath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnOrder(6);
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("smalldatetime");
+
+                    b.Property<string>("NumberOfEmployee")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnOrder(5);
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnOrder(4);
+
+                    b.Property<int?>("StatuId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TaxNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnOrder(3);
+
+                    b.Property<string>("TaxOfficeName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StatuId");
+
+                    b.ToTable("Companies");
+                });
+
             modelBuilder.Entity("HumanResource.Domain.Entities.CurrencyType", b =>
                 {
                     b.Property<int>("Id")
@@ -310,6 +379,9 @@ namespace HumanResource.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int?>("CompanyId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -321,6 +393,8 @@ namespace HumanResource.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
 
                     b.HasIndex("StatuId");
 
@@ -541,6 +615,9 @@ namespace HumanResource.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int?>("CompanyId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .IsUnicode(true)
@@ -551,6 +628,8 @@ namespace HumanResource.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
 
                     b.HasIndex("StatuId");
 
@@ -696,6 +775,11 @@ namespace HumanResource.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("HumanResource.Domain.Entities.Company", "Company")
+                        .WithOne("Address")
+                        .HasForeignKey("HumanResource.Domain.Entities.Address", "CompanyId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("HumanResource.Domain.Entities.District", "District")
                         .WithMany("Addresses")
                         .HasForeignKey("DistrictId")
@@ -707,6 +791,8 @@ namespace HumanResource.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("AppUser");
+
+                    b.Navigation("Company");
 
                     b.Navigation("District");
 
@@ -738,6 +824,11 @@ namespace HumanResource.Infrastructure.Migrations
                         .HasForeignKey("BloodTypeId")
                         .OnDelete(DeleteBehavior.Restrict);
 
+                    b.HasOne("HumanResource.Domain.Entities.Company", "Company")
+                        .WithMany("Users")
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("HumanResource.Domain.Entities.Department", "Department")
                         .WithMany("Users")
                         .HasForeignKey("DepartmentId")
@@ -760,6 +851,8 @@ namespace HumanResource.Infrastructure.Migrations
 
                     b.Navigation("BloodType");
 
+                    b.Navigation("Company");
+
                     b.Navigation("Department");
 
                     b.Navigation("Manager");
@@ -769,13 +862,30 @@ namespace HumanResource.Infrastructure.Migrations
                     b.Navigation("Title");
                 });
 
+            modelBuilder.Entity("HumanResource.Domain.Entities.Company", b =>
+                {
+                    b.HasOne("HumanResource.Domain.Entities.Statu", "Statu")
+                        .WithMany("Companies")
+                        .HasForeignKey("StatuId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Statu");
+                });
+
             modelBuilder.Entity("HumanResource.Domain.Entities.Department", b =>
                 {
+                    b.HasOne("HumanResource.Domain.Entities.Company", "Company")
+                        .WithMany("Departments")
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("HumanResource.Domain.Entities.Statu", "Statu")
                         .WithMany("Departments")
                         .HasForeignKey("StatuId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Company");
 
                     b.Navigation("Statu");
                 });
@@ -853,11 +963,18 @@ namespace HumanResource.Infrastructure.Migrations
 
             modelBuilder.Entity("HumanResource.Domain.Entities.Title", b =>
                 {
+                    b.HasOne("HumanResource.Domain.Entities.Company", "Company")
+                        .WithMany("Titles")
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("HumanResource.Domain.Entities.Statu", "Statu")
                         .WithMany("Titles")
                         .HasForeignKey("StatuId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Company");
 
                     b.Navigation("Statu");
                 });
@@ -934,6 +1051,17 @@ namespace HumanResource.Infrastructure.Migrations
                     b.Navigation("Districts");
                 });
 
+            modelBuilder.Entity("HumanResource.Domain.Entities.Company", b =>
+                {
+                    b.Navigation("Address");
+
+                    b.Navigation("Departments");
+
+                    b.Navigation("Titles");
+
+                    b.Navigation("Users");
+                });
+
             modelBuilder.Entity("HumanResource.Domain.Entities.CurrencyType", b =>
                 {
                     b.Navigation("Expenses");
@@ -966,6 +1094,8 @@ namespace HumanResource.Infrastructure.Migrations
                     b.Navigation("Advances");
 
                     b.Navigation("AppUsers");
+
+                    b.Navigation("Companies");
 
                     b.Navigation("Departments");
 
