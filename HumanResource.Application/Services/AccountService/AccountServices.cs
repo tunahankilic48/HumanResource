@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using HumanResource.Application.Models.DTOs.AccountDTO;
+using HumanResource.Application.Models.DTOs.CompanyManagerDTO;
 using HumanResource.Application.Models.VMs.PersonelVM;
 using HumanResource.Domain.Entities;
 using HumanResource.Domain.Repositries;
@@ -50,6 +51,10 @@ namespace HumanResource.Application.Services.AccountServices
                 UserName = x.UserName,
                 Email = x.Email,
                 PhoneNumber = x.PhoneNumber,
+                NumberOfEmployee = x.Company.NumberOfEmployee,
+                TaxNumber = x.Company.TaxNumber,
+                TaxOfficeName = x.Company.TaxOfficeName,
+                CompanyName = x.Company.CompanyName,
                 CityId = x.Address.District.CityId,
                 DistrictId = x.Address.DistrictId,
                 AddressDescription = x.Address.Description,

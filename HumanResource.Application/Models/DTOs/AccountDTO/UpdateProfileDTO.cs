@@ -43,12 +43,31 @@ namespace HumanResource.Application.Models.DTOs.AccountDTO
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "Phone cannot be null.")]
+		[MinLength(3, ErrorMessage = "Company name must be more than 3 characters.")]
+		[Required(ErrorMessage = "Company name cannot be null.")]
+		[Display(Name = "Company Name")]
+		public string CompanyName { get; set; }
+
+		[Required(ErrorMessage = "Tax Number cannot be null.")]
+		[Display(Name = "Tax Number")]
+		public string TaxNumber { get; set; }
+
+		[MinLength(3, ErrorMessage = "TaxOffice name must be more than 3 characters.")]
+		[MaxLength(50, ErrorMessage = "TaxOffice name must be less than 50 characters.")]
+		[Required(ErrorMessage = "TaxOffice name cannot be null.")]
+		[Display(Name = "TaxOffice Name")]
+		public string TaxOfficeName { get; set; }
+
+		[Required(ErrorMessage = "Phone cannot be null.")]
         [Display(Name = "Phone Number")]
         [DataType(DataType.PhoneNumber)]
         public string PhoneNumber { get; set; }
 
-        [Display(Name = ("City"))]
+		[Required(ErrorMessage = "Number Of Employee cannot be null.")]
+		[Display(Name = "Number Of Employee")]
+		public string NumberOfEmployee { get; set; }
+
+		[Display(Name = ("City"))]
         public int? CityId { get; set; }
 
         [Display(Name = ("District"))]
