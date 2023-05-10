@@ -308,6 +308,11 @@ namespace HumanResource.Infrastructure.Migrations
                     b.Property<DateTime?>("DeletedDate")
                         .HasColumnType("smalldatetime");
 
+                    b.Property<string>("ImagePath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnOrder(6);
+
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("smalldatetime");
 
@@ -315,6 +320,11 @@ namespace HumanResource.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnOrder(5);
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnOrder(4);
 
                     b.Property<int?>("StatuId")
                         .HasColumnType("int");
@@ -327,11 +337,6 @@ namespace HumanResource.Infrastructure.Migrations
                     b.Property<string>("TaxOfficeName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TelephoneNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnOrder(4);
 
                     b.HasKey("Id");
 
