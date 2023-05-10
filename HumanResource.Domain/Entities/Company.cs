@@ -1,0 +1,26 @@
+﻿namespace HumanResource.Domain.Entities
+{
+    public class Company : IBaseEntity
+    {
+        public int Id { get; set; }
+        public string CompanyName { get; set; }
+        public string TaxNumber { get; set; }
+        public string TaxOfficeName { get; set; }
+        public string TelephoneNumber { get; set; }
+        public string NumberOfEmployee { get; set; } 
+
+        //public int AddressId { get; set; }
+
+        public int? StatuId { get; set; }
+        public DateTime CreatedDate { get; set; }   
+        public DateTime? ModifiedDate { get; set; }
+        public DateTime? DeletedDate { get; set; }
+        public Statu? Statu { get; set; }
+
+        //Navigation Property
+        public List<Department>? Departments { get; set; }
+        public Address? Address { get; set; }
+        public List<Title>? Titles { get; set; }
+        public List<AppUser> Users { get; set; }
+    }
+}
