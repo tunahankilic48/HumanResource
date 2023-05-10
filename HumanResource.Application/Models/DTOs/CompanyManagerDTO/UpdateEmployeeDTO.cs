@@ -86,5 +86,8 @@ namespace HumanResource.Application.Models.DTOs.CompanyManagerDTO
 
         public DateTime ModifiedDate => DateTime.Now;
         public int StatuId => Status.Active.GetHashCode();
+
+        [ValidateNever]
+        public string? BaseUrl { get; set; }
     }
 }

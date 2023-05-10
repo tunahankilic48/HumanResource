@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-
+using NuGet.Protocol;
 
 namespace HumanResource.Presentation.Controllers
 {
@@ -86,9 +86,14 @@ namespace HumanResource.Presentation.Controllers
 
 				if (result.Succeeded)
 					return RedirectToLocal(returnUrl);
+				if(result == Microsoft.AspNetCore.Identity.SignInResult.Failed)
+					TempData["loginError"] = "Username, Email or Password is wrong.";
+				else if (result == Microsoft.AspNetCore.Identity.SignInResult.NotAllowed)
+                    TempData["loginError"] = "Email has not been verified yet. Please verify your email.";
+                else
+                    TempData["loginError"] = "Invalid Login Attemp";
 
-				ModelState.AddModelError("", "Invalid login");
-			}
+            }
 			ViewData["ReturnUrl"] = returnUrl;
 			return View(model);
 		}
@@ -100,10 +105,14 @@ namespace HumanResource.Presentation.Controllers
 		}
 		public async Task<IActionResult> Profile()
 		{
-			ViewBag.Cities = new SelectList(await _addressService.GetCities(), "Id", "Name");
+
+            ViewBag.Cities = new SelectList(await _addressService.GetCities(), "Id", "Name");
 			ViewBag.Districts = new SelectList(await _addressService.GetDistricts(), "Id", "Name");
 			ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
-			return View(await _accountServices.GetByUserName(User.Identity.Name));
+			var model = await _accountServices.GetByUserName(User.Identity.Name);
+			model.BaseUrl = Request.Scheme + "://" + HttpContext.Request.Host.ToString();
+
+            return View(model);
 		}
 
 		[HttpPost, ValidateAntiForgeryToken]
@@ -120,7 +129,7 @@ namespace HumanResource.Presentation.Controllers
 			return View(model);
 		}
 		[HttpGet]
-		public async Task<JsonResult> setDropDrownList(int id)
+		public async Task<JsonResult> setDropDownList(int id)
 		{
 			var districts = await _addressService.GetDistricts(id);
 			return Json(districts);
@@ -143,7 +152,7 @@ namespace HumanResource.Presentation.Controllers
 		[AllowAnonymous]
 		public async Task<IActionResult> ConfirmEmail(string token, string email)
 		{
-			var result = await _accountServices.ConfirmEmail(token, email); // ToDo: resulta göre sayfa yapılacak
+			var result = await _accountServices.ConfirmEmail(token, email);
 
 			if (result.Succeeded)
 			{

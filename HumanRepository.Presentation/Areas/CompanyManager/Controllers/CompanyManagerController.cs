@@ -45,6 +45,7 @@ namespace HumanResource.Presentation.Areas.CompanyManager.Controllers
             ViewBag.CompanyManagers = new SelectList(await _companyManagerService.GetCompanyManagers(), "Id", "FullName");
             ViewBag.Cities = new SelectList(await _addressService.GetCities(), "Id", "Name");
             ViewBag.Districts = new SelectList(await _addressService.GetDistricts(), "Id", "Name");
+            ViewBag.BaseUrl = Request.Scheme + "://" + HttpContext.Request.Host.ToString();
             return View();
         }
 
@@ -79,6 +80,7 @@ namespace HumanResource.Presentation.Areas.CompanyManager.Controllers
             ViewBag.CompanyManagers = new SelectList(await _companyManagerService.GetCompanyManagers(), "Id", "FullName");
             ViewBag.Cities = new SelectList(await _addressService.GetCities(), "Id", "Name");
             ViewBag.Districts = new SelectList(await _addressService.GetDistricts(), "Id", "Name");
+            ViewBag.BaseUrl = Request.Scheme + "://" + HttpContext.Request.Host.ToString();
             return View(model);
         }
 
@@ -91,7 +93,9 @@ namespace HumanResource.Presentation.Areas.CompanyManager.Controllers
             ViewBag.CompanyManagers = new SelectList(await _companyManagerService.GetCompanyManagers(), "Id", "FullName");
             ViewBag.Cities = new SelectList(await _addressService.GetCities(), "Id", "Name");
             ViewBag.Districts = new SelectList(await _addressService.GetDistricts(), "Id", "Name");
-            return View(await _companyManagerService.GetByUserName(id));
+            var model = await _companyManagerService.GetByUserName(id);
+            model.BaseUrl = Request.Scheme + "://" + HttpContext.Request.Host.ToString();
+            return View(model);
         }
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Update(UpdateEmployeeDTO model)

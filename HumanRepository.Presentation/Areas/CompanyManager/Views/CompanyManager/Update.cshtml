@@ -160,6 +160,8 @@
                                 <span class="text-danger" asp-validation-for="AddressDescription"></span>
                             </div>
 
+                            <input id="url" type="hidden" asp-for="BaseUrl" />
+
                         </div>
                     </div>
 
@@ -184,11 +186,12 @@
             $('#cityList').change(function () {
 
                 var cityId = $(this).val();
+                var baseUrl = $('#url').val();
 
                 if (cityId != null && cityId != '') {
                     $.ajax({
                         type: "GET",
-                        url: "https://localhost:7006/" + "Account/setDropDrownList" + "/" + cityId,
+                        url: baseUrl + "/account/setDropDownList/" + cityId,
                         datatype: "Json",
                         success: function (districts) {
 
