@@ -52,11 +52,13 @@ namespace HumanResource.Application.Services.AdvanceService
 				{
 					Id = x.Id,
 					Amount = x.Amount,
-					NumberOfInstallments = x.NumberOfInstallments
-				},
+					NumberOfInstallments = x.NumberOfInstallments,
+					AdvanceDate = x.AdvanceDate.ToShortDateString(),
+					ManagerName = x.User.Manager.FirstName + " " + x.User.Manager.LastName
+                },
 				where: x => x.User.Id == id && x.StatuId != Status.Deleted.GetHashCode(),
 				orderby: x => x.OrderByDescending(x => x.CreatedDate),
-				include: x => x.Include(x => x.User).Include(x => x.Statu)
+				include: x => x.Include(x => x.User).Include(x => x.Statu).Include(x=>x.User).Include(x=>x.User.Manager)
                 );
 			return advances;
 		}

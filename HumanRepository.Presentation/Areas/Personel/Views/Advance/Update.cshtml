@@ -8,6 +8,7 @@
         <input type="hidden" asp-for="CreatedDate" />
         <div class="col-lg-10">
             <h1>Update Advance</h1>
+
             <div class="form-group">
                 <label asp-for="Amount" class="form-label">@Html.DisplayNameFor(x=>x.Amount)</label>
                 <input asp-for="Amount" class="form-control" type="text">
@@ -18,6 +19,18 @@
                 <label asp-for="NumberOfInstallments" class="form-label">@Html.DisplayNameFor(x=>x.NumberOfInstallments)</label>
                 <input asp-for="NumberOfInstallments" class="form-control" type="number">
                 <span class="text-danger" asp-validation-for="NumberOfInstallments"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Description" class="form-label">@Html.DisplayNameFor(x=>x.Description)</label>
+                <input asp-for="Description" class="form-control">
+                <span class="text-danger" asp-validation-for="Description"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="AdvanceDate" class="form-label">@Html.DisplayNameFor(x=>x.AdvanceDate)</label>
+                <input asp-for="AdvanceDate" class="form-control">
+                <span class="text-danger" asp-validation-for="AdvanceDate"></span>
             </div>
 
         </div>

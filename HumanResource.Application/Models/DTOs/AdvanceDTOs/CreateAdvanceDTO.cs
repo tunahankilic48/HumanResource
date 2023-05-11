@@ -24,6 +24,8 @@ namespace HumanResource.Application.Models.DTOs.AdvanceDTOs
         [Required(ErrorMessage = "Installment field cannot be empty!")]
         [Range(0, 10, ErrorMessage = "Please enter between 0-10.")]
         public int NumberOfInstallments { get; set; }
+        public string Description { get; set; }
+        public DateTime AdvanceDate { get; set; }
         public DateTime CreatedDate => DateTime.Now;
         public Guid UserId { get; set; }
 

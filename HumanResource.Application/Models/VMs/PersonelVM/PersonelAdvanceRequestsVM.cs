@@ -13,5 +13,6 @@ namespace HumanResource.Application.Models.VMs.PersonelVM
 
         [Display(Name ="Oluşturulma Tarihi")]
         public  string CreatedDate { get; set; }
+
     }
 }

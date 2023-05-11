@@ -18,9 +18,19 @@ namespace HumanResource.Infrastructure.EntitiesConfig
             builder.Property(x => x.NumberOfInstallments)
                 .HasColumnOrder(3);
 
+            builder.Property(x=>x.Description)
+                .IsRequired(true)
+                .HasColumnType("NVARCHAR(MAX)")
+                .HasColumnOrder (4);
+
+            builder.Property(x=>x.AdvanceDate)
+                .IsRequired(true)
+                .HasColumnType("date")
+                .HasColumnOrder (5);
+
             builder.Property(x => x.UserId)
                 .IsRequired(true)
-                .HasColumnOrder(4);
+                .HasColumnOrder(6);
 
             builder.HasOne(x => x.User) // Advance in appuser ile ilişkisi
                 .WithMany(x => x.Advances)
