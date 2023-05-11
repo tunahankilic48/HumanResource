@@ -19,7 +19,7 @@ namespace HumanResource.Domain.Entities
         public decimal Amount { get; set; }
         public int CurrencyTypeId { get; set; }
         public DateTime ExpenseDate { get; set; }
-        public string LongDescription { get; set; }
+        public string? LongDescription { get; set; }
         public string ShortDescription { get; set; }
         public int ExpenseTypeId { get; set; }
         /*************************************************************************/

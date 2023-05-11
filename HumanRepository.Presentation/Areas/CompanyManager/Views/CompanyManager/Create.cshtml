@@ -18,6 +18,9 @@
 <h1 class="m-0 font-weight-bold text-primary mb-4">Create Employee</h1>
 <form asp-action="create" asp-controller="companymanager" asp-area="CompanyManager" enctype="multipart/form-data">
     <div class="row">
+        <div asp-validation-summary="ModelOnly" class="text-danger">
+
+        </div>
         <div class="col-lg-6">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
@@ -26,6 +29,7 @@
                     <div class="row d-flex justify-content-center">
 
                         <div class="col-lg-10">
+
                             <div class="form-group">
                                 <label asp-for="FirstName" class="form-label">@Html.DisplayNameFor(x=>x.FirstName)</label>
                                 <input asp-for="FirstName" class="form-control">
@@ -59,7 +63,7 @@
                             <div class="form-group">
                                 <label asp-for="DepartmentId" class="form-label">@Html.DisplayNameFor(x=>x.DepartmentId)</label>
                                 <select asp-for="DepartmentId" class="custom-select"asp-items="@ViewBag.Departments">
-                                    <option value="0">Please select a Department</option>
+                                    <option value ="">Please select a Department</option>
                                 </select>
                                 <span class="text-danger" asp-validation-for="DepartmentId"></span>
                             </div>
@@ -67,10 +71,11 @@
                             <div class="form-group">
                                 <label asp-for="TitleId" class="form-label">@Html.DisplayNameFor(x=>x.TitleId)</label>
                                 <select asp-for="TitleId" class="custom-select" asp-items="@ViewBag.Titles">
-                                    <option value="0">Please select a Title</option>
+                                    <option value="">Please select a Title</option>
                                 </select>
                                 <span class="text-danger" asp-validation-for="TitleId"></span>
                             </div>
+
 
                             <div class="form-group">
                                 <label asp-for="Image" class="form-label">Select Image</label>
@@ -98,7 +103,7 @@
                             <div class="form-group">
                                 <label asp-for="BloodTypeId" class="form-label">@Html.DisplayNameFor(x=>x.BloodTypeId)</label>
                                 <select asp-for="BloodTypeId" class="custom-select" asp-items="@Html.GetEnumSelectList<BloodTypeEnumVM>()">
-                                    <option value="">Please select a Leave Type</option>
+                                    <option value="">Please select a Blood Type</option>
                                 </select>
                                 <span class="text-danger" asp-validation-for="BloodTypeId"></span>
                             </div>
@@ -119,7 +124,7 @@
                             <div class="form-group">
                                 <label asp-for="ManagerId" class="form-label">@Html.DisplayNameFor(x=>x.ManagerId)</label>
                                 <select asp-for="ManagerId" class="custom-select" asp-items="@ViewBag.CompanyManagers">
-                                    <option value="0">Please select a Title</option>
+                                    <option value="">Please select a Manager</option>
                                 </select>
                                 <span class="text-danger" asp-validation-for="ManagerId"></span>
                             </div>
@@ -127,7 +132,7 @@
                             <div class="form-group">
                                 <label asp-for="CityId" class="form-label">@Html.DisplayNameFor(x=>x.CityId)</label>
                                 <select asp-for="CityId" class="custom-select" id="cityList" asp-items="@ViewBag.Cities">
-                                    <option value="0">Please select a City</option>
+                                    <option value="">Please select a City</option>
                                 </select>
                                 <span class="text-danger" asp-validation-for="CityId"></span>
                             </div>
@@ -136,7 +141,7 @@
                             <div class="form-group">
                                 <label asp-for="DistrictId" class="form-label">@Html.DisplayNameFor(x=>x.DistrictId)</label>
                                 <select asp-for="DistrictId" class="custom-select" id="districtList" asp-items="@ViewBag.Districts" disabled>
-                                    <option value="0">Please select a city firstly</option>
+                                    <option>Please select a city firstly</option>
                                 </select>
                                 <span class="text-danger" asp-validation-for="DistrictId"></span>
                             </div>

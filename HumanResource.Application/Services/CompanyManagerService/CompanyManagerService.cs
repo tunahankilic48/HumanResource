@@ -63,53 +63,63 @@ namespace HumanResource.Application.Services.CompanyManagerService
         }
         public async Task<CreateEmployeeVM> CreateEmployee(CreateEmployeeDTO model)
         {
-            AppUser newEmployee = _mapper.Map<AppUser>(model);
-            if (model.Image != null)
+            var userEmail = await _userManager.FindByEmailAsync(model.Email);
+            var userUserName = await _userManager.FindByNameAsync(model.UserName);
+            CreateEmployeeVM createEmployee = new CreateEmployeeVM();
+            if (userEmail == null && userUserName == null)
             {
-                using var image = Image.Load(model.Image.OpenReadStream());
+                AppUser newEmployee = _mapper.Map<AppUser>(model);
+                if (model.Image != null)
+                {
+                    using var image = Image.Load(model.Image.OpenReadStream());
 
-                Guid guid = Guid.NewGuid();
-                image.Save($"wwwroot/media/images/{guid}.jpg");
+                    Guid guid = Guid.NewGuid();
+                    image.Save($"wwwroot/media/images/{guid}.jpg");
 
-                newEmployee.ImagePath = $"/media/images/{guid}.jpg";
-            }
-            else
-                newEmployee.ImagePath = model.ImagePath;
-            newEmployee.Address = new Address()
-            {
-                CreatedDate = DateTime.Now,
-                Description = model.AddressDescription,
-                DistrictId = model.DistrictId,
-            };
-            var password = new Random().Next(100000, 9999990).ToString();
-            try
-            {
+                    newEmployee.ImagePath = $"/media/images/{guid}.jpg";
+                }
+                else
+                    newEmployee.ImagePath = model.ImagePath;
+                newEmployee.Address = new Address()
+                {
+                    CreatedDate = DateTime.Now,
+                    Description = model.AddressDescription,
+                    DistrictId = model.DistrictId,
+                };
+                var password = new Random().Next(100000, 9999990).ToString();
+
                 await _userManager.CreateAsync(newEmployee, password);
 
-            }
-            catch (Exception ex)
-            {
-                 var abc = ex.Message;
-                var bca = abc;
-                throw;
-            }
+                IdentityResult result = await _userManager.AddToRoleAsync(newEmployee, "Employee");
 
-            IdentityResult result = await _userManager.AddToRoleAsync(newEmployee, "Employee");
-            CreateEmployeeVM createEmployee = new CreateEmployeeVM();
-            if (result.Succeeded)
-            {
-                var token = await _userManager.GenerateEmailConfirmationTokenAsync(newEmployee);
-                createEmployee.Email = newEmployee.Email;
-                createEmployee.Token = token;
-                createEmployee.Result = result;
-                createEmployee.Password = password;
+                if (result.Succeeded)
+                {
+                    var token = await _userManager.GenerateEmailConfirmationTokenAsync(newEmployee);
+                    createEmployee.Email = newEmployee.Email;
+                    createEmployee.Token = token;
+                    createEmployee.Result = result;
+                    createEmployee.Password = password;
+                }
+                else
+                {
+
+                    createEmployee.Result = result;
+                }
+                return createEmployee;
             }
             else
             {
-
-                createEmployee.Result = result;
+                if (userEmail != null)
+                {
+                    createEmployee.Errors.Add("Email already exist.");
+                }
+                if (userUserName != null)
+                {
+                    createEmployee.Errors.Add("User Name already exist.");
+                }
+                createEmployee.Model = model;
+                return createEmployee;
             }
-            return createEmployee;
         }
 
         public async Task<List<CompanyManagerVM>> GetCompanyManagers()
@@ -244,7 +254,7 @@ namespace HumanResource.Application.Services.CompanyManagerService
             user.RecruitmentDate = model.RecruitmentDate;
             user.ManagerId = model.ManagerId;
             user.TitleId = model.TitleId;
-            
+
 
             if (model.DistrictId != 0 && model.CityId != 0)
             {

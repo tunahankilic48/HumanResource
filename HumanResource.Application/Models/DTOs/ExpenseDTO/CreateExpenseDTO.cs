@@ -1,14 +1,7 @@
-﻿using Bogus.DataSets;
-using HumanResource.Application.Extensions;
+﻿using HumanResource.Application.Extensions;
 using HumanResource.Domain.Entities;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HumanResource.Application.Models.DTOs.ExpenseDTO
 {
@@ -33,9 +26,9 @@ namespace HumanResource.Application.Models.DTOs.ExpenseDTO
         [Required(ErrorMessage = "Description field cannot be null.")]
         [Display(Name = "Short Description")]
         public string ShortDescription { get; set; }
-        [Required(ErrorMessage = "Description field cannot be null.")]
+
         [Display(Name = "Long Description")]
-        public string LongDescription { get; set; }
+        public string? LongDescription { get; set; }
 
         [Required(ErrorMessage = "Expense Type cannot be null.")]
         [Display(Name = "Expense Type")]

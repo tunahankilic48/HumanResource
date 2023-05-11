@@ -12,6 +12,6 @@ namespace HumanResource.Application.Models.VMs.PersonelVM
         public int NumberOfInstallments { get; set; }
 
         [Display(Name ="Oluşturulma Tarihi")]
-        public  DateTime CreatedDate { get; set; }
+        public  string CreatedDate { get; set; }
     }
 }

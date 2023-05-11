@@ -54,21 +54,10 @@
                             <th class="text-center">@Html.DisplayNameFor(x=>x.ExpenseDate)</th>
                             <th class="text-center">@Html.DisplayNameFor(x=>x.ExpenseType)</th>
                             <th class="text-center">@Html.DisplayNameFor(x=>x.ShortDescription)</th>
-                            <th class="text-center">@Html.DisplayNameFor(x=>x.LongDescription)</th>
                             <th></th>
                         </tr>
                     </thead>
-                    <tfoot>
-                        <tr>
-                            <th class="text-center">@Html.DisplayNameFor(x=>x.Amount)</th>
-                            <th class="text-center">@Html.DisplayNameFor(x=>x.CurrencyType)</th>
-                            <th class="text-center">@Html.DisplayNameFor(x=>x.ExpenseDate)</th>
-                            <th class="text-center">@Html.DisplayNameFor(x=>x.ExpenseType)</th>
-                            <th class="text-center">@Html.DisplayNameFor(x=>x.ShortDescription)</th>
-                            <th class="text-center">@Html.DisplayNameFor(x=>x.LongDescription)</th>
-                            <th></th>
-                        </tr>
-                    </tfoot>
+
                     <tbody>
                         @foreach (var item in Model)
                         {
@@ -79,9 +68,7 @@
                                 <td class="text-center">@item.ExpenseDate</td>
                                 <td class="text-center">@item.ExpenseType</td>
                                 <td class="text-center">@item.ShortDescription</td>
-                                <td class="text-center">@item.LongDescription</td>
                                 <td class="d-flex justify-content-around">
-                                    @*<a class="btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#updateLeaveModal" data-id="@item.Id">İzni Güncelle</a>*@
                                     <a class="btn btn-primary m-2" asp-action="update" asp-controller="expense" asp-route-id="@item.Id">Update Expense</a>
                                     <button type="button" class="btn btn-danger m-2" data-bs-toggle="modal" data-bs-target="#deleteExpenseModal" data-bs-whatever="@item.Id">Delete Expense</button>
                                 </td>
@@ -104,8 +91,6 @@
 
 
 <partial name="~/Areas/Personel/Views/PartialViews/_partialCreateExpense.cshtml" model="new CreateExpenseDTO()"></partial>
-
-@*<partial name="~/Areas/Personel/Views/PartialViews/_partialUpdateExpenses.cshtml" model="new UpdateAdvanceDTO()">*@
 
 <div class="modal fade" id="deleteExpenseModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-m">
