@@ -23,6 +23,8 @@ namespace HumanResource.Application.Models.VMs.LeaveVM
         public int LeavePeriod { get; set; }
         [Display(Name = "Leave Type")]
         public string LeaveType { get; set; }
+        [Display(Name = "Manager")]
+        public string ManagerName { get; set; }
 
     }
 }

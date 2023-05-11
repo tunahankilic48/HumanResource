@@ -62,11 +62,12 @@ namespace HumanResource.Application.Services.ExpenseService
                     Amount = x.Amount,
                     CurrencyType = x.CurrencyType.Name,
                     ShortDescription = x.ShortDescription,
-                    ExpenseType = x.ExpenseType.Name
+                    ExpenseType = x.ExpenseType.Name,
+                    ManagerName = x.User.Manager.FirstName + " " + x.User.Manager.LastName
                 },
                 where: x => x.User.Id == id && x.StatuId != Status.Deleted.GetHashCode(),
                 orderby: x => x.OrderByDescending(x => x.CreatedDate),
-                include: x => x.Include(x => x.User).Include(x => x.ExpenseType).Include(x => x.CurrencyType)
+                include: x => x.Include(x => x.User).Include(x => x.ExpenseType).Include(x => x.CurrencyType).Include(x => x.User.Manager)
                 );
 
             return expenses;

@@ -62,12 +62,13 @@ namespace HumanResource.Application.Services.LeaveServices
                     EndDate = x.EndDate.ToShortDateString(),
                     ReturnDate = x.ReturnDate.ToShortDateString(),
                     LeavePeriod = x.LeavePeriod,
-                    LeaveType = x.LeaveType.Name
+                    LeaveType = x.LeaveType.Name,
+                    ManagerName = x.User.Manager.FirstName + " " + x.User.Manager.LastName
                 },
                 
                 where: x => x.User.Id == id && x.StatuId != Status.Deleted.GetHashCode(),
                 orderby: x => x.OrderByDescending(x => x.CreatedDate),
-                include: x => x.Include(x => x.User).Include(x => x.LeaveType).Include(x=>x.Statu)
+                include: x => x.Include(x => x.User).Include(x => x.LeaveType).Include(x=>x.Statu).Include(x=>x.User.Manager)
                 );
 
             return comments;

@@ -54,6 +54,7 @@
                             <th class="text-center">@Html.DisplayNameFor(x=>x.EndDate)</th>
                             <th class="text-center">@Html.DisplayNameFor(x=>x.ReturnDate)</th>
                             <th class="text-center">@Html.DisplayNameFor(x=>x.LeaveType)</th>
+                            <th class="text-center">@Html.DisplayNameFor(x=>x.ManagerName)</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -66,6 +67,7 @@
                                 <td class="text-center" type="date">@item.StartDate</td>
                                 <td class="text-center" type="date">@item.EndDate</td>
                                 <td class="text-center" type="date">@item.ReturnDate</td>
+                                <td class="text-center" type="date">@item.ManagerName</td>
                                 <td class="text-center">@item.LeaveType</td>
                                 <td class="d-flex justify-content-around">
                                     @*<a class="btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#updateLeaveModal" data-id="@item.Id">İzni Güncelle</a>*@

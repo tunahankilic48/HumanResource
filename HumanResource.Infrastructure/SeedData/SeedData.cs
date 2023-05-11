@@ -170,9 +170,10 @@ namespace HumanResource.Infrastructure.SeedData
                 if (!context.Users.Any())
                 {
                     var passwordHasher = new PasswordHasher<AppUser>();
-
+                    var companyManagerId = Guid.NewGuid();
                     AppUser companyManager = new AppUser
                     {
+                        Id = companyManagerId,
                         FirstName="company",
                         LastName="manager",
                         UserName = "companyManager",
@@ -208,6 +209,7 @@ namespace HumanResource.Infrastructure.SeedData
                         NormalizedEmail = "EMPLOYEE@GMAIL.COM",
                         ImagePath = "/images/noImage.png",
                         CreatedDate = DateTime.Now,
+                        ManagerId = companyManagerId,
                         EmailConfirmed = true,
                         LockoutEnabled = true,
                         TwoFactorEnabled = false,

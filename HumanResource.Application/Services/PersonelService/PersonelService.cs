@@ -51,7 +51,7 @@ namespace HumanResource.Application.Services.PersonelService
                    Id = x.Id,
                    Amount = x.Amount,
                    NumberOfInstallments = x.NumberOfInstallments,
-                   CreatedDate = x.CreatedDate.ToShortDateString()
+                   CreatedDate = x.CreatedDate.ToShortDateString(),
 
                },
                where: x => x.User.UserName == name && x.Statu.Name == Status.Awating_Approval.ToString(),

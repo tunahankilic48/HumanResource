@@ -22,7 +22,8 @@ namespace HumanResource.Application.Models.DTOs.AdvanceDTOs
         [Range(0, 10, ErrorMessage = "Please enter between 0-10.")]
         [Display(Name ="Number Of Installments")]
         public int NumberOfInstallments { get; set; }
-
+        public string Description { get; set; }
+        public DateTime AdvanceDate { get; set; }
         public DateTime ModifiedDate => DateTime.Now;
 
         [Required(ErrorMessage = "Update date cannot be blank!"), DataType(DataType.DateTime)]
