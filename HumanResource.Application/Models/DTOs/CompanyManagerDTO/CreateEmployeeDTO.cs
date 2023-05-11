@@ -37,27 +37,34 @@ namespace HumanResource.Application.Models.DTOs.CompanyManagerDTO
         public string PhoneNumber { get; set; }
 
         [Display(Name = ("City"))]
+        [Required(ErrorMessage = "Please select a city.")]
         public int? CityId { get; set; }
 
         [Display(Name = ("District"))]
         public int? DistrictId { get; set; }
 
         [Display(Name = ("Address Description"))]
+        [Required(ErrorMessage = "Address cannot be null.")]
         public string? AddressDescription { get; set; }
 
         [Display(Name = "Blood Type")]
+        [Required(ErrorMessage = "Please select a blood type.")]
         public int? BloodTypeId { get; set; }
 
         [Display(Name = "Department")]
+        [Required(ErrorMessage = "Please select a department.")]
         public int? DepartmentId { get; set; }
 
         [Display(Name = "Birt Date")]
+        [Required(ErrorMessage = "Birth date cannot be null")]
         public DateTime? BirthDate { get; set; }
 
         [Display(Name = "Recruitment Date")]
+        [Required(ErrorMessage = "Recruitment date cannor be null")]
         public DateTime? RecruitmentDate { get; set; }
 
         [Display(Name = "Manager")]
+        [Required(ErrorMessage = "Please select a manager.")]
         public Guid? ManagerId { get; set; }
 
         [ValidateNever]
@@ -68,6 +75,7 @@ namespace HumanResource.Application.Models.DTOs.CompanyManagerDTO
 
 
         [Display(Name = "Title")]
+        [Required(ErrorMessage = "Please select a title.")]
         public int? TitleId { get; set; }
 
 

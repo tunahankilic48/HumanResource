@@ -55,22 +55,23 @@ namespace HumanResource.Presentation.Areas.CompanyManager.Controllers
             if (ModelState.IsValid)
             {
                 var result = await _companyManagerService.CreateEmployee(model);
-
-                if (result.Result.Succeeded)
+                if (!result.Errors.Any())
                 {
+                    if (result.Result.Succeeded)
+                    {
 
-                    var conformationLink = Url.Action("ConfirmEmail", "Account", new { token = result.Token, email = result.Email, Area = ""},Request.Scheme);
+                        var conformationLink = Url.Action("ConfirmEmail", "Account", new { token = result.Token, email = result.Email, Area = "" }, Request.Scheme);
 
-                    var message = new Message(result.Email, "Conformation Email Link", $"Welcome to our human resources platform. Please click the link to activate your account. {conformationLink!}   You can use your email and the password below to login to the platform.     {result.Password}");
-                    _emailService.SendEmail(message);
+                        var message = new Message(result.Email, "Conformation Email Link", $"Welcome to our human resources platform. Please click the link to activate your account. {conformationLink!}   You can use your email and the password below to login to the platform.     {result.Password}");
+                        _emailService.SendEmail(message);
 
-                    return RedirectToAction("employees", "companymanager", new { Area = "companymanager" });
+                        return RedirectToAction("employees", "companymanager", new { Area = "companymanager" });
+                    }
                 }
 
-                foreach (var item in result.Result.Errors)
+                foreach (var item in result.Errors)
                 {
-                    ModelState.AddModelError(string.Empty, item.Description);
-                    TempData["Error"] = "there is something wrong";
+                    ModelState.AddModelError(string.Empty, item);
                 }
              
             }

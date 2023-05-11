@@ -5,7 +5,6 @@ using HumanResource.Application.Services.PersonelService;
 using HumanResource.Domain.Entities;
 using HumanResource.Domain.Enums;
 using HumanResource.Domain.Repositories;
-using HumanResource.Domain.Repositries;
 using Microsoft.EntityFrameworkCore;
 
 namespace HumanResource.Application.Services.ExpenseService
@@ -14,7 +13,6 @@ namespace HumanResource.Application.Services.ExpenseService
     {
         private readonly IPersonelService _personelService;
         private readonly IExpenseRepository _expenseRepository;
-        private readonly IAppUserRepository _appUserRepository;
         private readonly IMapper _mapper;
         public ExpenseServices(IPersonelService personelService, IExpenseRepository expenseRepository, IMapper mapper)
         {
@@ -60,14 +58,10 @@ namespace HumanResource.Application.Services.ExpenseService
                 select: x => new ExpenseVM()
                 {
                     Id = x.Id,
-                    ExpenseDate = x.ExpenseDate.ToShortDateString(),
-                    UserId = x.UserId,
+                    ExpenseDate = x.ExpenseDate.ToShortDateString(),                   
                     Amount = x.Amount,
-                    CurrencyTypeId = x.CurrencyTypeId,
                     CurrencyType = x.CurrencyType.Name,
                     ShortDescription = x.ShortDescription,
-                    LongDescription = x.LongDescription,
-                    ExpenseTypeId = x.ExpenseTypeId,
                     ExpenseType = x.ExpenseType.Name
                 },
                 where: x => x.User.Id == id && x.StatuId != Status.Deleted.GetHashCode(),

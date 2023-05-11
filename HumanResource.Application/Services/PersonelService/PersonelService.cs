@@ -51,13 +51,13 @@ namespace HumanResource.Application.Services.PersonelService
                    Id = x.Id,
                    Amount = x.Amount,
                    NumberOfInstallments = x.NumberOfInstallments,
-                   CreatedDate = x.CreatedDate
+                   CreatedDate = x.CreatedDate.ToShortDateString()
 
                },
                where: x => x.User.UserName == name && x.Statu.Name == Status.AwatingApproval.ToString(),
                orderby: x => x.OrderByDescending(x => x.CreatedDate),
                include: x => x.Include(x => x.User)
-               );
+               ); ;
 
             return personelAdvanceRequests;
 
@@ -72,9 +72,7 @@ namespace HumanResource.Application.Services.PersonelService
                  ExpenseDate = x.ExpenseDate.ToShortDateString(),
                  Amount = x.Amount,
                  CurrencyType = x.CurrencyType.Name,
-                 LongDescription = x.LongDescription,
                  ShortDescription = x.ShortDescription,
-                 ExpenseType = x.ExpenseType.Name
              },
              where: x => x.User.UserName == name && x.Statu.Name == Status.AwatingApproval.ToString(),
              orderby: x => x.OrderByDescending(x => x.CreatedDate),
