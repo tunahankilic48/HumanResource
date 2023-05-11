@@ -15,5 +15,8 @@ namespace HumanResource.Application.Models.VMs.CompanyManagerVMs
 
         [Display(Name ="Title")]
         public string Title { get; set; }
+
+        [Display(Name = "Manager")]
+        public string ManagerName { get; set; }
     }
 }
