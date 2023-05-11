@@ -10,19 +10,19 @@ namespace HumanResource.Domain.Enums
 	public enum ExpenseTypes
 	{
 		[Display(Name = "Food Expenses")]
-		FoodExpenses = 1,
+		Food_Expenses = 1,
 		[Display(Name = "Transportation Expenses")]
-		TransportationExpenses,
+		Transportation_Expenses,
 		[Display(Name = "Clothing Expenses")]
-		ClothingExpenses,
+		Clothing_Expenses,
 		[Display(Name = "Energy and Communication Invoice Expenses")]
-		EnergyandCommunicationInvoiceExpenses,
+		Energyand_Communication_Invoice_Expenses,
 		[Display(Name = "Rental and Dues Expenses")]
-		RentalandDuesExpenses,
+		Rentaland_Dues_Expenses,
 		[Display(Name = "Office Expenses")]
-		OfficeExpenses,
+		Office_Expenses,
 		[Display(Name = "Education Expenses")]
-		EducationExpenses
+		Education_Expenses
 
 
 	}

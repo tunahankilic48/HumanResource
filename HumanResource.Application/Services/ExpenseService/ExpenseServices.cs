@@ -24,8 +24,8 @@ namespace HumanResource.Application.Services.ExpenseService
 
         public async Task<bool> Create(CreateExpenseDTO model, string UserName)
         {
-            model.Statu.Name = Status.AwatingApproval.ToString();
-            model.Statu.StatuEnumId = Status.AwatingApproval.GetHashCode();
+            model.Statu.Name = Status.Awating_Approval.ToString();
+            model.Statu.StatuEnumId = Status.Awating_Approval.GetHashCode();
             Expense expense = _mapper.Map<Expense>(model);
             expense.UserId = await _personelService.GetPersonelId(UserName);
             return await _expenseRepository.Add(expense);

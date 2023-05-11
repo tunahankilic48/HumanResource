@@ -32,7 +32,7 @@ namespace HumanResource.Infrastructure.SeedData
                     foreach (var item in Enum.GetValues(typeof(Status)))
                     {
                         Statu statu = new Statu();
-                        statu.Name = item.ToString();
+                        statu.Name = String.Join(" ", item.ToString().Split("_"));
                         statu.StatuEnumId = item.GetHashCode();
                         status.Add(statu);
                     }
@@ -49,9 +49,28 @@ namespace HumanResource.Infrastructure.SeedData
                     {
 
                         BloodType bloodType = new BloodType();
-                        bloodType.Name = item.ToString();
-                        bloodType.BloodTypeEnumId = item.GetHashCode();
-                        bloodTypes.Add(bloodType);
+
+                        var bloodTypesSplit = item.ToString().Split("_");
+                        if (bloodTypesSplit[0] != "Zero")
+                        {
+                            if (bloodTypesSplit[1] == "positive")
+                                bloodType.Name = bloodTypesSplit[0] + " rh +";
+                            else
+                                bloodType.Name = bloodTypesSplit[0] + " rh -";
+
+                            bloodType.BloodTypeEnumId = item.GetHashCode();
+                            bloodTypes.Add(bloodType);
+                        }
+                        else
+                        {
+                            if (bloodTypesSplit[1] == "positive")
+                                bloodType.Name = "0 rh +";
+                            else
+                                bloodType.Name = "0 rh -";
+
+                            bloodType.BloodTypeEnumId = item.GetHashCode();
+                            bloodTypes.Add(bloodType);
+                        }
                     }
 
                     await context.BloodTypes.AddRangeAsync(bloodTypes);
@@ -64,7 +83,7 @@ namespace HumanResource.Infrastructure.SeedData
                     {
 
                         LeaveType leaveType = new LeaveType();
-                        leaveType.Name = item.ToString();
+                        leaveType.Name = String.Join(" ", item.ToString().Split("_"));
                         leaveType.LeaveTypeEnumId = item.GetHashCode();
                         LeaveTypes.Add(leaveType);
                     }
@@ -94,7 +113,7 @@ namespace HumanResource.Infrastructure.SeedData
                     {
 
                         ExpenseType expenseType = new ExpenseType();
-                        expenseType.Name = item.ToString();
+                        expenseType.Name = String.Join(" ", item.ToString().Split("_"));
                         expenseType.ExpenseTypeEnumId = item.GetHashCode();
                         expenseTypes.Add(expenseType);
                     }

@@ -6,21 +6,21 @@ namespace HumanResource.Domain.Enums
     public enum BloodTypes
     {
         [Display(Name = "A rh +")]
-        Apositive = 1,
+        A_positive = 1,
         [Display(Name = "A rh -")]
-        Anegative,
+        A_negative,
         [Display(Name = "B rh +")]
-        Bpositive,
+        B_positive,
         [Display(Name = "B rh -")]
-        Bnegative,
+        B_negative,
         [Display(Name = "AB rh +")]
-        ABpositive,
+        AB_positive,
         [Display(Name = "AB rh -")]
-        ABnegative,
+        AB_negative,
         [Display(Name = "0 rh +")]
-        ZeroPositive,
+        Zero_Positive,
         [Display(Name = "0 rh -")]
-        ZeroNegative,
+        Zero_Negative,
 
     }
 }

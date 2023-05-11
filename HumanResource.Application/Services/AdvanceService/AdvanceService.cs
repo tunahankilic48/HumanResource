@@ -26,8 +26,8 @@ namespace HumanResource.Application.Services.AdvanceService
 
         public async Task<bool> Create(CreateAdvanceDTO model,string userName)
 		{
-            model.Statu.Name = Status.AwatingApproval.ToString();
-            model.Statu.StatuEnumId = Status.AwatingApproval.GetHashCode();
+            model.Statu.Name = Status.Awating_Approval.ToString();
+            model.Statu.StatuEnumId = Status.Awating_Approval.GetHashCode();
             Advance advance = _mapper.Map<Advance>(model);
             advance.UserId = await _personelService.GetPersonelId(userName);
             return await _advanceRepository.Add(advance);

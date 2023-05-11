@@ -27,8 +27,8 @@ namespace HumanResource.Application.Services.LeaveServices
 
         public async Task<bool> Create(CreateLeaveDTO model, string userName)
         {
-            model.Statu.Name = Status.AwatingApproval.ToString();
-            model.Statu.StatuEnumId = Status.AwatingApproval.GetHashCode();
+            model.Statu.Name = Status.Awating_Approval.ToString();
+            model.Statu.StatuEnumId = Status.Awating_Approval.GetHashCode();
             Leave leave = _mapper.Map<Leave>(model);
             leave.UserId = await _personelService.GetPersonelId(userName);
             return await _leaveRepository.Add(leave);
