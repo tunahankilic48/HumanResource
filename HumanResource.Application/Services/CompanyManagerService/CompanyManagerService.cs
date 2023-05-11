@@ -172,12 +172,13 @@ namespace HumanResource.Application.Services.CompanyManagerService
                   FullName = x.FirstName + " " + x.LastName,
                   DepartmentName = x.Department.Name,
                   Title = x.Title.Name,
-                  UserName = x.UserName
+                  UserName = x.UserName,
+                  ManagerName = x.Manager.FirstName + " " + x.Manager.LastName
 
               },
               where: x => x.StatuId == Status.Active.GetHashCode(),
               orderby: x => x.OrderByDescending(x => x.CreatedDate),
-              include: x => x.Include(x => x.Department).Include(x => x.Title)
+              include: x => x.Include(x => x.Department).Include(x => x.Title).Include(x => x.Manager)
               );
 
             return employees;
@@ -213,26 +214,34 @@ namespace HumanResource.Application.Services.CompanyManagerService
             return false;
         }
 
-        public async Task UpdateEmployee(UpdateEmployeeDTO model)
+        public async Task<IdentityResult> UpdateEmployee(UpdateEmployeeDTO model)
         {
             AppUser user = await _appUserRepository.GetDefault(x => x.Id == model.Id);
-
-            if (model.Password != null)
+            AppUser isUserMailExists = await _userManager.FindByEmailAsync(model.Email);
+            IdentityError errorEmail = new IdentityError();
+            if (user.Email != model.Email)
             {
-                user.PasswordHash = _userManager.PasswordHasher.HashPassword(user, model.Password);
-            }
-
-            if (model.Email != null)
-            {
-                AppUser isUserMailExists = await _userManager.FindByEmailAsync(model.Email);
                 if (isUserMailExists == null)
+                {
                     await _userManager.SetEmailAsync(user, model.Email);
+                }
+                else
+                {
+                    errorEmail.Description = "Email already exist.";
+                }
             }
-            if (model.UserName != null)
+            AppUser isUserNameExists = await _userManager.FindByNameAsync(model.UserName);
+            IdentityError errorUserName = new IdentityError();
+            if (user.UserName != model.UserName)
             {
-                AppUser isUserNameExists = await _userManager.FindByNameAsync(model.UserName);
                 if (isUserNameExists == null)
+                {
                     await _userManager.SetUserNameAsync(user, model.UserName);
+                }
+                else
+                {
+                    errorUserName.Description = "User name already exist.";
+                }
             }
             if (model.Image != null)
             {
@@ -275,8 +284,22 @@ namespace HumanResource.Application.Services.CompanyManagerService
                     user.Address.Description = model.AddressDescription;
                 }
             }
+            if (errorEmail.Description == null && errorUserName.Description == null)
+                return await _userManager.UpdateAsync(user);
+            else
+            {
+                if (errorEmail.Description != null)
+                {
+                    if (errorUserName.Description != null)
+                    {
+                        return IdentityResult.Failed(errorEmail, errorUserName);
 
-            await _userManager.UpdateAsync(user);
+                    }
+                    return IdentityResult.Failed(errorEmail);
+                }
+                else
+                    return IdentityResult.Failed(errorUserName);
+            }
         }
 
         public async Task Delete(Guid id)

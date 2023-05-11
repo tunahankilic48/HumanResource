@@ -73,7 +73,7 @@ namespace HumanResource.Presentation.Areas.CompanyManager.Controllers
                 {
                     ModelState.AddModelError(string.Empty, item);
                 }
-             
+
             }
             ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
             ViewBag.Departments = new SelectList(await _companyManagerService.GetDepartments(), "Id", "Name");
@@ -103,8 +103,14 @@ namespace HumanResource.Presentation.Areas.CompanyManager.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _companyManagerService.UpdateEmployee(model);
-                return RedirectToAction("employees");
+                var result = await _companyManagerService.UpdateEmployee(model);
+                if (result.Succeeded)
+                    return RedirectToAction("employees");
+                foreach (var item in result.Errors)
+                {
+                    ModelState.AddModelError("", item.Description);
+
+                } 
             }
 
             ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
@@ -113,6 +119,7 @@ namespace HumanResource.Presentation.Areas.CompanyManager.Controllers
             ViewBag.CompanyManagers = new SelectList(await _companyManagerService.GetCompanyManagers(), "Id", "FullName");
             ViewBag.Cities = new SelectList(await _addressService.GetCities(), "Id", "Name");
             ViewBag.Districts = new SelectList(await _addressService.GetDistricts(), "Id", "Name");
+            model.BaseUrl = Request.Scheme + "://" + HttpContext.Request.Host.ToString();
             return View(model);
         }
 

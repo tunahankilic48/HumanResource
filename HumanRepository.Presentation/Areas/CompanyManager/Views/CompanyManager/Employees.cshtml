@@ -57,17 +57,11 @@
                             <th class="text-center">@Html.DisplayNameFor(x=>x.FullName)</th>
                             <th class="text-center">@Html.DisplayNameFor(x=>x.DepartmentName)</th>
                             <th class="text-center">@Html.DisplayNameFor(x=>x.Title)</th>
+                            <th class="text-center">@Html.DisplayNameFor(x=>x.ManagerName)</th>
                             <th></th>
                         </tr>
                     </thead>
-                    <tfoot>
-                        <tr>
-                            <th class="text-center">@Html.DisplayNameFor(x=>x.FullName)</th>
-                            <th class="text-center">@Html.DisplayNameFor(x=>x.DepartmentName)</th>
-                            <th class="text-center">@Html.DisplayNameFor(x=>x.Title)</th>
-                            <th></th>
-                        </tr>
-                    </tfoot>
+
                     <tbody>
                         @foreach (var item in Model)
                         {
@@ -76,6 +70,7 @@
                                 <td class="text-center">@item.FullName</td>
                                 <td class="text-center">@item.DepartmentName</td>
                                 <td class="text-center">@item.Title</td>
+                                <td class="text-center">@item.ManagerName</td>
                                 <td class="d-flex justify-content-around">
                                     <a class="btn btn-primary m-2" asp-action="update" asp-controller="companymanager" asp-route-id="@item.Id">Update Employee</a>
                                     <button type="button" class="btn btn-danger m-2" data-bs-toggle="modal" data-bs-target="#deleteEmployeeModal" data-bs-whatever="@item.Id">Delete Employee</button>

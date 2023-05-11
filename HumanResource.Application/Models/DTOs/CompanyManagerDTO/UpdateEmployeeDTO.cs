@@ -27,17 +27,6 @@ namespace HumanResource.Application.Models.DTOs.CompanyManagerDTO
         [Display(Name = "User Name")]
         public string UserName { get; set; }
 
-        [MinLength(6, ErrorMessage = "Password must be more than 6 characters.")]
-        [MaxLength(30, ErrorMessage = "Password must be less than 30 characters.")]
-        [DataType(DataType.Password)]
-        [Display(Name = "Password")]
-        public string? Password { get; set; }
-
-        [Compare("Password", ErrorMessage = "Passwords are not same.")]
-        [DataType(DataType.Password)]
-        [Display(Name = "Password Confirm")]
-        public string? ConfirmPassword { get; set; }
-
 
         [Required(ErrorMessage = "E-mail cannot be null.")]
         [Display(Name = "E-Mail")]
