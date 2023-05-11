@@ -69,7 +69,7 @@ namespace HumanResource.Application.Services.AccountServices
             },
             where: x => x.UserName == userName,
             orderby: null,
-            include: x => x.Include(x => x.Manager).Include(x => x.Department).Include(x => x.Address).Include(x => x.Address.District).Include(x=>x.Title)
+            include: x => x.Include(x => x.Manager).Include(x => x.Department).Include(x => x.Address).Include(x => x.Address.District).Include(x => x.Title).Include(x => x.Company)
             );
 
 
@@ -101,21 +101,30 @@ namespace HumanResource.Application.Services.AccountServices
         {
             AppUser user = _mapper.Map<AppUser>(model);
 
-            IdentityResult result = await _userManager.CreateAsync(user, model.Password);
-            await _userManager.AddToRoleAsync(user, "Employee");
-            RegisterVM register = new RegisterVM();
-            if (result.Succeeded)
-            {
-                var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                register.Email = user.Email;
-                register.Token = token;
-                register.Result = result;
-            }
-            else
+            try
             {
 
-                register.Result = result;
+            IdentityResult result = await _userManager.CreateAsync(user, model.Password);
             }
+            catch (Exception ex)
+            {
+                var abc = ex.Message;
+                var bca = abc;
+                throw;
+            }
+            await _userManager.AddToRoleAsync(user, "Employee");
+            RegisterVM register = new RegisterVM();
+            //if (result.Succeeded)
+            //{
+            //    var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            //    register.Email = user.Email;
+            //    register.Token = token;
+            //    register.Result = result;
+            //}
+            //else
+            //{
+            //    register.Result = result;
+            //}
             return register;
         }
 

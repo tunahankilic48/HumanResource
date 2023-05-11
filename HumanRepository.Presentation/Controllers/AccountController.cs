@@ -21,12 +21,13 @@ namespace HumanResource.Presentation.Controllers
 		private readonly IAddressService _addressService;
 		private readonly IEmailService _emailService;
 		private readonly UserManager<AppUser> _userManager;
-		public AccountController(IAccountServices accountServices, IPersonelService personelService, IAddressService addressService, IEmailService emailService)
+		public AccountController(IAccountServices accountServices, IPersonelService personelService, IAddressService addressService, IEmailService emailService, UserManager<AppUser> userManager)
 		{
 			_accountServices = accountServices;
 			_personelService = personelService;
 			_addressService = addressService;
 			_emailService = emailService;
+			_userManager = userManager;
 		}
 
 		[AllowAnonymous]
