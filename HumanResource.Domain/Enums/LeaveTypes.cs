@@ -6,20 +6,20 @@ namespace HumanResource.Domain.Enums
     public enum LeaveTypes
     {
         [Display(Name = "Annual Leave")]
-        AnnualLeave = 1,
+        Annual_Leave = 1,
         [Display(Name = "Maternity Leave")]
-        MaternityLeave,
+        Maternity_Leave,
         [Display(Name = "Paternity Leave")]
-        PaternityLeave,
+        Paternity_Leave,
         [Display(Name = "Pregnancy Control Leave")]
-        PregnancyControlLeave,
+        Pregnancy_ControlLeave,
         [Display(Name = "Death Warrant")]
-        DeathWarrant,
+        Death_Warrant,
         [Display(Name = "New Job Search Permit")]
-        NewJobSearchPermit,
+        New_Job_Search_Permit,
         [Display(Name = "Marriage Permission")]
-        MarriagePermission,
+        Marriage_Permission,
         [Display(Name = "Paid Leave")]
-        PaidLeave
+        Paid_Leave
     }
 }

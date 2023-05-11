@@ -9,7 +9,7 @@ namespace HumanResource.Domain.Enums
         [Display(Name = "Passive")]
         Passive,
         [Display(Name = "Awating Approval")]
-        AwatingApproval,
+        Awating_Approval,
         [Display(Name = "Deleted")]
         Deleted,
         [Display(Name = "Rejected")]
