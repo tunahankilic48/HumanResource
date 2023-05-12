@@ -11,7 +11,7 @@ namespace HumanResource.Application.Services.AccountServices
         Task<UpdateProfileDTO> GetByUserName(string userName);
         Task UpdateUser(UpdateProfileDTO model);
         Task LogOut();
-
+        Task<bool> IsAdmin(string userName);
         Task<IdentityResult> ConfirmEmail(string token, string username);
 
     }

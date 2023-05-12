@@ -6,6 +6,7 @@ using HumanResource.Application.Models.DTOs.DepartmentDTOs;
 using HumanResource.Application.Models.DTOs.ExpenseDTO;
 using HumanResource.Application.Models.DTOs.LeaveDTO;
 using HumanResource.Application.Models.DTOs.TitleDTOs;
+using HumanResource.Application.Models.VMs.CompanyVM;
 using HumanResource.Domain.Entities;
 
 namespace HumanResource.Application.Mapping
@@ -33,6 +34,10 @@ namespace HumanResource.Application.Mapping
             CreateMap<Expense, UpdateExpenseDTO>().ReverseMap();
 
             CreateMap<AppUser, CreateEmployeeDTO>().ReverseMap();
+
+            CreateMap<Company, CompanyDetailsVM>().ReverseMap();
+
+
 
         }
     }

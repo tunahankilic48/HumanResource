@@ -82,7 +82,8 @@ namespace HumanResource.Application.Services.AccountServices
 
             if (userEmail != null)
             {
-                return await _signInManager.PasswordSignInAsync(userEmail.UserName, model.Password, false, false);
+                var result = await _signInManager.PasswordSignInAsync(userEmail.UserName, model.Password, false, false);
+                return result;
             }
             return await _signInManager.PasswordSignInAsync(model.UserNameOrEmail, model.Password, false, false);
         }
@@ -193,6 +194,35 @@ namespace HumanResource.Application.Services.AccountServices
                     return true;
             }
             return false;
+        }
+
+        public async Task<bool> IsAdmin(string userName)
+        {
+            var userEmail = await _userManager.FindByEmailAsync(userName);
+            var userUserName = await _userManager.FindByNameAsync(userName);
+            if (userUserName != null)
+            {
+                var roles = await GetUserRole(userName);
+
+                foreach (var role in roles)
+                {
+                    if (role == "SiteAdmin")
+                        return true;
+                }
+                return false;
+            }
+            else
+            {
+                var roles = await GetUserRole(userEmail.UserName);
+
+                foreach (var role in roles)
+                {
+                    if (role == "SiteAdmin")
+                        return true;
+                }
+                return false;
+
+            }
         }
     }
 }

@@ -13,156 +13,162 @@ using NuGet.Protocol;
 
 namespace HumanResource.Presentation.Controllers
 {
-	[Authorize]
-	public class AccountController : Controller
-	{
-		private readonly IAccountServices _accountServices;
-		private readonly IPersonelService _personelService;
-		private readonly IAddressService _addressService;
-		private readonly IEmailService _emailService;
-		private readonly UserManager<AppUser> _userManager;
-		public AccountController(IAccountServices accountServices, IPersonelService personelService, IAddressService addressService, IEmailService emailService)
-		{
-			_accountServices = accountServices;
-			_personelService = personelService;
-			_addressService = addressService;
-			_emailService = emailService;
-		}
+    [Authorize]
+    public class AccountController : Controller
+    {
+        private readonly IAccountServices _accountServices;
+        private readonly IPersonelService _personelService;
+        private readonly IAddressService _addressService;
+        private readonly IEmailService _emailService;
+        private readonly UserManager<AppUser> _userManager;
+        public AccountController(IAccountServices accountServices, IPersonelService personelService, IAddressService addressService, IEmailService emailService)
+        {
+            _accountServices = accountServices;
+            _personelService = personelService;
+            _addressService = addressService;
+            _emailService = emailService;
+        }
 
-		[AllowAnonymous]
-		public IActionResult Register()
-		{
-			if (User.Identity.IsAuthenticated)
-				return RedirectToAction("login", "account");
+        [AllowAnonymous]
+        public IActionResult Register()
+        {
+            if (User.Identity.IsAuthenticated)
+                return RedirectToAction("login", "account");
 
-			return View();
-		}
-		[AllowAnonymous, HttpPost, ValidateAntiForgeryToken]
-		public async Task<IActionResult> Register(RegisterDTO model)
-		{
-			if (ModelState.IsValid)
-			{
+            return View();
+        }
+        [AllowAnonymous, HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register(RegisterDTO model)
+        {
+            if (ModelState.IsValid)
+            {
 
-				var result = await _accountServices.Register(model);
+                var result = await _accountServices.Register(model);
 
-				if (result.Result.Succeeded)
-				{
-					
-					var conformationLink = Url.Action("ConfirmEmail", "Account", new { token = result.Token, email = result.Email }, Request.Scheme);
+                if (result.Result.Succeeded)
+                {
 
-					var message = new Message(result.Email, "Conformation Email Link", $"Welcome to our human resources platform. Please click the link to activate your account. {conformationLink!}");
-					_emailService.SendEmail(message);
+                    var conformationLink = Url.Action("ConfirmEmail", "Account", new { token = result.Token, email = result.Email }, Request.Scheme);
 
-					TempData["Conformation"] = "Please check your mailbox and verify your email!";
+                    var message = new Message(result.Email, "Conformation Email Link", $"Welcome to our human resources platform. Please click the link to activate your account. {conformationLink!}");
+                    _emailService.SendEmail(message);
 
-					return RedirectToAction("login", "account");
-				}
+                    TempData["Conformation"] = "Please check your mailbox and verify your email!";
 
-				foreach (var item in result.Result.Errors)
-				{
-					ModelState.AddModelError(string.Empty, item.Description);
-					TempData["Error"] = "there is something wrong";
-				}
-			}
-			return View(model);
-		}
+                    return RedirectToAction("login", "account");
+                }
 
-		[AllowAnonymous]
-		public IActionResult Login(string returnUrl = "/")
-		{
-			if (User.Identity.IsAuthenticated)
-				return RedirectToAction("index", "personel", new { Area = "personel" });
+                foreach (var item in result.Result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, item.Description);
+                    TempData["Error"] = "there is something wrong";
+                }
+            }
+            return View(model);
+        }
 
-			ViewData["ReturnUrl"] = returnUrl;
+        [AllowAnonymous]
+        public IActionResult Login(string returnUrl = "/")
+        {
+            if (User.Identity.IsAuthenticated)
+                return RedirectToAction("index", "personel", new { Area = "personel" });
 
-			return View();
-		}
-		[AllowAnonymous, HttpPost, ValidateAntiForgeryToken]
-		public async Task<IActionResult> Login(LoginDTO model, string returnUrl)
-		{
-			if (ModelState.IsValid)
-			{
-				var result = await _accountServices.Login(model);
+            ViewData["ReturnUrl"] = returnUrl;
 
-				if (result.Succeeded)
-					return RedirectToLocal(returnUrl);
-				if(result == Microsoft.AspNetCore.Identity.SignInResult.Failed)
-					TempData["loginError"] = "Username, Email or Password is wrong.";
-				else if (result == Microsoft.AspNetCore.Identity.SignInResult.NotAllowed)
+            return View();
+        }
+        [AllowAnonymous, HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login(LoginDTO model, string returnUrl)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _accountServices.Login(model);
+
+                if (result.Succeeded)
+                {
+                    if (await _accountServices.IsAdmin(model.UserNameOrEmail))
+                        return RedirectToAction("index", "siteadmin", new { Area = "SiteAdmin" });
+                    return RedirectToLocal(returnUrl);
+                }
+
+                if (result == Microsoft.AspNetCore.Identity.SignInResult.Failed)
+                    TempData["loginError"] = "Username, Email or Password is wrong.";
+                else if (result == Microsoft.AspNetCore.Identity.SignInResult.NotAllowed)
                     TempData["loginError"] = "Email has not been verified yet. Please verify your email.";
                 else
                     TempData["loginError"] = "Invalid Login Attemp";
 
             }
-			ViewData["ReturnUrl"] = returnUrl;
-			return View(model);
-		}
+            ViewData["ReturnUrl"] = returnUrl;
+            return View(model);
+        }
 
-		public async Task<IActionResult> LogOut()
-		{
-			await _accountServices.LogOut();
-			return RedirectToAction("login");
-		}
-		public async Task<IActionResult> Profile()
-		{
+        public async Task<IActionResult> LogOut()
+        {
+            await _accountServices.LogOut();
+            return RedirectToAction("login");
+        }
+        public async Task<IActionResult> Profile()
+        {
 
             ViewBag.Cities = new SelectList(await _addressService.GetCities(), "Id", "Name");
-			ViewBag.Districts = new SelectList(await _addressService.GetDistricts(), "Id", "Name");
-			ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
-			var model = await _accountServices.GetByUserName(User.Identity.Name);
-			model.BaseUrl = Request.Scheme + "://" + HttpContext.Request.Host.ToString();
+            ViewBag.Districts = new SelectList(await _addressService.GetDistricts(), "Id", "Name");
+            ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
+            var model = await _accountServices.GetByUserName(User.Identity.Name);
+            model.BaseUrl = Request.Scheme + "://" + HttpContext.Request.Host.ToString();
 
             return View(model);
-		}
+        }
 
-		[HttpPost, ValidateAntiForgeryToken]
-		public async Task<IActionResult> Profile(UpdateProfileDTO model)
-		{
-			if (ModelState.IsValid)
-			{
-				await _accountServices.UpdateUser(model);
-				return RedirectToAction("profile");
-			}
-			ViewBag.Cities = new SelectList(await _addressService.GetCities(), "Id", "Name");
-			ViewBag.Districts = new SelectList(await _addressService.GetDistricts(), "Id", "Name");
-			ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
-			return View(model);
-		}
-		[HttpGet]
-		public async Task<JsonResult> setDropDownList(int id)
-		{
-			var districts = await _addressService.GetDistricts(id);
-			return Json(districts);
-		}
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> Profile(UpdateProfileDTO model)
+        {
+            if (ModelState.IsValid)
+            {
+                await _accountServices.UpdateUser(model);
+                return RedirectToAction("profile");
+            }
+            ViewBag.Cities = new SelectList(await _addressService.GetCities(), "Id", "Name");
+            ViewBag.Districts = new SelectList(await _addressService.GetDistricts(), "Id", "Name");
+            ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
+            return View(model);
+        }
+        [HttpGet]
+        public async Task<JsonResult> setDropDownList(int id)
+        {
+            var districts = await _addressService.GetDistricts(id);
+            return Json(districts);
+        }
 
 
 
-		private IActionResult RedirectToLocal(string returnUrl = "/")
-		{
-			if (Url.IsLocalUrl(returnUrl))
-			{
-				return Redirect(returnUrl);
-			}
-			else
-			{
-				return RedirectToAction("index", "");
-			}
-		}
+        private IActionResult RedirectToLocal(string returnUrl = "/")
+        {
 
-		[AllowAnonymous]
-		public async Task<IActionResult> ConfirmEmail(string token, string email)
-		{
-			var result = await _accountServices.ConfirmEmail(token, email);
+            if (Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
+            else
+            {
+                return RedirectToAction("index", "");
+            }
+        }
 
-			if (result.Succeeded)
-			{
-				TempData["SuccessConformation"] = "Your account was confirmed successfully.";
-				return RedirectToAction("Login");
+        [AllowAnonymous]
+        public async Task<IActionResult> ConfirmEmail(string token, string email)
+        {
+            var result = await _accountServices.ConfirmEmail(token, email);
 
-			}
+            if (result.Succeeded)
+            {
+                TempData["SuccessConformation"] = "Your account was confirmed successfully.";
+                return RedirectToAction("Login");
+
+            }
             TempData["ErrorConformation"] = "Your account could not confirmed. Please register again.";
             return RedirectToAction("register");
 
-		}
-	}
+        }
+    }
 }
