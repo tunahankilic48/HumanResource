@@ -1,0 +1,47 @@
+﻿@model IEnumerable<PersonelAdvanceRequestVM>
+@{
+    Layout = "~/Areas/Personel/Views/Shared/_LayoutPersonel.cshtml";
+}
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800 mb-3">Advance Requests</h1>
+
+    <!-- DataTales Example -->
+    <div class="ms-2 card shadow mb-4">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th class="text-center">@Html.DisplayNameFor(x=>x.PersonelFullName)</th>
+                            <th class="text-center">@Html.DisplayNameFor(x=>x.Amount)</th>
+                            <th class="text-center">@Html.DisplayNameFor(x=>x.NumberOfInstallments)</th>
+                            <th class="text-center">@Html.DisplayNameFor(x=>x.Description)</th>
+                            <th class="text-center">@Html.DisplayNameFor(x=>x.AdvanceDate)</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+
+                            <tr class="align-middle">
+                                <td class="text-center align-middle" type="date">@item.PersonelFullName</td>
+                                <td class="text-center align-middle" type="date">@item.Amount</td>
+                                <td class="text-center align-middle" type="date">@item.NumberOfInstallments</td>
+                                <td class="text-center align-middle" type="date">@item.Description</td>
+                                <td class="text-center align-middle" type="date">@item.AdvanceDate</td>
+                                <td class="d-flex justify-content-around align-middle text-center">
+                                    <a class="btn btn-primary m-2" asp-action="update" asp-controller="title" asp-route-id="@item.Id">View Details</a>
+                                </td>
+                            </tr>
+
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

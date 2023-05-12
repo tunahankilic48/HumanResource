@@ -7,7 +7,6 @@ using HumanResource.Domain.Entities;
 using HumanResource.Domain.Enums;
 using HumanResource.Domain.Repositories;
 using HumanResource.Domain.Repositries;
-using HumanResource.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,7 +20,10 @@ namespace HumanResource.Application.Services.CompanyManagerService
         private readonly UserManager<AppUser> _userManager;
         private readonly IMapper _mapper;
         private readonly IPersonelService _personelService;
-        public CompanyManagerService(IDepartmentRepository departmentRepository, ITitleRepository titleRepository, IMapper mapper, UserManager<AppUser> userManager, IAppUserRepository appUserRepository, IPersonelService personelService)
+        private readonly ILeaveRepository _leaveRepository;
+        private readonly IAdvanceRepository _advanceRepository;
+        private readonly IExpenseRepository _expenseRepository;
+        public CompanyManagerService(IDepartmentRepository departmentRepository, ITitleRepository titleRepository, IMapper mapper, UserManager<AppUser> userManager, IAppUserRepository appUserRepository, IPersonelService personelService, ILeaveRepository leaveRepository, IAdvanceRepository advanceRepository, IExpenseRepository expenseRepository)
         {
             _departmentRepository = departmentRepository;
             _titleRepository = titleRepository;
@@ -29,6 +31,9 @@ namespace HumanResource.Application.Services.CompanyManagerService
             _userManager = userManager;
             _appUserRepository = appUserRepository;
             _personelService = personelService;
+            _leaveRepository = leaveRepository;
+            _advanceRepository = advanceRepository;
+            _expenseRepository = expenseRepository;
         }
 
         public async Task<UpdateEmployeeDTO> GetByUserName(Guid id)
@@ -311,6 +316,68 @@ namespace HumanResource.Application.Services.CompanyManagerService
                 leave.DeletedDate = DateTime.Now;
                 await _appUserRepository.Delete(leave);
             }
+        }
+
+        public async Task<List<PersonelLeaveRequestVM>> GetPersonelLeaveRequests(Guid id)
+        {
+            var personelLeaveRequests = await _leaveRepository.GetFilteredList(
+             select: x => new PersonelLeaveRequestVM()
+             {
+                 Id = x.Id,
+                 PersonelFullName = x.User.FirstName + " " + x.User.LastName,
+                 LeaveType = x.LeaveType.Name,
+                 StartDate = x.StartDate.ToShortDateString(),
+                 EndDate = x.EndDate.ToShortDateString(),
+
+             },
+             where: x => x.Statu.Name == Status.Awating_Approval.ToString() && x.User.ManagerId == id,
+             orderby: x => x.OrderByDescending(x => x.CreatedDate),
+             include: x => x.Include(x => x.LeaveType).Include(x => x.User).Include(x => x.User.Manager)
+             );
+
+            return personelLeaveRequests;
+        }
+
+        public async Task<List<PersonelAdvanceRequestVM>> GetPersonelAdvanceRequests(Guid id)
+        {
+            var personelAdvanceRequests = await _advanceRepository.GetFilteredList(
+             select: x => new PersonelAdvanceRequestVM()
+             {
+                 Id = x.Id,
+                 PersonelFullName = x.User.FirstName + " " + x.User.LastName,
+                 Amount = x.Amount,
+                 NumberOfInstallments = x.NumberOfInstallments,
+                 Description = x.Description,
+                 AdvanceDate = x.AdvanceDate.ToShortDateString()
+
+             },
+             where: x => x.Statu.Name == Status.Awating_Approval.ToString() && x.User.ManagerId == id,
+             orderby: x => x.OrderByDescending(x => x.CreatedDate),
+             include: x => x.Include(x => x.User).Include(x => x.User.Manager)
+             );
+
+            return personelAdvanceRequests;
+        }
+
+        public async Task<List<PersonelExpenseRequestVM>> GetPersonelExpenseRequests(Guid id)
+        {
+            var personelAdvanceRequests = await _expenseRepository.GetFilteredList(
+             select: x => new PersonelExpenseRequestVM()
+             {
+                 Id = x.Id,
+                 PersonelFullName = x.User.FirstName + " " + x.User.LastName,
+                 Amount = x.Amount,
+                 ExpenseDate = x.ExpenseDate.ToShortDateString(),
+                 CurrencyType = x.CurrencyType.Name,
+                 ShortDescription = x.ShortDescription
+
+             },
+             where: x => x.Statu.Name == Status.Awating_Approval.ToString() && x.User.ManagerId == id,
+             orderby: x => x.OrderByDescending(x => x.CreatedDate),
+             include: x => x.Include(x => x.User).Include(x => x.User.Manager).Include(x=>x.CurrencyType)
+                );
+
+            return personelAdvanceRequests;
         }
     }
 }

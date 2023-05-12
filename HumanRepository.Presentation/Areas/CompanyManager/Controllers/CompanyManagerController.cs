@@ -145,6 +145,22 @@ namespace HumanResource.Presentation.Areas.CompanyManager.Controllers
             return View(await _companyManagerService.GetTitles());
         }
 
+        public async Task<IActionResult> LeaveRequests()
+        {
+            ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
+            return View(await _companyManagerService.GetPersonelLeaveRequests( await _personelService.GetPersonelId(User.Identity.Name)));
+        }
+        public async Task<IActionResult> AdvanceRequests()
+        {
+            ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
+            return View(await _companyManagerService.GetPersonelAdvanceRequests(await _personelService.GetPersonelId(User.Identity.Name)));
+        }
+        public async Task<IActionResult> ExpenseRequests()
+        {
+            ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
+            return View(await _companyManagerService.GetPersonelExpenseRequests(await _personelService.GetPersonelId(User.Identity.Name)));
+        }
+
 
 
     }
