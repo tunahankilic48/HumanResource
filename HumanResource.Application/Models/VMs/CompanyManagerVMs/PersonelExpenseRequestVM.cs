@@ -1,11 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace HumanResource.Application.Models.VMs.ExpenseVM
+namespace HumanResource.Application.Models.VMs.CompanyManagerVMs
 {
-    public class ExpenseVM
+    public class PersonelExpenseRequestVM
     {
         public int Id { get; set; }
 
+        [Display(Name = "Personel Name")]
+        public string PersonelFullName { get; set; }
         [Display(Name = "Expense Date")]
         public string ExpenseDate { get; set; }
 
@@ -18,9 +20,5 @@ namespace HumanResource.Application.Models.VMs.ExpenseVM
         [Display(Name = "Description")]
         public string ShortDescription { get; set; }
 
-        [Display(Name = "Expense Type")]
-        public string ExpenseType { get; set; }
-        [Display(Name = "Manager")]
-        public string ManagerName { get; set; }
     }
 }

@@ -63,12 +63,12 @@
                         {
 
                             <tr>
-                                <td class="text-center">@item.Amount @item.CurrencyType</td>
-                                <td class="text-center">@item.ExpenseDate</td>
-                                <td class="text-center">@item.ExpenseType</td>
-                                <td class="text-center">@item.ShortDescription</td>
-                                <td class="text-center">@item.ManagerName</td>
-                                <td class="d-flex justify-content-around">
+                                <td class="text-center align-middle">@item.Amount @item.CurrencyType</td>
+                                <td class="text-center align-middle">@item.ExpenseDate</td>
+                                <td class="text-center align-middle">@item.ExpenseType</td>
+                                <td class="text-center align-middle">@item.ShortDescription</td>
+                                <td class="text-center align-middle">@item.ManagerName</td>
+                                <td class="d-flex justify-content-around align-middle">
                                     <a class="btn btn-primary m-2" asp-action="update" asp-controller="expense" asp-route-id="@item.Id">Update Expense</a>
                                     <button type="button" class="btn btn-danger m-2" data-bs-toggle="modal" data-bs-target="#deleteExpenseModal" data-bs-whatever="@item.Id">Delete Expense</button>
                                 </td>

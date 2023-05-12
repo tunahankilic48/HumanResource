@@ -16,7 +16,9 @@ namespace HumanResource.Application.Services.CompanyManagerService
         Task<bool> IsCompanyManager(string userName);
         Task<UpdateEmployeeDTO> GetByUserName(Guid id);
         Task Delete(Guid id);
-
+        Task<List<PersonelLeaveRequestVM>> GetPersonelLeaveRequests(Guid id);
+        Task<List<PersonelAdvanceRequestVM>> GetPersonelAdvanceRequests(Guid id);
+        Task<List<PersonelExpenseRequestVM>> GetPersonelExpenseRequests(Guid id);
 
     }
 }

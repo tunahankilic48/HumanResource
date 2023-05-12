@@ -64,12 +64,12 @@
                         {
 
                             <tr class="align-middle">
-                                <td class="text-center" type="date">@item.StartDate</td>
-                                <td class="text-center" type="date">@item.EndDate</td>
-                                <td class="text-center" type="date">@item.ReturnDate</td>
-                                <td class="text-center">@item.LeaveType</td>
-                                <td class="text-center" type="date">@item.ManagerName</td>
-                                <td class="d-flex justify-content-around">
+                                <td class="text-center align-middle" type="date">@item.StartDate</td>
+                                <td class="text-center align-middle" type="date">@item.EndDate</td>
+                                <td class="text-center align-middle" type="date">@item.ReturnDate</td>
+                                <td class="text-center align-middle">@item.LeaveType</td>
+                                <td class="text-center align-middle" type="date">@item.ManagerName</td>
+                                <td class="d-flex justify-content-around align-middle">
                                     @*<a class="btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#updateLeaveModal" data-id="@item.Id">İzni Güncelle</a>*@
                                     <a class="btn btn-primary m-2" asp-action="update" asp-controller="leave" asp-route-id="@item.Id">Update Leave</a>
                                     <button type="button" class="btn btn-danger m-2" data-bs-toggle="modal" data-bs-target="#deleteLeaveModal" data-bs-whatever="@item.Id">Delete Leave</button>
