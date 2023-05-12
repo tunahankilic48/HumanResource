@@ -61,11 +61,11 @@
                         {
 
                             <tr>
-                                <td class="text-center">@item.Amount</td>
-                                <td class="text-center">@item.NumberOfInstallments</td>
-                                <td class="text-center">@item.AdvanceDate</td>
-                                <td class="text-center">@item.ManagerName</td>
-                                <td class ="d-flex justify-content-around">
+                                <td class="text-center align-middle">@item.Amount</td>
+                                <td class="text-center align-middle">@item.NumberOfInstallments</td>
+                                <td class="text-center align-middle">@item.AdvanceDate</td>
+                                <td class="text-center align-middle">@item.ManagerName</td>
+                                <td class="d-flex justify-content-around align-middle">
                                     @*<a class="btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#updateLeaveModal" data-id="@item.Id">İzni Güncelle</a>*@
                                     <a class="btn btn-primary m-2" asp-action="update" asp-controller="advance" asp-route-id="@item.Id">Update Advance</a>
                                     <button type="button" class="btn btn-danger m-2" data-bs-toggle="modal" data-bs-target="#deleteAdvanceModal" data-bs-whatever="@item.Id">Delete Advance</button>

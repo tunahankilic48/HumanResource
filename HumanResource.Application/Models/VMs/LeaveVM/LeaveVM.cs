@@ -7,16 +7,16 @@ namespace HumanResource.Application.Models.VMs.LeaveVM
     {
         public int Id { get; set; }
 
-        [Display(Name = "Leave Created Date")]
+        [Display(Name = "Created Date")]
         public string CreatedDate { get; set; }
 
-        [Display(Name = "Leave Start Date")]
+        [Display(Name = "Start Date")]
         public string StartDate { get; set; }
 
-        [Display(Name = "Leave End Date")]
+        [Display(Name = "End Date")]
         public string EndDate { get; set; }
 
-        [Display(Name = "Leave Return Date")]
+        [Display(Name = "Return Date")]
         public string ReturnDate { get; set; }
 
         [Display(Name = "Leave Period")]
