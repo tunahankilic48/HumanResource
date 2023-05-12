@@ -1,12 +1,10 @@
 ﻿using AutoMapper;
 using HumanResource.Application.Models.VMs.CompanyManagerVMs;
 using HumanResource.Application.Models.VMs.CompanyVM;
-using HumanResource.Application.Services.CompanyManagerService;
 using HumanResource.Domain.Entities;
 using HumanResource.Domain.Enums;
 using HumanResource.Domain.Repositories;
 using HumanResource.Domain.Repositries;
-using HumanResource.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace HumanResource.Application.Services.SiteAdminService
@@ -32,7 +30,7 @@ namespace HumanResource.Application.Services.SiteAdminService
                      CompanyName = x.CompanyName,
                      PhoneNumber= x.PhoneNumber,
                  },
-                 where: x => x.StatuId == Status.AwatingApproval.GetHashCode() && x.StatuId == Status.Active.GetHashCode() && x.StatuId == Status.Passive.GetHashCode(),
+                 where: x => x.StatuId == Status.Awating_Approval.GetHashCode() && x.StatuId == Status.Active.GetHashCode() && x.StatuId == Status.Passive.GetHashCode(),
                  orderby: x => x.OrderByDescending(x => x.CreatedDate)
                  );
             return companies;
@@ -53,7 +51,7 @@ namespace HumanResource.Application.Services.SiteAdminService
                      CompanyName = x.Company.CompanyName,
                      FullName = x.FirstName + " " + x.LastName
                  },
-                 where: x => x.StatuId == Status.AwatingApproval.GetHashCode(),
+                 where: x => x.StatuId == Status.Awating_Approval.GetHashCode(),
                  orderby: x => x.OrderByDescending(x => x.CreatedDate),
                  include: x => x.Include(x => x.Company)
                  );
