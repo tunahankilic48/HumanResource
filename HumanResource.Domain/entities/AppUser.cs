@@ -15,6 +15,7 @@ namespace HumanResource.Domain.Entities
         public int? TitleId { get; set; }
         public int? CompanyId { get; set; }
         public Guid? ManagerId { get; set; }
+        public Guid? SiteAdminId { get; set; }
         public string? ImagePath { get; set; }
 
         public int? StatuId { get; set; }
@@ -34,8 +35,7 @@ namespace HumanResource.Domain.Entities
         public List<Expense>? Expenses { get; set; }
         public Title? Title { get; set; }
         public Company? Company { get; set; }
-
-
+        public AppUser? SiteAdmin { get; set; }
 
 
     }

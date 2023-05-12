@@ -226,6 +226,32 @@ namespace HumanResource.Infrastructure.SeedData
                     await employeeStore.AddToRoleAsync(employee, "Employee");
                     await context.SaveChangesAsync();
 
+
+                    AppUser siteAdmin = new AppUser
+                    {
+                        FirstName = "siteAdmin",
+                        LastName = "siteAdmin",
+                        UserName = "siteAdmin",
+                        NormalizedUserName = "siteAdmin",
+                        Email = "siteAdmin@gmail.com",
+                        NormalizedEmail = "SITEADMIN@GMAIL.COM",
+                        ImagePath = "/images/noImage.png",
+                        CreatedDate = DateTime.Now,
+                        EmailConfirmed = true,
+                        LockoutEnabled = true,
+                        TwoFactorEnabled = false,
+                        PhoneNumberConfirmed = false,
+                        SecurityStamp = Guid.NewGuid().ToString("D")
+                    };
+
+                    var hashedsiteAdmin = passwordHasher.HashPassword(siteAdmin, "123456");
+                    siteAdmin.PasswordHash = hashedsiteAdmin;
+
+                    var siteAdminStore = new UserStore<AppUser, IdentityRole<Guid>, ApplicationDbContext, Guid>(context);
+
+                    await siteAdminStore.CreateAsync(siteAdmin);
+                    await siteAdminStore.AddToRoleAsync(siteAdmin, "SiteAdmin");
+                    await context.SaveChangesAsync();
                 }
 
             }

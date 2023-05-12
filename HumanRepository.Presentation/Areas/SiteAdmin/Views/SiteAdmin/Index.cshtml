@@ -1,0 +1,41 @@
+﻿@model IEnumerable<CompanyManagerRegisterRequestsVM>
+
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800 ms-1">Register Requests</h1>
+
+    <!-- DataTales Example -->
+    <div class="ms-1 card shadow mb-1">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th class="text-center">@Html.DisplayNameFor(x=>x.UserId)</th>
+                            <th class="text-center">@Html.DisplayNameFor(x=>x.CompanyName)</th>
+                            <th class="text-center">@Html.DisplayNameFor(x=>x.FullName)</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="text-center">@item.UserId</td>
+                                <td class="text-center">@item.CompanyName</td>
+                                <td class="text-center">@item.FullName</td>
+                                <td class="d-flex justify-content-around">
+                                    @*<a class="btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#updateLeaveModal" data-id="@item.Id">İzni Güncelle</a>*@
+                                    <a class="btn btn-primary m-2" asp-action="update" asp-controller="account" asp-route-id="@item.UserId">Approval Register</a>
+                                    <button type="button" class="btn btn-danger m-2" data-bs-toggle="modal" data-bs-target="#deleteAdvanceModal" data-bs-whatever="@item.UserId">Red Register</button>
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
