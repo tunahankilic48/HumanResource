@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace HumanResource.Infrastructure.Migrations
 {
-    public partial class ilk : Migration
+    public partial class dsgg : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

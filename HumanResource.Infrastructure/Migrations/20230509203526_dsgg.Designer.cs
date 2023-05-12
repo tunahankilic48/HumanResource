@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HumanResource.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230508210915_ilk")]
-    partial class ilk
+    [Migration("20230509203526_dsgg")]
+    partial class dsgg
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
