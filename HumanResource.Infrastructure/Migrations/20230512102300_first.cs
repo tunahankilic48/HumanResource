@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace HumanResource.Infrastructure.Migrations
 {
-    public partial class ilk : Migration
+    public partial class first : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -243,6 +243,7 @@ namespace HumanResource.Infrastructure.Migrations
                     RecruitmentDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     TitleId = table.Column<int>(type: "int", nullable: true),
                     CompanyId = table.Column<int>(type: "int", nullable: true),
+                    SiteAdminId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     ImagePath = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     StatuId = table.Column<int>(type: "int", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "smalldatetime", nullable: false),
@@ -269,6 +270,12 @@ namespace HumanResource.Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_AspNetUsers_AspNetUsers_ManagerId",
                         column: x => x.ManagerId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_AspNetUsers_AspNetUsers_SiteAdminId",
+                        column: x => x.SiteAdminId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -357,6 +364,8 @@ namespace HumanResource.Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     NumberOfInstallments = table.Column<int>(type: "int", nullable: false),
+                    Description = table.Column<string>(type: "NVARCHAR(MAX)", nullable: false),
+                    AdvanceDate = table.Column<DateTime>(type: "date", nullable: false),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     StatuId = table.Column<int>(type: "int", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "smalldatetime", nullable: false),
@@ -479,7 +488,7 @@ namespace HumanResource.Infrastructure.Migrations
                     Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     CurrencyTypeId = table.Column<int>(type: "int", nullable: false),
                     ExpenseDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    LongDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LongDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ShortDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ExpenseTypeId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -636,6 +645,11 @@ namespace HumanResource.Infrastructure.Migrations
                 name: "IX_AspNetUsers_ManagerId",
                 table: "AspNetUsers",
                 column: "ManagerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_SiteAdminId",
+                table: "AspNetUsers",
+                column: "SiteAdminId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUsers_StatuId",

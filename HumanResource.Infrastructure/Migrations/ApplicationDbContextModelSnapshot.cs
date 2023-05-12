@@ -82,6 +82,10 @@ namespace HumanResource.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<DateTime>("AdvanceDate")
+                        .HasColumnType("date")
+                        .HasColumnOrder(5);
+
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18,2)")
                         .HasColumnOrder(2);
@@ -91,6 +95,11 @@ namespace HumanResource.Infrastructure.Migrations
 
                     b.Property<DateTime?>("DeletedDate")
                         .HasColumnType("smalldatetime");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR(MAX)")
+                        .HasColumnOrder(4);
 
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("smalldatetime");
@@ -104,7 +113,7 @@ namespace HumanResource.Infrastructure.Migrations
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier")
-                        .HasColumnOrder(4);
+                        .HasColumnOrder(6);
 
                     b.HasKey("Id");
 
@@ -210,6 +219,9 @@ namespace HumanResource.Infrastructure.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("SiteAdminId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int?>("StatuId")
                         .HasColumnType("int");
 
@@ -240,6 +252,8 @@ namespace HumanResource.Infrastructure.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.HasIndex("SiteAdminId");
 
                     b.HasIndex("StatuId");
 
@@ -453,7 +467,6 @@ namespace HumanResource.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("LongDescription")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("ModifiedDate")
@@ -837,6 +850,11 @@ namespace HumanResource.Infrastructure.Migrations
                         .HasForeignKey("ManagerId")
                         .OnDelete(DeleteBehavior.Restrict);
 
+                    b.HasOne("HumanResource.Domain.Entities.AppUser", "SiteAdmin")
+                        .WithMany()
+                        .HasForeignKey("SiteAdminId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("HumanResource.Domain.Entities.Statu", "Statu")
                         .WithMany("AppUsers")
                         .HasForeignKey("StatuId")
@@ -854,6 +872,8 @@ namespace HumanResource.Infrastructure.Migrations
                     b.Navigation("Department");
 
                     b.Navigation("Manager");
+
+                    b.Navigation("SiteAdmin");
 
                     b.Navigation("Statu");
 
