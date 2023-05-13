@@ -7,34 +7,19 @@
 		<h3 class="card-header bg-info text-white">Company Information</h3>
 
 		<ul class="list-group list-group-flush ">
-			<li class="list-group-item   border-bottom border-warning"><strong>@Html.DisplayNameFor(x => x.CompanyName) </strong> @Model.CompanyName</li>
-			<li class="list-group-item  border-bottom border-warning">
-				<strong>@Html.DisplayNameFor(x => x.TaxNumber) </strong>
-				@Model.TaxNumber
-
-			</li>
-			<li class="list-group-item  border-bottom border-warning">
-				<strong>@Html.DisplayNameFor(x => x.TaxOfficeName) </strong> @(Model.TaxOfficeName)
-
-			</li>
-			<li class="list-group-item  border-bottom border-warning">
-				<strong>@Html.DisplayNameFor(x => x.PhoneNumber) </strong> @(Model.PhoneNumber)
-
-			</li>
-			<li class="list-group-item  border-bottom border-warning">
-				<strong>@Html.DisplayNameFor(x => x.NumberOfEmployee) </strong> @(Model.NumberOfEmployee)
-
-			</li>
-			<li class="list-group-item  border-bottom border-warning">
-				<strong>: </strong> 
-
-			</li>
-			<li class="list-group-item  border-bottom border-warning">
-				<strong>Phone Number: </strong> @(Model.PhoneNumber)
-
-			</li>
+			<li class="list-group-item   border-bottom border-warning"><strong>@Html.DisplayNameFor(x => x.CompanyName) </strong> @(Model.CompanyName)</li>
+			<li class="list-group-item   border-bottom border-warning"><strong>@Html.DisplayNameFor(x => x.Manager) </strong> @(Model.Manager.FirstName)+@(Model.Manager.LastName)</li>
+			<li class="list-group-item  border-bottom border-warning"><strong>@Html.DisplayNameFor(x => x.TaxNumber) </strong>@(Model.TaxNumber)</li>
+			<li class="list-group-item  border-bottom border-warning"><strong>@Html.DisplayNameFor(x => x.TaxOfficeName) </strong> @(Model.TaxOfficeName)</li>
+			<li class="list-group-item  border-bottom border-warning"><strong>@Html.DisplayNameFor(x => x.PhoneNumber) </strong> @(Model.PhoneNumber)</li>
+			<li class="list-group-item  border-bottom border-warning"><strong>@Html.DisplayNameFor(x => x.NumberOfEmployee) </strong> @(Model.NumberOfEmployee)</li>
+			<li class="list-group-item  border-bottom border-warning"><strong>@Html.DisplayNameFor(x => x.City) </strong> @(Model.City)</li>
+			<li class="list-group-item  border-bottom border-warning"><strong>@Html.DisplayNameFor(x => x.District) </strong> @(Model.District)</li>
+			<li class="list-group-item  border-bottom border-warning"><strong>@Html.DisplayNameFor(x => x.AddressDescription) </strong> @(Model.AddressDescription)</li>
+			
+			
 		</ul>
-		<a class="nav-link" asp-area="Approve" asp-controller="siteadmin" asp-action="update" asp-route-id="@(Model.Id)"></a>
-		<a class="nav-link" asp-area="personel" asp-controller="siteadmin" asp-action="update" asp-route-id="@(Model.Id)"></a>
+		<a class="btn btn-success mt-2" asp-area="siteadmin" asp-controller="siteadmin" asp-action="Approve" asp-route-id="@(Model.Id)">Approve</a>
+		<a class="btn btn-danger mt-2" asp-area="siteadmin" asp-controller="siteadmin" asp-action="Reject" asp-route-id="@(Model.Id)">Reject</a>
 	</div>
 </div>

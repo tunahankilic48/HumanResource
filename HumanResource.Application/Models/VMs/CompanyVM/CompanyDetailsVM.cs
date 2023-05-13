@@ -1,4 +1,5 @@
 ﻿using Bogus.DataSets;
+using HumanResource.Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel.DataAnnotations;
@@ -34,7 +35,7 @@ namespace HumanResource.Application.Models.VMs.CompanyVM
         public string? AddressDescription { get; set; }
 
         [Display(Name = "Manager")]
-        public Guid ManagerId { get; set; }
+        public AppUser Manager { get; set; }
 
         [ValidateNever]
         public string? ImagePath { get; set; }

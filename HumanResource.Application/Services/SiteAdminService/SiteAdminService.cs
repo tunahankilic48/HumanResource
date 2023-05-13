@@ -5,6 +5,7 @@ using HumanResource.Domain.Entities;
 using HumanResource.Domain.Enums;
 using HumanResource.Domain.Repositories;
 using HumanResource.Domain.Repositries;
+using HumanResource.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace HumanResource.Application.Services.SiteAdminService
@@ -89,10 +90,24 @@ namespace HumanResource.Application.Services.SiteAdminService
 
 			  },
 			  where: x => x.StatuId == Status.Awating_Approval.GetHashCode(),
- orderby: null,
- include: x => x.Include(x => x.Address).Include(x => x.Address.District)
+			  orderby: null,
+              include: x => x.Include(x => x.Address).Include(x => x.Address.District)
 			  ); ;
 			return companyManager;
+		}
+		public async Task<ProcessVM> Approve(int id)
+		{
+			Company company = await _companyRepository.GetDefault(x => x.Id == id);
+			company.StatuId = Status.Active.GetHashCode();
+			var user = await _appUserRepository.GetDefault(x => x.Id == company.ManagerId);
+			return new ProcessVM() { Result = await _companyRepository.Update(company), UserEmail = user.Email };
+		}
+		public async Task<ProcessVM> Reject(int id)
+		{
+			Company company = await _companyRepository.GetDefault(x => x.Id == id);
+			company.StatuId = Status.Passive.GetHashCode();
+			var user = await _appUserRepository.GetDefault(x => x.Id == company.ManagerId);
+			return new ProcessVM() { Result = await _companyRepository.Update(company), UserEmail = user.Email };
 		}
 
 	}

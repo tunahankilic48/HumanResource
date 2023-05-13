@@ -9,5 +9,8 @@ namespace HumanResource.Application.Services.SiteAdminService
         Task<List<CompanyVM>> GetCompanies();
         Task<CompanyDetailsVM> GetCompanyId(int id);
         Task<CompanyManagerVM> GetCompanyManager(Guid id);
-    }
+        Task<ProcessVM> Approve(int id);
+        Task<ProcessVM> Reject(int id);
+
+	}
 }
