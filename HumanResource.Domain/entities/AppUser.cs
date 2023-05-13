@@ -35,11 +35,11 @@ namespace HumanResource.Domain.Entities
         public Title? Title { get; set; }
         public Company? Company { get; set; }
 
-        public AppUser()
-        {
-            Address = new Address();
-            Company = new Company();
-        }
+        //public AppUser()
+        //{
+        //    Address = new Address();
+        //    Company = new Company();
+        //}
 
 
     }

@@ -28,7 +28,7 @@ namespace HumanResource.Infrastructure.EntitiesConfig
                 .HasColumnOrder(5);
 
             builder.Property(x => x.ImagePath)
-                .IsRequired(true)
+                .IsRequired(false)//değişti-null olamaz hatası verdi registerda
                 .HasColumnOrder(6);
 
             // Foreign Key

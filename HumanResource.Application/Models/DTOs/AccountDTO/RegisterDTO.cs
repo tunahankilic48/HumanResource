@@ -45,7 +45,7 @@ namespace HumanResource.Application.Models.DTOs.AccountDTO
 		public string NumberOfEmployee { get; set; }
 
 		[Display(Name = ("City"))]
-		public int? CityId { get; set; }
+		public City? City { get; set; }// int? tipi City? oldu
 
 		[Display(Name = ("District"))]
 		public int? DistrictId { get; set; }
