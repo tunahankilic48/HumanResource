@@ -7,10 +7,6 @@ namespace HumanResource.Application.Models.DTOs.LeaveDTO
 {
     public class CreateLeaveDTO
     {
-        public CreateLeaveDTO()
-        {
-            Statu = new Statu();
-        }
 
         public Guid UserId { get; set; }
         public DateTime CreatedDate => DateTime.Now;
@@ -34,6 +30,6 @@ namespace HumanResource.Application.Models.DTOs.LeaveDTO
         [Display(Name = "Leave Type")]
         public int LeaveTypeId { get; set; }
         [ValidateNever]
-        public Statu Statu{ get; set; }
+        public int StatuId{ get; set; }
     }
 }

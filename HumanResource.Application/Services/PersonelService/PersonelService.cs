@@ -54,7 +54,7 @@ namespace HumanResource.Application.Services.PersonelService
                    CreatedDate = x.CreatedDate.ToShortDateString(),
 
                },
-               where: x => x.User.UserName == name && x.Statu.Name == Status.Awating_Approval.ToString(),
+               where: x => x.User.UserName == name && x.StatuId == Status.Awating_Approval.GetHashCode(),
                orderby: x => x.OrderByDescending(x => x.CreatedDate),
                include: x => x.Include(x => x.User)
                ); ;
@@ -74,7 +74,7 @@ namespace HumanResource.Application.Services.PersonelService
                  CurrencyType = x.CurrencyType.Name,
                  ShortDescription = x.ShortDescription,
              },
-             where: x => x.User.UserName == name && x.Statu.Name == Status.Awating_Approval.ToString(),
+             where: x => x.User.UserName == name && x.StatuId == Status.Awating_Approval.GetHashCode(),
              orderby: x => x.OrderByDescending(x => x.CreatedDate),
              include: x => x.Include(x => x.ExpenseType).Include(x => x.User).Include(x=>x.CurrencyType)
              );
@@ -101,7 +101,7 @@ namespace HumanResource.Application.Services.PersonelService
                   LeaveType = x.LeaveType.Name
 
               },
-              where: x => x.User.UserName == name && x.Statu.Name == Status.Awating_Approval.ToString(),
+              where: x => x.User.UserName == name && x.StatuId == Status.Awating_Approval.GetHashCode(),
               orderby: x => x.OrderByDescending(x => x.CreatedDate),
               include: x => x.Include(x => x.LeaveType).Include(x => x.User)
               );

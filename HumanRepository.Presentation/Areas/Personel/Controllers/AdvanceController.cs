@@ -1,5 +1,7 @@
 ﻿using HumanResource.Application.Models.DTOs.AdvanceDTOs;
+using HumanResource.Application.Models.VMs.EmailVM;
 using HumanResource.Application.Services.AdvanceService;
+using HumanResource.Application.Services.EmailSenderService;
 using HumanResource.Application.Services.PersonelService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,11 +15,13 @@ namespace HumanResource.Presentation.Areas.Personel.Controllers
     {
         private readonly IAdvanceService _advanceService;
         private readonly IPersonelService _personelService;
+        private readonly IEmailService _emailService;
 
-        public AdvanceController(IPersonelService personelService, IAdvanceService advanceService)
+        public AdvanceController(IPersonelService personelService, IAdvanceService advanceService, IEmailService emailService)
         {
             _personelService = personelService;
             _advanceService = advanceService;
+            _emailService = emailService;
         }
 
 
@@ -79,8 +83,38 @@ namespace HumanResource.Presentation.Areas.Personel.Controllers
         {
             int id = int.Parse(collection["id"]);
             await _advanceService.Delete(id);
-            TempData["success"] = "advance was deleted succesfully.";
+            TempData["success"] = "Advance was deleted succesfully.";
             return RedirectToAction("advances", "personel", new { Area = "personel" });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Approve(int id)
+        {
+            var result = await _advanceService.Approve(id);
+            if (result.Result)
+            {
+                TempData["success"] = "Personel advance request was approved.";
+                var message = new Message(result.UserEmail, "Advance Request", $"Your advance request was approved by your manager.");
+                _emailService.SendEmail(message);
+                return RedirectToAction("AdvanceRequests", "companymanager", new { Area = "companymanager" });
+            }
+            TempData["error"] = "There is something wrong. Request could not approved.";
+            return RedirectToAction("AdvanceRequests", "companymanager", new { Area = "companymanager" });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Reject(int id)
+        {
+            var result = await _advanceService.Reject(id);
+            if (result.Result)
+            {
+                TempData["success"] = "Personel advance request was rejected.";
+                var message = new Message(result.UserEmail, "Advance Request", $"Your advance request was rejected by your manager.");
+                _emailService.SendEmail(message);
+                return RedirectToAction("AdvanceRequests", "companymanager", new { Area = "companymanager" });
+            }
+            TempData["error"] = "There is something wrong. Request could not rejected.";
+            return RedirectToAction("AdvanceRequests", "companymanager", new { Area = "companymanager" });
         }
     }
 }

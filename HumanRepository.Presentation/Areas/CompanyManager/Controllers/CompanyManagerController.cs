@@ -2,8 +2,11 @@
 using HumanResource.Application.Models.VMs.EmailVM;
 using HumanResource.Application.Services.AccountServices;
 using HumanResource.Application.Services.AddressService;
+using HumanResource.Application.Services.AdvanceService;
 using HumanResource.Application.Services.CompanyManagerService;
 using HumanResource.Application.Services.EmailSenderService;
+using HumanResource.Application.Services.ExpenseService;
+using HumanResource.Application.Services.LeaveServices;
 using HumanResource.Application.Services.PersonelService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,14 +23,20 @@ namespace HumanResource.Presentation.Areas.CompanyManager.Controllers
         private readonly IAddressService _addressService;
         private readonly IEmailService _emailService;
         private readonly IAccountServices _accountService;
+        private readonly IAdvanceService _advanceService;
+        private readonly IExpenseServices _expenseService;
+        private readonly ILeaveService _leaveService;
 
-        public CompanyManagerController(ICompanyManagerService companyManagerService, IPersonelService personelService, IAddressService addressService, IEmailService emailService, IAccountServices accountService)
+        public CompanyManagerController(ICompanyManagerService companyManagerService, IPersonelService personelService, IAddressService addressService, IEmailService emailService, IAccountServices accountService, IAdvanceService advanceService, IExpenseServices expenseService, ILeaveService leaveService)
         {
             _companyManagerService = companyManagerService;
             _personelService = personelService;
             _addressService = addressService;
             _emailService = emailService;
             _accountService = accountService;
+            _advanceService = advanceService;
+            _expenseService = expenseService;
+            _leaveService = leaveService;
         }
 
         public async Task<IActionResult> Employees()
@@ -159,6 +168,24 @@ namespace HumanResource.Presentation.Areas.CompanyManager.Controllers
         {
             ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
             return View(await _companyManagerService.GetPersonelExpenseRequests(await _personelService.GetPersonelId(User.Identity.Name)));
+        }
+
+        public async Task<IActionResult> AdvanceRequestDetail(int id)
+        {
+            ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
+            return View(await _advanceService.AdvanceDetail(id));
+        }
+
+        public async Task<IActionResult> ExpenseRequestDetail(int id)
+        {
+            ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
+            return View(await _expenseService.ExpenseDetail(id));
+        }
+
+        public async Task<IActionResult> LeaveRequestDetail(int id)
+        {
+            ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
+            return View(await _leaveService.LeaveDetail(id));
         }
 
 

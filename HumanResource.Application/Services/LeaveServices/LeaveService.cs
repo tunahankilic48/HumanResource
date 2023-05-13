@@ -1,13 +1,12 @@
 ﻿using AutoMapper;
 using HumanResource.Application.Models.DTOs.LeaveDTO;
-using HumanResource.Application.Models.VMs.AdvanceVMs;
+using HumanResource.Application.Models.VMs.CompanyManagerVMs;
 using HumanResource.Application.Models.VMs.LeaveVM;
 using HumanResource.Application.Services.PersonelService;
 using HumanResource.Domain.Entities;
 using HumanResource.Domain.Enums;
 using HumanResource.Domain.Repositries;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Cryptography.X509Certificates;
 
 namespace HumanResource.Application.Services.LeaveServices
 {
@@ -16,19 +15,28 @@ namespace HumanResource.Application.Services.LeaveServices
         private readonly IPersonelService _personelService;
         private readonly ILeaveRepository _leaveRepository;
         private readonly IMapper _mapper;
+        private readonly IAppUserRepository _appUserRepository;
 
 
-        public LeaveService(ILeaveRepository leaveRepository, IMapper mapper, IPersonelService personelService)
+        public LeaveService(ILeaveRepository leaveRepository, IMapper mapper, IPersonelService personelService, IAppUserRepository appUserRepository)
         {
             _leaveRepository = leaveRepository;
             _mapper = mapper;
             _personelService = personelService;
+            _appUserRepository = appUserRepository;
+        }
+
+        public async Task<ProcessVM> Approve(int id)
+        {
+            Leave leave = await _leaveRepository.GetDefault(x => x.Id == id);
+            leave.StatuId = Status.Approved.GetHashCode();
+            var user = await _appUserRepository.GetDefault(x => x.Id == leave.UserId);
+            return new ProcessVM() { Result = await _leaveRepository.Update(leave), UserEmail = user.Email };
         }
 
         public async Task<bool> Create(CreateLeaveDTO model, string userName)
         {
-            model.Statu.Name = Status.Awating_Approval.ToString();
-            model.Statu.StatuEnumId = Status.Awating_Approval.GetHashCode();
+            model.StatuId = Status.Awating_Approval.GetHashCode();
             Leave leave = _mapper.Map<Leave>(model);
             leave.UserId = await _personelService.GetPersonelId(userName);
             return await _leaveRepository.Add(leave);
@@ -72,6 +80,35 @@ namespace HumanResource.Application.Services.LeaveServices
                 );
 
             return comments;
+        }
+
+        public async Task<LeaveDetailVM> LeaveDetail(int id)
+        {
+            LeaveDetailVM advance = await _leaveRepository.GetFilteredFirstOrDefault(
+                select: x => new LeaveDetailVM()
+                {
+                    Id = x.Id,
+                    StartDate = x.StartDate.ToShortDateString(),
+                    EndDate = x.EndDate.ToShortDateString(),
+                    ReturnDate = x.ReturnDate.ToShortDateString(),
+                    LeavePeriod = x.LeavePeriod,
+                    LeaveType = x.LeaveType.Name,
+                    PersonelName = x.User.FirstName + " " + x.User.LastName,
+                    CreatedDate = x.CreatedDate.ToShortDateString()
+                },
+                where: x => x.Id == id,
+                orderby: null,
+                include: x => x.Include(x => x.User).Include(x=>x.LeaveType)
+                );
+            return advance;
+        }
+
+        public async Task<ProcessVM> Reject(int id)
+        {
+            Leave leave = await _leaveRepository.GetDefault(x => x.Id == id);
+            leave.StatuId = Status.Rejected.GetHashCode();
+            var user = await _appUserRepository.GetDefault(x => x.Id == leave.UserId);
+            return new ProcessVM() { Result = await _leaveRepository.Update(leave), UserEmail = user.Email };
         }
 
         public async Task<bool> Update(UpdateLeaveDTO model)

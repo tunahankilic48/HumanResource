@@ -10,6 +10,8 @@ namespace HumanResource.Domain.Enums
         Passive,
         [Display(Name = "Awating Approval")]
         Awating_Approval,
+        [Display(Name = "Approved")]
+        Approved,
         [Display(Name = "Deleted")]
         Deleted,
         [Display(Name = "Rejected")]

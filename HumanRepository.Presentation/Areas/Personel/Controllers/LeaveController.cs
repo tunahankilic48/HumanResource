@@ -1,4 +1,6 @@
 ﻿using HumanResource.Application.Models.DTOs.LeaveDTO;
+using HumanResource.Application.Models.VMs.EmailVM;
+using HumanResource.Application.Services.EmailSenderService;
 using HumanResource.Application.Services.LeaveServices;
 using HumanResource.Application.Services.PersonelService;
 using Microsoft.AspNetCore.Authorization;
@@ -13,11 +15,13 @@ namespace HumanResource.Presentation.Areas.Personel.Controllers
     {
         private readonly ILeaveService _leaveService;
         private readonly IPersonelService _personelService;
+        private readonly IEmailService _emailService;
 
-        public LeaveController(ILeaveService leaveService, IPersonelService personelService)
+        public LeaveController(ILeaveService leaveService, IPersonelService personelService, IEmailService emailService)
         {
             _leaveService = leaveService;
             _personelService = personelService;
+            _emailService = emailService;
         }
 
         [HttpPost, ValidateAntiForgeryToken]
@@ -80,6 +84,36 @@ namespace HumanResource.Presentation.Areas.Personel.Controllers
             await _leaveService.Delete(id);
             TempData["success"] = "Leave was deleted succesfully.";
             return RedirectToAction("leaves", "personel", new { Area = "personel" });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Approve(int id)
+        {
+            var result = await _leaveService.Approve(id);
+            if (result.Result)
+            {
+                TempData["success"] = "Personel leave request was approved.";
+                var message = new Message(result.UserEmail, "Leave Request", $"Your leave request was approved by your manager.");
+                _emailService.SendEmail(message);
+                return RedirectToAction("leaveRequests", "companymanager", new { Area = "companymanager" });
+            }
+            TempData["error"] = "There is something wrong. Request could not approved.";
+            return RedirectToAction("leaveRequests", "companymanager", new { Area = "companymanager" });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Reject(int id)
+        {
+            var result = await _leaveService.Reject(id);
+            if (result.Result)
+            {
+                TempData["success"] = "Personel leave request was rejected.";
+                var message = new Message(result.UserEmail, "Leave Request", $"Your leave request was rejected by your manager.");
+                _emailService.SendEmail(message);
+                return RedirectToAction("leaveRequests", "companymanager", new { Area = "companymanager" });
+            }
+            TempData["error"] = "There is something wrong. Request could not rejected.";
+            return RedirectToAction("leaveRequests", "companymanager", new { Area = "companymanager" });
         }
     }
 }

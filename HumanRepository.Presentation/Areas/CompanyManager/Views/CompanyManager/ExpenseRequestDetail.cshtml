@@ -1,0 +1,25 @@
+﻿@model ExpenseDetailVM
+@{
+    Layout = "~/Areas/Personel/Views/Shared/_LayoutPersonel.cshtml";
+}
+
+<div class="d-flex justify-content-center">
+    <div class="card mt-1" style="width: 40%;">
+
+        <div class="card-body mt-1">
+            <h1 class="card-title text-center text-black-50 mt-2"><strong>@Model.PersonelName</strong></h1>
+            <h4 class="card-text text-center mt-2">@Model.ShortDescription</h4>
+        </div>
+        <ul class="list-group list-group-flush mt-3">
+            <li class="list-group-item text-center mt-2"><strong>@Html.DisplayNameFor(x=>x.Amount):</strong> @Model.Amount @Model.CurrencyType</li>
+            <li class="list-group-item text-center mt-2"><strong>@Html.DisplayNameFor(x=>x.ExpenseDate):</strong> @Model.ExpenseDate</li>
+            <li class="list-group-item text-center mt-2"><strong>@Html.DisplayNameFor(x=>x.ExpenseType):</strong> @Model.ExpenseType</li>
+            <li class="list-group-item text-center mt-2"><strong>@Html.DisplayNameFor(x=>x.LongDescription):</strong> @Model.LongDescription</li>
+            <li class="list-group-item text-center mt-2"><strong>@Html.DisplayNameFor(x=>x.CreatedDate):</strong> @Model.CreatedDate</li>
+        </ul>
+        <div class="card-body d-flex justify-content-around my-1">
+            <a asp-controller="expense" asp-action="Approve" asp-area="personel" asp-route-id="@Model.Id"  class="btn btn-success mt-2">Approve</a>
+            <a asp-controller="expense" asp-action="reject" asp-area="personel" asp-route-id="@Model.Id" class="btn btn-danger mt-2">Reject</a>
+        </div>
+    </div>
+</div>

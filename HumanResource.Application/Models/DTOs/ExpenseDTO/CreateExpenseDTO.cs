@@ -7,10 +7,6 @@ namespace HumanResource.Application.Models.DTOs.ExpenseDTO
 {
     public class CreateExpenseDTO
     {
-        public CreateExpenseDTO()
-        {
-            Statu = new Statu();
-        }
         public Guid UserId { get; set; }
         public DateTime CreatedDate => DateTime.Now;
 
@@ -37,9 +33,7 @@ namespace HumanResource.Application.Models.DTOs.ExpenseDTO
         [Required(ErrorMessage = "Currency Type cannot be null.")]
         [Display(Name = "Currency Type")]
         public int CurrencyTypeId { get; set; }
-
-
         [ValidateNever]
-        public Statu Statu { get; set; }
+        public int StatuId { get; set; }
     }
 }

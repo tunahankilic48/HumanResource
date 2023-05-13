@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using HumanResource.Application.Models.DTOs.AdvanceDTOs;
 using HumanResource.Application.Models.VMs.AdvanceVMs;
+using HumanResource.Application.Models.VMs.CompanyManagerVMs;
 using HumanResource.Application.Services.PersonelService;
 using HumanResource.Domain.Entities;
 using HumanResource.Domain.Enums;
@@ -24,10 +25,37 @@ namespace HumanResource.Application.Services.AdvanceService
             _personelService = personelService;
         }
 
+        public async Task<AdvanceDetailVM> AdvanceDetail(int id)
+        {
+			AdvanceDetailVM advance = await _advanceRepository.GetFilteredFirstOrDefault(
+				select: x => new AdvanceDetailVM()
+				{
+					Id = x.Id,
+					Amount = x.Amount,
+					NumberOfInstallments = x.NumberOfInstallments,
+					Description = x.Description,
+					AdvanceDate = x.AdvanceDate.ToShortDateString(),
+					PersonelName = x.User.FirstName + " " + x.User.LastName,
+					CreatedDate = x.CreatedDate.ToShortDateString()
+				},
+				where: x => x.Id == id,
+				orderby: null,
+				include: x => x.Include(x => x.User)
+				);
+            return advance;
+        }
+
+        public async Task<ProcessVM> Approve(int id)
+        {
+            Advance advance = await _advanceRepository.GetDefault(x => x.Id == id);
+			advance.StatuId = Status.Approved.GetHashCode();
+			var user = await _appUserRepository.GetDefault(x=>x.Id == advance.UserId);			
+            return new ProcessVM() { Result = await _advanceRepository.Update(advance), UserEmail = user.Email};
+        }
+
         public async Task<bool> Create(CreateAdvanceDTO model,string userName)
 		{
-            model.Statu.Name = Status.Awating_Approval.ToString();
-            model.Statu.StatuEnumId = Status.Awating_Approval.GetHashCode();
+            model.StatuId = Status.Awating_Approval.GetHashCode();
             Advance advance = _mapper.Map<Advance>(model);
             advance.UserId = await _personelService.GetPersonelId(userName);
             return await _advanceRepository.Add(advance);
@@ -70,7 +98,15 @@ namespace HumanResource.Application.Services.AdvanceService
 			return _mapper.Map<UpdateAdvanceDTO>(advance);
 		}
 
-		public async Task<bool> Update(UpdateAdvanceDTO model)
+        public async Task<ProcessVM> Reject(int id)
+        {
+            Advance advance = await _advanceRepository.GetDefault(x => x.Id == id);
+            advance.StatuId = Status.Rejected.GetHashCode();
+            var user = await _appUserRepository.GetDefault(x => x.Id == advance.UserId);
+            return new ProcessVM() { Result = await _advanceRepository.Update(advance), UserEmail = user.Email };
+        }
+
+        public async Task<bool> Update(UpdateAdvanceDTO model)
 		{
 				Advance advance = _mapper.Map<Advance>(model);
 				return await _advanceRepository.Update(advance);

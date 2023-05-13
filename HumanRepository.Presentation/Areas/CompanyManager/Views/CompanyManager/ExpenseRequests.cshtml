@@ -2,6 +2,27 @@
 @{
     Layout = "~/Areas/Personel/Views/Shared/_LayoutPersonel.cshtml";
 }
+
+
+
+@if (TempData["error"] is not null)
+{
+    <div class="ms-4 me-4 alert alert-dismissible alert-danger ps-0">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <h4 class="alert-heading ms-4 ps-0">Something goes wrong!</h4>
+        <p class="mb-0 ms-4">@TempData["error"]</p>
+    </div>
+}
+
+
+@if (TempData["success"] is not null)
+{
+    <div class="ms-4 me-4 alert alert-dismissible alert-success ps-0">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <h4 class="alert-heading ms-4 ps-0">Successfull</h4>
+        <p class="mb-0 ms-4">@TempData["success"]</p>
+    </div>
+}
 <div class="container-fluid">
 
     <!-- Page Heading -->
@@ -31,7 +52,7 @@
                                 <td class="text-center align-middle" type="date">@item.ExpenseDate</td>
                                 <td class="text-center align-middle" type="date">@item.ShortDescription</td>
                                 <td class="d-flex justify-content-around align-middle">
-                                    <a class="btn btn-primary m-2" asp-action="update" asp-controller="title" asp-route-id="@item.Id">View Details</a>
+                                    <a class="btn btn-primary m-2" asp-action="expenserequestdetail" asp-controller="companymanager" asp-route-id="@item.Id">View Details</a>
                                 </td>
                             </tr>
 

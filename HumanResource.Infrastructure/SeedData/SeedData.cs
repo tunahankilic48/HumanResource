@@ -161,9 +161,9 @@ namespace HumanResource.Infrastructure.SeedData
                 {
                     var roleStore = new RoleStore<IdentityRole<Guid>, ApplicationDbContext, Guid>(context);
 
-                    await roleStore.CreateAsync(new IdentityRole<Guid>() { Name = "SiteAdmin", NormalizedName = "SiteAdmin" });
-                    await roleStore.CreateAsync(new IdentityRole<Guid>() { Name = "CompanyManager", NormalizedName = "CompanyManager" });
-                    await roleStore.CreateAsync(new IdentityRole<Guid>() { Name = "Employee", NormalizedName = "Employee" });
+                    await roleStore.CreateAsync(new IdentityRole<Guid>() { Name = "SiteAdmin", NormalizedName = "SITEADMIN" });
+                    await roleStore.CreateAsync(new IdentityRole<Guid>() { Name = "CompanyManager", NormalizedName = "COMPANYMANAGER" });
+                    await roleStore.CreateAsync(new IdentityRole<Guid>() { Name = "Employee", NormalizedName = "EMPLOYEE" });
                     await context.SaveChangesAsync();
                 }
 
@@ -177,7 +177,7 @@ namespace HumanResource.Infrastructure.SeedData
                         FirstName="company",
                         LastName="manager",
                         UserName = "companyManager",
-                        NormalizedUserName = "companyManager",
+                        NormalizedUserName = "COMPANYMANAGER",
                         Email = "companyManager@gmail.com",
                         NormalizedEmail = "COMPANYMANAGER@GMAIL.COM",
                         ImagePath = "/images/noImage.png",
@@ -195,7 +195,7 @@ namespace HumanResource.Infrastructure.SeedData
                     var companyManagerStore = new UserStore<AppUser, IdentityRole<Guid>, ApplicationDbContext, Guid>(context);
 
                     await companyManagerStore.CreateAsync(companyManager);
-                    await companyManagerStore.AddToRoleAsync(companyManager, "CompanyManager");
+                    await companyManagerStore.AddToRoleAsync(companyManager, "COMPANYMANAGER");
                     await context.SaveChangesAsync();
 
 
@@ -204,7 +204,7 @@ namespace HumanResource.Infrastructure.SeedData
                         FirstName = "employee",
                         LastName = "employee",
                         UserName = "employee",
-                        NormalizedUserName = "employee",
+                        NormalizedUserName = "EMPLOYEE",
                         Email = "employee@gmail.com",
                         NormalizedEmail = "EMPLOYEE@GMAIL.COM",
                         ImagePath = "/images/noImage.png",
@@ -223,7 +223,7 @@ namespace HumanResource.Infrastructure.SeedData
                     var employeeStore = new UserStore<AppUser, IdentityRole<Guid>, ApplicationDbContext, Guid>(context);
 
                     await employeeStore.CreateAsync(employee);
-                    await employeeStore.AddToRoleAsync(employee, "Employee");
+                    await employeeStore.AddToRoleAsync(employee, "EMPLOYEE");
                     await context.SaveChangesAsync();
 
 
@@ -232,7 +232,7 @@ namespace HumanResource.Infrastructure.SeedData
                         FirstName = "siteAdmin",
                         LastName = "siteAdmin",
                         UserName = "siteAdmin",
-                        NormalizedUserName = "siteAdmin",
+                        NormalizedUserName = "SITEADMIN",
                         Email = "siteAdmin@gmail.com",
                         NormalizedEmail = "SITEADMIN@GMAIL.COM",
                         ImagePath = "/images/noImage.png",
@@ -250,7 +250,7 @@ namespace HumanResource.Infrastructure.SeedData
                     var siteAdminStore = new UserStore<AppUser, IdentityRole<Guid>, ApplicationDbContext, Guid>(context);
 
                     await siteAdminStore.CreateAsync(siteAdmin);
-                    await siteAdminStore.AddToRoleAsync(siteAdmin, "SiteAdmin");
+                    await siteAdminStore.AddToRoleAsync(siteAdmin, "SITEADMIN");
                     await context.SaveChangesAsync();
                 }
 

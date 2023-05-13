@@ -11,29 +11,25 @@ namespace HumanResource.Application.Models.DTOs.AdvanceDTOs
 {
     public class CreateAdvanceDTO
     {
-        public CreateAdvanceDTO()
-        {
-            Statu = new Statu();
-        }
 
         [Required(ErrorMessage = "Amount field cannot be empty!")]
         [Range(0, 99999.99, ErrorMessage = "Please enter between 0-99999.99!")]
         [RegularExpression(@"^\d+$", ErrorMessage = "No letters or symbols can be entered!")]
+        [Display(Name = "Amount")]
         public decimal Amount { get; set; }
 
         [Required(ErrorMessage = "Installment field cannot be empty!")]
         [Range(0, 10, ErrorMessage = "Please enter between 0-10.")]
+        [Display(Name = "Number of Installments")]
         public int NumberOfInstallments { get; set; }
+        [Display(Name = "Description")]
         public string Description { get; set; }
+        [Display(Name = "Advance Date")]
         public DateTime AdvanceDate { get; set; }
         public DateTime CreatedDate => DateTime.Now;
         public Guid UserId { get; set; }
-
-
-
         [ValidateNever]
-        public Statu Statu { get; set; }
-        //ToDo: Tarih kısıtlaması için attibute yazılacak.
+        public int StatuId { get; set; }
 
     }
 }

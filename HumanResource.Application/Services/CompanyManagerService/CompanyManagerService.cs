@@ -330,7 +330,7 @@ namespace HumanResource.Application.Services.CompanyManagerService
                  EndDate = x.EndDate.ToShortDateString(),
 
              },
-             where: x => x.Statu.Name == Status.Awating_Approval.ToString() && x.User.ManagerId == id,
+             where: x => x.StatuId == Status.Awating_Approval.GetHashCode() && x.User.ManagerId == id,
              orderby: x => x.OrderByDescending(x => x.CreatedDate),
              include: x => x.Include(x => x.LeaveType).Include(x => x.User).Include(x => x.User.Manager)
              );
@@ -351,7 +351,7 @@ namespace HumanResource.Application.Services.CompanyManagerService
                  AdvanceDate = x.AdvanceDate.ToShortDateString()
 
              },
-             where: x => x.Statu.Name == Status.Awating_Approval.ToString() && x.User.ManagerId == id,
+             where: x => x.StatuId == Status.Awating_Approval.GetHashCode() && x.User.ManagerId == id,
              orderby: x => x.OrderByDescending(x => x.CreatedDate),
              include: x => x.Include(x => x.User).Include(x => x.User.Manager)
              );
@@ -372,7 +372,7 @@ namespace HumanResource.Application.Services.CompanyManagerService
                  ShortDescription = x.ShortDescription
 
              },
-             where: x => x.Statu.Name == Status.Awating_Approval.ToString() && x.User.ManagerId == id,
+             where: x => x.StatuId == Status.Awating_Approval.GetHashCode() && x.User.ManagerId == id,
              orderby: x => x.OrderByDescending(x => x.CreatedDate),
              include: x => x.Include(x => x.User).Include(x => x.User.Manager).Include(x=>x.CurrencyType)
                 );

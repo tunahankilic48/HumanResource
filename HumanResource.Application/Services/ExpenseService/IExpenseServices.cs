@@ -1,10 +1,6 @@
 ﻿using HumanResource.Application.Models.DTOs.ExpenseDTO;
+using HumanResource.Application.Models.VMs.CompanyManagerVMs;
 using HumanResource.Application.Models.VMs.ExpenseVM;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HumanResource.Application.Services.ExpenseService
 {
@@ -15,5 +11,8 @@ namespace HumanResource.Application.Services.ExpenseService
         Task Delete(int id);
         Task<UpdateExpenseDTO> GetById(int id);
         Task<List<ExpenseVM>> GetExpenseForPersonel(Guid id);
+        Task<ExpenseDetailVM> ExpenseDetail(int id);
+        Task<ProcessVM> Approve(int id);
+        Task<ProcessVM> Reject(int id);
     }
 }
