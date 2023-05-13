@@ -1,0 +1,40 @@
+﻿@model CompanyDetailsVM
+
+<div class="row d-flex justify-content-between">
+	<div class="card m-3 col-lg-3 p-0">
+		
+
+		<h3 class="card-header bg-info text-white">Company Information</h3>
+
+		<ul class="list-group list-group-flush ">
+			<li class="list-group-item   border-bottom border-warning"><strong>@Html.DisplayNameFor(x => x.CompanyName) </strong> @Model.CompanyName</li>
+			<li class="list-group-item  border-bottom border-warning">
+				<strong>@Html.DisplayNameFor(x => x.TaxNumber) </strong>
+				@Model.TaxNumber
+
+			</li>
+			<li class="list-group-item  border-bottom border-warning">
+				<strong>@Html.DisplayNameFor(x => x.TaxOfficeName) </strong> @(Model.TaxOfficeName)
+
+			</li>
+			<li class="list-group-item  border-bottom border-warning">
+				<strong>@Html.DisplayNameFor(x => x.PhoneNumber) </strong> @(Model.PhoneNumber)
+
+			</li>
+			<li class="list-group-item  border-bottom border-warning">
+				<strong>@Html.DisplayNameFor(x => x.NumberOfEmployee) </strong> @(Model.NumberOfEmployee)
+
+			</li>
+			<li class="list-group-item  border-bottom border-warning">
+				<strong>: </strong> 
+
+			</li>
+			<li class="list-group-item  border-bottom border-warning">
+				<strong>Phone Number: </strong> @(Model.PhoneNumber)
+
+			</li>
+		</ul>
+		<a class="nav-link" asp-area="Approve" asp-controller="siteadmin" asp-action="update" asp-route-id="@(Model.Id)"></a>
+		<a class="nav-link" asp-area="personel" asp-controller="siteadmin" asp-action="update" asp-route-id="@(Model.Id)"></a>
+	</div>
+</div>

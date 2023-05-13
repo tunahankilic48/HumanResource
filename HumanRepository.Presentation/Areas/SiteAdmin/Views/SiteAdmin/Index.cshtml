@@ -27,8 +27,8 @@
                                 <td class="text-center">@item.FullName</td>
                                 <td class="d-flex justify-content-around">
                                     @*<a class="btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#updateLeaveModal" data-id="@item.Id">İzni Güncelle</a>*@
-                                    <a class="btn btn-primary m-2" asp-action="update" asp-controller="account" asp-route-id="@item.UserId">Approval Register</a>
-                                    <button type="button" class="btn btn-danger m-2" data-bs-toggle="modal" data-bs-target="#deleteAdvanceModal" data-bs-whatever="@item.UserId">Red Register</button>
+                                    <a class="btn btn-primary m-2" asp-action="details" asp-controller="siteadmin" asp-route-id="@item.UserId">Details </a>
+                                    
                                 </td>
                             </tr>
                         }

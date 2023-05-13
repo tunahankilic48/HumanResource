@@ -134,8 +134,8 @@ namespace HumanResource.Application.Services.CompanyManagerService
               {
                   Id = x.Id,
                   FullName = x.FirstName + " " + x.LastName,
-                  UserName = x.UserName
-
+                  UserName = x.UserName,
+                  Email = x.Email
               },
               where: null,
               orderby: x => x.OrderByDescending(x => x.FirstName)
