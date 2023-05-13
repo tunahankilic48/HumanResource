@@ -2,7 +2,7 @@
 
 @if (TempData["modelError"] is not null)
 {
-    <div class="ms-4 me-4 alert alert-dismissible alert-danger ps-0">
+    <div class="ms-4 me-4 alert alert-dismissible alert-danger ps-0" id="myAlert1">
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         <h4 class="alert-heading ms-0 ps-1">Something goes wrong!</h4>
 
@@ -20,7 +20,7 @@
 
 @if (TempData["error"] is not null)
 {
-    <div class="ms-4 me-4 alert alert-dismissible alert-danger ps-0">
+    <div class="ms-4 me-4 alert alert-dismissible alert-danger ps-0" id="myAlert2">
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         <h4 class="alert-heading ms-4 ps-0">Something goes wrong!</h4>
         <p class="mb-0">@TempData["error"]</p>
@@ -29,7 +29,7 @@
 
 @if (TempData["success"] is not null)
 {
-    <div class="ms-4 me-4 alert alert-dismissible alert-success">
+    <div class="ms-4 me-4 alert alert-dismissible alert-success" id="myAlert3">
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         <h4 class="alert-heading">Successfully</h4>
         <p class="mb-0">@TempData["success"]</p>
@@ -125,6 +125,18 @@
             document.getElementById("deleteExpenseInput").value = recipient;
 
         })
+    </script>
+
+    <script type="text/javascript">
+        setTimeout(function () {
+            $('#myAlert3').hide('fade')
+        }, 3000);
+        setTimeout(function () {
+            $('#myAlert2').hide('fade')
+        }, 5000);
+        setTimeout(function () {
+            $('#myAlert1').hide('fade')
+        }, 5000)
     </script>
 
 }
