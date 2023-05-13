@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HumanResource.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230513203234_ilk")]
-    partial class ilk
+    [Migration("20230513212838_first")]
+    partial class first
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -325,9 +325,14 @@ namespace HumanResource.Infrastructure.Migrations
                         .HasColumnType("smalldatetime");
 
                     b.Property<string>("ImagePath")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnOrder(6);
+
+                    b.Property<Guid>("ManagerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ManagerId1")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("smalldatetime");
@@ -355,6 +360,8 @@ namespace HumanResource.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ManagerId1");
 
                     b.HasIndex("StatuId");
 
@@ -884,10 +891,18 @@ namespace HumanResource.Infrastructure.Migrations
 
             modelBuilder.Entity("HumanResource.Domain.Entities.Company", b =>
                 {
+                    b.HasOne("HumanResource.Domain.Entities.AppUser", "Manager")
+                        .WithMany()
+                        .HasForeignKey("ManagerId1")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("HumanResource.Domain.Entities.Statu", "Statu")
                         .WithMany("Companies")
                         .HasForeignKey("StatuId")
                         .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Manager");
 
                     b.Navigation("Statu");
                 });
