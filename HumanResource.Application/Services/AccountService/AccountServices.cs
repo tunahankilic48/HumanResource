@@ -106,14 +106,14 @@ namespace HumanResource.Application.Services.AccountServices
 				CreatedDate = DateTime.Now,
 				Description = model.AddressDescription,
 				DistrictId = model.DistrictId,
-				
-		};
+
+			};
 			user.Company = new Company()
 			{
 				CreatedDate = DateTime.Now,
 				CompanyName = model.CompanyName,
 			};
-			
+
 			IdentityResult result = await _userManager.CreateAsync(user, model.Password);
 
 			await _userManager.AddToRoleAsync(user, "Employee");
