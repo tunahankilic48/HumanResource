@@ -4,6 +4,7 @@ using HumanResource.Application.Models.DTOs.CompanyManagerDTO;
 using HumanResource.Application.Models.VMs.CompanyManagerVMs;
 using HumanResource.Application.Models.VMs.PersonelVM;
 using HumanResource.Domain.Entities;
+using HumanResource.Domain.Enums;
 using HumanResource.Domain.Repositries;
 using HumanResource.Infrastructure.SeedData;
 using Microsoft.AspNetCore.Identity;
@@ -112,7 +113,13 @@ namespace HumanResource.Application.Services.AccountServices
 			{
 				CreatedDate = DateTime.Now,
 				CompanyName = model.CompanyName,
-			};
+                TaxNumber = model.TaxNumber,
+				TaxOfficeName = model.TaxOfficeName,
+				NumberOfEmployee = model.NumberOfEmployee,
+				PhoneNumber = model.PhoneNumber,
+				StatuId = Status.Awating_Approval.GetHashCode(),
+
+            };
 
 			IdentityResult result = await _userManager.CreateAsync(user, model.Password);
 

@@ -52,7 +52,7 @@ namespace HumanResource.Application.Services.SiteAdminService
 					 CompanyName = x.Company.CompanyName,
 					 FullName = x.FirstName + " " + x.LastName
 				 },
-				 where: x => x.StatuId == Status.Awating_Approval.GetHashCode(),
+				 where: x => x.Company.StatuId == Status.Awating_Approval.GetHashCode(),
 				 orderby: x => x.OrderByDescending(x => x.CreatedDate),
 				 include: x => x.Include(x => x.Company)
 				 );
@@ -99,15 +99,15 @@ namespace HumanResource.Application.Services.SiteAdminService
 		{
 			Company company = await _companyRepository.GetDefault(x => x.Id == id);
 			company.StatuId = Status.Active.GetHashCode();
-			var user = await _appUserRepository.GetDefault(x => x.Id == company.ManagerId);
-			return new ProcessVM() { Result = await _companyRepository.Update(company), UserEmail = user.Email };
+			//var user = await _appUserRepository.GetDefault(x => x.Id == company.ManagerId);
+			return new ProcessVM() { Result = await _companyRepository.Update(company)};
 		}
 		public async Task<ProcessVM> Reject(int id)
 		{
 			Company company = await _companyRepository.GetDefault(x => x.Id == id);
 			company.StatuId = Status.Passive.GetHashCode();
-			var user = await _appUserRepository.GetDefault(x => x.Id == company.ManagerId);
-			return new ProcessVM() { Result = await _companyRepository.Update(company), UserEmail = user.Email };
+			//var user = await _appUserRepository.GetDefault(x => x.Id == company.ManagerId);
+			return new ProcessVM() { Result = await _companyRepository.Update(company)};
 		}
 
 	}
