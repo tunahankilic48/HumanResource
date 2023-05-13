@@ -25,16 +25,16 @@ namespace HumanResource.Application.Models.VMs.CompanyVM
         public string NumberOfEmployee { get; set; }
 
         [Display(Name = ("City"))]
-        public int? CityId { get; set; }
+        public string? City { get; set; }
 
-        [Display(Name = ("District"))]
-        public int? DistrictId { get; set; }
+		[Display(Name = ("District"))]
+        public string? District { get; set; }
 
         [Display(Name = ("Address Description"))]
         public string? AddressDescription { get; set; }
 
         [Display(Name = "Manager")]
-        public Guid? ManagerId { get; set; }
+        public Guid ManagerId { get; set; }
 
         [ValidateNever]
         public string? ImagePath { get; set; }

@@ -8,5 +8,6 @@ namespace HumanResource.Application.Services.SiteAdminService
         Task<List<CompanyManagerRegisterRequestsVM>> GetCompanyManagerRequests();
         Task<List<CompanyVM>> GetCompanies();
         Task<CompanyDetailsVM> GetCompanyId(int id);
+        Task<CompanyManagerVM> GetCompanyManager(Guid id);
     }
 }
