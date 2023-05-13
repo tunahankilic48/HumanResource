@@ -36,23 +36,38 @@ namespace HumanResource.Presentation.Areas.SiteAdmin
             ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
             return View(await _siteAdminService.GetCompanyManagerRequests());
         }
-        public async Task<IActionResult> Approve(Guid companyManagerId)
+        public async Task<IActionResult> Approve(int id)
         {
 
-            
-            var companyManager = await _siteAdminService.GetCompanyManager(companyManagerId);
+			var result = await _siteAdminService.Approve(id);
+			if (result.Result)
+			{
+				TempData["success"] = "Company register request was approved.";
+				var message = new Message(result.UserEmail, "Company Request", $"Your company request was approved by SiteAdmin.");
+				_emailService.SendEmail(message);
+				return RedirectToAction("index", "siteadmin", new { Area = "siteadmin" });
+			}
+			TempData["error"] = "There is something wrong. Request could not approved.";
 
-            var conformationLink = Url.Action("ConfirmEmail", "Account", new { token = companyManager.Token, email = companyManager.Email, Area = "" }, Request.Scheme);
-
-            var message = new Message(companyManager.Email, "Conformation Email Link", $"Welcome to our human resources platform. Please click the link to activate your account. {conformationLink!}   You can use your email below to login to the platform. ");
-            _emailService.SendEmail(message);
-
-            return RedirectToAction("index", "siteadmin", new { Area = "siteadmin" });
-
-
-
+			return RedirectToAction("index", "siteadmin", new { Area = "siteadmin" });
         }
-        public async Task<IActionResult> Details (int id)
+
+		public async Task<IActionResult> Reject(int id)
+		{
+			var result = await _siteAdminService.Reject(id);
+			if (result.Result)
+			{
+				TempData["success"] = "Company register request was approved.";
+				var message = new Message(result.UserEmail, "Company Request", $"Your company request was rejected by SiteAdmin.");
+				_emailService.SendEmail(message);
+				return RedirectToAction("index", "siteadmin", new { Area = "siteadmin" });
+			}
+			TempData["error"] = "There is something wrong. Request could not rejected.";
+			return RedirectToAction("index", "siteadmin", new { Area = "siteadmin" });
+		}
+
+
+		public async Task<IActionResult> Details (int id)
         {
             return View(await _siteAdminService.GetCompanyId(id));
 		}

@@ -4,6 +4,7 @@ using HumanResource.Application.Services.AccountServices;
 using HumanResource.Application.Services.AddressService;
 using HumanResource.Application.Services.AdvanceService;
 using HumanResource.Application.Services.CompanyManagerService;
+using HumanResource.Application.Services.CompanyService;
 using HumanResource.Application.Services.DepartmentService;
 using HumanResource.Application.Services.ExpenseService;
 using HumanResource.Application.Services.LeaveServices;
@@ -44,6 +45,7 @@ namespace HumanResource.Application.IoC
             builder.RegisterType<TitleService>().As<ITitleService>().InstancePerLifetimeScope();
             builder.RegisterType<ExpenseServices>().As<IExpenseServices>().InstancePerLifetimeScope();
             builder.RegisterType<SiteAdminService>().As<ISiteAdminService>().InstancePerLifetimeScope();
+            builder.RegisterType<CompanyService>().As<ICompanyService>().InstancePerLifetimeScope();
             
 
 
