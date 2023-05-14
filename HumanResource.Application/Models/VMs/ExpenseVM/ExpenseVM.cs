@@ -22,5 +22,7 @@ namespace HumanResource.Application.Models.VMs.ExpenseVM
         public string ExpenseType { get; set; }
         [Display(Name = "Manager")]
         public string ManagerName { get; set; }
+        [Display(Name ="Statu")]
+        public string Statu { get; set; }
     }
 }

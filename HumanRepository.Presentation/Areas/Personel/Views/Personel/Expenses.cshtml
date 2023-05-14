@@ -54,6 +54,8 @@
                             <th class="text-center">@Html.DisplayNameFor(x=>x.ExpenseType)</th>
                             <th class="text-center">@Html.DisplayNameFor(x=>x.ShortDescription)</th>
                             <th class="text-center">@Html.DisplayNameFor(x=>x.ManagerName)</th>
+                            <th class="text-center">@Html.DisplayNameFor(x=>x.Statu)</th>
+
                             <th></th>
                         </tr>
                     </thead>
@@ -68,6 +70,18 @@
                                 <td class="text-center align-middle">@item.ExpenseType</td>
                                 <td class="text-center align-middle">@item.ShortDescription</td>
                                 <td class="text-center align-middle">@item.ManagerName</td>
+                                @if (item.Statu == "Awating Approval")
+                                {
+                                    <td class="text-center align-middle "><span class="badge rounded-pill bg-warning p-3">@item.Statu</span></td>
+                                }
+                                else if (item.Statu == "Rejected")
+                                {
+                                    <td class="text-center align-middle"><span class="badge rounded-pill bg-danger p-3">@item.Statu</span></td>
+                                }
+                                else if (item.Statu == "Approved")
+                                {
+                                    <td class="text-center align-middle"><span class="badge rounded-pill bg-success p-3">@item.Statu</span></td>
+                                }
                                 <td class="d-flex justify-content-around align-middle">
                                     <a class="btn btn-primary m-2" asp-action="update" asp-controller="expense" asp-route-id="@item.Id">Update Expense</a>
                                     <button type="button" class="btn btn-danger m-2" data-bs-toggle="modal" data-bs-target="#deleteExpenseModal" data-bs-whatever="@item.Id">Delete Expense</button>

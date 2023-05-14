@@ -25,6 +25,8 @@ namespace HumanResource.Application.Models.VMs.LeaveVM
         public string LeaveType { get; set; }
         [Display(Name = "Manager")]
         public string ManagerName { get; set; }
+        [Display(Name ="Statu")]
+        public string Statu { get; set; }
 
     }
 }

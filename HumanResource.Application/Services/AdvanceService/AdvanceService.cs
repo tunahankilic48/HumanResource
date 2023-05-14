@@ -82,11 +82,12 @@ namespace HumanResource.Application.Services.AdvanceService
 					Amount = x.Amount,
 					NumberOfInstallments = x.NumberOfInstallments,
 					AdvanceDate = x.AdvanceDate.ToShortDateString(),
-					ManagerName = x.User.Manager.FirstName + " " + x.User.Manager.LastName
+					ManagerName = x.User.Manager.FirstName + " " + x.User.Manager.LastName,
+					Statu = x.Statu.Name
                 },
 				where: x => x.User.Id == id && x.StatuId != Status.Deleted.GetHashCode(),
 				orderby: x => x.OrderByDescending(x => x.CreatedDate),
-				include: x => x.Include(x => x.User).Include(x => x.Statu).Include(x=>x.User).Include(x=>x.User.Manager)
+				include: x => x.Include(x => x.User).Include(x => x.Statu).Include(x=>x.User.Manager)
                 );
 			return advances;
 		}

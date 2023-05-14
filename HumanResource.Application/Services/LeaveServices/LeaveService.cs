@@ -71,7 +71,9 @@ namespace HumanResource.Application.Services.LeaveServices
                     ReturnDate = x.ReturnDate.ToShortDateString(),
                     LeavePeriod = x.LeavePeriod,
                     LeaveType = x.LeaveType.Name,
-                    ManagerName = x.User.Manager.FirstName + " " + x.User.Manager.LastName
+                    ManagerName = x.User.Manager.FirstName + " " + x.User.Manager.LastName,
+                    Statu = x.Statu.Name
+
                 },
                 
                 where: x => x.User.Id == id && x.StatuId != Status.Deleted.GetHashCode(),
