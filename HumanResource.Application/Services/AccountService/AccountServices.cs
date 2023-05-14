@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using HumanResource.Application.Extensions;
 using HumanResource.Application.Models.DTOs.AccountDTO;
 using HumanResource.Application.Models.DTOs.CompanyManagerDTO;
 using HumanResource.Application.Models.VMs.CompanyManagerVMs;
@@ -98,7 +99,7 @@ namespace HumanResource.Application.Services.AccountServices
 		{
 			await _signInManager.SignOutAsync();
 		}
-
+		[TestMailAttribute]
 		public async Task<RegisterVM> Register(RegisterDTO model)
 		{
 			AppUser user = _mapper.Map<AppUser>(model);
@@ -106,7 +107,7 @@ namespace HumanResource.Application.Services.AccountServices
 			{
 				CreatedDate = DateTime.Now,
 				Description = model.AddressDescription,
-				DistrictId = model.DistrictId,
+				District = model.DistrictId,
 
 			};
 			user.Company = new Company()
@@ -131,7 +132,7 @@ namespace HumanResource.Application.Services.AccountServices
 			{
 				var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 				register.Email = user.Email;
-				register.Token = token;
+				//register.Token = token;
 				register.Result = result;
 			}
 			else

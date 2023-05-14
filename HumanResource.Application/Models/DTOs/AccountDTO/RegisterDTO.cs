@@ -44,11 +44,15 @@ namespace HumanResource.Application.Models.DTOs.AccountDTO
 		[Display(Name = "Number Of Employee")]
 		public string NumberOfEmployee { get; set; }
 
+		[Required(ErrorMessage = "City cannot be null.")]
 		[Display(Name = ("City"))]
 		public City? City { get; set; }// int? tipi City? oldu
 
+		[Required(ErrorMessage = "District cannot be null.")]
 		[Display(Name = ("District"))]
-		public int? DistrictId { get; set; }
+		public District? DistrictId { get; set; }
+
+		[Required(ErrorMessage = "Address Description cannot be null.")]
 		[Display(Name = ("Address Description"))]
 		public string? AddressDescription { get; set; }
 		public DateTime CreatedDate => DateTime.Now;
