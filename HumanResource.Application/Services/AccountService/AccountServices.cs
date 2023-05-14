@@ -104,7 +104,7 @@ namespace HumanResource.Application.Services.AccountServices
 			{
 				CreatedDate = DateTime.Now,
 				Description = model.AddressDescription,
-				District = model.DistrictId,
+				DistrictId = model.DistrictId,
 
 			};
 			user.Company = new Company()

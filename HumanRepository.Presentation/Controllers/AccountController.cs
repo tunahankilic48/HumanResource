@@ -30,11 +30,13 @@ namespace HumanResource.Presentation.Controllers
         }
 
         [AllowAnonymous]
-        public IActionResult Register()
+        public async Task<IActionResult> Register()
         {
             if (User.Identity.IsAuthenticated)
                 return RedirectToAction("login", "account");
-
+            ViewBag.Cities = new SelectList(await _addressService.GetCities(), "Id", "Name");
+            ViewBag.Districts = new SelectList(await _addressService.GetDistricts(), "Id", "Name");
+            ViewBag.BaseUrl = Request.Scheme + "://" + HttpContext.Request.Host.ToString();
             return View();
         }
         [AllowAnonymous, HttpPost, ValidateAntiForgeryToken]
@@ -64,6 +66,9 @@ namespace HumanResource.Presentation.Controllers
                     TempData["Error"] = "there is something wrong";
                 }
             }
+            ViewBag.Cities = new SelectList(await _addressService.GetCities(), "Id", "Name");
+            ViewBag.Districts = new SelectList(await _addressService.GetDistricts(), "Id", "Name");
+            ViewBag.BaseUrl = Request.Scheme + "://" + HttpContext.Request.Host.ToString();
             return View(model);
         }
 
@@ -133,7 +138,7 @@ namespace HumanResource.Presentation.Controllers
             ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
             return View(model);
         }
-        [HttpGet]
+        [HttpGet, AllowAnonymous]
         public async Task<JsonResult> setDropDownList(int id)
         {
             var districts = await _addressService.GetDistricts(id);
