@@ -15,6 +15,8 @@ namespace HumanResource.Application.Models.VMs.AdvanceVMs
         public string AdvanceDate { get; set; }
         [Display(Name ="Manager")]
         public string ManagerName { get; set; }
+        [Display(Name ="Statu")]
+        public string Statu { get; set; }
 
     }
 }

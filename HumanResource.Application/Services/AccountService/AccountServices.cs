@@ -1,19 +1,16 @@
 ﻿using AutoMapper;
 using HumanResource.Application.Models.DTOs.AccountDTO;
-using HumanResource.Application.Models.DTOs.CompanyManagerDTO;
-using HumanResource.Application.Models.VMs.CompanyManagerVMs;
 using HumanResource.Application.Models.VMs.PersonelVM;
 using HumanResource.Domain.Entities;
 using HumanResource.Domain.Enums;
 using HumanResource.Domain.Repositries;
-using HumanResource.Infrastructure.SeedData;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Image = SixLabors.ImageSharp.Image;
 
 namespace HumanResource.Application.Services.AccountServices
 {
-	public class AccountServices : IAccountServices
+    public class AccountServices : IAccountServices
 	{
 		private readonly IAppUserRepository _appUserRepository;
 		private readonly SignInManager<AppUser> _signInManager;

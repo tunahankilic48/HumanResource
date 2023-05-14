@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using HumanResource.Application.Models.DTOs.ExpenseDTO;
-using HumanResource.Application.Models.VMs.AdvanceVMs;
 using HumanResource.Application.Models.VMs.CompanyManagerVMs;
 using HumanResource.Application.Models.VMs.ExpenseVM;
 using HumanResource.Application.Services.PersonelService;
@@ -8,7 +7,6 @@ using HumanResource.Domain.Entities;
 using HumanResource.Domain.Enums;
 using HumanResource.Domain.Repositories;
 using HumanResource.Domain.Repositries;
-using HumanResource.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace HumanResource.Application.Services.ExpenseService
@@ -97,11 +95,12 @@ namespace HumanResource.Application.Services.ExpenseService
                     CurrencyType = x.CurrencyType.Name,
                     ShortDescription = x.ShortDescription,
                     ExpenseType = x.ExpenseType.Name,
-                    ManagerName = x.User.Manager.FirstName + " " + x.User.Manager.LastName
+                    ManagerName = x.User.Manager.FirstName + " " + x.User.Manager.LastName,
+                    Statu = x.Statu.Name
                 },
                 where: x => x.User.Id == id && x.StatuId != Status.Deleted.GetHashCode(),
                 orderby: x => x.OrderByDescending(x => x.CreatedDate),
-                include: x => x.Include(x => x.User).Include(x => x.ExpenseType).Include(x => x.CurrencyType).Include(x => x.User.Manager)
+                include: x => x.Include(x => x.User).Include(x => x.ExpenseType).Include(x => x.CurrencyType).Include(x => x.User.Manager).Include(x=>x.Statu)
                 );
 
             return expenses;
