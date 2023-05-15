@@ -10,19 +10,19 @@ namespace HumanResource.Application.Services.CompanyService
             throw new NotImplementedException();
         }
 
-        public Task<bool> UpdateCompany(UpdateCompanyDTO model)
-        {
-            throw new NotImplementedException();
-        }
         public Task Delete(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<List<CompanyVM>> GetCompany()
+        public Task<List<CompanyVM>> GetCompany(string companyName)
         {
             throw new NotImplementedException();
         }
 
+        public Task<bool> UpdateCompany(UpdateCompanyDTO model)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

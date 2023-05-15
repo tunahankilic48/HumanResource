@@ -20,7 +20,6 @@ namespace HumanResource.Application.Services.AccountServices
 		public AccountServices(IAppUserRepository appUserRepository, SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, IMapper mapper)
 		{
 			_appUserRepository = appUserRepository;
-			_appUserRepository = appUserRepository;
 			_signInManager = signInManager;
 			_userManager = userManager;
 			_mapper = mapper;
@@ -121,8 +120,9 @@ namespace HumanResource.Application.Services.AccountServices
 			{
 				var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 				register.Email = user.Email;
-				//register.Token = token;
+				register.Token = token;
 				register.Result = result;
+				
 			}
 			else
 			{
