@@ -31,11 +31,11 @@ namespace HumanResource.Application.Services.SiteAdminService
                      CompanyId = x.CompanyId,
                      CompanyName = x.Company.CompanyName,
                      FullName = x.FirstName + " " + x.LastName,
-					 Statu = x.Statu.Name
+					 Statu = x.Company.Statu.Name
                  },
-                 where: x => x.Company.StatuId != Status.Deleted.GetHashCode(),
-                 orderby: x => x.OrderByDescending(x => x.CreatedDate),
-                 include: x => x.Include(x => x.Company)
+                 where: x => x.Company.CompanyName != null,
+                 orderby: x => x.OrderByDescending(x => x.Company.Statu),
+                 include: x => x.Include(x => x.Company) .Include(x => x.Statu)
                  );
             return companies;
         }
