@@ -4,16 +4,16 @@ namespace HumanResource.Application.Models.VMs.CompanyVM
 {
     public class CompanyVM
     {
-        public int Id { get; set; }
+        public Guid UserId { get; set; }
+        public int? CompanyId { get; set; }
 
         [Display(Name = "Company Name")]
         public string CompanyName { get; set; }
 
-        [Required(ErrorMessage = "Phone cannot be null.")]
-        [Display(Name = "Company Phone Number")]
-        [DataType(DataType.PhoneNumber)]
-        public string PhoneNumber { get; set; }
+        [Display(Name = "Manager Full Name")]
+        public string FullName { get; set; }
 
-        
+        [Display(Name = "Statu")]
+        public string Statu { get; set; }
     }
 }

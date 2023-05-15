@@ -100,13 +100,7 @@ namespace HumanResource.Application.Services.AccountServices
 		public async Task<RegisterVM> Register(RegisterDTO model)
 		{
 			AppUser user = _mapper.Map<AppUser>(model);
-			user.Address = new Address()
-			{
-				CreatedDate = DateTime.Now,
-				Description = model.AddressDescription,
-				DistrictId = model.DistrictId,
-
-			};
+			
 			user.Company = new Company()
 			{
 				CreatedDate = DateTime.Now,
@@ -118,8 +112,14 @@ namespace HumanResource.Application.Services.AccountServices
 				StatuId = Status.Awating_Approval.GetHashCode(),
 
             };
+            user.Company.Address = new Address()
+            {
+                CreatedDate = DateTime.Now,
+                Description = model.AddressDescription,
+                DistrictId = model.DistrictId,
 
-			IdentityResult result = await _userManager.CreateAsync(user, model.Password);
+            };
+            IdentityResult result = await _userManager.CreateAsync(user, model.Password);
 
 			await _userManager.AddToRoleAsync(user, "Employee");
 

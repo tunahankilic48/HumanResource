@@ -12,7 +12,7 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th class="text-center">@Html.DisplayNameFor(x=>x.UserId)</th>
+                            <th hidden class="text-center">@Html.DisplayNameFor(x=>x.CompanyId)</th>
                             <th class="text-center">@Html.DisplayNameFor(x=>x.CompanyName)</th>
                             <th class="text-center">@Html.DisplayNameFor(x=>x.FullName)</th>
                             <th></th>
@@ -22,7 +22,7 @@
                         @foreach (var item in Model)
                         {
                             <tr>
-                                <td class="text-center">@item.UserId</td>
+                                <td hidden class="text-center">@item.CompanyId</td>
                                 <td class="text-center">@item.CompanyName</td>
                                 <td class="text-center">@item.FullName</td>
                                 <td class="d-flex justify-content-around">
