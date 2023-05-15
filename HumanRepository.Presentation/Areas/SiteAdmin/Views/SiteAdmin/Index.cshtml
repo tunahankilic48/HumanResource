@@ -1,11 +1,6 @@
 ﻿@model IEnumerable<CompanyManagerRegisterRequestsVM>
-
-<div class="container-fluid">
-
-    <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800 ms-1">Register Requests</h1>
-
-    <!-- DataTales Example -->
+<div class="row d-flex justify-content-between">
+    <h3 class="card-header bg-dark text-white border-3">Company Registration Requests</h3>
     <div class="ms-1 card shadow mb-1">
         <div class="card-body">
             <div class="table-responsive">
@@ -18,6 +13,7 @@
                             <th></th>
                         </tr>
                     </thead>
+
                     <tbody>
                         @foreach (var item in Model)
                         {
@@ -26,13 +22,9 @@
                                 <td class="text-center">@item.CompanyName</td>
                                 <td class="text-center">@item.FullName</td>
                                 <td class="d-flex justify-content-around">
-                                    @*<a class="btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#updateLeaveModal" data-id="@item.Id">İzni Güncelle</a>*@
-                                    <a class="btn btn-primary m-2" asp-action="details" asp-controller="siteadmin" asp-route-id="@item.UserId">Details </a>
-                                    
-                                </td>
+                                <a class="btn btn-primary m-2" asp-action="details" asp-controller="siteadmin" asp-route-id="@item.UserId">Details </a></td>
                             </tr>
                         }
-
                     </tbody>
                 </table>
             </div>
