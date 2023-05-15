@@ -101,6 +101,7 @@
                                 </div>
 
                                 <div class="form-group row">
+
                                     <div class="col-sm-6 mb-3 mb-sm-0">
                                         <input asp-for="TaxOfficeName" class="form-control form-control-user" placeholder="Tax Office Name">
                                         <span asp-validation-for="TaxOfficeName" class="text-danger"></span>
@@ -114,10 +115,18 @@
                                 </div>
 
                                 <div class="form-group row">
+
                                     <div class="col-sm-6 mb-3 mb-sm-0">
                                         <input asp-for="NumberOfEmployee" class="form-control form-control-user" placeholder="Number Of Employee">
                                         <span asp-validation-for="NumberOfEmployee" class="text-danger"></span>
                                     </div>
+
+                                    <div class="col-sm-6">
+                                        <input asp-for="AddressDescription" class="form-control form-control-user" placeholder="Address Description">
+                                        <span asp-validation-for="AddressDescription" class="text-danger"></span>
+                                    </div>
+                                </div>
+
                                     <div class="form-group row">
                                         <select asp-for="CityId" class="custom-select" id="cityList" asp-items="@ViewBag.Cities">
                                             <option value="0">Please select a City</option>
@@ -127,7 +136,7 @@
 
 
                                   
-                                </div>
+                                
                                 <div class="form-group row">
                                     <div class="form-group row">                                     
 
@@ -135,11 +144,6 @@
                                             <option value="0">Please select a city firstly</option>
                                         </select>
                                         <span class="text-danger" asp-validation-for="DistrictId"></span>
-                                    </div>
-
-                                    <div class="col-sm-6">
-                                        <input asp-for="AddressDescription" class="form-control form-control-user" placeholder="AddressDescription">
-                                        <span asp-validation-for="AddressDescription" class="text-danger"></span>
                                     </div>
                                 </div>
 

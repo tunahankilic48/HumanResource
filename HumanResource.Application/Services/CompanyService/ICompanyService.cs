@@ -8,6 +8,6 @@ namespace HumanResource.Application.Services.CompanyService
         Task<bool> CreateCompany(CreateCompanyDTO model, string userName);
         Task<bool> UpdateCompany(UpdateCompanyDTO model);
         Task Delete(Guid id);
-        Task<List<CompanyVM>> GetCompany();
+        Task<List<CompanyVM>> GetCompany(string companyName);
     }
 }

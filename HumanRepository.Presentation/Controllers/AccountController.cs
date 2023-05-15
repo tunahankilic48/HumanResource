@@ -2,14 +2,17 @@
 using HumanResource.Application.Models.VMs.EmailVM;
 using HumanResource.Application.Services.AccountServices;
 using HumanResource.Application.Services.AddressService;
+using HumanResource.Application.Services.CompanyService;
 using HumanResource.Application.Services.EmailSenderService;
 using HumanResource.Application.Services.PersonelService;
 using HumanResource.Domain.Entities;
+using HumanResource.Domain.Enums;
+using HumanResource.Infrastructure.DbContext;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using NuGet.Protocol;
+using Microsoft.EntityFrameworkCore;
 
 namespace HumanResource.Presentation.Controllers
 {
@@ -28,6 +31,7 @@ namespace HumanResource.Presentation.Controllers
             _addressService = addressService;
             _emailService = emailService;
         }
+        ApplicationDbContext context = new ApplicationDbContext();
 
         [AllowAnonymous]
         public async Task<IActionResult> Register()
@@ -44,27 +48,86 @@ namespace HumanResource.Presentation.Controllers
         {
             if (ModelState.IsValid)
             {
-
                 var result = await _accountServices.Register(model);
-
                 if (result.Result.Succeeded)
                 {
+                    //var sorgu = await _companyService.GetCompany(model.CompanyName);
+                    var sorgu = context.Companies.FirstOrDefault(x => x.CompanyName == model.CompanyName);
+                    
+                    foreach (var companyName in model.CompanyName)
+                    {
+                        if (sorgu != companyName && Status == Status.Passive))
+                        {
+                            var conformationLink = Url.Action("ConfirmEmail", "Account", new { token = result.Token, email = result.Email }, Request.Scheme);
+                            var message = new Message(result.Email, "Information e-mail", "Welcome to our human resources platform. Your request has been received. Notification will be made as soon as possible.");
+                            _emailService.SendEmail(message);
 
-                    var conformationLink = Url.Action("ConfirmEmail", "Account", new { token = result.Token, email = result.Email }, Request.Scheme);
+                            TempData["Conformation"] = "Please check your mailbox and verify your email!";
 
-                    var message = new Message(result.Email, "Conformation Email Link", $"Welcome to our human resources platform. Please click the link to activate your account. {conformationLink!}");
-                    _emailService.SendEmail(message);
+                            return RedirectToAction("login", "account");
+                        }
+                       
+                    }
+                    foreach (var companyName in model.CompanyName)
+                    {
+                        if (sorgu.Any(x => x.CompanyName != model.CompanyName && sStatus == Status.Active))
+                        {
+                            var conformationLink = Url.Action("ConfirmEmail", "Account", new { token = result.Token, email = result.Email }, Request.Scheme);
+                            var message = new Message(result.Email, "Information e-mail", "Welcome to our human resources platform. Your request has been received. Notification will be made as soon as possible.");
+                            _emailService.SendEmail(message);
 
-                    TempData["Conformation"] = "Please check your mailbox and verify your email!";
+                            TempData["Conformation"] = "Please check your mailbox and verify your email!";
 
-                    return RedirectToAction("login", "account");
+                            return RedirectToAction("login", "account");
+                        }
+
+                    }
+                    return View();
                 }
 
-                foreach (var item in result.Result.Errors)
-                {
-                    ModelState.AddModelError(string.Empty, item.Description);
-                    TempData["Error"] = "there is something wrong";
-                }
+
+                
+                    
+
+                    //if (result.Result.Succeeded)
+                    //{
+                    //    var conformationLink = Url.Action("ConfirmEmail", "Account", new { token = result.Token, email = result.Email }, Request.Scheme);
+                    //    var message = new Message(result.Email, "Information e-mail", "Welcome to our human resources platform. Your request has been received. Notification will be made as soon as possible.");
+                    //    _emailService.SendEmail(message);
+
+                    //    TempData["Conformation"] = "Please check your mailbox and verify your email!";
+
+                    //    return RedirectToAction("login", "account");
+                    //}
+                    //foreach (var item in result.Result.Errors)
+                    //{
+                    //    ModelState.AddModelError(string.Empty, item.Description);
+                    //    TempData["Error"] = "there is something wrong";
+                    //}
+                
+                //************************************************************************************************************************************
+                //if (dogrulama.Companies.Any(x => x.CompanyName != user.Company.CompanyName) && dogrulama.Status.All())
+                //{
+                //    var result = await _accountServices.Register(model);
+
+                //    if (result.Result.Succeeded)
+                //    {
+                //        var conformationLink = Url.Action("ConfirmEmail", "Account", new { token = result.Token, email = result.Email }, Request.Scheme);
+                //        var message = new Message(result.Email, "Information e-mail", "Welcome to our human resources platform. Your request has been received. Notification will be made as soon as possible.");
+                //        _emailService.SendEmail(message);
+
+                //        TempData["Conformation"] = "Please check your mailbox and verify your email!";
+
+                //        return RedirectToAction("login", "account");
+                //    }
+                //    foreach (var item in result.Result.Errors)
+                //    {
+                //        ModelState.AddModelError(string.Empty, item.Description);
+                //        TempData["Error"] = "there is something wrong";
+                //    }
+                //}
+
+
             }
             ViewBag.Cities = new SelectList(await _addressService.GetCities(), "Id", "Name");
             ViewBag.Districts = new SelectList(await _addressService.GetDistricts(), "Id", "Name");
