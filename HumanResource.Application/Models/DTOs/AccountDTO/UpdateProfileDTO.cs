@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using HumanResource.Domain.Enums;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel.DataAnnotations;
 
@@ -20,22 +21,12 @@ namespace HumanResource.Application.Models.DTOs.AccountDTO
         [Required(ErrorMessage = "Last name cannot be null.")]
         public string LastName { get; set; }
 
+
         [MinLength(6, ErrorMessage = "User name must be more than 6 characters.")]
         [MaxLength(30, ErrorMessage = "User name must be less than 30 characters.")]
         [Required(ErrorMessage = "User name cannot be null.")]
         [Display(Name = "User Name")]
         public string UserName { get; set; }
-
-        [MinLength(6, ErrorMessage = "Password must be more than 6 characters.")]
-        [MaxLength(30, ErrorMessage = "Password must be less than 30 characters.")]
-        [DataType(DataType.Password)]
-        [Display(Name = "Password")]
-        public string? Password { get; set; }
-
-        [Compare("Password", ErrorMessage = "Passwords are not same.")]
-        [DataType(DataType.Password)]
-        [Display(Name = "Password Confirm")]
-        public string? ConfirmPassword { get; set; }
 
 
         [Required(ErrorMessage = "E-mail cannot be null.")]
@@ -43,31 +34,17 @@ namespace HumanResource.Application.Models.DTOs.AccountDTO
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
-		[MinLength(3, ErrorMessage = "Company name must be more than 3 characters.")]
-		[Required(ErrorMessage = "Company name cannot be null.")]
-		[Display(Name = "Company Name")]
-		public string CompanyName { get; set; }
-
-		[Required(ErrorMessage = "Tax Number cannot be null.")]
-		[Display(Name = "Tax Number")]
-		public string TaxNumber { get; set; }
-
-		[MinLength(3, ErrorMessage = "TaxOffice name must be more than 3 characters.")]
-		[MaxLength(50, ErrorMessage = "TaxOffice name must be less than 50 characters.")]
-		[Required(ErrorMessage = "TaxOffice name cannot be null.")]
-		[Display(Name = "TaxOffice Name")]
-		public string TaxOfficeName { get; set; }
-
-		[Required(ErrorMessage = "Phone cannot be null.")]
+        [Required(ErrorMessage = "Phone cannot be null.")]
         [Display(Name = "Phone Number")]
         [DataType(DataType.PhoneNumber)]
         public string PhoneNumber { get; set; }
 
-		[Required(ErrorMessage = "Number Of Employee cannot be null.")]
-		[Display(Name = "Number Of Employee")]
-		public string NumberOfEmployee { get; set; }
+        [MinLength(6, ErrorMessage = "You cannot enter your password less than 6 characters."), Required(ErrorMessage = "This field is required"), Display(Name = "Password"), DataType(DataType.Password)]
+        public string Password { get; set; }
+        [Compare("Password", ErrorMessage = "Your passwords are not matched!"), DataType(DataType.Password)]
+        public string ConfirmPassword { get; set; }
 
-		[Display(Name = ("City"))]
+        [Display(Name = ("City"))]
         public int? CityId { get; set; }
 
         [Display(Name = ("District"))]
@@ -78,8 +55,9 @@ namespace HumanResource.Application.Models.DTOs.AccountDTO
 
         [Display(Name = "Blood Type")]
         public int? BloodTypeId { get; set; }
+
         [Display(Name = "Department")]
-        public string? DepartmentName { get; set; }
+        public int? DepartmentId { get; set; }
 
         [Display(Name = "Birt Date")]
         public DateTime? BirthDate { get; set; }
@@ -87,15 +65,8 @@ namespace HumanResource.Application.Models.DTOs.AccountDTO
         [Display(Name = "Recruitment Date")]
         public DateTime? RecruitmentDate { get; set; }
 
-
-        [Display(Name ="Manager")]
-        public string? ManagerName { get; set; }
-
-        [Display(Name = "Title")]
-        public string? TitleName { get; set; }
-
-
-
+        [Display(Name = "Manager")]
+        public Guid? ManagerId { get; set; }
 
         [ValidateNever]
         public IFormFile? Image { get; set; }
@@ -103,13 +74,16 @@ namespace HumanResource.Application.Models.DTOs.AccountDTO
         [ValidateNever]
         public string? ImagePath { get; set; }
 
+
+        [Display(Name = "Title")]
+        public int? TitleId { get; set; }
+
+
         public DateTime ModifiedDate => DateTime.Now;
+        public int StatuId => Status.Active.GetHashCode();
 
         [ValidateNever]
-        public string FullName { get; set; }
-
-        [ValidateNever]
-        public string BaseUrl{ get; set; }
+        public string? BaseUrl { get; set; }
 
 
 

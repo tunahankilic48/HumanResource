@@ -1,24 +1,14 @@
 ﻿@model UpdateProfileDTO
-
-
 @{
     Layout = "~/Areas/Personel/Views/Shared/_LayoutPersonel.cshtml";
 }
 
-@if (TempData["error"] is not null)
-{
-    <div class="ms-4 me-4 alert alert-dismissible alert-danger ps-0">
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        <h4 class="alert-heading ms-4 ps-0">Something goes wrong!</h4>
-        <p class="mb-0">@TempData["error"]</p>
-    </div>
-}
 
-
-
-<h1 class="m-0 font-weight-bold text-primary mb-4">@Model.FullName</h1>
-<form asp-action="profile" asp-controller="account" asp-area="" enctype="multipart/form-data">
+<h1 class="m-0 font-weight-bold text-primary mb-4">Update Employee</h1>
+<form asp-action="update" asp-controller="personel" asp-area="Personel" enctype="multipart/form-data">
     <div class="row">
+        <div asp-validation-summary="ModelOnly" class="text-danger">
+        </div>
         <div class="col-lg-6">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
@@ -28,10 +18,7 @@
 
                         <div class="col-lg-10">
                             <input asp-for="Id" type="hidden" />
-                            <input asp-for="DepartmentName" type="hidden" />
-                            <input asp-for="TitleName" type="hidden" />
-                            <input asp-for="ManagerName" type="hidden" />
-                            <input asp-for="RecruitmentDate" type="hidden" />
+                            <input asp-for="DistrictId" type="hidden" />
 
                             @if (!String.IsNullOrEmpty(Model.ImagePath))
                             {
@@ -65,22 +52,25 @@
                                 <span class="text-danger" asp-validation-for="UserName"></span>
                             </div>
 
-                            <div class="form-group">
-                                <label asp-for="Email" class="form-label">@Html.DisplayNameFor(x=>x.Email)</label>
-                                <input asp-for="Email" class="form-control">
-                                <span class="text-danger" asp-validation-for="Email"></span>
-                            </div>
 
                             <div class="form-group">
                                 <label asp-for="Password" class="form-label">@Html.DisplayNameFor(x=>x.Password)</label>
                                 <input asp-for="Password" class="form-control">
-                                <span class="text-danger" asp-validation-for="Password"></span>
+                                <span asp-validation-for="Password" class="text-danger"></span>
                             </div>
 
                             <div class="form-group">
                                 <label asp-for="ConfirmPassword" class="form-label">@Html.DisplayNameFor(x=>x.ConfirmPassword)</label>
                                 <input asp-for="ConfirmPassword" class="form-control">
-                                <span class="text-danger" asp-validation-for="ConfirmPassword"></span>
+                                <span asp-validation-for="Password" class="text-danger"></span>
+                            </div>
+
+
+
+                            <div class="form-group">
+                                <label asp-for="Email" class="form-label">@Html.DisplayNameFor(x=>x.Email)</label>
+                                <input asp-for="Email" class="form-control">
+                                <span class="text-danger" asp-validation-for="Email"></span>
                             </div>
 
                             <div class="form-group">
@@ -89,13 +79,20 @@
                                 <span class="text-danger" asp-validation-for="PhoneNumber"></span>
                             </div>
 
+                           
+
+
                         </div>
+
+
+
                     </div>
-
                 </div>
-            </div>
 
+            </div>
         </div>
+
+
 
         <div class="col-lg-6">
             <div class="card shadow mb-4">
@@ -105,46 +102,50 @@
 
                     <div class="row d-flex justify-content-center">
                         <div class="col-lg-10">
-
                             <div class="form-group">
-                                <label asp-for="RecruitmentDate" class="form-label">@Html.DisplayNameFor(x=>x.RecruitmentDate)</label>
-                                <input asp-for="RecruitmentDate" class="form-control" type="date" disabled>
+                                <label asp-for="DepartmentId" class="form-label">@Html.DisplayNameFor(x=>x.DepartmentId)</label>
+                                <select asp-for="DepartmentId" class="custom-select" disabled asp-items="@ViewBag.Departments">
+                                </select>
+                                <span class="text-danger" asp-validation-for="DepartmentId"></span>
                             </div>
 
                             <div class="form-group">
-                                <label asp-for="DepartmentName" class="form-label">@Html.DisplayNameFor(x=>x.DepartmentName)</label>
-                                <input asp-for="DepartmentName" class="form-control" disabled>
+                                <label asp-for="TitleId" class="form-label">@Html.DisplayNameFor(x=>x.TitleId)</label>
+                                <select asp-for="TitleId" class="custom-select" asp-items="@ViewBag.Titles" disabled>
+                                </select>
+                                <span class="text-danger" asp-validation-for="TitleId"></span>
                             </div>
-
-                            <div class="form-group">
-                                <label asp-for="TitleName" class="form-label">@Html.DisplayNameFor(x=>x.TitleName)</label>
-                                <input asp-for="TitleName" class="form-control" disabled>
-                            </div>
-
-                            <div class="form-group">
-                                <label asp-for="ManagerName" class="form-label">@Html.DisplayNameFor(x=>x.ManagerName)</label>
-                                <input asp-for="ManagerName" class="form-control" disabled>
-                            </div>
-
 
                             <div class="form-group">
                                 <label asp-for="BloodTypeId" class="form-label">@Html.DisplayNameFor(x=>x.BloodTypeId)</label>
                                 <select asp-for="BloodTypeId" class="custom-select" asp-items="@Html.GetEnumSelectList<BloodTypeEnumVM>()">
-                                    <option value="">Please select a Leave Type</option>
                                 </select>
                                 <span class="text-danger" asp-validation-for="BloodTypeId"></span>
                             </div>
 
                             <div class="form-group">
-                                <label asp-for="BirthDate" class="form-label mt-1">@Html.DisplayNameFor(x=>x.BirthDate)</label>
+                                <label asp-for="BirthDate" class="form-label">@Html.DisplayNameFor(x=>x.BirthDate)</label>
                                 <input asp-for="BirthDate" class="form-control" type="date">
                                 <span class="text-danger" asp-validation-for="BirthDate"></span>
                             </div>
 
+
                             <div class="form-group">
-                                <label asp-for="CityId" class="form-label mt-1">@Html.DisplayNameFor(x=>x.CityId)</label>
-                                <select asp-for="CityId" class="custom-select" id="cityList" asp-items="@ViewBag.Cities">
-                                    <option value="0">Please select a City</option>
+                                <label asp-for="RecruitmentDate" class="form-label">@Html.DisplayNameFor(x=>x.RecruitmentDate)</label>
+                                <input asp-for="RecruitmentDate" disabled class="form-control" type="date">
+                                <span class="text-danger" asp-validation-for="RecruitmentDate"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="ManagerId" class="form-label">@Html.DisplayNameFor(x=>x.ManagerId)</label>
+                                <select asp-for="ManagerId" disabled class="custom-select" asp-items="@ViewBag.Personels">
+                                </select>
+                                <span class="text-danger" asp-validation-for="ManagerId"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="CityId" class="form-label">@Html.DisplayNameFor(x=>x.CityId)</label>
+                                <select asp-for="CityId" class="custom-select mt-1" id="cityList" asp-items="@ViewBag.Cities">
                                 </select>
                                 <span class="text-danger" asp-validation-for="CityId"></span>
                             </div>
@@ -153,18 +154,18 @@
                             <div class="form-group">
                                 <label asp-for="DistrictId" class="form-label mt-1">@Html.DisplayNameFor(x=>x.DistrictId)</label>
                                 <select asp-for="DistrictId" class="custom-select" id="districtList" asp-items="@ViewBag.Districts" disabled>
-                                    <option value="0">Please select a city firstly</option>
                                 </select>
                                 <span class="text-danger" asp-validation-for="DistrictId"></span>
                             </div>
 
                             <div class="form-group">
                                 <label asp-for="AddressDescription" class="form-label mt-2">@Html.DisplayNameFor(x=>x.AddressDescription)</label>
-                                <textarea asp-for="AddressDescription" class="form-control" rows="7" style="resize:none"></textarea>
+                                <textarea asp-for="AddressDescription" class="form-control" rows="6" style="resize:none"></textarea>
                                 <span class="text-danger" asp-validation-for="AddressDescription"></span>
                             </div>
 
                             <input id="url" type="hidden" asp-for="BaseUrl" />
+
                         </div>
                     </div>
 
@@ -173,8 +174,8 @@
 
         </div>
     </div>
-    <div class="form-group d-flex justify-content-end mt-1  ">
-        <input type="submit" value="Update Profile" class="btn btn-primary" style="width:200px" />
+    <div class="form-group d-flex justify-content-end mt-1 ">
+        <input type="submit" value="Update Employee" class="btn btn-primary" style="width:200px" />
     </div>
 </form>
 

@@ -15,7 +15,7 @@ namespace HumanResource.Application.Models.DTOs.AccountDTO
         public string LastName { get; set; }
         [MinLength(6, ErrorMessage = "You cannot enter your password less than 6 characters."), Required(ErrorMessage = "This field is required"), Display(Name = "Password"), DataType(DataType.Password)]
         public string Password { get; set; }
-        [Compare("Password", ErrorMessage ="Şifreniz uyuşmuyor"), DataType(DataType.Password)]
+        [Compare("Password", ErrorMessage = "Your passwords are not matched!"), DataType(DataType.Password)]
         public string ConfirmPassword { get; set; }
         [ Required(ErrorMessage = "This field is required"), Display(Name = "E-Mail"), DataType(DataType.EmailAddress)]
         public string Email { get; set; }
