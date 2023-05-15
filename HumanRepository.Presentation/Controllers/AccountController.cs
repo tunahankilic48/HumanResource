@@ -31,7 +31,7 @@ namespace HumanResource.Presentation.Controllers
             _addressService = addressService;
             _emailService = emailService;
         }
-        ApplicationDbContext context = new ApplicationDbContext();
+        //ApplicationDbContext context = new ApplicationDbContext();
 
         [AllowAnonymous]
         public async Task<IActionResult> Register()
@@ -51,60 +51,60 @@ namespace HumanResource.Presentation.Controllers
                 var result = await _accountServices.Register(model);
                 if (result.Result.Succeeded)
                 {
-                    //var sorgu = await _companyService.GetCompany(model.CompanyName);
-                    var sorgu = context.Companies.FirstOrDefault(x => x.CompanyName == model.CompanyName);
-                    
-                    foreach (var companyName in model.CompanyName)
-                    {
-                        if (sorgu != companyName && Status == Status.Passive))
-                        {
-                            var conformationLink = Url.Action("ConfirmEmail", "Account", new { token = result.Token, email = result.Email }, Request.Scheme);
-                            var message = new Message(result.Email, "Information e-mail", "Welcome to our human resources platform. Your request has been received. Notification will be made as soon as possible.");
-                            _emailService.SendEmail(message);
+                    ////var sorgu = await _companyService.GetCompany(model.CompanyName);
+                    //var sorgu = context.Companies.FirstOrDefault(x => x.CompanyName == model.CompanyName);
 
-                            TempData["Conformation"] = "Please check your mailbox and verify your email!";
-
-                            return RedirectToAction("login", "account");
-                        }
-                       
-                    }
-                    foreach (var companyName in model.CompanyName)
-                    {
-                        if (sorgu.Any(x => x.CompanyName != model.CompanyName && sStatus == Status.Active))
-                        {
-                            var conformationLink = Url.Action("ConfirmEmail", "Account", new { token = result.Token, email = result.Email }, Request.Scheme);
-                            var message = new Message(result.Email, "Information e-mail", "Welcome to our human resources platform. Your request has been received. Notification will be made as soon as possible.");
-                            _emailService.SendEmail(message);
-
-                            TempData["Conformation"] = "Please check your mailbox and verify your email!";
-
-                            return RedirectToAction("login", "account");
-                        }
-
-                    }
-                    return View();
-                }
-
-
-                
-                    
-
-                    //if (result.Result.Succeeded)
+                    //foreach (var companyName in model.CompanyName)
                     //{
-                    //    var conformationLink = Url.Action("ConfirmEmail", "Account", new { token = result.Token, email = result.Email }, Request.Scheme);
-                    //    var message = new Message(result.Email, "Information e-mail", "Welcome to our human resources platform. Your request has been received. Notification will be made as soon as possible.");
-                    //    _emailService.SendEmail(message);
+                    //    if (sorgu != companyName && Status == Status.Passive))
+                    //    {
+                    var conformationLink = Url.Action("ConfirmEmail", "Account", new { token = result.Token, email = result.Email }, Request.Scheme);
+                    var message = new Message(result.Email, "Information e-mail", "Welcome to our human resources platform. Your request has been received. Notification will be made as soon as possible.");
+                    _emailService.SendEmail(message);
 
-                    //    TempData["Conformation"] = "Please check your mailbox and verify your email!";
+                    TempData["Conformation"] = "Please check your mailbox and verify your email!";
 
-                    //    return RedirectToAction("login", "account");
+                    return RedirectToAction("login", "account");
+                    //    }
+
                     //}
-                    //foreach (var item in result.Result.Errors)
+                    //foreach (var companyName in model.CompanyName)
                     //{
-                    //    ModelState.AddModelError(string.Empty, item.Description);
-                    //    TempData["Error"] = "there is something wrong";
+                    //    if (sorgu.Any(x => x.CompanyName != model.CompanyName && sStatus == Status.Active))
+                    //    {
+                    //        var conformationLink = Url.Action("ConfirmEmail", "Account", new { token = result.Token, email = result.Email }, Request.Scheme);
+                    //        var message = new Message(result.Email, "Information e-mail", "Welcome to our human resources platform. Your request has been received. Notification will be made as soon as possible.");
+                    //        _emailService.SendEmail(message);
+
+                    //        TempData["Conformation"] = "Please check your mailbox and verify your email!";
+
+                    //        return RedirectToAction("login", "account");
+                    //    }
+
                     //}
-                
+                //    return View();
+                //}
+
+
+
+
+
+                //if (result.Result.Succeeded)
+                //{
+                //    var conformationLink = Url.Action("ConfirmEmail", "Account", new { token = result.Token, email = result.Email }, Request.Scheme);
+                //    var message = new Message(result.Email, "Information e-mail", "Welcome to our human resources platform. Your request has been received. Notification will be made as soon as possible.");
+                //    _emailService.SendEmail(message);
+
+                //    TempData["Conformation"] = "Please check your mailbox and verify your email!";
+
+                //    return RedirectToAction("login", "account");
+                //}
+                //foreach (var item in result.Result.Errors)
+                //{
+                //    ModelState.AddModelError(string.Empty, item.Description);
+                //    TempData["Error"] = "there is something wrong";
+                //}
+
                 //************************************************************************************************************************************
                 //if (dogrulama.Companies.Any(x => x.CompanyName != user.Company.CompanyName) && dogrulama.Status.All())
                 //{
@@ -125,7 +125,7 @@ namespace HumanResource.Presentation.Controllers
                 //        ModelState.AddModelError(string.Empty, item.Description);
                 //        TempData["Error"] = "there is something wrong";
                 //    }
-                //}
+                }
 
 
             }
