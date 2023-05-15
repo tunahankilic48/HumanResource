@@ -22,92 +22,78 @@ namespace HumanResource.Application.Services.SiteAdminService
 			_appUserRepository = appUserRepository;
 		}
 
-		public async Task<List<CompanyVM>> GetCompanies()
+		public async Task<List<CompanyVM>> GetCompanies(Guid id)
 		{
-			var companies = await _companyRepository.GetFilteredList(
-				 select: x => new CompanyVM()
-				 {
-					 Id = x.Id,
-					 CompanyName = x.CompanyName,
-					 PhoneNumber = x.PhoneNumber,
-				 },
-				 where: x => x.StatuId == Status.Awating_Approval.GetHashCode() && x.StatuId == Status.Active.GetHashCode() && x.StatuId == Status.Passive.GetHashCode(),
-				 orderby: x => x.OrderByDescending(x => x.CreatedDate)
-				 );
-			return companies;
-		}
+            var companies = await _appUserRepository.GetFilteredList(
+                 select: x => new CompanyVM()
+                 {
+                     UserId = x.Id,
+                     CompanyId = x.CompanyId,
+                     CompanyName = x.Company.CompanyName,
+                     FullName = x.FirstName + " " + x.LastName,
+					 Statu = x.Statu.Name
+                 },
+                 where: x => x.Company.StatuId != Status.Deleted.GetHashCode(),
+                 orderby: x => x.OrderByDescending(x => x.CreatedDate),
+                 include: x => x.Include(x => x.Company)
+                 );
+            return companies;
+        }
 
-		public async Task<CompanyDetailsVM> GetCompanyId(int id)
-		{
-			Company company = await _companyRepository.GetDefault(x => x.Id == id);
-			return _mapper.Map<CompanyDetailsVM>(company);
-		}
 
 		public async Task<List<CompanyManagerRegisterRequestsVM>> GetCompanyManagerRequests()
 		{
 			var companies = await _appUserRepository.GetFilteredList(
 				 select: x => new CompanyManagerRegisterRequestsVM()
 				 {
-					 UserId = x.Id,
+					 UserId =x.Id,
+					 CompanyId = x.CompanyId,
 					 CompanyName = x.Company.CompanyName,
 					 FullName = x.FirstName + " " + x.LastName
 				 },
 				 where: x => x.Company.StatuId == Status.Awating_Approval.GetHashCode(),
 				 orderby: x => x.OrderByDescending(x => x.CreatedDate),
-				 include: x => x.Include(x => x.Company)
+				 include: x => x.Include(x => x.Company) 
 				 );
 			return companies;
 		}
-
-		public async Task<CompanyManagerVM> GetCompanyManager(Guid id)
-		{
-			var companyManager = await _appUserRepository.GetFilteredFirstOrDefault(
-			  select: x => new CompanyManagerVM()
-			  {
-				  Id = x.Id,
-				  FullName = x.FirstName + " " + x.LastName,
-				  UserName = x.UserName,
-				  Email = x.Email
-			  },
-			  where: null
-			  ); ;
-			return companyManager;
-		}
 		public async Task<CompanyDetailsVM> GetCompanyDetails(Guid id)
 		{
-			var companyManager = await _companyRepository.GetFilteredFirstOrDefault(
+			var company = await _appUserRepository.GetFilteredFirstOrDefault(
 			  select: x => new CompanyDetailsVM()
 			  {
-				  Id = x.Id,
-				  CompanyName = x.CompanyName,
-				  TaxNumber = x.TaxNumber,
-				  TaxOfficeName = x.TaxOfficeName,
-				  PhoneNumber = x.PhoneNumber,
-				  NumberOfEmployee = x.NumberOfEmployee,
-				  City = x.Address.District.City.Name,
-				  District = x.Address.District.Name,
-				  AddressDescription = x.Address.Description,
+				  Id = x.Company.Id,
+                  FullName = x.FirstName + " " + x.LastName,
+                  CompanyName = x.Company.CompanyName,
+				  TaxNumber = x.Company.TaxNumber,
+				  TaxOfficeName = x.Company.TaxOfficeName,
+				  PhoneNumber = x.Company.PhoneNumber,
+				  NumberOfEmployee = x.Company.NumberOfEmployee,
+				  City = x.Company.Address.District.City.Name,
+				  District = x.Company.Address.District.Name,
+				  AddressDescription = x.Company.Address.Description,
 
 			  },
-			  where: x => x.StatuId == Status.Awating_Approval.GetHashCode(),
+			  where: x => x.Company.StatuId == Status.Awating_Approval.GetHashCode() && x.Id == id,
 			  orderby: null,
-              include: x => x.Include(x => x.Address).Include(x => x.Address.District)
-			  ); ;
-			return companyManager;
+              include: x => x.Include(x => x.Company) .Include(x => x.Company.Address).Include(x => x.Company.Address.District)
+              );
+			return company; 
 		}
 		public async Task<ProcessVM> Approve(int id)
 		{
 			Company company = await _companyRepository.GetDefault(x => x.Id == id);
 			company.StatuId = Status.Active.GetHashCode();
-			//var user = await _appUserRepository.GetDefault(x => x.Id == company.ManagerId);
-			return new ProcessVM() { Result = await _companyRepository.Update(company)};
+			var user = await _appUserRepository.GetDefault(x => x.CompanyId == company.Id);
+			user.EmailConfirmed = true;
+			return new ProcessVM() { Result = await _companyRepository.Update(company), UserEmail=user.Email};
 		}
 		public async Task<ProcessVM> Reject(int id)
 		{
 			Company company = await _companyRepository.GetDefault(x => x.Id == id);
 			company.StatuId = Status.Passive.GetHashCode();
-			//var user = await _appUserRepository.GetDefault(x => x.Id == company.ManagerId);
-			return new ProcessVM() { Result = await _companyRepository.Update(company)};
+			var user = await _appUserRepository.GetDefault(x => x.CompanyId == company.Id);
+			return new ProcessVM() { Result = await _companyRepository.Update(company),UserEmail= user.Email };
 		}
 
 	}
