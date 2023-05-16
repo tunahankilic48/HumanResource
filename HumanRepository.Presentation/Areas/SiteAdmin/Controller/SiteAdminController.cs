@@ -2,7 +2,6 @@
 using HumanResource.Application.Models.VMs.EmailVM;
 using HumanResource.Application.Services.AddressService;
 using HumanResource.Application.Services.CompanyManagerService;
-using HumanResource.Application.Services.CompanyService;
 using HumanResource.Application.Services.EmailSenderService;
 using HumanResource.Application.Services.PersonelService;
 using HumanResource.Application.Services.SiteAdminService;
@@ -19,17 +18,15 @@ namespace HumanResource.Presentation.Areas.SiteAdmin
         private readonly ISiteAdminService _siteAdminService;
         private readonly IPersonelService _personelService;
         private readonly ICompanyManagerService _companyManagerService;
-        private readonly ICompanyService _companyService;
         private readonly IEmailService _emailService;
         private readonly IAddressService _addressService;
 
-        public SiteAdminController(ISiteAdminService siteAdminService, IPersonelService personelService, ICompanyManagerService companyManagerService, IEmailService emailService, ICompanyService companyService, IAddressService addressService)
+        public SiteAdminController(ISiteAdminService siteAdminService, IPersonelService personelService, ICompanyManagerService companyManagerService, IEmailService emailService, IAddressService addressService)
         {
             _siteAdminService = siteAdminService;
             _personelService = personelService;
             _companyManagerService = companyManagerService;
             _emailService = emailService;
-            _companyService = companyService;
             _addressService = addressService;
         }
         public async Task<IActionResult> Index()

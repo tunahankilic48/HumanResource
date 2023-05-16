@@ -1,3 +1,69 @@
-﻿@{
+﻿@model UpdateCompanyDTO
+@{
     Layout = "~/Areas/Personel/Views/Shared/_LayoutPersonel.cshtml";
 }
+<form asp-action="company" asp-controller="company">
+    <div class="row d-flex justify-content-center mt-3">
+        <input type="hidden" asp-for="CompanyId" />
+        <input type="hidden" asp-for="StatuId" />
+        <div class="col-lg-10">
+            <h1>Update Company Information</h1>
+
+            <div class="form-group">
+                <label asp-for="CompanyName" class="form-label">@Html.DisplayNameFor(x=>x.CompanyName)</label>
+                <input asp-for="CompanyName" class="form-control">
+                <span class="text-danger" asp-validation-for="CompanyName"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TaxNumber" class="form-label">@Html.DisplayNameFor(x=>x.TaxNumber)</label>
+                <input asp-for="TaxNumber" class="form-control" disabled>
+                <span class="text-danger" asp-validation-for="TaxNumber"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TaxOfficeName" class="form-label">@Html.DisplayNameFor(x=>x.TaxOfficeName)</label>
+                <input asp-for="TaxOfficeName" class="form-control" disabled>
+                <span class="text-danger" asp-validation-for="TaxOfficeName"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PhoneNumber" class="form-label">@Html.DisplayNameFor(x=>x.PhoneNumber)</label>
+                <input asp-for="PhoneNumber" class="form-control">
+                <span class="text-danger" asp-validation-for="PhoneNumber"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NumberOfEmployee" class="form-label">@Html.DisplayNameFor(x=>x.NumberOfEmployee)</label>
+                <input asp-for="NumberOfEmployee" class="form-control">
+                <span class="text-danger" asp-validation-for="NumberOfEmployee"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="City" class="form-label">@Html.DisplayNameFor(x=>x.City)</label>
+                <input asp-for="City" class="form-control">
+                <span class="text-danger" asp-validation-for="City"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="District" class="form-label">@Html.DisplayNameFor(x=>x.District)</label>
+                <input asp-for="District" class="form-control">
+                <span class="text-danger" asp-validation-for="District"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AddressDescription" class="form-label">@Html.DisplayNameFor(x=>x.AddressDescription)</label>
+                <input asp-for="AddressDescription" class="form-control">
+                <span class="text-danger" asp-validation-for="AddressDescription"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ManagerName" class="form-label">@Html.DisplayNameFor(x=>x.ManagerName)</label>
+                <input asp-for="ManagerName" class="form-control">
+                <span class="text-danger" asp-validation-for="ManagerName"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ImagePath" class="form-label">@Html.DisplayNameFor(x=>x.ImagePath)</label>
+                <input asp-for="ImagePath" class="form-control">
+                <span class="text-danger" asp-validation-for="ImagePath"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group d-flex justify-content-end mt-3">
+        <input type="submit" value="Update" class="btn btn-primary" />
+        <div class="col-lg-1"></div>
+    </div>
+</form>
