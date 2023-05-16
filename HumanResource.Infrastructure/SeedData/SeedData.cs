@@ -149,7 +149,7 @@ namespace HumanResource.Infrastructure.SeedData
                 {
                     var departmentFaker = new Faker<Department>()
                         .RuleFor(x => x.Name, y => y.Company.CompanyName())
-                        .RuleFor(x=>x.StatuId, y=> Status.Active.GetHashCode());
+                        .RuleFor(x => x.StatuId, y => Status.Active.GetHashCode());
 
                     department = departmentFaker.Generate(5);
                     await context.Departments.AddRangeAsync(department);
@@ -167,7 +167,23 @@ namespace HumanResource.Infrastructure.SeedData
                     await context.SaveChangesAsync();
                 }
 
-               
+                if (!context.Users.Any())
+                {
+
+                    Company company = new Company()
+                    {
+                        CompanyName = "Test",
+                        TaxNumber = "1234567890",
+                        PhoneNumber = "12345678901",
+                        NumberOfEmployee = "20-50",
+                        TaxOfficeName = "Test",
+                        StatuId = Status.Active.GetHashCode(),
+                        CreatedDate = DateTime.Now,
+
+                    };
+                    context.Companies.Add(company);
+                    await context.SaveChangesAsync();
+                }
 
                 if (!context.Users.Any())
                 {
@@ -176,32 +192,21 @@ namespace HumanResource.Infrastructure.SeedData
                     AppUser companyManager = new AppUser
                     {
                         Id = companyManagerId,
-                        FirstName="company",
-                        LastName="manager",
+                        FirstName = "company",
+                        LastName = "manager",
                         UserName = "companyManager",
                         NormalizedUserName = "COMPANYMANAGER",
                         Email = "companyManager@gmail.com",
                         NormalizedEmail = "COMPANYMANAGER@GMAIL.COM",
                         ImagePath = "/images/noImage.png",
                         CreatedDate = DateTime.Now,
-                        EmailConfirmed=true,
-                        LockoutEnabled=true,
-                        TwoFactorEnabled=false,
-                        PhoneNumberConfirmed=false,
+                        EmailConfirmed = true,
+                        LockoutEnabled = true,
+                        TwoFactorEnabled = false,
+                        PhoneNumberConfirmed = false,
                         SecurityStamp = Guid.NewGuid().ToString("D"),
-                        Company = new Company()
-                        {
-                            Id = 1,
-                            CompanyName = "Test",
-                            TaxNumber = "1234567890",
-                            PhoneNumber = "12345678901",
-                            NumberOfEmployee = "20-50",
-                            TaxOfficeName = "Test",
-                            StatuId = Status.Active.GetHashCode(),
-                            CreatedDate = DateTime.Now,
-
-                        }
-                };
+                        CompanyId = 1
+                    };
 
                     var hashed = passwordHasher.HashPassword(companyManager, "123456");
                     companyManager.PasswordHash = hashed;
@@ -229,19 +234,8 @@ namespace HumanResource.Infrastructure.SeedData
                         TwoFactorEnabled = false,
                         PhoneNumberConfirmed = false,
                         SecurityStamp = Guid.NewGuid().ToString("D"),
-                        Company = new Company()
-                        {
-                            Id = 1,
-                            CompanyName = "Test",
-                            TaxNumber = "1234567890",
-                            PhoneNumber = "12345678901",
-                            NumberOfEmployee = "20-50",
-                            TaxOfficeName = "Test",
-                            StatuId = Status.Active.GetHashCode(),
-                            CreatedDate = DateTime.Now,
-
-                        }
-                };
+                        CompanyId = 1
+                    };
 
                     var hashedCustomer = passwordHasher.HashPassword(employee, "123456");
                     employee.PasswordHash = hashedCustomer;
