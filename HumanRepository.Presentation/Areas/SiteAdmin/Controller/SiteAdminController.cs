@@ -78,5 +78,11 @@ namespace HumanResource.Presentation.Areas.SiteAdmin
             var companies = await _siteAdminService.GetCompanies(id);
             return View(companies);
         }
+
+        public async Task<IActionResult> GetDetails(Guid id)
+        {
+            ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
+            return View(await _siteAdminService.GetCompanyListDetails(id));
+        }
     }
 }
