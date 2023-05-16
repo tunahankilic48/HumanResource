@@ -80,8 +80,11 @@
                                 }
 
                                 <td class="d-flex justify-content-around align-middle">
-                                    <a class="btn btn-primary m-2" asp-action="update" asp-controller="advance" asp-route-id="@item.Id">Update Advance</a>
-                                    <button type="button" class="btn btn-danger m-2" data-bs-toggle="modal" data-bs-target="#deleteAdvanceModal" data-bs-whatever="@item.Id">Delete Advance</button>
+                                    @if (item.Statu == "Awating Approval")
+                                    {
+                                        <a class="btn btn-primary m-2" asp-action="update" asp-controller="advance" asp-route-id="@item.Id">Update Advance</a>
+                                        <button type="button" class="btn btn-danger m-2" data-bs-toggle="modal" data-bs-target="#deleteAdvanceModal" data-bs-whatever="@item.Id">Delete Advance</button>
+                                    }
                                 </td>
                             </tr>
 

@@ -83,8 +83,11 @@
                                     <td class="text-center align-middle"><span class="badge rounded-pill bg-success p-3">@item.Statu</span></td>
                                 }
                                 <td class="d-flex justify-content-around align-middle">
-                                    <a class="btn btn-primary m-2" asp-action="update" asp-controller="expense" asp-route-id="@item.Id">Update Expense</a>
-                                    <button type="button" class="btn btn-danger m-2" data-bs-toggle="modal" data-bs-target="#deleteExpenseModal" data-bs-whatever="@item.Id">Delete Expense</button>
+                                    @if (item.Statu == "Awating Approval")
+                                    {
+                                        <a class="btn btn-primary m-2" asp-action="update" asp-controller="expense" asp-route-id="@item.Id">Update Expense</a>
+                                        <button type="button" class="btn btn-danger m-2" data-bs-toggle="modal" data-bs-target="#deleteExpenseModal" data-bs-whatever="@item.Id">Delete Expense</button>
+                                    }
                                 </td>
                             </tr>
 
