@@ -171,8 +171,9 @@ namespace HumanResource.Application.Services.CompanyManagerService
             return departments;
         }
 
-        public async Task<List<EmployeeVM>> GetEmployees()
+        public async Task<List<EmployeeVM>> GetEmployees(int companyId)
         {
+            
             var employees = await _appUserRepository.GetFilteredList(
               select: x => new EmployeeVM()
               {
@@ -184,7 +185,7 @@ namespace HumanResource.Application.Services.CompanyManagerService
                   ManagerName = x.Manager.FirstName + " " + x.Manager.LastName
 
               },
-              where: x => x.StatuId == Status.Active.GetHashCode(),
+              where: x => x.StatuId != Status.Deleted.GetHashCode() && x.CompanyId == companyId,
               orderby: x => x.OrderByDescending(x => x.CreatedDate),
               include: x => x.Include(x => x.Department).Include(x => x.Title).Include(x => x.Manager)
               );

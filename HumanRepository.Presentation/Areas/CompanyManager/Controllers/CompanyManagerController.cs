@@ -42,7 +42,7 @@ namespace HumanResource.Presentation.Areas.CompanyManager.Controllers
         public async Task<IActionResult> Employees()
         {
             ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
-            return View(await _companyManagerService.GetEmployees());
+            return View(await _companyManagerService.GetEmployees((int)((ViewBag.Personel).CompanyId)));
         }
 
 

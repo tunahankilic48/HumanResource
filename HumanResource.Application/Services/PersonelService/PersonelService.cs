@@ -33,7 +33,8 @@ namespace HumanResource.Application.Services.PersonelService
                    FirstName = x.FirstName,
                    LastName = x.LastName,
                    Image = x.ImagePath == null ? "/media/images/noImage.png" : x.ImagePath,
-                   FullName = x.FirstName + " " + x.LastName
+                   FullName = x.FirstName + " " + x.LastName,
+                   CompanyId = x.CompanyId
                },
                where: x => x.UserName == userName,
                orderby: null,

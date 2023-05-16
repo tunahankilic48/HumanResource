@@ -13,5 +13,6 @@ namespace HumanResource.Application.Models.VMs.PersonelVM
         [Display(Name = "Image")]
         public string Image { get; set; }
         public string FullName { get; set; }
+        public int? CompanyId { get; set; }
     }
 }
