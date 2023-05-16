@@ -30,7 +30,7 @@ namespace HumanResource.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<Guid>("AppUserId")
+                    b.Property<Guid?>("AppUserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int?>("CompanyId")
@@ -60,7 +60,8 @@ namespace HumanResource.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AppUserId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[AppUserId] IS NOT NULL");
 
                     b.HasIndex("CompanyId")
                         .IsUnique()
@@ -782,8 +783,7 @@ namespace HumanResource.Infrastructure.Migrations
                     b.HasOne("HumanResource.Domain.Entities.AppUser", "AppUser")
                         .WithOne("Address")
                         .HasForeignKey("HumanResource.Domain.Entities.Address", "AppUserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("HumanResource.Domain.Entities.Company", "Company")
                         .WithOne("Address")

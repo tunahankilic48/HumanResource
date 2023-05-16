@@ -7,7 +7,7 @@
         public int PostCode { get; set; }
         public int? DistrictId { get; set; }
         public int? CompanyId { get; set; }
-        public Guid AppUserId { get; set; }
+        public Guid? AppUserId { get; set; }
 
         public int? StatuId { get; set; }
         public DateTime CreatedDate { get; set; }

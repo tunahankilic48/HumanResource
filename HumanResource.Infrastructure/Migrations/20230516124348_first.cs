@@ -321,7 +321,7 @@ namespace HumanResource.Infrastructure.Migrations
                     PostCode = table.Column<int>(type: "int", nullable: false),
                     DistrictId = table.Column<int>(type: "int", nullable: true),
                     CompanyId = table.Column<int>(type: "int", nullable: true),
-                    AppUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AppUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     StatuId = table.Column<int>(type: "int", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "smalldatetime", nullable: false),
                     ModifiedDate = table.Column<DateTime>(type: "smalldatetime", nullable: true),
@@ -565,7 +565,8 @@ namespace HumanResource.Infrastructure.Migrations
                 name: "IX_Addresses_AppUserId",
                 table: "Addresses",
                 column: "AppUserId",
-                unique: true);
+                unique: true,
+                filter: "[AppUserId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Addresses_CompanyId",

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HumanResource.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230513215113_first")]
+    [Migration("20230516124348_first")]
     partial class first
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,7 +32,7 @@ namespace HumanResource.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<Guid>("AppUserId")
+                    b.Property<Guid?>("AppUserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int?>("CompanyId")
@@ -62,7 +62,8 @@ namespace HumanResource.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AppUserId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[AppUserId] IS NOT NULL");
 
                     b.HasIndex("CompanyId")
                         .IsUnique()
@@ -784,8 +785,7 @@ namespace HumanResource.Infrastructure.Migrations
                     b.HasOne("HumanResource.Domain.Entities.AppUser", "AppUser")
                         .WithOne("Address")
                         .HasForeignKey("HumanResource.Domain.Entities.Address", "AppUserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("HumanResource.Domain.Entities.Company", "Company")
                         .WithOne("Address")
