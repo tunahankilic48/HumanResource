@@ -33,7 +33,7 @@ namespace HumanResource.Application.Services.SiteAdminService
                      FullName = x.FirstName + " " + x.LastName,
 					 Statu = x.Company.Statu.Name
                  },
-                 where: x => x.Company.CompanyName != null,
+                 where: x => x.Company.Statu != null,
                  orderby: x => x.OrderByDescending(x => x.Company.Statu),
                  include: x => x.Include(x => x.Company) .Include(x => x.Statu)
                  );
@@ -91,10 +91,32 @@ namespace HumanResource.Application.Services.SiteAdminService
 		public async Task<ProcessVM> Reject(int id)
 		{
 			Company company = await _companyRepository.GetDefault(x => x.Id == id);
-			company.StatuId = Status.Passive.GetHashCode();
+			company.StatuId = Status.Rejected.GetHashCode();
 			var user = await _appUserRepository.GetDefault(x => x.CompanyId == company.Id);
 			return new ProcessVM() { Result = await _companyRepository.Update(company),UserEmail= user.Email };
 		}
+        public async Task<CompanyDetailsVM> GetCompanyListDetails(Guid id)
+        {
+            var company = await _appUserRepository.GetFilteredFirstOrDefault(
+              select: x => new CompanyDetailsVM()
+              {
+                  Id = x.Company.Id,
+                  FullName = x.FirstName + " " + x.LastName,
+                  CompanyName = x.Company.CompanyName,
+                  TaxNumber = x.Company.TaxNumber,
+                  TaxOfficeName = x.Company.TaxOfficeName,
+                  PhoneNumber = x.Company.PhoneNumber,
+                  NumberOfEmployee = x.Company.NumberOfEmployee,
+                  City = x.Company.Address.District.City.Name,
+                  District = x.Company.Address.District.Name,
+                  AddressDescription = x.Company.Address.Description,
 
-	}
+              },
+              where: x => x.Id == id,
+              orderby: null,
+              include: x => x.Include(x => x.Company).Include(x => x.Company.Address).Include(x => x.Company.Address.District)
+              );
+            return company;
+        }
+    }
 }
