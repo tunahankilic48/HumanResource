@@ -1,23 +1,22 @@
-﻿using HumanResource.Domain.Entities;
-using Microsoft.AspNetCore.Identity;
-using System.ComponentModel.DataAnnotations;
-using System.Xml.Linq;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace HumanResource.Application.Models.DTOs.AccountDTO
 {
     public class RegisterDTO
     {
-        [MinLength(6, ErrorMessage = "You cannot enter your Username less than 6 characters."), Required(ErrorMessage = "This field is required"), Display(Name = "User Name")]
+        [MinLength(6, ErrorMessage = "You cannot enter your Username less than 6 characters."), 
+			Required(ErrorMessage = "User name cannot be null"), 
+			Display(Name = "User Name")]
         public string UserName { get; set; }
-        [StringLength(30, ErrorMessage = "Your name cannot exceed 30 characters"), Required(ErrorMessage = "This field is required"), Display(Name = "First Name")]
+        [StringLength(30, ErrorMessage = "Your name cannot exceed 30 characters"), Required(ErrorMessage = "First name cannot be null"), Display(Name = "First Name")]
         public string FirstName { get; set; }
-        [StringLength(50, ErrorMessage = "Your lastname cannot exceed 50 characters"), Required(ErrorMessage = "This field is required"), Display(Name = "Last Name")]
+        [StringLength(50, ErrorMessage = "Your lastname cannot exceed 50 characters"), Required(ErrorMessage = "Last name cannot be null"), Display(Name = "Last Name")]
         public string LastName { get; set; }
-        [MinLength(6, ErrorMessage = "You cannot enter your password less than 6 characters."), Required(ErrorMessage = "This field is required"), Display(Name = "Password"), DataType(DataType.Password)]
+        [MinLength(6, ErrorMessage = "You cannot enter your password less than 6 characters."), Required(ErrorMessage = "Password name cannot be null"), Display(Name = "Password"), DataType(DataType.Password)]
         public string Password { get; set; }
         [Compare("Password", ErrorMessage = "Your passwords are not matched!"), DataType(DataType.Password)]
         public string ConfirmPassword { get; set; }
-        [ Required(ErrorMessage = "This field is required"), Display(Name = "E-Mail"), DataType(DataType.EmailAddress)]
+        [ Required(ErrorMessage = "Email cannot be null"), Display(Name = "E-Mail"), DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
 		[MinLength(3, ErrorMessage = "Company name must be more than 3 characters.")]
@@ -27,6 +26,7 @@ namespace HumanResource.Application.Models.DTOs.AccountDTO
 
 		[Required(ErrorMessage = "Tax Number cannot be null.")]
 		[Display(Name = "Tax Number")]
+		[RegularExpression("[0-9]{10}", ErrorMessage = "It must be 10 integers.")]
 		public string TaxNumber { get; set; }
 
 		[MinLength(3, ErrorMessage = "TaxOffice name must be more than 3 characters.")]
@@ -38,7 +38,8 @@ namespace HumanResource.Application.Models.DTOs.AccountDTO
 		[Required(ErrorMessage = "Phone cannot be null.")]
 		[Display(Name = "Phone Number")]
 		[DataType(DataType.PhoneNumber)]
-		public string PhoneNumber { get; set; }
+        [RegularExpression("[0-9]{11}", ErrorMessage = "Format must be 05** *** ** ** without space.")]
+        public string PhoneNumber { get; set; }
 
 		[Required(ErrorMessage = "Number Of Employee cannot be null.")]
 		[Display(Name = "Number Of Employee")]
