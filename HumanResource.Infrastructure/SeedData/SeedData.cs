@@ -167,6 +167,24 @@ namespace HumanResource.Infrastructure.SeedData
                     await context.SaveChangesAsync();
                 }
 
+                if(!context.Companies.Any())
+                {
+                    Company company = new Company()
+                    {
+                        Id = 1,
+                        CompanyName = "Test",
+                        TaxNumber ="1234567890",
+                        PhoneNumber = "12345678901",
+                        NumberOfEmployee = "20-50",
+                        TaxOfficeName = "Test",
+                        StatuId = Status.Active.GetHashCode(),
+                        CreatedDate = DateTime.Now,
+
+                    };
+                    await context.Companies.AddAsync(company);
+                    await context.SaveChangesAsync();
+                }
+
                 if (!context.Users.Any())
                 {
                     var passwordHasher = new PasswordHasher<AppUser>();
@@ -186,7 +204,8 @@ namespace HumanResource.Infrastructure.SeedData
                         LockoutEnabled=true,
                         TwoFactorEnabled=false,
                         PhoneNumberConfirmed=false,
-                        SecurityStamp = Guid.NewGuid().ToString("D")
+                        SecurityStamp = Guid.NewGuid().ToString("D"),
+                        CompanyId = 1
                     };
 
                     var hashed = passwordHasher.HashPassword(companyManager, "123456");
@@ -214,7 +233,8 @@ namespace HumanResource.Infrastructure.SeedData
                         LockoutEnabled = true,
                         TwoFactorEnabled = false,
                         PhoneNumberConfirmed = false,
-                        SecurityStamp = Guid.NewGuid().ToString("D")
+                        SecurityStamp = Guid.NewGuid().ToString("D"),
+                        CompanyId = 1
                     };
 
                     var hashedCustomer = passwordHasher.HashPassword(employee, "123456");
