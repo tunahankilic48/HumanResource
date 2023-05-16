@@ -46,7 +46,7 @@ namespace HumanResource.Application.Models.DTOs.AccountDTO
 
 		[Required(ErrorMessage = "City cannot be null.")]
 		[Display(Name = ("City"))]
-		public int? CityId { get; set; }// int? tipi City? oldu
+		public int? CityId { get; set; }
 
 		[Required(ErrorMessage = "District cannot be null.")]
 		[Display(Name = ("District"))]
@@ -54,7 +54,7 @@ namespace HumanResource.Application.Models.DTOs.AccountDTO
 
 		[Required(ErrorMessage = "Address Description cannot be null.")]
 		[Display(Name = ("Address Description"))]
-		public string? AddressDescription { get; set; }
+		public string? Description { get; set; }
 		public DateTime CreatedDate => DateTime.Now;
 	}
 }

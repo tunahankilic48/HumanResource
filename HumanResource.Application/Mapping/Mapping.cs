@@ -37,6 +37,8 @@ namespace HumanResource.Application.Mapping
 
             CreateMap<Company, CompanyDetailsVM>().ReverseMap();
 
+            CreateMap<Company, RegisterDTO>().ReverseMap();
+            CreateMap<Address, RegisterDTO>().ReverseMap();
 
 
         }
