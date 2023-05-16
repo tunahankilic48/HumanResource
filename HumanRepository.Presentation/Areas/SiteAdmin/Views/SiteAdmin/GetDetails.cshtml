@@ -13,8 +13,8 @@
             <li class="list-group-item  border-bottom border-warning"><strong>@Html.DisplayNameFor(x => x.City) </strong> @(Model.City)</li>
             <li class="list-group-item  border-bottom border-warning"><strong>@Html.DisplayNameFor(x => x.District) </strong> @(Model.District)</li>
             <li class="list-group-item  border-bottom border-warning"><strong>@Html.DisplayNameFor(x => x.AddressDescription) </strong> @(Model.AddressDescription)</li>
+            <a class="btn btn-primary m-2" asp-area="siteadmin" asp-action="list" asp-controller="siteadmin" asp-route-id="@Model.Id">Back List</a>
+            </li>
         </ul>
-        <a class="btn btn-success mt-2" asp-area="siteadmin" asp-controller="siteadmin" asp-action="Approve" asp-route-id="@(Model.Id)">Approve</a>
-        <a class="btn btn-danger mt-2" asp-area="siteadmin" asp-controller="siteadmin" asp-action="Reject" asp-route-id="@(Model.Id)">Reject</a>
     </div>
 </div>

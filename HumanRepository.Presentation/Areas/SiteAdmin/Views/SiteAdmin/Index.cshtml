@@ -18,9 +18,9 @@
                         @foreach (var item in Model)
                         {
                             <tr>
-                                <td hidden class="text-center">@item.CompanyId</td>
-                                <td class="text-center">@item.CompanyName</td>
-                                <td class="text-center">@item.FullName</td>
+                                <td hidden class="text-center align-middle">@item.CompanyId</td>
+                                <td class="text-center align-middle">@item.CompanyName</td>
+                                <td class="text-center align-middle">@item.FullName</td>
                                 <td class="d-flex justify-content-around">
                                 <a class="btn btn-primary m-2" asp-action="details" asp-controller="siteadmin" asp-route-id="@item.UserId">Details </a></td>
                             </tr>
