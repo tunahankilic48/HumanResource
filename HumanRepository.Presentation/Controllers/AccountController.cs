@@ -2,7 +2,6 @@
 using HumanResource.Application.Models.VMs.EmailVM;
 using HumanResource.Application.Services.AccountServices;
 using HumanResource.Application.Services.AddressService;
-using HumanResource.Application.Services.CompanyService;
 using HumanResource.Application.Services.EmailSenderService;
 using HumanResource.Application.Services.PersonelService;
 using HumanResource.Domain.Entities;
