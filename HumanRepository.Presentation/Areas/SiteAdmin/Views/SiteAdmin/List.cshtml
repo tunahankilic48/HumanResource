@@ -7,9 +7,8 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th hidden class="text-center">@Html.DisplayNameFor(x=>x.CompanyId)</th>
+                            <th hidden class="text-center">@Html.DisplayNameFor(x=>x.Id)</th>
                             <th class="text-center">@Html.DisplayNameFor(x=>x.CompanyName)</th>
-                            <th class="text-center">@Html.DisplayNameFor(x=>x.FullName)</th>
                             <th class="text-center">@Html.DisplayNameFor(x=>x.Statu)</th>
                             <th></th>
                         </tr>
@@ -19,9 +18,8 @@
                         @foreach (var item in Model)
                         {
                             <tr>
-                                <td hidden class="text-center align-middle">@item.CompanyId</td>
+                                <td hidden class="text-center align-middle">@item.Id</td>
                                 <td class="text-center align-middle">@item.CompanyName</td>
-                                <td class="text-center align-middle">@item.FullName</td>
                                 @if (item.Statu == "Awating Approval")
                                 {
                                     <td class="text-center align-middle "><span class="badge rounded-pill bg-warning p-3">@item.Statu</span></td>
@@ -35,7 +33,7 @@
                                     <td class="text-center align-middle"><span class="badge rounded-pill bg-success p-3">@item.Statu</span></td>
                                 }
                                 <td class="d-flex justify-content-around align-middle">
-                                    <a class="btn btn-primary m-2" asp-area="siteadmin" asp-action="getdetails" asp-controller="siteadmin" asp-route-id="@item.UserId">Details </a>
+                                    <a class="btn btn-primary m-2" asp-area="siteadmin" asp-action="getdetails" asp-controller="siteadmin" asp-route-companyname="@item.CompanyName">Details </a>
                                 </td>
                             </tr>
                         }

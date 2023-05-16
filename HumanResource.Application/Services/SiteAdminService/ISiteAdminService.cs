@@ -6,10 +6,10 @@ namespace HumanResource.Application.Services.SiteAdminService
     public interface ISiteAdminService
     {
         Task<List<CompanyManagerRegisterRequestsVM>> GetCompanyManagerRequests();
-        Task<List<CompanyVM>> GetCompanies(Guid id);
+        Task<List<CompanyVM>> GetCompanies();
         Task<ProcessVM> Approve(int id);
         Task<ProcessVM> Reject(int id);
         Task<CompanyDetailsVM> GetCompanyDetails(Guid id);
-        Task<CompanyDetailsVM> GetCompanyListDetails(Guid id);
+        Task<CompanyDetailsVM> GetCompanyListDetails(string companyName);
     }
 }

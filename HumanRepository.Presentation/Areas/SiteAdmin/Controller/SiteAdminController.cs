@@ -69,17 +69,17 @@ namespace HumanResource.Presentation.Areas.SiteAdmin
             ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
             return View(await _siteAdminService.GetCompanyDetails(id));
         }
-        public async Task<IActionResult> List(Guid id)
+        public async Task<IActionResult> List()
         {
             ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
-            var companies = await _siteAdminService.GetCompanies(id);
+            var companies = await _siteAdminService.GetCompanies();
             return View(companies);
         }
 
-        public async Task<IActionResult> GetDetails(Guid id)
+        public async Task<IActionResult> GetDetails(string companyName)
         {
             ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
-            return View(await _siteAdminService.GetCompanyListDetails(id));
+            return View(await _siteAdminService.GetCompanyListDetails(companyName));
         }
     }
 }

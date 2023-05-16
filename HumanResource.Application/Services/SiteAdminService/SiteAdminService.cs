@@ -22,20 +22,18 @@ namespace HumanResource.Application.Services.SiteAdminService
 			_appUserRepository = appUserRepository;
 		}
 
-		public async Task<List<CompanyVM>> GetCompanies(Guid id)
+		public async Task<List<CompanyVM>> GetCompanies()
 		{
-            var companies = await _appUserRepository.GetFilteredList(
+            var companies = await _companyRepository.GetFilteredList(
                  select: x => new CompanyVM()
                  {
-                     UserId = x.Id,
-                     CompanyId = x.CompanyId,
-                     CompanyName = x.Company.CompanyName,
-                     FullName = x.FirstName + " " + x.LastName,
-					 Statu = x.Company.Statu.Name
+                     Id = x.Id,
+                     CompanyName = x.CompanyName,
+					 Statu = x.Statu.Name
                  },
-                 where: x => x.Company.Statu != null,
-                 orderby: x => x.OrderByDescending(x => x.Company.Statu),
-                 include: x => x.Include(x => x.Company) .Include(x => x.Statu)
+                 where: null,
+                 orderby: x => x.OrderByDescending(x => x.CompanyName),
+                 include: x=>x.Include(x=>x.Statu)
                  );
             return companies;
         }
@@ -95,13 +93,12 @@ namespace HumanResource.Application.Services.SiteAdminService
 			var user = await _appUserRepository.GetDefault(x => x.CompanyId == company.Id);
 			return new ProcessVM() { Result = await _companyRepository.Update(company),UserEmail= user.Email };
 		}
-        public async Task<CompanyDetailsVM> GetCompanyListDetails(Guid id)
+        public async Task<CompanyDetailsVM> GetCompanyListDetails(string companyName)
         {
             var company = await _appUserRepository.GetFilteredFirstOrDefault(
               select: x => new CompanyDetailsVM()
               {
                   Id = x.Company.Id,
-                  FullName = x.FirstName + " " + x.LastName,
                   CompanyName = x.Company.CompanyName,
                   TaxNumber = x.Company.TaxNumber,
                   TaxOfficeName = x.Company.TaxOfficeName,
@@ -112,11 +109,13 @@ namespace HumanResource.Application.Services.SiteAdminService
                   AddressDescription = x.Company.Address.Description,
 
               },
-              where: x => x.Id == id,
+              where: x=>x.Company.CompanyName == companyName,
               orderby: null,
               include: x => x.Include(x => x.Company).Include(x => x.Company.Address).Include(x => x.Company.Address.District)
               );
             return company;
         }
+
+		//To Do: 1 method kalacak cshtml tarafı düzeltilecek
     }
 }
