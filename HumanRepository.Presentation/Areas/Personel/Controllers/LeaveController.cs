@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HumanResource.Presentation.Areas.Personel.Controllers
 {
-    [Authorize]
     [Area("personel")]
     [Authorize(Roles = "CompanyManager, Employee")]
     public class LeaveController : Controller
