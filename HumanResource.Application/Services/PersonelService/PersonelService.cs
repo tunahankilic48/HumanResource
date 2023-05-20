@@ -110,6 +110,26 @@ namespace HumanResource.Application.Services.PersonelService
             return personelLeaveRequests;
         }
 
+        public async Task<List<CompanyEmployeesVM>> GetCompanyEmployees(int companyId, string searchString)
+        {
+            List<CompanyEmployeesVM> companyEmployees = await _userRepository.GetFilteredList(
+                select: x => new CompanyEmployeesVM()
+                {
+                    FirstName = x.FirstName,
+                    LastName = x.LastName,
+                    PhoneNumber = x.PhoneNumber,
+                    Email = x.Email,
+                    Title = x.Title.Name,
+                    Department = x.Department.Name,
+                    ImagePath = x.ImagePath
+                },
+                where: x => x.CompanyId == companyId && ((x.FirstName + " " + x.LastName).Contains(searchString)),
+                orderby: x => x.OrderBy(x => x.FirstName),
+                include: x => x.Include(x => x.Title).Include(x=>x.Department)
+                );
+
+            return companyEmployees;
+        }
 
     }
 }
