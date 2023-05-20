@@ -146,7 +146,7 @@ namespace HumanResource.Application.Services.SiteAdminService
                 if (tempCompanies.Count != 0)
                 {
                     double ratio = (tempCompanies.Count / companyCount) * 100;
-                    CompaniesDistributionBySectors.Add(new CompanySectorPieVM(tempCompanies[0].CompanySectorName, Math.Round(ratio, 2)));
+                    CompaniesDistributionBySectors.Add(new CompanySectorPieVM($"{tempCompanies[0].CompanySectorName} ({tempCompanies.Count})", Math.Round(ratio, 2)));
                 }
 
             }
