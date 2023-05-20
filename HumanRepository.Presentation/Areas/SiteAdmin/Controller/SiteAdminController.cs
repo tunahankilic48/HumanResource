@@ -8,6 +8,7 @@ using HumanResource.Application.Services.SiteAdminService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Newtonsoft.Json;
 
 namespace HumanResource.Presentation.Areas.SiteAdmin
 {
@@ -80,6 +81,14 @@ namespace HumanResource.Presentation.Areas.SiteAdmin
         {
             ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
             return View(await _siteAdminService.GetCompanyListDetails(companyName));
+        }
+
+        public async Task<IActionResult> Dashboard()
+        {
+
+            ViewBag.Data = JsonConvert.SerializeObject(await _siteAdminService.CompaniesDistributionBySectors());
+            ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
+            return View();
         }
     }
 }
