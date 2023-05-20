@@ -88,6 +88,16 @@
                     <span>Expenses</span>
                 </a>
             </li>
+            @if (User.IsInRole("Employee"))
+            {
+                <li class="nav-item ms-3">
+                    <a class="nav-link collapsed" asp-area="personel" asp-controller="personel" asp-action="Employees">
+                        <i class="fa-solid fa-person-walking-luggage"></i>
+                        <span>Employees</span>
+                    </a>
+                </li>
+
+            }
 
             @if (User.IsInRole("CompanyManager"))
             {

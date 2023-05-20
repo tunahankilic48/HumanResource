@@ -4,6 +4,7 @@ using HumanResource.Application.Services.LeaveServices;
 using HumanResource.Application.Services.PersonelService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using X.PagedList;
 
 namespace HumanResource.Presentation.Areas.Personel.Controllers
 {
@@ -50,6 +51,15 @@ namespace HumanResource.Presentation.Areas.Personel.Controllers
         {
             ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
             return View(await _expenseServices.GetExpenseForPersonel(await _personelService.GetPersonelId(User.Identity.Name)));
+        }
+
+        public async Task<IActionResult> Employees(int page = 1, string searchString = "")
+        {
+            ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
+            var temp = await _personelService.GetCompanyEmployees((int)((ViewBag.Personel).CompanyId), searchString);
+            
+
+            return View(temp.ToPagedList(page, 3));
         }
     }
 }

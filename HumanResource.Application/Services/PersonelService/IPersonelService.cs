@@ -10,6 +10,7 @@ namespace HumanResource.Application.Services.PersonelService
 
         Task<PersonelVM> GetPersonel(string userName);
         Task<Guid> GetPersonelId(string name);
+        Task<List<CompanyEmployeesVM>> GetCompanyEmployees(int companyId, string searchString);
 
     }
 }
