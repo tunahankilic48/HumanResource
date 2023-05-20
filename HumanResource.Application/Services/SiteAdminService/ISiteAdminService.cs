@@ -11,5 +11,6 @@ namespace HumanResource.Application.Services.SiteAdminService
         Task<ProcessVM> Reject(int id);
         Task<CompanyDetailsVM> GetCompanyDetails(Guid id);
         Task<CompanyDetailsVM> GetCompanyListDetails(string companyName);
+        Task<List<CompanySectorPieVM>> CompaniesDistributionBySectors();
     }
 }

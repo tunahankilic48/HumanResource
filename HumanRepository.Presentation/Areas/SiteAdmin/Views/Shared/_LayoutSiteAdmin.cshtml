@@ -16,6 +16,35 @@
 
     <!-- Custom styles for this template-->
     <link href="~/media/css/sb-admin-2.min.css" rel="stylesheet">
+
+    <script>
+        window.onload = function () {
+
+            var chart = new CanvasJS.Chart("chartContainer", {
+                theme: "light1", // "light1", "light2", "dark1", "dark2"
+                exportEnabled: true,
+                animationEnabled: true,
+                title: {
+                    text: "Company Distribution on Sectors"
+                },
+                subtitles: [{
+                    text: ""
+                }],
+                data: [{
+                    type: "pie",
+                    startAngle: 180,
+                    toolTipContent: "<b>{label}</b>: {y}%",
+                    showInLegend: "true",
+                    legendText: "{label}",
+                    indexLabel: "{label} - {y}%",
+                    dataPoints: @Html.Raw(ViewBag.Data)
+            }]
+            });
+            chart.render();
+
+        }
+    </script>
+
 </head>
 <body id="page-top">
 
@@ -66,6 +95,13 @@
                 </a>
             </li>
 
+            <li class="nav-item ms-3">
+                <a class="nav-link collapsed" asp-area="siteadmin" asp-controller="siteadmin" asp-action="dashboard">
+                    <i class="fa-solid fa-house-user"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+
 
 
 
@@ -91,10 +127,10 @@
                         <div class="topbar-divider d-none d-sm-block"></div>
 
                         <!-- Nav Item - User Information -->
-                         <li class="nav-item d-flex">
-                        <a class="nav-link" asp-area="" asp-controller="account" asp-action="profile">
-                        <span class="mr-2 d-none d-lg-inline text-gray-600">@((ViewBag.Personel).FullName)</span>
-                        </a>
+                        <li class="nav-item d-flex">
+                            <a class="nav-link" asp-area="" asp-controller="account" asp-action="profile">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600">@((ViewBag.Personel).FullName)</span>
+                            </a>
 
                         </li>
                         <li class="nav-item d-flex">
