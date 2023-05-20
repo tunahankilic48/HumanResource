@@ -25,6 +25,7 @@ namespace HumanResource.Infrastructure.SeedData
                 List<Department> department = new List<Department>();
                 List<CurrencyType> currencyTypes = new List<CurrencyType>();
                 List<ExpenseType> expenseTypes = new List<ExpenseType>();
+                List<CompanySector> companySectors = new List<CompanySector>();
 
                 if (!context.Status.Any())
                 {
@@ -122,6 +123,25 @@ namespace HumanResource.Infrastructure.SeedData
                     await context.SaveChangesAsync();
                 }
 
+                if (!context.CompanySectors.Any())
+                {
+
+                    foreach (var item in Enum.GetValues(typeof(CompanySectors)))
+                    {
+                        CompanySector companySector = new CompanySector();
+                        companySector.Name = String.Join(" ", item.ToString().Split("_"));
+                        companySector.CompanySectorEnumId = item.GetHashCode();
+                        companySectors.Add(companySector);
+                    }
+
+                    await context.CompanySectors.AddRangeAsync(companySectors);
+
+                    await context.SaveChangesAsync();
+
+
+
+                }
+
                 if (!context.Cities.Any())
                 {
                     var cityFaker = new Faker<City>()
@@ -179,6 +199,7 @@ namespace HumanResource.Infrastructure.SeedData
                         TaxOfficeName = "Test",
                         StatuId = Status.Active.GetHashCode(),
                         CreatedDate = DateTime.Now,
+                        CompanySectorId = 1
 
                     };
                     context.Companies.Add(company);

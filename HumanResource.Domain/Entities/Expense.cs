@@ -8,12 +8,6 @@ namespace HumanResource.Domain.Entities
 {
     public class Expense : IBaseEntity
     {
-        public int? StatuId { get ; set ; }
-        public DateTime CreatedDate { get; set; }
-        public DateTime? ModifiedDate { get; set; }
-        public DateTime? DeletedDate { get; set; }
-        public Statu? Statu { get; set; }
-        /*************************************************************************/
         public int Id { get; set; }
         public Guid UserId { get; set; }
         public decimal Amount { get; set; }
@@ -22,8 +16,15 @@ namespace HumanResource.Domain.Entities
         public string? LongDescription { get; set; }
         public string ShortDescription { get; set; }
         public int ExpenseTypeId { get; set; }
-        /*************************************************************************/
-        //Navigation
+
+        public int? StatuId { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public DateTime? ModifiedDate { get; set; }
+        public DateTime? DeletedDate { get; set; }
+        public Statu? Statu { get; set; }
+
+
+        //Navigation Properties
         public CurrencyType CurrencyType { get; set; }
         public ExpenseType ExpenseType { get; set; }
         public AppUser User { get; set; }

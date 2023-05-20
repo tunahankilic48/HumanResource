@@ -317,6 +317,9 @@ namespace HumanResource.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnOrder(2);
 
+                    b.Property<int>("CompanySectorId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("smalldatetime");
 
@@ -354,9 +357,34 @@ namespace HumanResource.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CompanySectorId");
+
                     b.HasIndex("StatuId");
 
                     b.ToTable("Companies");
+                });
+
+            modelBuilder.Entity("HumanResource.Domain.Entities.CompanySector", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnOrder(1);
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("CompanySectorEnumId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .IsUnicode(true)
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnOrder(2);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CompanySectors");
                 });
 
             modelBuilder.Entity("HumanResource.Domain.Entities.CurrencyType", b =>
@@ -881,10 +909,18 @@ namespace HumanResource.Infrastructure.Migrations
 
             modelBuilder.Entity("HumanResource.Domain.Entities.Company", b =>
                 {
+                    b.HasOne("HumanResource.Domain.Entities.CompanySector", "CompanySector")
+                        .WithMany("Companies")
+                        .HasForeignKey("CompanySectorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("HumanResource.Domain.Entities.Statu", "Statu")
                         .WithMany("Companies")
                         .HasForeignKey("StatuId")
                         .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("CompanySector");
 
                     b.Navigation("Statu");
                 });
@@ -1077,6 +1113,11 @@ namespace HumanResource.Infrastructure.Migrations
                     b.Navigation("Titles");
 
                     b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("HumanResource.Domain.Entities.CompanySector", b =>
+                {
+                    b.Navigation("Companies");
                 });
 
             modelBuilder.Entity("HumanResource.Domain.Entities.CurrencyType", b =>
