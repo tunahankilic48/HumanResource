@@ -9,8 +9,7 @@
         public string PhoneNumber { get; set; }
         public string NumberOfEmployee { get; set; }
         public string? ImagePath { get; set; }
-
-        //public int AddressId { get; set; }
+        public int CompanySectorId { get; set; }
 
         public int? StatuId { get; set; }
         public DateTime CreatedDate { get; set; }   
@@ -23,6 +22,7 @@
         public Address? Address { get; set; }
         public List<Title>? Titles { get; set; }
         public List<AppUser> Users { get; set; }
+        public CompanySector CompanySector { get; set; }
 
     }
 }

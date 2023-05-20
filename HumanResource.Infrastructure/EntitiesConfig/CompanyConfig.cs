@@ -28,7 +28,7 @@ namespace HumanResource.Infrastructure.EntitiesConfig
                 .HasColumnOrder(5);
 
             builder.Property(x => x.ImagePath)
-                .IsRequired(false)//değişti-null olamaz hatası verdi registerda
+                .IsRequired(false)
                 .HasColumnOrder(6);
 
             // Foreign Key
@@ -47,6 +47,11 @@ namespace HumanResource.Infrastructure.EntitiesConfig
                .WithOne(x => x.Company)
                .HasForeignKey(x => x.CompanyId)
                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne(x => x.CompanySector)
+               .WithMany(x => x.Companies)
+               .HasForeignKey(x => x.CompanySectorId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             base.Configure(builder);
         }

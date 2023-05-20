@@ -51,6 +51,20 @@ namespace HumanResource.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "CompanySectors",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(50)", nullable: false),
+                    CompanySectorEnumId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CompanySectors", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CurrencyTypes",
                 columns: table => new
                 {
@@ -159,6 +173,7 @@ namespace HumanResource.Infrastructure.Migrations
                     NumberOfEmployee = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ImagePath = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     TaxOfficeName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CompanySectorId = table.Column<int>(type: "int", nullable: false),
                     StatuId = table.Column<int>(type: "int", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "smalldatetime", nullable: false),
                     ModifiedDate = table.Column<DateTime>(type: "smalldatetime", nullable: true),
@@ -167,6 +182,12 @@ namespace HumanResource.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Companies", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Companies_CompanySectors_CompanySectorId",
+                        column: x => x.CompanySectorId,
+                        principalTable: "CompanySectors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Companies_Status_StatuId",
                         column: x => x.StatuId,
@@ -480,17 +501,17 @@ namespace HumanResource.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    StatuId = table.Column<int>(type: "int", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "smalldatetime", nullable: false),
-                    ModifiedDate = table.Column<DateTime>(type: "smalldatetime", nullable: true),
-                    DeletedDate = table.Column<DateTime>(type: "smalldatetime", nullable: true),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     CurrencyTypeId = table.Column<int>(type: "int", nullable: false),
                     ExpenseDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LongDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ShortDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ExpenseTypeId = table.Column<int>(type: "int", nullable: false)
+                    ExpenseTypeId = table.Column<int>(type: "int", nullable: false),
+                    StatuId = table.Column<int>(type: "int", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "smalldatetime", nullable: false),
+                    ModifiedDate = table.Column<DateTime>(type: "smalldatetime", nullable: true),
+                    DeletedDate = table.Column<DateTime>(type: "smalldatetime", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -670,6 +691,11 @@ namespace HumanResource.Infrastructure.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Companies_CompanySectorId",
+                table: "Companies",
+                column: "CompanySectorId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Companies_StatuId",
                 table: "Companies",
                 column: "StatuId");
@@ -796,6 +822,9 @@ namespace HumanResource.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "Companies");
+
+            migrationBuilder.DropTable(
+                name: "CompanySectors");
 
             migrationBuilder.DropTable(
                 name: "Status");
