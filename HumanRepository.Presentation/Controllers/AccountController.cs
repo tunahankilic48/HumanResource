@@ -46,7 +46,7 @@ namespace HumanResource.Presentation.Controllers
                     var message = new Message(result.Email, "Information e-mail", "Welcome to our human resources platform. Your request has been received. Notification will be made as soon as possible.");
                     _emailService.SendEmail(message);
 
-                    TempData["Conformation"] = "Please check your mailbox and verify your email!";
+                    TempData["Information"] = "Please check your mailbox!";
 
                     return RedirectToAction("login", "account");                
                 }
