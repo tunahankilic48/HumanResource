@@ -187,8 +187,10 @@ namespace HumanResource.Infrastructure.SeedData
                     await context.SaveChangesAsync();
                 }
 
+
                 if (!context.Users.Any())
                 {
+
 
                     Company company = new Company()
                     {
@@ -199,17 +201,14 @@ namespace HumanResource.Infrastructure.SeedData
                         TaxOfficeName = "Test",
                         StatuId = Status.Active.GetHashCode(),
                         CreatedDate = DateTime.Now,
-                        CompanySectorId = 1
+                        CompanySectorId = 1,
 
                     };
-                    context.Companies.Add(company);
+                    await context.Companies.AddAsync(company);
                     await context.SaveChangesAsync();
-                }
-
-                if (!context.Users.Any())
-                {
-                    var passwordHasher = new PasswordHasher<AppUser>();
                     var companyManagerId = Guid.NewGuid();
+
+                    var passwordHasher = new PasswordHasher<AppUser>();
                     AppUser companyManager = new AppUser
                     {
                         Id = companyManagerId,
@@ -236,6 +235,8 @@ namespace HumanResource.Infrastructure.SeedData
 
                     await companyManagerStore.CreateAsync(companyManager);
                     await companyManagerStore.AddToRoleAsync(companyManager, "COMPANYMANAGER");
+                    company.CompanyRepresentativeId = companyManagerId;
+                    context.Companies.Update(company);
                     await context.SaveChangesAsync();
 
 

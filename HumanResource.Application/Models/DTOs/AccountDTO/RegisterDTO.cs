@@ -56,6 +56,10 @@ namespace HumanResource.Application.Models.DTOs.AccountDTO
 		[Required(ErrorMessage = "Address Description cannot be null.")]
 		[Display(Name = ("Address Description"))]
 		public string? Description { get; set; }
-		public DateTime CreatedDate => DateTime.Now;
+
+        [Required(ErrorMessage = "Sector cannot be null.")]
+        [Display(Name = ("Sector"))]
+        public int CompanySectorId { get; set; }
+        public DateTime CreatedDate => DateTime.Now;
 	}
 }

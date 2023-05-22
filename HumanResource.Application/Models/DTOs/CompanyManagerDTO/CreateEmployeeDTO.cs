@@ -77,7 +77,8 @@ namespace HumanResource.Application.Models.DTOs.CompanyManagerDTO
         [Display(Name = "Title")]
         [Required(ErrorMessage = "Please select a title.")]
         public int? TitleId { get; set; }
-
+        [ValidateNever]
+        public int CompanyId { get; set; }
 
         public DateTime CreatedDate => DateTime.Now;
         public int StatuId => Status.Active.GetHashCode();

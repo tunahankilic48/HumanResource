@@ -113,6 +113,7 @@ namespace HumanResource.Application.Services.AccountServices
                     Company company1 = await _companyRepository.GetDefault(x => x.TaxNumber == model.TaxNumber);
                     user1.CompanyId = company1.Id;
                     company1.Address = address;
+                    company.CompanyRepresentativeId = user1.Id;
                     await _userManager.UpdateAsync(user1);
                     await _companyRepository.Update(company1);
 

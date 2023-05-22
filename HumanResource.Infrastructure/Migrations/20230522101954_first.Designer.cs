@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HumanResource.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230519095842_first")]
+    [Migration("20230522101954_first")]
     partial class first
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -319,6 +319,9 @@ namespace HumanResource.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnOrder(2);
 
+                    b.Property<Guid?>("CompanyRepresentativeId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int>("CompanySectorId")
                         .HasColumnType("int");
 
@@ -358,6 +361,10 @@ namespace HumanResource.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CompanyRepresentativeId")
+                        .IsUnique()
+                        .HasFilter("[CompanyRepresentativeId] IS NOT NULL");
 
                     b.HasIndex("CompanySectorId");
 
@@ -911,6 +918,11 @@ namespace HumanResource.Infrastructure.Migrations
 
             modelBuilder.Entity("HumanResource.Domain.Entities.Company", b =>
                 {
+                    b.HasOne("HumanResource.Domain.Entities.AppUser", "CompanyRepresentative")
+                        .WithOne("CompanyRepresentative")
+                        .HasForeignKey("HumanResource.Domain.Entities.Company", "CompanyRepresentativeId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("HumanResource.Domain.Entities.CompanySector", "CompanySector")
                         .WithMany("Companies")
                         .HasForeignKey("CompanySectorId")
@@ -921,6 +933,8 @@ namespace HumanResource.Infrastructure.Migrations
                         .WithMany("Companies")
                         .HasForeignKey("StatuId")
                         .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("CompanyRepresentative");
 
                     b.Navigation("CompanySector");
 
@@ -1090,6 +1104,8 @@ namespace HumanResource.Infrastructure.Migrations
                     b.Navigation("Address");
 
                     b.Navigation("Advances");
+
+                    b.Navigation("CompanyRepresentative");
 
                     b.Navigation("Employees");
 
