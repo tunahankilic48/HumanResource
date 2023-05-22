@@ -1,6 +1,7 @@
 ﻿using HumanResource.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System.Security.Cryptography.X509Certificates;
 
 namespace HumanResource.Infrastructure.EntitiesConfig
 {
@@ -51,6 +52,11 @@ namespace HumanResource.Infrastructure.EntitiesConfig
             builder.HasOne(x => x.CompanySector)
                .WithMany(x => x.Companies)
                .HasForeignKey(x => x.CompanySectorId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne(x=>x.CompanyRepresentative)
+                .WithOne(x=>x.CompanyRepresentative)
+                .HasForeignKey<Company>(x=>x.CompanyRepresentativeId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             base.Configure(builder);

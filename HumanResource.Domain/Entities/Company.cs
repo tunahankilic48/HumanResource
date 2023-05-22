@@ -10,6 +10,7 @@
         public string NumberOfEmployee { get; set; }
         public string? ImagePath { get; set; }
         public int CompanySectorId { get; set; }
+        public Guid? CompanyRepresentativeId { get; set; }
 
         public int? StatuId { get; set; }
         public DateTime CreatedDate { get; set; }   
@@ -21,8 +22,9 @@
         public List<Department>? Departments { get; set; }
         public Address? Address { get; set; }
         public List<Title>? Titles { get; set; }
-        public List<AppUser> Users { get; set; }
-        public CompanySector CompanySector { get; set; }
+        public List<AppUser>? Users { get; set; }
+        public AppUser? CompanyRepresentative { get; set; }
+        public CompanySector? CompanySector { get; set; }
 
     }
 }

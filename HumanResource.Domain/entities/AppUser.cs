@@ -35,6 +35,7 @@ namespace HumanResource.Domain.Entities
         public List<Expense>? Expenses { get; set; }
         public Title? Title { get; set; }
         public Company? Company { get; set; }
+        public Company? CompanyRepresentative { get; set; }
         public AppUser? SiteAdmin { get; set; }
 
 
