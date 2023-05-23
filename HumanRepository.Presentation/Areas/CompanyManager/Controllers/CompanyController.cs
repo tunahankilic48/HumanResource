@@ -1,9 +1,12 @@
 ﻿using HumanResource.Application.Models.DTOs.CompanyDTO;
+using HumanResource.Application.Services.AccountServices;
+using HumanResource.Application.Services.AddressService;
 using HumanResource.Application.Services.CompanyManagerService;
 using HumanResource.Application.Services.PersonelService;
 using HumanResource.Application.Services.SiteAdminService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace HumanResource.Presentation.Areas.CompanyManager.Controllers
 {
@@ -13,29 +16,37 @@ namespace HumanResource.Presentation.Areas.CompanyManager.Controllers
     {
         private readonly IPersonelService _personelService;
         private readonly ICompanyManagerService _companyManagerService;
+        private readonly IAddressService _addressService;
+        private readonly IAccountServices _accountService;
 
-        public CompanyController(IPersonelService personelService, ICompanyManagerService companyManagerService)
-        {
-            _personelService = personelService;
-            _companyManagerService = companyManagerService;
-        }
+		public CompanyController(IPersonelService personelService, ICompanyManagerService companyManagerService, IAddressService addressService, IAccountServices accountService)
+		{
+			_personelService = personelService;
+			_companyManagerService = companyManagerService;
+			_addressService = addressService;
+			_accountService = accountService;
+		}
 
-        public async Task<IActionResult> Company(Guid id)
+		public async Task<IActionResult> Company(Guid id)
         {
             ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
+			ViewBag.Cities = new SelectList(await _addressService.GetCities(), "Id", "Name");
+			ViewBag.Districts = new SelectList(await _addressService.GetDistricts(), "Id", "Name");
+			id = await _personelService.GetPersonelId(User.Identity.Name);
             return View(await _companyManagerService.GetCompany(id));
         }
 
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Company(UpdateCompanyDTO model)
         {
+            
             if (ModelState.IsValid)
             {
                 var result = await _companyManagerService.UpdateCompany(model);
-                if (result)
+                if (result == true)
                 {
                     TempData["success"] = "Company was updated successfully.";
-                    return RedirectToAction("company", "companymanager", new { Area = "companymanager" });
+                    return RedirectToAction("company", "company", new { Area = "companymanager" });
                 }
                 else
                 {
