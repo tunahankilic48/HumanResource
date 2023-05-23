@@ -5,6 +5,7 @@ using HumanResource.Application.Services.CompanyManagerService;
 using HumanResource.Application.Services.EmailSenderService;
 using HumanResource.Application.Services.PersonelService;
 using HumanResource.Application.Services.SiteAdminService;
+using HumanResource.Presentation.Controllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -40,8 +41,9 @@ namespace HumanResource.Presentation.Areas.SiteAdmin
             var result = await _siteAdminService.Approve(id);
             if (result.Result)
             {
-                TempData["success"] = "Company register request was approved.";
-                var message = new Message(result.UserEmail, "Company Request", $"Your company request was approved by SiteAdmin.");
+				var conformationLink = Url.Action("Login", "Account", new { Contoller="account", Area = "" }, Request.Scheme);
+				TempData["success"] = "Company register request was approved.";
+                var message = new Message(result.UserEmail, "Company Request", $"Your company request was approved by SiteAdmin. You can login by clicking the link. {conformationLink!}");
                 _emailService.SendEmail(message);
                 return RedirectToAction("index", "siteadmin", new { Area = "siteadmin" });
             }

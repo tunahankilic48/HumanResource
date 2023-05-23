@@ -25,21 +25,23 @@ namespace HumanResource.Application.Services.CompanyManagerService
         private readonly IAdvanceRepository _advanceRepository;
         private readonly IExpenseRepository _expenseRepository;
         private readonly ICompanyRepository _companyRepository;
-        public CompanyManagerService(IDepartmentRepository departmentRepository, ITitleRepository titleRepository, IMapper mapper, UserManager<AppUser> userManager, IAppUserRepository appUserRepository, IPersonelService personelService, ILeaveRepository leaveRepository, IAdvanceRepository advanceRepository, IExpenseRepository expenseRepository, ICompanyRepository companyRepository)
-        {
-            _departmentRepository = departmentRepository;
-            _titleRepository = titleRepository;
-            _mapper = mapper;
-            _userManager = userManager;
-            _appUserRepository = appUserRepository;
-            _personelService = personelService;
-            _leaveRepository = leaveRepository;
-            _advanceRepository = advanceRepository;
-            _expenseRepository = expenseRepository;
-            _companyRepository = companyRepository;
-        }
+        private readonly IAddressRepository _addressRepository;
+		public CompanyManagerService(IDepartmentRepository departmentRepository, ITitleRepository titleRepository, IMapper mapper, UserManager<AppUser> userManager, IAppUserRepository appUserRepository, IPersonelService personelService, ILeaveRepository leaveRepository, IAdvanceRepository advanceRepository, IExpenseRepository expenseRepository, ICompanyRepository companyRepository, IAddressRepository addressRepository)
+		{
+			_departmentRepository = departmentRepository;
+			_titleRepository = titleRepository;
+			_mapper = mapper;
+			_userManager = userManager;
+			_appUserRepository = appUserRepository;
+			_personelService = personelService;
+			_leaveRepository = leaveRepository;
+			_advanceRepository = advanceRepository;
+			_expenseRepository = expenseRepository;
+			_companyRepository = companyRepository;
+			_addressRepository = addressRepository;
+		}
 
-        public async Task<UpdateEmployeeDTO> GetByUserName(Guid id)
+		public async Task<UpdateEmployeeDTO> GetByUserName(Guid id)
         {
             UpdateEmployeeDTO result = await _appUserRepository.GetFilteredFirstOrDefault(
             select: x => new UpdateEmployeeDTO
@@ -391,28 +393,41 @@ namespace HumanResource.Application.Services.CompanyManagerService
             UpdateCompanyDTO result = await _appUserRepository.GetFilteredFirstOrDefault(
             select: x => new UpdateCompanyDTO
             {
+                UserId =x.Id,
                 CompanyId = x.Company.Id,
                 CompanyName = x.Company.CompanyName,
                 TaxNumber = x.Company.TaxNumber,
                 TaxOfficeName = x.Company.TaxOfficeName,
                 PhoneNumber = x.Company.PhoneNumber,
                 NumberOfEmployee = x.Company.NumberOfEmployee,
-                City = x.Company.Address.District.City.Name,
-                District = x.Company.Address.District.Name,
+                CityId = x.Company.Address.District.City.Id,
+                DistrictId = x.Company.Address.District.Id,
                 AddressDescription = x.Company.Address.Description,
                 ManagerName = x.FirstName + " " + x.LastName,
-                ImagePath = x.ImagePath,
+                ImagePath = x.Company.ImagePath,
+                
+               
             },
             where: x => x.Id == id,
             orderby: null,
-            include: x => x.Include(x => x.Address).Include(x => x.Address.District)
+            include: x => x.Include(x => x.Address).Include(x => x.Address.District).Include(x => x.Company)
             );
             return result;
         }
-        public async Task<bool> UpdateCompany(UpdateCompanyDTO model)
+        public async Task <bool> UpdateCompany(UpdateCompanyDTO model)
         {
-            Company company = _mapper.Map<Company>(model);
-            return await _companyRepository.Update(company);
+          
+            Company company = await _companyRepository.GetDefault(x => x.Id == model.CompanyId);
+            company.ImagePath = model.ImagePath;
+            company.CompanyName = model.CompanyName;
+            company.TaxNumber = model.TaxNumber;
+            company.TaxOfficeName = model.TaxOfficeName;
+            company.PhoneNumber = model.PhoneNumber;
+            company.NumberOfEmployee = model.NumberOfEmployee;
+            company.ModifiedDate = model.ModifiedDate;
+            company.Address = await _addressRepository.GetDefault(x => x.DistrictId == model.DistrictId);
+                
+			return await _companyRepository.Update(company);
         }
     }
 }

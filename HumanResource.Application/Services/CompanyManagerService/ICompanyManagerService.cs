@@ -21,6 +21,6 @@ namespace HumanResource.Application.Services.CompanyManagerService
         Task<List<PersonelAdvanceRequestVM>> GetPersonelAdvanceRequests(Guid id);
         Task<List<PersonelExpenseRequestVM>> GetPersonelExpenseRequests(Guid id);
         Task<UpdateCompanyDTO> GetCompany(Guid id);
-        Task<bool> UpdateCompany(UpdateCompanyDTO model);
+        Task <bool> UpdateCompany(UpdateCompanyDTO model);
     }
 }
