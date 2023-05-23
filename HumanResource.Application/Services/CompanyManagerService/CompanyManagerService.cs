@@ -182,8 +182,10 @@ namespace HumanResource.Application.Services.CompanyManagerService
                   DepartmentName = x.Department.Name,
                   Title = x.Title.Name,
                   UserName = x.UserName,
-                  ManagerName = x.Manager.FirstName + " " + x.Manager.LastName
-
+                  ManagerName = x.Manager.FirstName + " " + x.Manager.LastName,
+                  Phone = x.PhoneNumber,
+                  Email = x.Email,
+                  BirthDate = x.BirthDate.ToString(),
               },
               where: x => x.StatuId != Status.Deleted.GetHashCode() && x.CompanyId == companyId,
               orderby: x => x.OrderByDescending(x => x.CreatedDate),
