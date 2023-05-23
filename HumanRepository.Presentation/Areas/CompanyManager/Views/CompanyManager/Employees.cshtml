@@ -51,13 +51,17 @@
     <div class="ms-1 card shadow mb-1">
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table id="example1" class="table table-bordered" width=" 100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th class="text-center">@Html.DisplayNameFor(x=>x.FullName)</th>
                             <th class="text-center">@Html.DisplayNameFor(x=>x.DepartmentName)</th>
                             <th class="text-center">@Html.DisplayNameFor(x=>x.Title)</th>
                             <th class="text-center">@Html.DisplayNameFor(x=>x.ManagerName)</th>
+                            <th hidden class="text-center">@Html.DisplayNameFor(x=>x.Phone)</th>
+                            <th hidden class="text-center">@Html.DisplayNameFor(x=>x.Email)</th>
+                            <th hidden class="text-center">@Html.DisplayNameFor(x=>x.BirthDate)</th>
+                            
                             <th></th>
                         </tr>
                     </thead>
@@ -71,6 +75,10 @@
                                 <td class="text-center">@item.DepartmentName</td>
                                 <td class="text-center">@item.Title</td>
                                 <td class="text-center">@item.ManagerName</td>
+                                <td hidden class="text-center">@item.Phone</td>
+                                <td hidden class="text-center">@item.Email</td>
+                                <td hidden class="text-center">@item.BirthDate</td>
+
                                 <td class="d-flex justify-content-around">
                                     <a class="btn btn-primary m-2" asp-action="update" asp-controller="companymanager" asp-route-id="@item.Id">Update Employee</a>
                                     <button type="button" class="btn btn-danger m-2" data-bs-toggle="modal" data-bs-target="#deleteEmployeeModal" data-bs-whatever="@item.Id">Delete Employee</button>
@@ -125,6 +133,39 @@
             document.getElementById("deleteEmployeeInput").value = recipient;
 
         })
+    </script>
+    <script>
+
+        $(function () {
+
+            $("#example1").DataTable({
+
+                "responsive": true, "lengthChange": false, "autoWidth": false,
+
+                "buttons": ["excel", "pdf", "colvis"]
+
+                //"buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+
+            $('#example2').DataTable({
+
+                "paging": true,
+
+                "lengthChange": false,
+
+                "searching": false,
+
+                "ordering": true,
+
+                "info": true,
+
+                "autoWidth": false,
+
+                "responsive": true,
+            });
+
+        });
+
     </script>
 
 }

@@ -24,16 +24,20 @@ namespace HumanResource.Application.Services.SiteAdminService
 
         public async Task<List<CompanyVM>> GetCompanies()
         {
-            var companies = await _companyRepository.GetFilteredList(
+            var companies = await _appUserRepository.GetFilteredList(
                  select: x => new CompanyVM()
                  {
-                     Id = x.Id,
-                     CompanyName = x.CompanyName,
-                     Statu = x.Statu.Name
+                     UserId = x.Id,
+                     CompanyId = x.CompanyId,
+                     CompanyName = x.Company.CompanyName,
+                     FullName = x.FirstName + " " + x.LastName,
+                     PhoneNumber = x.PhoneNumber,
+                     Email = x.Email,
+                     Statu = x.Company.Statu.Name,
                  },
-                 where: null,
-                 orderby: x => x.OrderByDescending(x => x.CompanyName),
-                 include: x => x.Include(x => x.Statu)
+                 where: x => x.Company.CompanyName != null,
+                 orderby: x => x.OrderByDescending(x => x.CreatedDate),
+                 include: x => x.Include(x => x.Statu) .Include(x => x.Company)
                  );
             return companies;
         }
@@ -47,7 +51,9 @@ namespace HumanResource.Application.Services.SiteAdminService
                      UserId = x.Id,
                      CompanyId = x.CompanyId,
                      CompanyName = x.Company.CompanyName,
-                     FullName = x.FirstName + " " + x.LastName
+                     FullName = x.FirstName + " " + x.LastName,
+                     PhoneNumber = x.PhoneNumber,
+                     Email= x.Email,
                  },
                  where: x => x.Company.StatuId == Status.Awating_Approval.GetHashCode(),
                  orderby: x => x.OrderByDescending(x => x.CreatedDate),

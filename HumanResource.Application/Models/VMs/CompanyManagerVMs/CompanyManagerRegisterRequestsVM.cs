@@ -12,5 +12,11 @@ namespace HumanResource.Application.Models.VMs.CompanyManagerVMs
 
         [Display(Name = "Full Name")]
         public string FullName { get; set; }
+
+        [Display(Name = "Phone Number")]
+        public string PhoneNumber { get; set; }
+
+        [Display(Name = "Email")]
+        public string Email { get; set; }
     }
 }

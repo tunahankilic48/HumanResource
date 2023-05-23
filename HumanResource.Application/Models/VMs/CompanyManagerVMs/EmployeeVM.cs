@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Bogus.DataSets;
+using System.ComponentModel.DataAnnotations;
 
 namespace HumanResource.Application.Models.VMs.CompanyManagerVMs
 {
@@ -18,5 +19,14 @@ namespace HumanResource.Application.Models.VMs.CompanyManagerVMs
 
         [Display(Name = "Manager")]
         public string ManagerName { get; set; }
+
+        [Display(Name = "Phone")]
+        public string Phone { get; set; }
+
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+
+        [Display(Name = "Birth Date")]
+        public string BirthDate { get; set; }
     }
 }
