@@ -18,5 +18,8 @@ namespace HumanResource.Application.Models.VMs.CompanyManagerVMs
 
         [Display(Name = "Email")]
         public string Email { get; set; }
+
+        [Display(Name = "Sector")]
+        public string Sector { get; set; }
     }
 }

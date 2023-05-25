@@ -54,10 +54,11 @@ namespace HumanResource.Application.Services.SiteAdminService
                      FullName = x.FirstName + " " + x.LastName,
                      PhoneNumber = x.PhoneNumber,
                      Email= x.Email,
+                     Sector = x.Company.CompanySector.Name,
                  },
                  where: x => x.Company.StatuId == Status.Awating_Approval.GetHashCode(),
                  orderby: x => x.OrderByDescending(x => x.CreatedDate),
-                 include: x => x.Include(x => x.Company)
+                 include: x => x.Include(x => x.Company) 
                  );
             return companies;
         }
