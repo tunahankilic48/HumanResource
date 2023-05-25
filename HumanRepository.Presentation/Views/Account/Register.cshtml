@@ -136,9 +136,17 @@
 
                                     </div>
                                 </div>
+
+                                <div class="form-group">
+                                    <select asp-for="CountryId" class="form-select form-control-user" id="countryList" asp-items="@ViewBag.Countries">
+                                        <option value="">Please select a Country</option>
+                                    </select>
+                                    <span class="text-danger" asp-validation-for="CountryId"></span>
+                                </div>
+
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <select asp-for="CityId" class="form-select form-control-user" id="cityList" asp-items="@ViewBag.Cities">
+                                        <select asp-for="CityId" class="form-select form-control-user" id="cityList" asp-items="@ViewBag.Cities" disabled>
                                             <option value="">Please select a City</option>
                                         </select>
                                         <span class="text-danger" asp-validation-for="CityId"></span>
@@ -183,6 +191,53 @@
 
 
     <script type="text/javascript">
+
+        $(function () {
+
+            $('#countryList').change(function () {
+
+                var countryId = $(this).val();
+                var baseUrl = $('#url').val();
+
+                if (countryId != null && countryId != '') {
+                    $.ajax({
+                        type: "GET",
+                        url: baseUrl + "/account/setDropDownListCity/" + countryId,
+                        datatype: "Json",
+                        success: function (cities) {
+
+                            $("#cityList").empty();
+                            $("#districtList").empty();
+                            $("#districtList").prop('disabled', true);
+
+                            $("#cityList").removeAttr("disabled");
+
+                            $.each(cities, function () {
+                                $('#cityList').append('<option value=' + this.id + '>' + this.name + '</option>');
+                            });
+
+                            
+                        },
+                                                
+
+                        error: function () {
+                            /*Bu metod ile Ajax işlemi başarısız
+                            olursa eğer hata mesajı verebiliyoruz.*/
+                            alert("Hata");
+                        },
+                        beforeSend: function () {
+                            /*Burada ise Form Post edilmeden önce
+                            işlemler yapılabilir.Örnek olarak Loading, yükleniyor vs..*/
+                        },
+                        complete: function () {
+                            /*Burada ise Form Post edildikten sonra
+                            işlemler yapılabilir.Örnek olarak yükleme tamamlandı vs..*/
+                        }
+                    });
+                }
+            });
+        });
+
         $(function () {
 
             $('#cityList').change(function () {
@@ -193,7 +248,7 @@
                 if (cityId != null && cityId != '') {
                     $.ajax({
                         type: "GET",
-                        url: baseUrl + "/account/setDropDownList/" + cityId,
+                        url: baseUrl + "/account/setDropDownListDistrict/" + cityId,
                         datatype: "Json",
                         success: function (districts) {
 
@@ -231,6 +286,5 @@
             });
         });
     </script>
-
 
 }

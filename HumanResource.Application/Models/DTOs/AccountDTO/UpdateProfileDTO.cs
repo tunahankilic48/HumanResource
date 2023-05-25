@@ -39,10 +39,13 @@ namespace HumanResource.Application.Models.DTOs.AccountDTO
         [DataType(DataType.PhoneNumber)]
         public string PhoneNumber { get; set; }
 
-        [MinLength(6, ErrorMessage = "You cannot enter your password less than 6 characters."), Required(ErrorMessage = "This field is required"), Display(Name = "Password"), DataType(DataType.Password)]
-        public string Password { get; set; }
+        [MinLength(6, ErrorMessage = "You cannot enter your password less than 6 characters."), Display(Name = "Password"), DataType(DataType.Password)]
+        public string? Password { get; set; }
         [Compare("Password", ErrorMessage = "Your passwords are not matched!"), DataType(DataType.Password)]
-        public string ConfirmPassword { get; set; }
+        public string? ConfirmPassword { get; set; }
+
+        [Display(Name = ("Country"))]
+        public int? CountryId { get; set; }
 
         [Display(Name = ("City"))]
         public int? CityId { get; set; }

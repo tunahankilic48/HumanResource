@@ -292,6 +292,9 @@ namespace HumanResource.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("CountryId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .IsUnicode(true)
@@ -299,6 +302,8 @@ namespace HumanResource.Infrastructure.Migrations
                         .HasColumnOrder(2);
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CountryId");
 
                     b.ToTable("Cities");
                 });
@@ -392,6 +397,26 @@ namespace HumanResource.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("CompanySectors");
+                });
+
+            modelBuilder.Entity("HumanResource.Domain.Entities.Country", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnOrder(1);
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .IsUnicode(true)
+                        .HasColumnType("NVARCHAR(30)")
+                        .HasColumnOrder(2);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Countries");
                 });
 
             modelBuilder.Entity("HumanResource.Domain.Entities.CurrencyType", b =>
@@ -914,6 +939,17 @@ namespace HumanResource.Infrastructure.Migrations
                     b.Navigation("Title");
                 });
 
+            modelBuilder.Entity("HumanResource.Domain.Entities.City", b =>
+                {
+                    b.HasOne("HumanResource.Domain.Entities.Country", "Country")
+                        .WithMany("Cities")
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Country");
+                });
+
             modelBuilder.Entity("HumanResource.Domain.Entities.Company", b =>
                 {
                     b.HasOne("HumanResource.Domain.Entities.AppUser", "CompanyRepresentative")
@@ -1134,6 +1170,11 @@ namespace HumanResource.Infrastructure.Migrations
             modelBuilder.Entity("HumanResource.Domain.Entities.CompanySector", b =>
                 {
                     b.Navigation("Companies");
+                });
+
+            modelBuilder.Entity("HumanResource.Domain.Entities.Country", b =>
+                {
+                    b.Navigation("Cities");
                 });
 
             modelBuilder.Entity("HumanResource.Domain.Entities.CurrencyType", b =>

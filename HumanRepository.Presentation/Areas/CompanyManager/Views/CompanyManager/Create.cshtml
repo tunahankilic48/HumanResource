@@ -130,8 +130,16 @@
                             </div>
 
                             <div class="form-group">
+                                <label asp-for="CountryId" class="form-label">@Html.DisplayNameFor(x=>x.CountryId)</label>
+                                <select asp-for="CountryId" class="custom-select mt-1" id="countryList" asp-items="@ViewBag.Countries">
+                                    <option value="">Please select a Country</option>
+                                </select>
+                                <span class="text-danger" asp-validation-for="CountryId"></span>
+                            </div>
+
+                            <div class="form-group">
                                 <label asp-for="CityId" class="form-label">@Html.DisplayNameFor(x=>x.CityId)</label>
-                                <select asp-for="CityId" class="custom-select" id="cityList" asp-items="@ViewBag.Cities">
+                                <select asp-for="CityId" class="custom-select mt-1" id="cityList" asp-items="@ViewBag.Cities" disabled>
                                     <option value="">Please select a City</option>
                                 </select>
                                 <span class="text-danger" asp-validation-for="CityId"></span>
@@ -141,14 +149,13 @@
                             <div class="form-group">
                                 <label asp-for="DistrictId" class="form-label">@Html.DisplayNameFor(x=>x.DistrictId)</label>
                                 <select asp-for="DistrictId" class="custom-select" id="districtList" asp-items="@ViewBag.Districts" disabled>
-                                    <option>Please select a city firstly</option>
                                 </select>
                                 <span class="text-danger" asp-validation-for="DistrictId"></span>
                             </div>
 
                             <div class="form-group">
                                 <label asp-for="AddressDescription" class="form-label">@Html.DisplayNameFor(x=>x.AddressDescription)</label>
-                                <textarea asp-for="AddressDescription" class="form-control" style="height:115px" rows="8"></textarea>
+                                <textarea asp-for="AddressDescription" class="form-control" rows="4" style="resize:none"></textarea>
                                 <span class="text-danger" asp-validation-for="AddressDescription"></span>
                             </div>
                             <input id="url" type="hidden" value="@(ViewBag.BaseUrl)" />
@@ -171,6 +178,53 @@
 
 
     <script type="text/javascript">
+
+        $(function () {
+
+            $('#countryList').change(function () {
+
+                var countryId = $(this).val();
+                var baseUrl = $('#url').val();
+
+                if (countryId != null && countryId != '') {
+                    $.ajax({
+                        type: "GET",
+                        url: baseUrl + "/account/setDropDownListCity/" + countryId,
+                        datatype: "Json",
+                        success: function (cities) {
+
+                            $("#cityList").empty();
+                            $("#districtList").empty();
+                            $("#districtList").prop('disabled', true);
+
+                            $("#cityList").removeAttr("disabled");
+
+                            $.each(cities, function () {
+                                $('#cityList').append('<option value=' + this.id + '>' + this.name + '</option>');
+                            });
+
+
+                        },
+
+
+                        error: function () {
+                            /*Bu metod ile Ajax işlemi başarısız
+                            olursa eğer hata mesajı verebiliyoruz.*/
+                            alert("Hata");
+                        },
+                        beforeSend: function () {
+                            /*Burada ise Form Post edilmeden önce
+                            işlemler yapılabilir.Örnek olarak Loading, yükleniyor vs..*/
+                        },
+                        complete: function () {
+                            /*Burada ise Form Post edildikten sonra
+                            işlemler yapılabilir.Örnek olarak yükleme tamamlandı vs..*/
+                        }
+                    });
+                }
+            });
+        });
+
         $(function () {
 
             $('#cityList').change(function () {
@@ -181,7 +235,7 @@
                 if (cityId != null && cityId != '') {
                     $.ajax({
                         type: "GET",
-                        url: baseUrl + "/account/setDropDownList/" + cityId,
+                        url: baseUrl + "/account/setDropDownListDistrict/" + cityId,
                         datatype: "Json",
                         success: function (districts) {
 

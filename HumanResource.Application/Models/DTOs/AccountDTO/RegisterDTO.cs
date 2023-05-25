@@ -45,7 +45,11 @@ namespace HumanResource.Application.Models.DTOs.AccountDTO
 		[Display(Name = "Number Of Employee")]
 		public string NumberOfEmployee { get; set; }
 
-		[Required(ErrorMessage = "City cannot be null.")]
+        [Required(ErrorMessage = "Country cannot be null.")]
+        [Display(Name = ("Country"))]
+        public int? CountryId { get; set; }
+
+        [Required(ErrorMessage = "City cannot be null.")]
 		[Display(Name = ("City"))]
 		public int? CityId { get; set; }
 

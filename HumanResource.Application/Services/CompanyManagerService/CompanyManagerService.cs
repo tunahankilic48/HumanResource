@@ -52,6 +52,7 @@ namespace HumanResource.Application.Services.CompanyManagerService
                 UserName = x.UserName,
                 Email = x.Email,
                 PhoneNumber = x.PhoneNumber,
+                CountryId = x.Address.District.City.CountryId,
                 CityId = x.Address.District.CityId,
                 DistrictId = x.Address.DistrictId,
                 AddressDescription = x.Address.Description,
@@ -65,7 +66,7 @@ namespace HumanResource.Application.Services.CompanyManagerService
             },
             where: x => x.Id == id,
             orderby: null,
-            include: x => x.Include(x => x.Address).Include(x => x.Address.District)
+            include: x => x.Include(x => x.Address).Include(x => x.Address.District).Include(x=>x.Address.District.City)
             );
 
 
@@ -278,7 +279,7 @@ namespace HumanResource.Application.Services.CompanyManagerService
             user.TitleId = model.TitleId;
 
 
-            if (model.DistrictId != 0 && model.CityId != 0)
+            if (model.DistrictId != 0 && model.CityId != 0 && model.CountryId != 0)
             {
                 if (user.Address == null)
                 {
