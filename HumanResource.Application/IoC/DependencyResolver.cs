@@ -33,6 +33,7 @@ namespace HumanResource.Application.IoC
             builder.RegisterType<TitleRepository>().As<ITitleRepository>().InstancePerLifetimeScope();
             builder.RegisterType<ExpenseRepository>().As<IExpenseRepository>().InstancePerLifetimeScope();
             builder.RegisterType<CompanyRepository>().As<ICompanyRepository>().InstancePerLifetimeScope();
+            builder.RegisterType<CountryRepository>().As<ICountryRepository>().InstancePerLifetimeScope();
 
             builder.RegisterType<AccountServices>().As<IAccountServices>().InstancePerLifetimeScope();
             builder.RegisterType<PersonelService>().As<IPersonelService>().InstancePerLifetimeScope();

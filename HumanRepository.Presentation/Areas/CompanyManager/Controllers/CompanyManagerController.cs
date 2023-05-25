@@ -54,6 +54,7 @@ namespace HumanResource.Presentation.Areas.CompanyManager.Controllers
             ViewBag.CompanyManagers = new SelectList(await _companyManagerService.GetCompanyManagers(), "Id", "FullName");
             ViewBag.Cities = new SelectList(await _addressService.GetCities(), "Id", "Name");
             ViewBag.Districts = new SelectList(await _addressService.GetDistricts(), "Id", "Name");
+            ViewBag.Countries = new SelectList(await _addressService.GetCountries(), "Id", "Name");
             ViewBag.BaseUrl = Request.Scheme + "://" + HttpContext.Request.Host.ToString();
             return View();
         }
@@ -103,6 +104,7 @@ namespace HumanResource.Presentation.Areas.CompanyManager.Controllers
             ViewBag.CompanyManagers = new SelectList(await _companyManagerService.GetCompanyManagers(), "Id", "FullName");
             ViewBag.Cities = new SelectList(await _addressService.GetCities(), "Id", "Name");
             ViewBag.Districts = new SelectList(await _addressService.GetDistricts(), "Id", "Name");
+            ViewBag.Countries = new SelectList(await _addressService.GetCountries(), "Id", "Name");
             var model = await _companyManagerService.GetByUserName(id);
             model.BaseUrl = Request.Scheme + "://" + HttpContext.Request.Host.ToString();
             return View(model);

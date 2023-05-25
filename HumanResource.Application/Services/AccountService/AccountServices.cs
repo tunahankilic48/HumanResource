@@ -55,17 +55,21 @@ namespace HumanResource.Application.Services.AccountServices
                 UserName = x.UserName,
                 Email = x.Email,
                 PhoneNumber = x.PhoneNumber,
+                CountryId = x.Address.District.City.CountryId,
                 CityId = x.Address.District.CityId,
                 DistrictId = x.Address.DistrictId,
                 AddressDescription = x.Address.Description,
                 BloodTypeId = x.BloodTypeId,
                 BirthDate = x.BirthDate,
                 RecruitmentDate = x.RecruitmentDate,
-                ImagePath = x.ImagePath
+                ImagePath = x.ImagePath,
+                TitleId = x.TitleId,
+                DepartmentId = x.DepartmentId,
+                ManagerId = x.ManagerId
             },
             where: x => x.UserName == userName,
             orderby: null,
-            include: x => x.Include(x => x.Manager).Include(x => x.Department).Include(x => x.Address).Include(x => x.Address.District).Include(x => x.Title).Include(x => x.Company)
+            include: x => x.Include(x => x.Manager).Include(x => x.Department).Include(x => x.Address).Include(x => x.Address.District).Include(x => x.Address.District.City).Include(x => x.Title).Include(x => x.Company)
             );
 
 

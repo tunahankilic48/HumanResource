@@ -2,6 +2,7 @@
 using HumanResource.Application.Models.VMs.EmailVM;
 using HumanResource.Application.Services.AccountServices;
 using HumanResource.Application.Services.AddressService;
+using HumanResource.Application.Services.CompanyManagerService;
 using HumanResource.Application.Services.EmailSenderService;
 using HumanResource.Application.Services.PersonelService;
 using Microsoft.AspNetCore.Authorization;
@@ -17,12 +18,14 @@ namespace HumanResource.Presentation.Controllers
         private readonly IPersonelService _personelService;
         private readonly IAddressService _addressService;
         private readonly IEmailService _emailService;
-        public AccountController(IAccountServices accountServices, IPersonelService personelService, IAddressService addressService, IEmailService emailService)
+        private readonly ICompanyManagerService _companyManagerService;
+        public AccountController(IAccountServices accountServices, IPersonelService personelService, IAddressService addressService, IEmailService emailService, ICompanyManagerService companyManagerService)
         {
             _accountServices = accountServices;
             _personelService = personelService;
             _addressService = addressService;
             _emailService = emailService;
+            _companyManagerService = companyManagerService;
         }
 
         [AllowAnonymous]
@@ -32,6 +35,7 @@ namespace HumanResource.Presentation.Controllers
                 return RedirectToAction("login", "account");
             ViewBag.Cities = new SelectList(await _addressService.GetCities(), "Id", "Name");
             ViewBag.Districts = new SelectList(await _addressService.GetDistricts(), "Id", "Name");
+            ViewBag.Countries = new SelectList(await _addressService.GetCountries(), "Id", "Name");
             ViewBag.BaseUrl = Request.Scheme + "://" + HttpContext.Request.Host.ToString();
             return View();
         }
@@ -102,10 +106,13 @@ namespace HumanResource.Presentation.Controllers
         }
         public async Task<IActionResult> Profile()
         {
-
+            ViewBag.Departments = new SelectList(await _companyManagerService.GetDepartments(), "Id", "Name");
+            ViewBag.Titles = new SelectList(await _companyManagerService.GetTitles(), "Id", "Name");
+            ViewBag.CompanyManagers = new SelectList(await _companyManagerService.GetCompanyManagers(), "Id", "FullName");
             ViewBag.Cities = new SelectList(await _addressService.GetCities(), "Id", "Name");
             ViewBag.Districts = new SelectList(await _addressService.GetDistricts(), "Id", "Name");
             ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
+            ViewBag.Countries = new SelectList(await _addressService.GetCountries(), "Id", "Name");
             var model = await _accountServices.GetByUserName(User.Identity.Name);
             model.BaseUrl = Request.Scheme + "://" + HttpContext.Request.Host.ToString();
 
@@ -120,18 +127,28 @@ namespace HumanResource.Presentation.Controllers
                 await _accountServices.UpdateUser(model);
                 return RedirectToAction("profile");
             }
+            ViewBag.Departments = new SelectList(await _companyManagerService.GetDepartments(), "Id", "Name");
+            ViewBag.Titles = new SelectList(await _companyManagerService.GetTitles(), "Id", "Name");
+            ViewBag.CompanyManagers = new SelectList(await _companyManagerService.GetCompanyManagers(), "Id", "FullName");
             ViewBag.Cities = new SelectList(await _addressService.GetCities(), "Id", "Name");
             ViewBag.Districts = new SelectList(await _addressService.GetDistricts(), "Id", "Name");
+            ViewBag.Countries = new SelectList(await _addressService.GetCountries(), "Id", "Name");
             ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
             return View(model);
         }
+
         [HttpGet, AllowAnonymous]
-        public async Task<JsonResult> setDropDownList(int id)
+        public async Task<JsonResult> setDropDownListCity(int id)
+        {
+            var cities = await _addressService.GetCities(id);
+            return Json(cities);
+        }
+        [HttpGet, AllowAnonymous]
+        public async Task<JsonResult> setDropDownListDistrict(int id)
         {
             var districts = await _addressService.GetDistricts(id);
             return Json(districts);
         }
-
 
 
         private IActionResult RedirectToLocal(string returnUrl = "/")
