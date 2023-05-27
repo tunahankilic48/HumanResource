@@ -1,4 +1,5 @@
-﻿using HumanResource.Domain.Entities;
+﻿using HumanResource.Application.Extensions;
+using HumanResource.Domain.Entities;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System;
 using System.Collections.Generic;
@@ -14,8 +15,9 @@ namespace HumanResource.Application.Models.DTOs.AdvanceDTOs
 
         [Required(ErrorMessage = "Amount field cannot be empty!")]
         [Range(0, 99999.99, ErrorMessage = "Please enter between 0-99999.99!")]
-        [RegularExpression(@"^\d+$", ErrorMessage = "No letters or symbols can be entered!")]
+        //[RegularExpression(@"^\d+$", ErrorMessage = "No letters or symbols can be entered!")]
         [Display(Name = "Amount")]
+        [Amount]
         public decimal Amount { get; set; }
 
         [Required(ErrorMessage = "Installment field cannot be empty!")]

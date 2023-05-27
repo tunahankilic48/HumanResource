@@ -11,7 +11,7 @@
 
             <div class="form-group">
                 <label asp-for="Amount" class="form-label">@Html.DisplayNameFor(x=>x.Amount)</label>
-                <input asp-for="Amount" class="form-control" type="text">
+                <input asp-for="Amount" class="form-control" type="text" placeholder="0" value="">
                 <span class="text-danger" asp-validation-for="Amount"></span>
             </div>
 
@@ -38,6 +38,7 @@
 
     <div class="form-group d-flex justify-content-end mt-3">
         <input type="submit" value="Update" class="btn btn-primary" />
+        <a class="btn btn-danger ms-3" asp-area="personel" asp-action="index" asp-controller="personel">Back List</a>
         <div class="col-lg-1"></div>
     </div>
 </form>
