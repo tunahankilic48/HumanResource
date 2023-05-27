@@ -4,7 +4,7 @@ namespace HumanResource.Application.Models.VMs.CompanyVM
 {
     public class CompanyVM
     {
-        public Guid UserId { get; set; }
+        public Guid? UserId { get; set; }
         public int? CompanyId { get; set; }
 
         [Display(Name = "Company Name")]

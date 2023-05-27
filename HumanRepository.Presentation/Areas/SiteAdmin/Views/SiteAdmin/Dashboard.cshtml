@@ -33,13 +33,6 @@
                                                                                                         }]
         });
         chart.render();
-
-    }
-</script>
-
-<script>
-    window.onload = function () {
-
         var chart = new CanvasJS.Chart("chartContainer", {
             theme: "light1", // "light1", "light2", "dark1", "dark2"
             exportEnabled: true,
@@ -58,10 +51,8 @@
                 legendText: "{label}",
                 indexLabel: "{label} - {y}%",
                 dataPoints: @Html.Raw(ViewBag.Data)
-                                                                                    }]
+                                                                                        }]
         });
         chart.render();
-
     }
-
 </script>

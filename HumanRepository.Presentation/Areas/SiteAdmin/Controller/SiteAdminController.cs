@@ -42,9 +42,9 @@ namespace HumanResource.Presentation.Areas.SiteAdmin
             var result = await _siteAdminService.Approve(id);
             if (result.Result)
             {
-				var conformationLink = Url.Action("Login", "Account", new { Contoller="account", Area = "" }, Request.Scheme);
+				var conformationLink = Url.Action("Login", "Account", new { Area = "" }, Request.Scheme);
 				TempData["success"] = "Company register request was approved.";
-                var message = new Message(result.UserEmail, "Company Request", $"Your company request was approved by SiteAdmin. You can login by clicking the link. {conformationLink!}");
+                var message = new Message(result.UserEmail, "Company Request", $"Your company request was approved by SiteAdmin. You can login by <a href={conformationLink!}>clicking here!</a>");
                 _emailService.SendEmail(message);
                 return RedirectToAction("index", "siteadmin", new { Area = "siteadmin" });
             }

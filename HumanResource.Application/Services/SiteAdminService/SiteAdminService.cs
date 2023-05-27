@@ -27,20 +27,20 @@ namespace HumanResource.Application.Services.SiteAdminService
 
         public async Task<List<CompanyVM>> GetCompanies()
         {
-            var company = await _appUserRepository.GetFilteredList(
+            var company = await _companyRepository.GetFilteredList(
      select: x => new CompanyVM()
      {
-         UserId = x.Id,
-         CompanyId = x.Company.Id,
-         CompanyName = x.Company.CompanyName,
-         FullName = x.FirstName + " " + x.LastName,
-         PhoneNumber = x.PhoneNumber,
-         Email = x.Email,
-         Statu = x.Company.Statu.Name,
+         UserId = x.CompanyRepresentativeId,
+         CompanyId = x.Id,
+         CompanyName = x.CompanyName,
+         FullName = x.CompanyRepresentative.FirstName + " " + x.CompanyRepresentative.LastName,
+         PhoneNumber = x.CompanyRepresentative.PhoneNumber,
+         Email = x.CompanyRepresentative.Email,
+         Statu = x.Statu.Name,
      },
-     where: x => x.Company.CompanyName != null,
-     orderby: x => x.OrderByDescending(x => x.CreatedDate),
-     include: x => x.Include(x => x.Statu).Include(x => x.Company)
+     where: null,
+     orderby: x => x.OrderByDescending(x => x.CompanyName),
+     include: x => x.Include(x => x.Statu).Include(x => x.CompanyRepresentative)
      );
 
             return company;
