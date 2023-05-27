@@ -13,10 +13,12 @@ namespace HumanResource.Application.Models.DTOs.ExpenseDTO
         [Required(ErrorMessage = "Expense date cannot be null.")]
         [Display(Name = "Expense Date")]
         [DataType(DataType.Date), EndDate]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime ExpenseDate { get; set; }
 
         [Required(ErrorMessage = "Spend amount cannot be empty")]
         [Display(Name = "Spending amount")]
+        [Amount]
         public Decimal Amount { get; set; }
 
         [Required(ErrorMessage = "Description field cannot be null.")]
