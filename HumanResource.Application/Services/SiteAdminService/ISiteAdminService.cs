@@ -12,5 +12,6 @@ namespace HumanResource.Application.Services.SiteAdminService
         Task<CompanyDetailsVM> GetCompanyDetails(Guid id);
         Task<CompanyDetailsVM> GetCompanyListDetails(string companyName);
         Task<List<CompanySectorPieVM>> CompaniesDistributionBySectors();
+        Task<List<CompanyStatuPieVM>> CompaniesDistributionByStatus();
     }
 }
