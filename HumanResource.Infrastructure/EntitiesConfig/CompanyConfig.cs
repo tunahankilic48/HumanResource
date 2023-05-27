@@ -1,7 +1,6 @@
 ﻿using HumanResource.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System.Security.Cryptography.X509Certificates;
 
 namespace HumanResource.Infrastructure.EntitiesConfig
 {
@@ -35,6 +34,16 @@ namespace HumanResource.Infrastructure.EntitiesConfig
             // Foreign Key
 
             builder.HasMany(x => x.Departments)
+               .WithOne(x => x.Company)
+               .HasForeignKey(x => x.CompanyId)
+               .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasMany(x => x.ExpenseTypes)
+               .WithOne(x => x.Company)
+               .HasForeignKey(x => x.CompanyId)
+               .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasMany(x => x.LeaveTypes)
                .WithOne(x => x.Company)
                .HasForeignKey(x => x.CompanyId)
                .OnDelete(DeleteBehavior.Restrict);

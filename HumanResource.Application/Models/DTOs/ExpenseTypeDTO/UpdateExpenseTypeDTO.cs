@@ -1,6 +1,6 @@
-﻿namespace HumanResource.Application.Models.DTOs.DepartmentDTOs
+﻿namespace HumanResource.Application.Models.DTOs.ExpenseTypeDTO
 {
-    public class UpdateDepartmentDTO
+    public class UpdateExpenseTypeDTO
     {
         public int Id { get; set; }
         public string Name { get; set; }

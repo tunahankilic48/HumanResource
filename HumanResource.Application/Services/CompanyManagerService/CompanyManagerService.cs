@@ -26,22 +26,26 @@ namespace HumanResource.Application.Services.CompanyManagerService
         private readonly IExpenseRepository _expenseRepository;
         private readonly ICompanyRepository _companyRepository;
         private readonly IAddressRepository _addressRepository;
-		public CompanyManagerService(IDepartmentRepository departmentRepository, ITitleRepository titleRepository, IMapper mapper, UserManager<AppUser> userManager, IAppUserRepository appUserRepository, IPersonelService personelService, ILeaveRepository leaveRepository, IAdvanceRepository advanceRepository, IExpenseRepository expenseRepository, ICompanyRepository companyRepository, IAddressRepository addressRepository)
-		{
-			_departmentRepository = departmentRepository;
-			_titleRepository = titleRepository;
-			_mapper = mapper;
-			_userManager = userManager;
-			_appUserRepository = appUserRepository;
-			_personelService = personelService;
-			_leaveRepository = leaveRepository;
-			_advanceRepository = advanceRepository;
-			_expenseRepository = expenseRepository;
-			_companyRepository = companyRepository;
-			_addressRepository = addressRepository;
-		}
+        private readonly IExpenseTypeRepository _expenseTypeRepository;
+        private readonly ILeaveTypeRepository _LeaveTypeRepository;
+        public CompanyManagerService(IDepartmentRepository departmentRepository, ITitleRepository titleRepository, IMapper mapper, UserManager<AppUser> userManager, IAppUserRepository appUserRepository, IPersonelService personelService, ILeaveRepository leaveRepository, IAdvanceRepository advanceRepository, IExpenseRepository expenseRepository, ICompanyRepository companyRepository, IAddressRepository addressRepository, IExpenseTypeRepository expenseTypeRepository, ILeaveTypeRepository leaveTypeRepository)
+        {
+            _departmentRepository = departmentRepository;
+            _titleRepository = titleRepository;
+            _mapper = mapper;
+            _userManager = userManager;
+            _appUserRepository = appUserRepository;
+            _personelService = personelService;
+            _leaveRepository = leaveRepository;
+            _advanceRepository = advanceRepository;
+            _expenseRepository = expenseRepository;
+            _companyRepository = companyRepository;
+            _addressRepository = addressRepository;
+            _expenseTypeRepository = expenseTypeRepository;
+            _LeaveTypeRepository = leaveTypeRepository;
+        }
 
-		public async Task<UpdateEmployeeDTO> GetByUserName(Guid id)
+        public async Task<UpdateEmployeeDTO> GetByUserName(Guid id)
         {
             UpdateEmployeeDTO result = await _appUserRepository.GetFilteredFirstOrDefault(
             select: x => new UpdateEmployeeDTO
@@ -66,7 +70,7 @@ namespace HumanResource.Application.Services.CompanyManagerService
             },
             where: x => x.Id == id,
             orderby: null,
-            include: x => x.Include(x => x.Address).Include(x => x.Address.District).Include(x=>x.Address.District.City)
+            include: x => x.Include(x => x.Address).Include(x => x.Address.District).Include(x => x.Address.District.City)
             );
 
 
@@ -158,7 +162,7 @@ namespace HumanResource.Application.Services.CompanyManagerService
             return companyManagers;
         }
 
-        public async Task<List<DepartmentVM>> GetDepartments()
+        public async Task<List<DepartmentVM>> GetDepartments(int? companyId)
         {
             var departments = await _departmentRepository.GetFilteredList(
               select: x => new DepartmentVM()
@@ -167,7 +171,7 @@ namespace HumanResource.Application.Services.CompanyManagerService
                   Name = x.Name
 
               },
-              where: x => x.StatuId == Status.Active.GetHashCode(),
+              where: x => x.StatuId == Status.Active.GetHashCode() && x.CompanyId == companyId,
               orderby: x => x.OrderByDescending(x => x.Name)
               );
 
@@ -176,7 +180,7 @@ namespace HumanResource.Application.Services.CompanyManagerService
 
         public async Task<List<EmployeeVM>> GetEmployees(int companyId)
         {
-            
+
             var employees = await _appUserRepository.GetFilteredList(
               select: x => new EmployeeVM()
               {
@@ -198,7 +202,7 @@ namespace HumanResource.Application.Services.CompanyManagerService
             return employees;
         }
 
-        public async Task<List<TitleVM>> GetTitles()
+        public async Task<List<TitleVM>> GetTitles(int? companyId)
         {
             var titles = await _titleRepository.GetFilteredList(
              select: x => new TitleVM()
@@ -207,7 +211,7 @@ namespace HumanResource.Application.Services.CompanyManagerService
                  Name = x.Name
 
              },
-             where: x => x.StatuId == Status.Active.GetHashCode(),
+             where: x => x.StatuId == Status.Active.GetHashCode() && x.CompanyId == companyId,
              orderby: x => x.OrderByDescending(x => x.Name)
              );
 
@@ -383,7 +387,7 @@ namespace HumanResource.Application.Services.CompanyManagerService
              },
              where: x => x.StatuId == Status.Awating_Approval.GetHashCode() && x.User.ManagerId == id,
              orderby: x => x.OrderByDescending(x => x.CreatedDate),
-             include: x => x.Include(x => x.User).Include(x => x.User.Manager).Include(x=>x.CurrencyType)
+             include: x => x.Include(x => x.User).Include(x => x.User.Manager).Include(x => x.CurrencyType)
                 );
 
             return personelAdvanceRequests;
@@ -394,7 +398,7 @@ namespace HumanResource.Application.Services.CompanyManagerService
             UpdateCompanyDTO result = await _appUserRepository.GetFilteredFirstOrDefault(
             select: x => new UpdateCompanyDTO
             {
-                UserId =x.Id,
+                UserId = x.Id,
                 CompanyId = x.Company.Id,
                 CompanyName = x.Company.CompanyName,
                 TaxNumber = x.Company.TaxNumber,
@@ -406,8 +410,8 @@ namespace HumanResource.Application.Services.CompanyManagerService
                 AddressDescription = x.Company.Address.Description,
                 ManagerName = x.FirstName + " " + x.LastName,
                 ImagePath = x.Company.ImagePath,
-                
-               
+
+
             },
             where: x => x.Id == id,
             orderby: null,
@@ -415,9 +419,9 @@ namespace HumanResource.Application.Services.CompanyManagerService
             );
             return result;
         }
-        public async Task <bool> UpdateCompany(UpdateCompanyDTO model)
+        public async Task<bool> UpdateCompany(UpdateCompanyDTO model)
         {
-          
+
             Company company = await _companyRepository.GetDefault(x => x.Id == model.CompanyId);
             company.ImagePath = model.ImagePath;
             company.CompanyName = model.CompanyName;
@@ -427,8 +431,40 @@ namespace HumanResource.Application.Services.CompanyManagerService
             company.NumberOfEmployee = model.NumberOfEmployee;
             company.ModifiedDate = model.ModifiedDate;
             company.Address = await _addressRepository.GetDefault(x => x.DistrictId == model.DistrictId);
-                
-			return await _companyRepository.Update(company);
+
+            return await _companyRepository.Update(company);
+        }
+
+        public async Task<List<ExpenseTypeVM>> GetExpenseTypes(int? companyId)
+        {
+            var expenseTypeVM = await _expenseTypeRepository.GetFilteredList(
+              select: x => new ExpenseTypeVM()
+              {
+                  Id = x.Id,
+                  Name = x.Name
+
+              },
+              where: x => x.StatuId == Status.Active.GetHashCode() && x.CompanyId == companyId,
+              orderby: x => x.OrderByDescending(x => x.Name)
+              );
+
+            return expenseTypeVM;
+        }
+
+        public async Task<List<LeaveTypeVM>> GetLeaveTypes(int? companyId)
+        {
+            var leaveTypeVM = await _LeaveTypeRepository.GetFilteredList(
+              select: x => new LeaveTypeVM()
+              {
+                  Id = x.Id,
+                  Name = x.Name
+
+              },
+              where: x => x.StatuId == Status.Active.GetHashCode() && x.CompanyId == companyId,
+              orderby: x => x.OrderByDescending(x => x.Name)
+              );
+
+            return leaveTypeVM;
         }
     }
 }

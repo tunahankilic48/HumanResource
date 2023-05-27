@@ -1,7 +1,6 @@
-﻿using HumanResource.Application.Models.DTOs.TitleDTOs;
-using HumanResource.Application.Services.DepartmentService;
+﻿using HumanResource.Application.Models.DTOs.ExpenseTypeDTO;
+using HumanResource.Application.Services.ExpenceTypeService;
 using HumanResource.Application.Services.PersonelService;
-using HumanResource.Application.Services.TitleService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,32 +8,33 @@ namespace HumanResource.Presentation.Areas.CompanyManager.Controllers
 {
     [Area("CompanyManager")]
     [Authorize(Roles = "CompanyManager")]
-    public class TitleController : Controller
+    public class ExpenseTypeController : Controller
     {
-        public readonly ITitleService _titleService;
+        public readonly IExpenceTypeService _expenseTypeService;
         public readonly IPersonelService _personelService;
 
-        public TitleController(ITitleService titleService, IPersonelService personelService)
+        public ExpenseTypeController(IExpenceTypeService expenseTypeService, IPersonelService personelService)
         {
-            _titleService = titleService;
+            _expenseTypeService = expenseTypeService;
             _personelService = personelService;
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(CreateTitleDTO model)
+        public async Task<IActionResult> Create(CreateExpenseTypeDTO model)
         {
+
             if (ModelState.IsValid)
             {
                 var personel = await _personelService.GetPersonel(User.Identity.Name);
-                var result = await _titleService.Create(model, personel.CompanyId);
+                var result = await _expenseTypeService.Create(model, personel.CompanyId);
                 if (result)
                 {
-                    TempData["success"] = "Title was created successfully.";
-                    return RedirectToAction("titles", "companymanager", new { Area = "companymanager" });
+                    TempData["success"] = "Expense type was created successfully.";
+                    return RedirectToAction("expensetypes", "companymanager", new { Area = "companymanager" });
                 }
                 else
                 {
-                    TempData["error"] = "Something goes wrong, Title could not be created.";
+                    TempData["error"] = "Something goes wrong, Expense Type could not be created.";
                 }
             }
             List<string> errors = new List<string>();
@@ -43,43 +43,46 @@ namespace HumanResource.Presentation.Areas.CompanyManager.Controllers
                 errors.Add(item.ErrorMessage);
             }
             TempData["modelError"] = errors.ToArray();
-            return RedirectToAction("titles", "companymanager", new { Area = "companymanager" });
+            return RedirectToAction("leavetypes", "companymanager", new { Area = "companymanager" });
         }
 
         public async Task<IActionResult> Update(int id)
         {
             ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
-            return View(await _titleService.GetById(id));
+            return View(await _expenseTypeService.GetById(id));
         }
 
+
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<IActionResult> Update(UpdateTitleDTO model)
+        public async Task<IActionResult> Update(UpdateExpenseTypeDTO model)
         {
             if (ModelState.IsValid)
             {
-                var result = await _titleService.Update(model);
+                var result = await _expenseTypeService.Update(model);
                 if (result)
                 {
-                    TempData["success"] = "Title was created successfully.";
-                    return RedirectToAction("titles", "companymanager", new { Area = "companymanager" });
+                    TempData["success"] = "Expense type was created successfully.";
+                    return RedirectToAction("expensetypes", "companymanager", new { Area = "companymanager" });
                 }
                 else
                 {
-                    TempData["error"] = "Something goes wrong, Title could not be created.";
+                    TempData["error"] = "Something goes wrong, Expense type could not be created.";
                 }
             }
+
 
             ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
             return View(model);
         }
 
+
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(IFormCollection collection)
         {
             int id = int.Parse(collection["id"]);
-            await _titleService.Delete(id);
-            TempData["success"] = "Title was deleted succesfully.";
-            return RedirectToAction("titles", "companymanager", new { Area = "companymanager" });
+            await _expenseTypeService.Delete(id);
+            TempData["success"] = "Expense type was deleted succesfully.";
+            return RedirectToAction("expensetypes", "companymanager", new { Area = "companymanager" });
         }
     }
 }

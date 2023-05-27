@@ -1,5 +1,6 @@
 ﻿using HumanResource.Application.Models.DTOs.DepartmentDTOs;
-using HumanResource.Application.Services.DepartmentService;
+using HumanResource.Application.Models.DTOs.LeaveTypeDTO;
+using HumanResource.Application.Services.LeaveTypeService;
 using HumanResource.Application.Services.PersonelService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -7,34 +8,34 @@ using Microsoft.AspNetCore.Mvc;
 namespace HumanResource.Presentation.Areas.CompanyManager.Controllers
 {
     [Area("CompanyManager")]
-    [Authorize(Roles ="CompanyManager")]
-    public class DepartmentController : Controller
+    [Authorize(Roles = "CompanyManager")]
+    public class LeaveTypeController : Controller
     {
-        public readonly IDepartmentService _departmentService;
+        public readonly ILeaveTypeService _leaveTypeService;
         public readonly IPersonelService _personelService;
 
-        public DepartmentController(IDepartmentService departmentService, IPersonelService personelService)
+        public LeaveTypeController(ILeaveTypeService leaveTypeService, IPersonelService personelService)
         {
-            _departmentService = departmentService;
+            _leaveTypeService = leaveTypeService;
             _personelService = personelService;
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(CreateDepartmentDTO model)
+        public async Task<IActionResult> Create(CreateLeaveTypeDTO model)
         {
 
             if (ModelState.IsValid)
             {
                 var personel = await _personelService.GetPersonel(User.Identity.Name);
-                var result = await _departmentService.Create(model, personel.CompanyId);
+                var result = await _leaveTypeService.Create(model, personel.CompanyId);
                 if (result)
                 {
-                    TempData["success"] = "Department was created successfully.";
-                    return RedirectToAction("departments", "companymanager", new { Area = "companymanager" });
+                    TempData["success"] = "Leave Type was created successfully.";
+                    return RedirectToAction("leavetypes", "companymanager", new { Area = "companymanager" });
                 }
                 else
                 {
-                    TempData["error"] = "Something goes wrong, Leave request could not be created.";
+                    TempData["error"] = "Something goes wrong, Leave type could not be created.";
                 }
             }
             List<string> errors = new List<string>();
@@ -43,30 +44,30 @@ namespace HumanResource.Presentation.Areas.CompanyManager.Controllers
                 errors.Add(item.ErrorMessage);
             }
             TempData["modelError"] = errors.ToArray();
-            return RedirectToAction("departments", "companymanager", new { Area = "companymanager" });
+            return RedirectToAction("leavetypes", "companymanager", new { Area = "companymanager" });
         }
 
         public async Task<IActionResult> Update(int id)
         {
             ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
-            return View(await _departmentService.GetById(id));
+            return View(await _leaveTypeService.GetById(id));
         }
 
 
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<IActionResult> Update(UpdateDepartmentDTO model)
+        public async Task<IActionResult> Update(UpdateLeaveTypeDTO model)
         {
             if (ModelState.IsValid)
             {
-                var result = await _departmentService.Update(model);
+                var result = await _leaveTypeService.Update(model);
                 if (result)
                 {
-                    TempData["success"] = "Department was created successfully.";
-                    return RedirectToAction("departments", "companymanager", new { Area = "companymanager" });
+                    TempData["success"] = "Leave type was created successfully.";
+                    return RedirectToAction("leavetypes", "companymanager", new { Area = "companymanager" });
                 }
                 else
                 {
-                    TempData["error"] = "Something goes wrong, Department could not be created.";
+                    TempData["error"] = "Something goes wrong, Leave type could not be created.";
                 }
             }
 
@@ -80,9 +81,9 @@ namespace HumanResource.Presentation.Areas.CompanyManager.Controllers
         public async Task<IActionResult> Delete(IFormCollection collection)
         {
             int id = int.Parse(collection["id"]);
-            await _departmentService.Delete(id);
-            TempData["success"] = "Department was deleted succesfully.";
-            return RedirectToAction("departments", "companymanager", new { Area = "companymanager" });
+            await _leaveTypeService.Delete(id);
+            TempData["success"] = "Leave type was deleted succesfully.";
+            return RedirectToAction("leavetypes", "companymanager", new { Area = "companymanager" });
         }
     }
 }

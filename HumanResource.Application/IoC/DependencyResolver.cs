@@ -5,8 +5,10 @@ using HumanResource.Application.Services.AddressService;
 using HumanResource.Application.Services.AdvanceService;
 using HumanResource.Application.Services.CompanyManagerService;
 using HumanResource.Application.Services.DepartmentService;
+using HumanResource.Application.Services.ExpenceTypeService;
 using HumanResource.Application.Services.ExpenseService;
 using HumanResource.Application.Services.LeaveServices;
+using HumanResource.Application.Services.LeaveTypeService;
 using HumanResource.Application.Services.PersonelService;
 using HumanResource.Application.Services.SiteAdminService;
 using HumanResource.Application.Services.TitleService;
@@ -34,6 +36,7 @@ namespace HumanResource.Application.IoC
             builder.RegisterType<ExpenseRepository>().As<IExpenseRepository>().InstancePerLifetimeScope();
             builder.RegisterType<CompanyRepository>().As<ICompanyRepository>().InstancePerLifetimeScope();
             builder.RegisterType<CountryRepository>().As<ICountryRepository>().InstancePerLifetimeScope();
+            builder.RegisterType<ExpenseTypeRepository>().As<IExpenseTypeRepository>().InstancePerLifetimeScope();
 
             builder.RegisterType<AccountServices>().As<IAccountServices>().InstancePerLifetimeScope();
             builder.RegisterType<PersonelService>().As<IPersonelService>().InstancePerLifetimeScope();
@@ -45,6 +48,8 @@ namespace HumanResource.Application.IoC
             builder.RegisterType<TitleService>().As<ITitleService>().InstancePerLifetimeScope();
             builder.RegisterType<ExpenseServices>().As<IExpenseServices>().InstancePerLifetimeScope();
             builder.RegisterType<SiteAdminService>().As<ISiteAdminService>().InstancePerLifetimeScope();
+            builder.RegisterType<ExpenceTypeService>().As<IExpenceTypeService>().InstancePerLifetimeScope();
+            builder.RegisterType<LeaveTypeService>().As<ILeaveTypeService>().InstancePerLifetimeScope();
             
 
 

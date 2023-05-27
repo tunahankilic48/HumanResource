@@ -1,6 +1,6 @@
-﻿namespace HumanResource.Application.Models.DTOs.DepartmentDTOs
+﻿namespace HumanResource.Application.Models.DTOs.LeaveTypeDTO
 {
-    public class UpdateDepartmentDTO
+    public class UpdateLeaveTypeDTO
     {
         public int Id { get; set; }
         public string Name { get; set; }

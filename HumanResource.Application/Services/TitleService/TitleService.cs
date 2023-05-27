@@ -18,10 +18,11 @@ namespace HumanResource.Application.Services.TitleService
         }
 
 
-        public async Task<bool> Create(CreateTitleDTO model, string userName)
+        public async Task<bool> Create(CreateTitleDTO model, int? companyId)
         {
             Title title = _mapper.Map<Title>(model);
             title.StatuId = Status.Active.GetHashCode();
+            title.CompanyId = companyId;
             return await _titleRepository.Add(title);
         }
 

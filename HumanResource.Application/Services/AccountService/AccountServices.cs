@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using HumanResource.Application.Models.DTOs.AccountDTO;
 using HumanResource.Application.Models.VMs.PersonelVM;
+using HumanResource.Application.Services.ExpenceTypeService;
+using HumanResource.Application.Services.LeaveTypeService;
 using HumanResource.Domain.Entities;
 using HumanResource.Domain.Enums;
 using HumanResource.Domain.Repositories;
@@ -19,8 +21,10 @@ namespace HumanResource.Application.Services.AccountServices
         private readonly IMapper _mapper;
         private readonly ICompanyRepository _companyRepository;
         private readonly IAddressRepository _addressRepository;
+        private readonly IExpenceTypeService _expenceTypeService;
+        private readonly ILeaveTypeService _leaveTypeService;
 
-        public AccountServices(IAppUserRepository appUserRepository, SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, IMapper mapper, ICompanyRepository companyRepository, IAddressRepository addressRepository)
+        public AccountServices(IAppUserRepository appUserRepository, SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, IMapper mapper, ICompanyRepository companyRepository, IAddressRepository addressRepository, IExpenceTypeService expenceTypeService, ILeaveTypeService leaveTypeService)
         {
             _appUserRepository = appUserRepository;
             _signInManager = signInManager;
@@ -28,6 +32,8 @@ namespace HumanResource.Application.Services.AccountServices
             _mapper = mapper;
             _companyRepository = companyRepository;
             _addressRepository = addressRepository;
+            _expenceTypeService = expenceTypeService;
+            _leaveTypeService = leaveTypeService;
         }
 
         public async Task<IdentityResult> ConfirmEmail(string token, string email)
@@ -120,6 +126,9 @@ namespace HumanResource.Application.Services.AccountServices
                     company.CompanyRepresentativeId = user1.Id;
                     await _userManager.UpdateAsync(user1);
                     await _companyRepository.Update(company1);
+
+                    await _expenceTypeService.CreateDefault(company1.Id);
+                    await _leaveTypeService.CreateDefault(company1.Id);
 
                     if (resultUser.Succeeded)
                     {

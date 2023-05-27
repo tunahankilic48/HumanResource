@@ -38,6 +38,16 @@ namespace HumanResource.Infrastructure.EntitiesConfig
                .HasForeignKey(x => x.StatuId)
                .OnDelete(DeleteBehavior.Restrict);
             
+            builder.HasMany(x => x.ExpenseTypes)
+               .WithOne(x => x.Statu)
+               .HasForeignKey(x => x.StatuId)
+               .OnDelete(DeleteBehavior.Restrict);            
+            
+            builder.HasMany(x => x.LeaveTypes)
+               .WithOne(x => x.Statu)
+               .HasForeignKey(x => x.StatuId)
+               .OnDelete(DeleteBehavior.Restrict);
+            
             builder.HasMany(x => x.Titles)
                .WithOne(x => x.Statu)
                .HasForeignKey(x => x.StatuId)

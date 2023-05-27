@@ -1,4 +1,6 @@
-﻿namespace HumanResource.Domain.Entities
+﻿using HumanResource.Domain.Enums;
+
+namespace HumanResource.Domain.Entities
 {
     public class Company : IBaseEntity
     {
@@ -25,6 +27,8 @@
         public List<AppUser>? Users { get; set; }
         public AppUser? CompanyRepresentative { get; set; }
         public CompanySector? CompanySector { get; set; }
+        public List<ExpenseType> ExpenseTypes { get; set; }
+        public List<LeaveType> LeaveTypes{ get; set; }
 
     }
 }

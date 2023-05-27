@@ -564,7 +564,8 @@ namespace HumanResource.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("ExpenseTypeEnumId")
+                    b.Property<int?>("CompanyId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -573,7 +574,14 @@ namespace HumanResource.Infrastructure.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasColumnOrder(2);
 
+                    b.Property<int>("StatuId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("StatuId");
 
                     b.ToTable("ExpenseTypes");
                 });
@@ -643,7 +651,8 @@ namespace HumanResource.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("LeaveTypeEnumId")
+                    b.Property<int?>("CompanyId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -652,7 +661,14 @@ namespace HumanResource.Infrastructure.Migrations
                         .HasColumnType("nvarchar(30)")
                         .HasColumnOrder(2);
 
+                    b.Property<int>("StatuId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("StatuId");
 
                     b.ToTable("LeaveTypes");
                 });
@@ -1038,6 +1054,25 @@ namespace HumanResource.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("HumanResource.Domain.Entities.ExpenseType", b =>
+                {
+                    b.HasOne("HumanResource.Domain.Entities.Company", "Company")
+                        .WithMany("ExpenseTypes")
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HumanResource.Domain.Entities.Statu", "Statu")
+                        .WithMany("ExpenseTypes")
+                        .HasForeignKey("StatuId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Company");
+
+                    b.Navigation("Statu");
+                });
+
             modelBuilder.Entity("HumanResource.Domain.Entities.Leave", b =>
                 {
                     b.HasOne("HumanResource.Domain.Entities.LeaveType", "LeaveType")
@@ -1062,6 +1097,25 @@ namespace HumanResource.Infrastructure.Migrations
                     b.Navigation("Statu");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("HumanResource.Domain.Entities.LeaveType", b =>
+                {
+                    b.HasOne("HumanResource.Domain.Entities.Company", "Company")
+                        .WithMany("LeaveTypes")
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HumanResource.Domain.Entities.Statu", "Statu")
+                        .WithMany("LeaveTypes")
+                        .HasForeignKey("StatuId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Company");
+
+                    b.Navigation("Statu");
                 });
 
             modelBuilder.Entity("HumanResource.Domain.Entities.Title", b =>
@@ -1162,6 +1216,10 @@ namespace HumanResource.Infrastructure.Migrations
 
                     b.Navigation("Departments");
 
+                    b.Navigation("ExpenseTypes");
+
+                    b.Navigation("LeaveTypes");
+
                     b.Navigation("Titles");
 
                     b.Navigation("Users");
@@ -1214,7 +1272,11 @@ namespace HumanResource.Infrastructure.Migrations
 
                     b.Navigation("Departments");
 
+                    b.Navigation("ExpenseTypes");
+
                     b.Navigation("Expenses");
+
+                    b.Navigation("LeaveTypes");
 
                     b.Navigation("Leaves");
 
