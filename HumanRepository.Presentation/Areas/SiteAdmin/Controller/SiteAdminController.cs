@@ -5,6 +5,7 @@ using HumanResource.Application.Services.CompanyManagerService;
 using HumanResource.Application.Services.EmailSenderService;
 using HumanResource.Application.Services.PersonelService;
 using HumanResource.Application.Services.SiteAdminService;
+using HumanResource.Domain.Entities;
 using HumanResource.Presentation.Controllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -48,7 +49,7 @@ namespace HumanResource.Presentation.Areas.SiteAdmin
                 return RedirectToAction("index", "siteadmin", new { Area = "siteadmin" });
             }
             TempData["error"] = "There is something wrong. Request could not approved.";
-
+            
             return RedirectToAction("index", "siteadmin", new { Area = "siteadmin" });
         }
 
@@ -87,8 +88,8 @@ namespace HumanResource.Presentation.Areas.SiteAdmin
 
         public async Task<IActionResult> Dashboard()
         {
-
             ViewBag.Data = JsonConvert.SerializeObject(await _siteAdminService.CompaniesDistributionBySectors());
+            ViewBag.Data2 = JsonConvert.SerializeObject(await _siteAdminService.CompaniesDistributionByStatus());
             ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
             return View();
         }

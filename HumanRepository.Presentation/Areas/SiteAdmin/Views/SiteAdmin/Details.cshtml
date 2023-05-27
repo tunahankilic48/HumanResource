@@ -4,17 +4,18 @@
     <div class="card m-3 col-lg-3 p-0">
         <h3 class="card-header bg-info text-white">Company Information</h3>
         <ul class="list-group list-group-flush ">
-            <li class="list-group-item   border-bottom border-warning"><strong>@Html.DisplayNameFor(x => x.CompanyName) </strong> @(Model.CompanyName)</li>
-            <li class="list-group-item   border-bottom border-warning"><strong>@Html.DisplayNameFor(x => x.FullName) </strong> @(Model.FullName)</li>
-            <li class="list-group-item  border-bottom border-warning"><strong>@Html.DisplayNameFor(x => x.TaxNumber) </strong>@(Model.TaxNumber)</li>
-            <li class="list-group-item  border-bottom border-warning"><strong>@Html.DisplayNameFor(x => x.TaxOfficeName) </strong> @(Model.TaxOfficeName)</li>
-            <li class="list-group-item  border-bottom border-warning"><strong>@Html.DisplayNameFor(x => x.PhoneNumber) </strong> @(Model.PhoneNumber)</li>
-            <li class="list-group-item  border-bottom border-warning"><strong>@Html.DisplayNameFor(x => x.NumberOfEmployee) </strong> @(Model.NumberOfEmployee)</li>
-            <li class="list-group-item  border-bottom border-warning"><strong>@Html.DisplayNameFor(x => x.City) </strong> @(Model.City)</li>
-            <li class="list-group-item  border-bottom border-warning"><strong>@Html.DisplayNameFor(x => x.District) </strong> @(Model.District)</li>
-            <li class="list-group-item  border-bottom border-warning"><strong>@Html.DisplayNameFor(x => x.AddressDescription) </strong> @(Model.AddressDescription)</li>
+            <li class="list-group-item   border-bottom border-warning"><strong>@Html.DisplayNameFor(x => x.CompanyName) :</strong> @(Model.CompanyName)</li>
+            <li class="list-group-item   border-bottom border-warning"><strong>@Html.DisplayNameFor(x => x.FullName) :</strong> @(Model.FullName)</li>
+            <li class="list-group-item  border-bottom border-warning"><strong>@Html.DisplayNameFor(x => x.TaxNumber) :</strong> @(Model.TaxNumber)</li>
+            <li class="list-group-item  border-bottom border-warning"><strong>@Html.DisplayNameFor(x => x.TaxOfficeName) :</strong> @(Model.TaxOfficeName)</li>
+            <li class="list-group-item  border-bottom border-warning"><strong>@Html.DisplayNameFor(x => x.PhoneNumber) :</strong> @(Model.PhoneNumber)</li>
+            <li class="list-group-item  border-bottom border-warning"><strong>@Html.DisplayNameFor(x => x.NumberOfEmployee) :</strong> @(Model.NumberOfEmployee)</li>
+            <li class="list-group-item  border-bottom border-warning"><strong>@Html.DisplayNameFor(x => x.City) :</strong> @(Model.City)</li>
+            <li class="list-group-item  border-bottom border-warning"><strong>@Html.DisplayNameFor(x => x.District) :</strong> @(Model.District)</li>
+            <li class="list-group-item  border-bottom border-warning"><strong>@Html.DisplayNameFor(x => x.AddressDescription) :</strong> @(Model.AddressDescription)</li>
         </ul>
         <a class="btn btn-success mt-2" asp-area="siteadmin" asp-controller="siteadmin" asp-action="Approve" asp-route-id="@(Model.Id)">Approve</a>
         <a class="btn btn-danger mt-2" asp-area="siteadmin" asp-controller="siteadmin" asp-action="Reject" asp-route-id="@(Model.Id)">Reject</a>
+        <a class="btn btn-primary mt-2" asp-area="siteadmin" asp-action="index" asp-controller="siteadmin">Back List</a>
     </div>
 </div>
