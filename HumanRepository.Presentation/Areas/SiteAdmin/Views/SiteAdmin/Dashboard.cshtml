@@ -1,11 +1,8 @@
-﻿<div class="card-body col-lg-6">
-    <div class="row d-flex" id="chartContainer" style="height: 185px; width: 50%;"></div>
+﻿<div class="row d-flex card-body">
+    <div id="chartContainer" style="height: 300px; width: 50%;"></div>
     <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
 
-</div>
-
-<div class="card-body col-lg-6">
-    <div class="row d-flex" id="chartContainer2" style="height: 185px; width: 50%;"></div>
+    <div id="chartContainer2" style="height: 300px; width: 50%;"></div>
     <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
 </div>
 <script>
@@ -13,7 +10,7 @@
     window.onload = function () {
 
         var chart = new CanvasJS.Chart("chartContainer2", {
-            theme: "light2", // "light1", "light2", "dark1", "dark2"
+            theme: "light1", // "light1", "light2", "dark1", "dark2"
             exportEnabled: true,
             animationEnabled: true,
             title: {

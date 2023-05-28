@@ -339,6 +339,7 @@ namespace HumanResource.Application.Services.CompanyManagerService
                  Id = x.Id,
                  PersonelFullName = x.User.FirstName + " " + x.User.LastName,
                  LeaveType = x.LeaveType.Name,
+                 LeavePeriod = x.LeavePeriod,
                  StartDate = x.StartDate.ToShortDateString(),
                  EndDate = x.EndDate.ToShortDateString(),
 

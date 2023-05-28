@@ -14,5 +14,7 @@ namespace HumanResource.Application.Models.VMs.CompanyManagerVMs
         public string StartDate { get; set; }
         [Display(Name = "End Date")]
         public string EndDate { get; set; }
+        [Display(Name = "Leave Period")]
+        public string LeavePeriod { get; set; }
     }
 }

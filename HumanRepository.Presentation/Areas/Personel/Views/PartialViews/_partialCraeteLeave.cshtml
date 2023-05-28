@@ -15,14 +15,20 @@
                             
                             <div class="form-group">
                                 <label asp-for="StartDate" class="form-label">Leave Start Date</label>
-                                <input asp-for="StartDate" class="form-control" type="date" value="@DateTime.Now.ToString("yyyy-MM-dd")">
+                                <input asp-for="StartDate" class="form-control" type="date" min="@(new DateTime(2023,04,10))" value="@DateTime.Now.ToString("yyyy-MM-dd")">
                                 <span asp-validation-for="StartDate"></span>
                             </div>
 
                             <div class="form-group">
                                 <label asp-for="EndDate" class="form-label">Leave End Date</label>
-                                <input asp-for="EndDate" class="form-control" type="date" value="@DateTime.Now.ToString("yyyy-MM-dd")">
+                                <input asp-for="EndDate" class="form-control" type="date" max="@DateTime.Now.AddYears(+1)" value="@DateTime.Now.ToString("yyyy-MM-dd")">
                                 <span asp-validation-for="EndDate"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="LeavePeriod" class="form-label">Leave Period</label>
+                                <input asp-for="LeavePeriod" class="form-control" type="text" placeholder="Total Number of Leave Days" value="">
+                                <span asp-validation-for="LeavePeriod"></span>
                             </div>
 
                             <div class="form-group">

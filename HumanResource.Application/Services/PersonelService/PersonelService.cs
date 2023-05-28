@@ -98,6 +98,7 @@ namespace HumanResource.Application.Services.PersonelService
                   Id = x.Id,
                   StartDate = x.StartDate.ToShortDateString(),
                   EndDate = x.EndDate.ToShortDateString(),
+                  LeavePeriod = x.LeavePeriod,
                   ReturnDate = x.ReturnDate.ToShortDateString(),
                   LeaveType = x.LeaveType.Name
 
