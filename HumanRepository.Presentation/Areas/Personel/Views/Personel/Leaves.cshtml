@@ -52,6 +52,7 @@
                         <tr>
                             <th class="text-center">@Html.DisplayNameFor(x=>x.StartDate)</th>
                             <th class="text-center">@Html.DisplayNameFor(x=>x.EndDate)</th>
+                            <th class="text-center">@Html.DisplayNameFor(x=>x.LeavePeriod)</th>
                             <th class="text-center">@Html.DisplayNameFor(x=>x.ReturnDate)</th>
                             <th class="text-center">@Html.DisplayNameFor(x=>x.LeaveType)</th>
                             <th class="text-center">@Html.DisplayNameFor(x=>x.ManagerName)</th>
@@ -67,6 +68,7 @@
                             <tr class="align-middle">
                                 <td class="text-center align-middle" type="date">@item.StartDate</td>
                                 <td class="text-center align-middle" type="date">@item.EndDate</td>
+                                <td class="text-center align-middle" type="text">@item.LeavePeriod</td>
                                 <td class="text-center align-middle" type="date">@item.ReturnDate</td>
                                 <td class="text-center align-middle">@item.LeaveType</td>
                                 <td class="text-center align-middle" type="date">@item.ManagerName</td>

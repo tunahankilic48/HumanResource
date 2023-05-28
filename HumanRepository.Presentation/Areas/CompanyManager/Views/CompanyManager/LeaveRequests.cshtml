@@ -37,6 +37,7 @@
                             <th class="text-center">@Html.DisplayNameFor(x=>x.LeaveType)</th>
                             <th class="text-center">@Html.DisplayNameFor(x=>x.StartDate)</th>
                             <th class="text-center">@Html.DisplayNameFor(x=>x.EndDate)</th>
+                            <th class="text-center">@Html.DisplayNameFor(x=>x.LeavePeriod)</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -49,6 +50,7 @@
                                 <td class="text-center align-middle" type="date">@item.LeaveType</td>
                                 <td class="text-center align-middle" type="date">@item.StartDate</td>
                                 <td class="text-center align-middle" type="date">@item.EndDate</td>
+                                <td class="text-center align-middle" type="text">@item.LeavePeriod</td>
                                 <td class="d-flex justify-content-around align-middle">
                                     <a class="btn btn-primary m-2" asp-action="leaverequestdetail" asp-controller="companymanager" asp-route-id="@item.Id">View Details</a>
                                 </td>

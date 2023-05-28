@@ -20,14 +20,14 @@
 
 				<div class="form-group">
 					<label asp-for="ExpenseDate" class="form-label">Expense Date</label>
-					<input asp-for="ExpenseDate" class="form-control" type="date" >
-					<span asp-validation-for="ExpenseDate"></span>
+					<input asp-for="ExpenseDate" class="form-control" type="date">
+					<span class="text-danger" asp-validation-for="ExpenseDate"></span>
 				</div>
 
 				<div class="row">
 					<div class="form-group col-lg-6">
 						<label asp-for="Amount" class="form-label">Amount</label>
-						<input asp-for="Amount" id="id" class="form-control" pattern="\d*" type="text" placeholder="0" value="">
+						<input asp-for="Amount" id="id" class="form-control" pattern="\d*" type="text">
 						<span asp-validation-for="Amount"></span>
 					</div>
 

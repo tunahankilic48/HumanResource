@@ -7,10 +7,11 @@ namespace HumanResource.Application.Models.VMs.ExpenseVM
         public int Id { get; set; }
 
         [Display(Name = "Expense Date")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MMMM-yyyy}")]
         public string ExpenseDate { get; set; }
 
         [Display(Name = "Amount")]
-        public decimal Amount { get; set; }
+        public Decimal Amount { get; set; }
 
         [Display(Name = "Currency Type")]
         public string CurrencyType { get; set; }

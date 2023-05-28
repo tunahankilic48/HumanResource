@@ -11,6 +11,9 @@ namespace HumanResource.Application.Models.VMs.PersonelVM
         [Display(Name = "İzin Bitiş Tarihi")]
         public string EndDate { get; set; }
 
+        [Display(Name = "İzinli Gün Sayısı")]
+        public string LeavePeriod { get; set; }
+
         [Display(Name = "Geri Dönüş Tarihi")]
         public string ReturnDate { get; set; }
 
