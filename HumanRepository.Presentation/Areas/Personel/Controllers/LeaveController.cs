@@ -1,10 +1,12 @@
 ﻿using HumanResource.Application.Models.DTOs.LeaveDTO;
 using HumanResource.Application.Models.VMs.EmailVM;
+using HumanResource.Application.Services.CompanyManagerService;
 using HumanResource.Application.Services.EmailSenderService;
 using HumanResource.Application.Services.LeaveServices;
 using HumanResource.Application.Services.PersonelService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace HumanResource.Presentation.Areas.Personel.Controllers
 {
@@ -15,15 +17,17 @@ namespace HumanResource.Presentation.Areas.Personel.Controllers
         private readonly ILeaveService _leaveService;
         private readonly IPersonelService _personelService;
         private readonly IEmailService _emailService;
+		private readonly ICompanyManagerService _companyManagerService;
 
-        public LeaveController(ILeaveService leaveService, IPersonelService personelService, IEmailService emailService)
-        {
-            _leaveService = leaveService;
-            _personelService = personelService;
-            _emailService = emailService;
-        }
+		public LeaveController(ILeaveService leaveService, IPersonelService personelService, IEmailService emailService, ICompanyManagerService companyManagerService)
+		{
+			_leaveService = leaveService;
+			_personelService = personelService;
+			_emailService = emailService;
+			_companyManagerService = companyManagerService;
+		}
 
-        [HttpPost, ValidateAntiForgeryToken]
+		[HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateLeaveDTO model)
         {
             if (ModelState.IsValid)
@@ -51,8 +55,10 @@ namespace HumanResource.Presentation.Areas.Personel.Controllers
 
         public async Task<IActionResult> Update(int id)
         {
-            ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
-            return View(await _leaveService.GetById(id));
+			var personel = await _personelService.GetPersonel(User.Identity.Name);
+			ViewBag.Personel = personel;
+			ViewBag.LeaveTypes = new SelectList(await _companyManagerService.GetLeaveTypes(personel.CompanyId), "Id", "Name");
+			return View(await _leaveService.GetById(id));
         }
 
         [HttpPost, ValidateAntiForgeryToken]
@@ -71,10 +77,10 @@ namespace HumanResource.Presentation.Areas.Personel.Controllers
                     TempData["error"] = "Something goes wrong, Leave request could not be created.";
                 }
             }
-
-
-            ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
-            return View(model);
+			var personel = await _personelService.GetPersonel(User.Identity.Name);
+			ViewBag.Personel = personel;
+			ViewBag.LeaveTypes = new SelectList(await _companyManagerService.GetLeaveTypes(personel.CompanyId), "Id", "Name");
+			return View(model);
         }
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(IFormCollection collection)

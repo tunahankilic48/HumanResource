@@ -8,8 +8,9 @@ namespace HumanResource.Application.Models.DTOs.ExpenseDTO
     {
         public int Id { get; set; }
         public Guid UserId { get; set; }
-        [EndDate]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
+        [Display(Name = "Expense Date")]
+        [Required(ErrorMessage = "Expense date cannot be null.")]
+        [DataType(DataType.Date)]
         public DateTime ExpenseDate { get; set; }
         public DateTime Modified => DateTime.Now;
 
