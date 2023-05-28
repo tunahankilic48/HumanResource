@@ -37,25 +37,44 @@
     </div>
 
     <div class="form-group d-flex justify-content-end mt-3">
-        <input type="submit" value="Update" class="btn btn-primary" />
-        <a class="btn btn-danger ms-3" asp-area="personel" asp-action="index" asp-controller="personel">Back List</a>
+        <button type="submit" id="updateModel" class="btn btn-primary" hidden></button>
+        <button type="button" class="btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#updateAdvanceModal">Update Advance</button>
+        <a class="btn btn-danger m-2" asp-area="personel" asp-action="index" asp-controller="personel">Back List</a>
         <div class="col-lg-1"></div>
     </div>
 </form>
 
+<div class="modal fade" id="updateAdvanceModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-m">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Are You Sure?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure updating advance request?</p>
+            </div>
+            <div class="modal-footer">
+                <button id="update" class="btn btn-danger m-2" type="submit" data-bs-dismiss="modal">Update</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Back To Update Page</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Scripts{
     <script>
-        function myFunction(id) {
-            Number.prototype.formatMoney = function (c, d, t) {
-                var n = this,
-                    c = isNaN(c = Math.abs(c)) ? 2 : c,
-                    d = d == undefined ? "." : d,
-                    t = t == undefined ? "," : t,
-                    s = n < 0 ? "-" : "",
-                    i = parseInt(n = Math.abs(+n || 0).toFixed(c)) + "",
-                    j = (j = i.length) > 3 ? j % 3 : 0;
-                return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(d{3})(?=d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
-            };
-        }
+
+        $(function () {
+
+            $('#update').click(function () {
+
+                $('#updateModel').trigger('click');
+            })
+        });
+
+
     </script>
+
+
 }

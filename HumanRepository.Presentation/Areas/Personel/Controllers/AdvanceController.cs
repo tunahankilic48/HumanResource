@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HumanResource.Presentation.Areas.Personel.Controllers
 {
-    [Authorize]
     [Area("personel")]
     [Authorize(Roles = "CompanyManager, Employee")]
     public class AdvanceController : Controller
@@ -87,7 +86,7 @@ namespace HumanResource.Presentation.Areas.Personel.Controllers
             return RedirectToAction("advances", "personel", new { Area = "personel" });
         }
 
-        [HttpGet]
+        [HttpPost]
         public async Task<IActionResult> Approve(int id)
         {
             var result = await _advanceService.Approve(id);
@@ -102,7 +101,7 @@ namespace HumanResource.Presentation.Areas.Personel.Controllers
             return RedirectToAction("AdvanceRequests", "companymanager", new { Area = "companymanager" });
         }
 
-        [HttpGet]
+        [HttpPost]
         public async Task<IActionResult> Reject(int id)
         {
             var result = await _advanceService.Reject(id);

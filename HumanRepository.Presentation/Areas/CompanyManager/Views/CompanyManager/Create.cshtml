@@ -178,57 +178,61 @@
         </div>
     </div>
     <div class="form-group d-flex justify-content-end mt-1 ">
-        <input type="submit" value="Create Employee" class="btn btn-primary" style="width:200px" />
+        <button type="submit" id="createModel"hidden></button>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createEmployeeModal">Create Employee</button>
+        <a class="btn btn-danger ms-3" asp-area="companymanager" asp-action="employees" asp-controller="companymanager">Back To The Employee List</a>
     </div>
 </form>
 
-
+<div class="modal fade" id="createEmployeeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-m">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Are You Sure?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure create new employee?</p>
+            </div>
+            <div class="modal-footer">
+                <button id="create" class="btn btn-danger m-2" type="submit" data-bs-dismiss="modal">Create</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Back To Create Employee Page</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 @section Scripts{
 
+    <script>
+        $(function () {
+            $('#create').click(function () {
+                $('#createModel').trigger('click');
+            })
+        });
+    </script>
 
     <script type="text/javascript">
-
         $(function () {
-
             $('#countryList').change(function () {
-
                 var countryId = $(this).val();
                 var baseUrl = $('#url').val();
-
                 if (countryId != null && countryId != '') {
                     $.ajax({
                         type: "GET",
                         url: baseUrl + "/account/setDropDownListCity/" + countryId,
                         datatype: "Json",
                         success: function (cities) {
-
                             $("#cityList").empty();
                             $("#districtList").empty();
                             $("#districtList").prop('disabled', true);
-
                             $("#cityList").removeAttr("disabled");
-
                             $.each(cities, function () {
                                 $('#cityList').append('<option value=' + this.id + '>' + this.name + '</option>');
                             });
-
-
                         },
-
-
                         error: function () {
-                            /*Bu metod ile Ajax işlemi başarısız
-                            olursa eğer hata mesajı verebiliyoruz.*/
                             alert("Hata");
-                        },
-                        beforeSend: function () {
-                            /*Burada ise Form Post edilmeden önce
-                            işlemler yapılabilir.Örnek olarak Loading, yükleniyor vs..*/
-                        },
-                        complete: function () {
-                            /*Burada ise Form Post edildikten sonra
-                            işlemler yapılabilir.Örnek olarak yükleme tamamlandı vs..*/
                         }
                     });
                 }
@@ -236,47 +240,23 @@
         });
 
         $(function () {
-
             $('#cityList').change(function () {
-
                 var cityId = $(this).val();
                 var baseUrl = $('#url').val();
-
                 if (cityId != null && cityId != '') {
                     $.ajax({
                         type: "GET",
                         url: baseUrl + "/account/setDropDownListDistrict/" + cityId,
                         datatype: "Json",
                         success: function (districts) {
-
                             $("#districtList").empty();
-                            //for (var i = 0; i <data.length; i++){
-                            //    $('#districtList2').append("<option value='" + data[i].Id + "'>" + data[i].Name + "</options>");
-                            //}
                             $("#districtList").removeAttr("disabled");
-
                             $.each(districts, function () {
                                 $('#districtList').append('<option value=' + this.id + '>' + this.name + '</option>');
                             });
-                            //$.each(districts, function (index, district) {
-                            //        $('#districtList2').append($('<option/>', {
-                            //            value: district.Id,
-                            //            text: district.Name
-                            //        }));
-                            //    });
                         },
                         error: function () {
-                            /*Bu metod ile Ajax işlemi başarısız
-                            olursa eğer hata mesajı verebiliyoruz.*/
                             alert("Hata");
-                        },
-                        beforeSend: function () {
-                            /*Burada ise Form Post edilmeden önce
-                            işlemler yapılabilir.Örnek olarak Loading, yükleniyor vs..*/
-                        },
-                        complete: function () {
-                            /*Burada ise Form Post edildikten sonra
-                            işlemler yapılabilir.Örnek olarak yükleme tamamlandı vs..*/
                         }
                     });
                 }
