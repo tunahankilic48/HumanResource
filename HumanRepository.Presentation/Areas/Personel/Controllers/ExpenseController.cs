@@ -1,10 +1,12 @@
 ﻿using HumanResource.Application.Models.DTOs.ExpenseDTO;
 using HumanResource.Application.Models.VMs.EmailVM;
+using HumanResource.Application.Services.CompanyManagerService;
 using HumanResource.Application.Services.EmailSenderService;
 using HumanResource.Application.Services.ExpenseService;
 using HumanResource.Application.Services.PersonelService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace HumanResource.Presentation.Areas.Personel.Controllers
 {
@@ -16,12 +18,14 @@ namespace HumanResource.Presentation.Areas.Personel.Controllers
 		private readonly IExpenseServices _expenseServices;
 		private readonly IPersonelService _personelService;
         private readonly IEmailService _emailService;
+        private readonly ICompanyManagerService _companyManagerService;
 
-        public ExpenseController(IExpenseServices expenseServices, IPersonelService personelService, IEmailService emailService)
+        public ExpenseController(IExpenseServices expenseServices, IPersonelService personelService, IEmailService emailService, ICompanyManagerService companyManagerService)
         {
             _expenseServices = expenseServices;
             _personelService = personelService;
             _emailService = emailService;
+            _companyManagerService = companyManagerService;
         }
 
         [HttpPost, ValidateAntiForgeryToken]
@@ -51,7 +55,9 @@ namespace HumanResource.Presentation.Areas.Personel.Controllers
 		}
         public async Task<IActionResult> Update(int id)
         {
-            ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
+            var personel = await _personelService.GetPersonel(User.Identity.Name);
+            ViewBag.Personel = personel;
+            ViewBag.ExpenseTypes = new SelectList(await _companyManagerService.GetExpenseTypes(personel.CompanyId), "Id", "Name");
             return View(await _expenseServices.GetById(id));
         }
 
@@ -71,9 +77,9 @@ namespace HumanResource.Presentation.Areas.Personel.Controllers
                     TempData["error"] = "Something goes wrong, Expense request could not be created.";
                 }
             }
-
-
-            ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
+            var personel = await _personelService.GetPersonel(User.Identity.Name);
+            ViewBag.Personel = personel;
+            ViewBag.ExpenseTypes = new SelectList(await _companyManagerService.GetExpenseTypes(personel.CompanyId), "Id", "Name");
             return View(model);
         }
         [HttpPost, ValidateAntiForgeryToken]

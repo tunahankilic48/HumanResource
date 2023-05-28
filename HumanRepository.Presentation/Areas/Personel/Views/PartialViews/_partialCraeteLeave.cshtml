@@ -15,13 +15,13 @@
                             
                             <div class="form-group">
                                 <label asp-for="StartDate" class="form-label">Leave Start Date</label>
-                                <input asp-for="StartDate" class="form-control" type="date" min="@(new DateTime(2023,04,10))" value="@DateTime.Now.ToString("yyyy-MM-dd")">
+                                <input asp-for="StartDate" class="form-control" type="date" max="@DateTime.Now.AddYears(1).ToString("yyyy-MM-dd")" min="@DateTime.Now.AddYears(-1).ToString("yyyy-MM-dd")" value="@DateTime.Now.ToString("yyyy-MM-dd")">
                                 <span asp-validation-for="StartDate"></span>
                             </div>
 
                             <div class="form-group">
                                 <label asp-for="EndDate" class="form-label">Leave End Date</label>
-                                <input asp-for="EndDate" class="form-control" type="date" max="@DateTime.Now.AddYears(+1)" value="@DateTime.Now.ToString("yyyy-MM-dd")">
+                                <input asp-for="EndDate" class="form-control" type="date" max="@DateTime.Now.AddYears(1).ToString("yyyy-MM-dd")" min="@DateTime.Now.AddYears(-1).ToString("yyyy-MM-dd")" value="@DateTime.Now.ToString("yyyy-MM-dd")">
                                 <span asp-validation-for="EndDate"></span>
                             </div>
 
@@ -33,13 +33,13 @@
 
                             <div class="form-group">
                                 <label asp-for="ReturnDate" class="form-label">Return Date</label>
-                                <input asp-for="ReturnDate" class="form-control" type="date" value="@DateTime.Now.ToString("yyyy-MM-dd")">
+                                <input asp-for="ReturnDate" class="form-control" type="date" max="@DateTime.Now.AddYears(1).ToString("yyyy-MM-dd")" min="@DateTime.Now.AddYears(-1).ToString("yyyy-MM-dd")" value="@DateTime.Now.ToString("yyyy-MM-dd")">
                                 <span asp-validation-for="ReturnDate"></span>
                             </div>
 
                             <div class="form-group">
                                 <label asp-for="LeaveTypeId" class="form-label">@Html.DisplayNameFor(x=>x.LeaveTypeId)</label>
-                                <select asp-for="LeaveTypeId" class="custom-select" asp-items="@Html.GetEnumSelectList<LeaveTypeEnumVM>()">
+                                <select asp-for="LeaveTypeId" class="custom-select" asp-items="@ViewBag.LeaveTypes">
                                     <option>Please select a Leave Type</option>
                                 </select>
                             </div>
