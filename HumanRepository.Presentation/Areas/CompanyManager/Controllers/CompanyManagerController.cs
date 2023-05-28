@@ -73,7 +73,7 @@ namespace HumanResource.Presentation.Areas.CompanyManager.Controllers
 
                         var conformationLink = Url.Action("ConfirmEmail", "Account", new { token = result.Token, email = result.Email, Area = "" }, Request.Scheme);
 
-                        var message = new Message(result.Email, "Conformation Email Link", $"Welcome to our human resources platform. Please click the link to activate your account. {conformationLink!}   You can use your email and the password below to login to the platform.     {result.Password}");
+                        var message = new Message(result.Email, "Conformation Email Link", $"Welcome to our human resources platform. Please <a href={conformationLink!}>click here</a> activate your account.   You can use your email and the password below to login to the platform.     {result.Password}");
                         _emailService.SendEmail(message);
 
                         return RedirectToAction("employees", "companymanager", new { Area = "companymanager" });

@@ -17,7 +17,7 @@ namespace HumanResource.Application.Models.VMs.LeaveVM
         [Display(Name = "Return Date")]
         public string ReturnDate { get; set; }
         [Display(Name = "Leave Period")]
-        public int LeavePeriod { get; set; }
+        public string LeavePeriod { get; set; }
         [Display(Name = "Leave Type")]
         public string LeaveType { get; set; }
         [Display(Name ="Description")]
