@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 namespace HumanResource.Presentation.Areas.CompanyManager.Controllers
 {
     [Area("CompanyManager")]
-    [Authorize(Roles = "CompanyManager")]
+    [Authorize(Roles = "CompanyManager, Manager")]
     public class CompanyManagerController : Controller
     {
         private readonly ICompanyManagerService _companyManagerService;

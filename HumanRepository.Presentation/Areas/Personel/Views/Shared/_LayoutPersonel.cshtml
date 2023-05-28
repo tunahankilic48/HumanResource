@@ -104,33 +104,36 @@
 
             }
 
+            @if (User.IsInRole("Manager") || User.IsInRole("CompanyManager"))
+            {
+                <li class="nav-item ms-3">
+                    <a class="nav-link collapsed" asp-area="CompanyManager" asp-controller="companymanager" asp-action="LeaveRequests">
+                        <i class="fa-solid fa-check"></i>
+                        <span>Leave Requests</span>
+                    </a>
+                </li>
+
+                <li class="nav-item ms-3">
+                    <a class="nav-link collapsed" asp-area="CompanyManager" asp-controller="companymanager" asp-action="AdvanceRequests">
+                        <i class="fa-solid fa-check"></i>
+                        <span>Advance Requests</span>
+                    </a>
+                </li>
+
+                <li class="nav-item ms-3">
+                    <a class="nav-link collapsed" asp-area="CompanyManager" asp-controller="companymanager" asp-action="ExpenseRequests">
+                        <i class="fa-solid fa-check"></i>
+                        <span>Expense Requests</span>
+                    </a>
+                </li>
+            }
+
             @if (User.IsInRole("CompanyManager"))
             {
                 <li class="nav-item ms-3">
                     <a class="nav-link collapsed" asp-area="CompanyManager" asp-controller="companymanager" asp-action="Employees">
                         <i class="fa-solid fa-person-walking-luggage"></i>
                         <span>Employees</span>
-                    </a>
-                </li>
-
-                <li class="nav-item ms-3">
-                    <a class="nav-link collapsed" asp-area="CompanyManager" asp-controller="companymanager" asp-action="LeaveRequests">
-                        <i class="fa-solid fa-check"></i>
-                        <span>Leave Requests</span>
-                    </a>
-                </li>      
-                
-                <li class="nav-item ms-3">
-                    <a class="nav-link collapsed" asp-area="CompanyManager" asp-controller="companymanager" asp-action="AdvanceRequests">
-                        <i class="fa-solid fa-check"></i>
-                        <span>Advance Requests</span>
-                    </a>
-                </li>               
-                
-                <li class="nav-item ms-3">
-                    <a class="nav-link collapsed" asp-area="CompanyManager" asp-controller="companymanager" asp-action="ExpenseRequests">
-                        <i class="fa-solid fa-check"></i>
-                        <span>Expense Requests</span>
                     </a>
                 </li>
 
@@ -181,7 +184,7 @@
                     <ul class="navbar-nav ml-auto">
 
                         <div class="topbar-divider d-none d-sm-block"></div>
-                      
+
                         <!-- Nav Item - User Information -->
                         <li class="nav-item d-flex">
                             <a class="nav-link" asp-area="" asp-controller="account" asp-action="profile">
@@ -190,7 +193,7 @@
                                      src="@((ViewBag.Personel).Image)">
 
                             </a>
-                            
+
                         </li>
                         <li class="nav-item d-flex">
                             <a class="nav-link " asp-area="" asp-controller="account" asp-action="logout">
@@ -285,7 +288,6 @@
     <script src="~/media1/js/buttons.print.min.js"></script>
     <script src="~/media1/js/buttons.colVis.min.js"></script>
     <!-- AdminLTE App -->
-
     <!-- Page level custom scripts -->
     <script src="~/media/js/chart-area-demo.js"></script>
     <script src="~/media/js/chart-pie-demo.js"></script>

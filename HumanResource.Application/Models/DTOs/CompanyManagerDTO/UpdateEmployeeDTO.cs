@@ -75,6 +75,8 @@ namespace HumanResource.Application.Models.DTOs.CompanyManagerDTO
         [Display(Name = "Title")]
         public int? TitleId { get; set; }
 
+        public bool IsEmployee { get; set; }
+
 
         public DateTime ModifiedDate => DateTime.Now;
         public int StatuId => Status.Active.GetHashCode();

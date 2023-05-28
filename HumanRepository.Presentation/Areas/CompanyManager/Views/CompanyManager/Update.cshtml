@@ -130,6 +130,16 @@
                             </div>
 
                             <div class="form-group">
+                                <label asp-for="IsEmployee" class="form-label">@Html.DisplayNameFor(x=>x.IsEmployee)</label>
+                                <select asp-for="IsEmployee" class="custom-select">
+                                    <option value="">Please select a Role</option>
+                                    <option value="True">Employee</option>
+                                    <option value="False">Manager</option>
+                                </select>
+                                <span class="text-danger" asp-validation-for="IsEmployee"></span>
+                            </div>
+
+                            <div class="form-group">
                                 <label asp-for="CountryId" class="form-label">@Html.DisplayNameFor(x=>x.CountryId)</label>
                                 <select asp-for="CountryId" class="custom-select mt-1" id="countryList" asp-items="@ViewBag.Countries">
                                     <option value="">Please select a Country</option>

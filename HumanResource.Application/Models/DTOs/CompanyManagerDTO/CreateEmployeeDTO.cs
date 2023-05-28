@@ -84,6 +84,8 @@ namespace HumanResource.Application.Models.DTOs.CompanyManagerDTO
         [ValidateNever]
         public int CompanyId { get; set; }
 
+        public bool IsEmployee { get; set; }
+
         public DateTime CreatedDate => DateTime.Now;
         public int StatuId => Status.Active.GetHashCode();
 

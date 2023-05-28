@@ -153,6 +153,7 @@ namespace HumanResource.Infrastructure.SeedData
                     await roleStore.CreateAsync(new IdentityRole<Guid>() { Name = "SiteAdmin", NormalizedName = "SITEADMIN" });
                     await roleStore.CreateAsync(new IdentityRole<Guid>() { Name = "CompanyManager", NormalizedName = "COMPANYMANAGER" });
                     await roleStore.CreateAsync(new IdentityRole<Guid>() { Name = "Employee", NormalizedName = "EMPLOYEE" });
+                    await roleStore.CreateAsync(new IdentityRole<Guid>() { Name = "Manager", NormalizedName = "MANAGER" });
                     await context.SaveChangesAsync();
                 }
 

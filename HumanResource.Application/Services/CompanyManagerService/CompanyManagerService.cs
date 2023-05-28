@@ -104,8 +104,11 @@ namespace HumanResource.Application.Services.CompanyManagerService
                 var password = new Random().Next(100000, 9999990).ToString();
 
                 await _userManager.CreateAsync(newEmployee, password);
-
                 IdentityResult result = await _userManager.AddToRoleAsync(newEmployee, "Employee");
+                if (!model.IsEmployee)
+                {
+                   await _userManager.AddToRoleAsync(newEmployee, "Manager");
+                }
 
                 if (result.Succeeded)
                 {
@@ -117,7 +120,6 @@ namespace HumanResource.Application.Services.CompanyManagerService
                 }
                 else
                 {
-
                     createEmployee.Result = result;
                 }
                 return createEmployee;
@@ -232,6 +234,20 @@ namespace HumanResource.Application.Services.CompanyManagerService
             return false;
         }
 
+        public async Task<bool> IsManager(string userName)
+        {
+            AppUser user = await _userManager.FindByNameAsync(userName);
+
+            foreach (var roles in await _userManager.GetRolesAsync(user))
+            {
+                if (roles == "Manager")
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public async Task<IdentityResult> UpdateEmployee(UpdateEmployeeDTO model)
         {
             AppUser user = await _appUserRepository.GetDefault(x => x.Id == model.Id);
@@ -281,6 +297,11 @@ namespace HumanResource.Application.Services.CompanyManagerService
             user.RecruitmentDate = model.RecruitmentDate;
             user.ManagerId = model.ManagerId;
             user.TitleId = model.TitleId;
+
+            if(!model.IsEmployee && !(await IsManager(user.UserName)))
+            {
+                await _userManager.AddToRoleAsync(user, "Manager");
+            }
 
 
             if (model.DistrictId != 0 && model.CityId != 0 && model.CountryId != 0)
