@@ -1,5 +1,6 @@
 ﻿using HumanResource.Application.Models.DTOs.CompanyManagerDTO;
 using HumanResource.Application.Models.VMs.EmailVM;
+using HumanResource.Application.Models.VMs.ExpenseVM;
 using HumanResource.Application.Services.AccountServices;
 using HumanResource.Application.Services.AddressService;
 using HumanResource.Application.Services.AdvanceService;
@@ -8,9 +9,11 @@ using HumanResource.Application.Services.EmailSenderService;
 using HumanResource.Application.Services.ExpenseService;
 using HumanResource.Application.Services.LeaveServices;
 using HumanResource.Application.Services.PersonelService;
+using HumanResource.Application.Services.SiteAdminService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Newtonsoft.Json;
 
 namespace HumanResource.Presentation.Areas.CompanyManager.Controllers
 {
@@ -28,18 +31,18 @@ namespace HumanResource.Presentation.Areas.CompanyManager.Controllers
         private readonly ILeaveService _leaveService;
 
         public CompanyManagerController(ICompanyManagerService companyManagerService, IPersonelService personelService, IAddressService addressService, IEmailService emailService, IAccountServices accountService, IAdvanceService advanceService, IExpenseServices expenseService, ILeaveService leaveService)
-        {
-            _companyManagerService = companyManagerService;
-            _personelService = personelService;
-            _addressService = addressService;
-            _emailService = emailService;
-            _accountService = accountService;
-            _advanceService = advanceService;
-            _expenseService = expenseService;
-            _leaveService = leaveService;
-        }
+		{
+			_companyManagerService = companyManagerService;
+			_personelService = personelService;
+			_addressService = addressService;
+			_emailService = emailService;
+			_accountService = accountService;
+			_advanceService = advanceService;
+			_expenseService = expenseService;
+			_leaveService = leaveService;
+		}
 
-        public async Task<IActionResult> Employees()
+		public async Task<IActionResult> Employees()
         {
             ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
             return View(await _companyManagerService.GetEmployees((int)((ViewBag.Personel).CompanyId)));
@@ -187,8 +190,11 @@ namespace HumanResource.Presentation.Areas.CompanyManager.Controllers
             ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
             return View(await _leaveService.LeaveDetail(id));
         }
-
-
-
-    }
+		public async Task<IActionResult> DashboardExpenseType()
+		{
+			ViewBag.ExpenseType = JsonConvert.SerializeObject(await _companyManagerService.ExpensesDistributionByExpensesType());
+			ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
+			return View();
+		}
+	}
 }

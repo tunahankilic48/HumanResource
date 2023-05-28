@@ -89,7 +89,7 @@ namespace HumanResource.Presentation.Areas.SiteAdmin
         {
 
             ViewBag.Data = JsonConvert.SerializeObject(await _siteAdminService.CompaniesDistributionBySectors());
-            ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
+			ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
             return View();
         }
     }

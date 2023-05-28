@@ -1,296 +1,396 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - HumanResource.Presentation</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/HumanResource.Presentation.styles.css" asp-append-version="true" />
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>@ViewData["Title"] - HumanResource.Presentation</title>
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/HumanResource.Presentation.styles.css" asp-append-version="true" />
 
-    <link href="~/media/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-          rel="stylesheet">
-    <link href="~/media/datatables/css/dataTables.bootstrap4.min.css" rel="stylesheet">
-    <link href="~/media/bootstrap/bootstrap-datepicker.min.css" rel="stylesheet">
+	<link href="~/media/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+	<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+		  rel="stylesheet">
+	<link href="~/media/datatables/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+	<link href="~/media/bootstrap/bootstrap-datepicker.min.css" rel="stylesheet">
 
-    <!-- DataTables -->
-    <link rel="stylesheet" href="~/media1/css/dataTables.bootstrap4.min.css">
-    <link rel="stylesheet" href="~/media1/css/responsive.bootstrap4.min.css">
-    <link rel="stylesheet" href="~/media1/css/buttons.bootstrap4.min.css">
+	<!-- DataTables -->
+	<link rel="stylesheet" href="~/media1/css/dataTables.bootstrap4.min.css">
+	<link rel="stylesheet" href="~/media1/css/responsive.bootstrap4.min.css">
+	<link rel="stylesheet" href="~/media1/css/buttons.bootstrap4.min.css">
 
-    <!-- Custom styles for this template-->
-    <link href="~/media/css/sb-admin-2.min.css" rel="stylesheet">
+	<!-- Custom styles for this template-->
+	<link href="~/media/css/sb-admin-2.min.css" rel="stylesheet">
+	<script>
+		window.onload = function () {
+
+			var chart = new CanvasJS.Chart("chartContainer", {
+				theme: "light1", // "light1", "light2", "dark1", "dark2"
+				exportEnabled: true,
+				animationEnabled: true,
+				title: {
+					text: "Expense Distribution for Expense Type"
+				},
+				subtitles: [{
+					text: ""
+				}],
+				data: [{
+					type: "pie",
+					startAngle: 180,
+					toolTipContent: "<b>{label}</b>: {y}%",
+					showInLegend: "true",
+					legendText: "{label}",
+					indexLabel: "{label} - {y}%",
+					dataPoints: @Html.Raw(ViewBag.ExpenseType)
+													}]
+			});
+			chart.render();
+		}
+	</script>
 </head>
 <body id="page-top">
 
-    <!-- Page Wrapper -->
-    <div id="wrapper">
+	<!-- Page Wrapper -->
+	<div id="wrapper">
 
-        <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+		@if (User.IsInRole("Employee"))
+		{
+			<!-- Sidebar -->
+			<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
-            <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-                <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-laugh-wink"></i>@*ToDo : Şirket logosu konulabilir*@
-                </div>
-                <div class="sidebar-brand-text mx-3">Şirket Adı</div>@*ToDo : Şirket Adı konulabilir*@
-            </a>
+				<!-- Sidebar - Brand -->
+				<a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+					<div class="sidebar-brand-icon rotate-n-15">
+						<i class="fas fa-laugh-wink"></i>@*ToDo : Şirket logosu konulabilir*@
+					</div>
+					<div class="sidebar-brand-text mx-3">Şirket Adı</div>@*ToDo : Şirket Adı konulabilir*@
+				</a>
 
-            <!-- Divider -->
-            <hr class="sidebar-divider my-0">
+				<!-- Divider -->
+				<hr class="sidebar-divider my-0">
 
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item active ms-3">
-                <a class="nav-link" href="index.html">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Human Resources</span>@*ToDo : Uygulama adı konulabilir*@
-                </a>
-            </li>
+				<!-- Nav Item - Dashboard -->
+				<li class="nav-item active ms-3">
+					<a class="nav-link" href="index.html">
+						<i class="fas fa-fw fa-tachometer-alt"></i>
+						<span>Human Resources</span>@*ToDo : Uygulama adı konulabilir*@
+					</a>
+				</li>
 
-            <!-- Divider -->
-            <hr class="sidebar-divider">
+				<!-- Divider -->
+				<hr class="sidebar-divider">
 
-            <!-- Heading -->
-            <div class="sidebar-heading">
-            </div>
+				<!-- Heading -->
+				<div class="sidebar-heading">
+				</div>
 
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item ms-3">
-                <a class="nav-link collapsed" asp-area="personel" asp-controller="personel" asp-action="index">
-                    <i class="fa-solid fa-house-user"></i>
-                    <span>Home</span>
-                </a>
-            </li>
+				<!-- Nav Item - Pages Collapse Menu -->
+				<li class="nav-item ms-3">
+					<a class="nav-link collapsed" asp-area="personel" asp-controller="personel" asp-action="index">
+						<i class="fa-solid fa-house-user"></i>
+						<span>Home</span>
+					</a>
+				</li>
 
-            <li class="nav-item ms-3">
-                <a class="nav-link collapsed" asp-area="" asp-controller="account" asp-action="profile">
-                    <i class="fa-solid fa-address-card"></i>
-                    <span>Profile</span>
-                </a>
-            </li>
+				<li class="nav-item ms-3">
+					<a class="nav-link collapsed" asp-area="" asp-controller="account" asp-action="profile">
+						<i class="fa-solid fa-address-card"></i>
+						<span>Profile</span>
+					</a>
+				</li>
 
-            <li class="nav-item ms-3">
-                <a class="nav-link collapsed" asp-area="personel" asp-controller="personel" asp-action="leaves">
-                    <i class="fa-solid fa-person-through-window"></i>
-                    <span>Leaves</span>
-                </a>
-            </li>
+				<li class="nav-item ms-3">
+					<a class="nav-link collapsed" asp-area="personel" asp-controller="personel" asp-action="leaves">
+						<i class="fa-solid fa-person-through-window"></i>
+						<span>Leaves</span>
+					</a>
+				</li>
 
-            <!-- Nav Item - Utilities Collapse Menu -->
-            <li class="nav-item ms-3">
-                <a class="nav-link collapsed" asp-area="personel" asp-controller="personel" asp-action="advances">
-                    <i class="fa-solid fa-money-check-dollar"></i>
-                    <span>Advances</span>
-                </a>
-            </li>
+				<!-- Nav Item - Utilities Collapse Menu -->
+				<li class="nav-item ms-3">
+					<a class="nav-link collapsed" asp-area="personel" asp-controller="personel" asp-action="advances">
+						<i class="fa-solid fa-money-check-dollar"></i>
+						<span>Advances</span>
+					</a>
+				</li>
 
-            <!-- Nav Item - Utilities Collapse Menu -->
-            <li class="nav-item ms-3">
-                <a class="nav-link collapsed" asp-area="personel" asp-controller="personel" asp-action="expenses">
-                    <i class="fa-solid fa-money-check-dollar"></i>
-                    <span>Expenses</span>
-                </a>
-            </li>
-            @if (User.IsInRole("Employee"))
-            {
-                <li class="nav-item ms-3">
-                    <a class="nav-link collapsed" asp-area="personel" asp-controller="personel" asp-action="Employees">
-                        <i class="fa-solid fa-person-walking-luggage"></i>
-                        <span>Employees</span>
-                    </a>
-                </li>
+				<!-- Nav Item - Utilities Collapse Menu -->
+				<li class="nav-item ms-3">
+					<a class="nav-link collapsed" asp-area="personel" asp-controller="personel" asp-action="expenses">
+						<i class="fa-solid fa-money-check-dollar"></i>
+						<span>Expenses</span>
+					</a>
+				</li>
 
-            }
+				<li class="nav-item ms-3">
+					<a class="nav-link collapsed" asp-area="personel" asp-controller="personel" asp-action="Employees">
+						<i class="fa-solid fa-person-walking-luggage"></i>
+						<span>Employees</span>
+					</a>
+				</li>
+			</ul>
+		}
 
-            @if (User.IsInRole("CompanyManager"))
-            {
-                <li class="nav-item ms-3">
-                    <a class="nav-link collapsed" asp-area="CompanyManager" asp-controller="companymanager" asp-action="Employees">
-                        <i class="fa-solid fa-person-walking-luggage"></i>
-                        <span>Employees</span>
-                    </a>
-                </li>
+		@if (User.IsInRole("CompanyManager"))
+		{
+			<!-- Sidebar -->
+			<ul class="navbar-nav bg-gradient-info sidebar sidebar-dark accordion" id="accordionSidebar">
 
-                <li class="nav-item ms-3">
-                    <a class="nav-link collapsed" asp-area="CompanyManager" asp-controller="companymanager" asp-action="LeaveRequests">
-                        <i class="fa-solid fa-check"></i>
-                        <span>Leave Requests</span>
-                    </a>
-                </li>      
-                
-                <li class="nav-item ms-3">
-                    <a class="nav-link collapsed" asp-area="CompanyManager" asp-controller="companymanager" asp-action="AdvanceRequests">
-                        <i class="fa-solid fa-check"></i>
-                        <span>Advance Requests</span>
-                    </a>
-                </li>               
-                
-                <li class="nav-item ms-3">
-                    <a class="nav-link collapsed" asp-area="CompanyManager" asp-controller="companymanager" asp-action="ExpenseRequests">
-                        <i class="fa-solid fa-check"></i>
-                        <span>Expense Requests</span>
-                    </a>
-                </li>
+				<!-- Sidebar - Brand -->
+				<a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+					<div class="sidebar-brand-icon rotate-n-15">
+						<i class="fas fa-laugh-wink"></i>@*ToDo : Şirket logosu konulabilir*@
+					</div>
+					<div class="sidebar-brand-text mx-3">Şirket Adı</div>@*ToDo : Şirket Adı konulabilir*@
+				</a>
 
-                <li class="nav-item ms-3">
-                    <a class="nav-link collapsed" asp-area="CompanyManager" asp-controller="company" asp-action="company">
-                        <i class="fa-solid fa-building"></i>
-                        <span>Company</span>
-                    </a>
-                </li>
+				<!-- Divider -->
+				<hr class="sidebar-divider my-0">
 
-                <li class="nav-item ms-3">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                       aria-expanded="true" aria-controls="collapseTwo">
-                        <i class="fas fa-fw fa-cog"></i>
-                        <span>Definitions</span>
-                    </a>
-                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" asp-area="CompanyManager" asp-controller="companymanager" asp-action="departments">Departments</a>
-                            <a class="collapse-item" asp-area="CompanyManager" asp-controller="companymanager" asp-action="titles">Titles</a>
-                        </div>
-                    </div>
-                </li>
+				<!-- Nav Item - Dashboard -->
+				<li class="nav-item active ms-3">
+					<a class="nav-link" href="index.html">
+						<i class="fas fa-fw fa-tachometer-alt"></i>
+						<span>Human Resources</span>@*ToDo : Uygulama adı konulabilir*@
+					</a>
+				</li>
 
-            }
+				<!-- Divider -->
+				<hr class="sidebar-divider">
+
+				<!-- Heading -->
+				<div class="sidebar-heading">
+				</div>
+
+				<!-- Nav Item - Pages Collapse Menu -->
+				<li class="nav-item ms-3">
+					<a class="nav-link collapsed" asp-area="personel" asp-controller="personel" asp-action="index">
+						<i class="fa-solid fa-house-user"></i>
+						<span>Home</span>
+					</a>
+				</li>
+
+				<li class="nav-item ms-3">
+					<a class="nav-link collapsed" asp-area="" asp-controller="account" asp-action="profile">
+						<i class="fa-solid fa-address-card"></i>
+						<span>Profile</span>
+					</a>
+				</li>
+
+				<li class="nav-item ms-3">
+					<a class="nav-link collapsed" asp-area="personel" asp-controller="personel" asp-action="leaves">
+						<i class="fa-solid fa-person-through-window"></i>
+						<span>Leaves</span>
+					</a>
+				</li>
+
+				<!-- Nav Item - Utilities Collapse Menu -->
+				<li class="nav-item ms-3">
+					<a class="nav-link collapsed" asp-area="personel" asp-controller="personel" asp-action="advances">
+						<i class="fa-solid fa-money-check-dollar"></i>
+						<span>Advances</span>
+					</a>
+				</li>
+
+				<!-- Nav Item - Utilities Collapse Menu -->
+				<li class="nav-item ms-3">
+					<a class="nav-link collapsed" asp-area="personel" asp-controller="personel" asp-action="expenses">
+						<i class="fa-solid fa-money-check-dollar"></i>
+						<span>Expenses</span>
+					</a>
+				</li>
+				<li class="nav-item ms-3">
+					<a class="nav-link collapsed" asp-area="CompanyManager" asp-controller="companymanager" asp-action="Employees">
+						<i class="fa-solid fa-person-walking-luggage"></i>
+						<span>Employees</span>
+					</a>
+				</li>
+
+				<li class="nav-item ms-3">
+					<a class="nav-link collapsed" asp-area="CompanyManager" asp-controller="companymanager" asp-action="LeaveRequests">
+						<i class="fa-solid fa-check"></i>
+						<span>Leave Requests</span>
+					</a>
+				</li>
+
+				<li class="nav-item ms-3">
+					<a class="nav-link collapsed" asp-area="CompanyManager" asp-controller="companymanager" asp-action="AdvanceRequests">
+						<i class="fa-solid fa-check"></i>
+						<span>Advance Requests</span>
+					</a>
+				</li>
+
+				<li class="nav-item ms-3">
+					<a class="nav-link collapsed" asp-area="CompanyManager" asp-controller="companymanager" asp-action="ExpenseRequests">
+						<i class="fa-solid fa-check"></i>
+						<span>Expense Requests</span>
+					</a>
+				</li>
+
+				<li class="nav-item ms-3">
+					<a class="nav-link collapsed" asp-area="CompanyManager" asp-controller="company" asp-action="company">
+						<i class="fa-solid fa-building"></i>
+						<span>Company</span>
+					</a>
+				</li>
+
+				<li class="nav-item ms-3">
+					<a class="nav-link collapsed" asp-area="CompanyManager" asp-controller="companymanager" asp-action="DashboardExpenseType">
+						<i class="fa-solid fa-house-user"></i>
+						<span>Dashboard</span>
+					</a>
+				</li>
+
+				<li class="nav-item ms-3">
+					<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+				   aria-expanded="true" aria-controls="collapseTwo">
+						<i class="fas fa-fw fa-cog"></i>
+						<span>Definitions</span>
+					</a>
+					<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+						<div class="bg-white py-2 collapse-inner rounded">
+							<a class="collapse-item" asp-area="CompanyManager" asp-controller="companymanager" asp-action="departments">Departments</a>
+							<a class="collapse-item" asp-area="CompanyManager" asp-controller="companymanager" asp-action="titles">Titles</a>
+						</div>
+					</div>
+				</li>
+			</ul>
+
+		}
 
 
 
-        </ul>
-        <!-- End of Sidebar -->
-        <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
 
-            <!-- Main Content -->
-            <div id="content">
+		<!-- End of Sidebar -->
+		<!-- Content Wrapper -->
+		<div id="content-wrapper" class="d-flex flex-column">
 
-                <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+			<!-- Main Content -->
+			<div id="content">
 
-                    <!-- Sidebar Toggle (Topbar) -->
-                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                        <i class="fa fa-bars"></i>
-                    </button>
+				<!-- Topbar -->
+				<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
-                    <!-- Topbar Navbar -->
-                    <ul class="navbar-nav ml-auto">
+					<!-- Sidebar Toggle (Topbar) -->
+					<button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+						<i class="fa fa-bars"></i>
+					</button>
 
-                        <div class="topbar-divider d-none d-sm-block"></div>
-                      
-                        <!-- Nav Item - User Information -->
-                        <li class="nav-item d-flex">
-                            <a class="nav-link" asp-area="" asp-controller="account" asp-action="profile">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600">@((ViewBag.Personel).FullName)</span>
-                                <img class="img-profile rounded-circle"
-                                     src="@((ViewBag.Personel).Image)">
+					<!-- Topbar Navbar -->
+					<ul class="navbar-nav ml-auto">
 
-                            </a>
-                            
-                        </li>
-                        <li class="nav-item d-flex">
-                            <a class="nav-link " asp-area="" asp-controller="account" asp-action="logout">
-                                <span class="mr-2 d-none d-lg-inline text-white bg-primary btn-sm">Logout</span>
-                            </a>
+						<div class="topbar-divider d-none d-sm-block"></div>
 
-                        </li>
+						<!-- Nav Item - User Information -->
+						<li class="nav-item d-flex">
+							<a class="nav-link" asp-area="" asp-controller="account" asp-action="profile">
+								<span class="mr-2 d-none d-lg-inline text-gray-600">@((ViewBag.Personel).FullName)</span>
+								<img class="img-profile rounded-circle"
+									 src="@((ViewBag.Personel).Image)">
 
-                    </ul>
+							</a>
 
-                </nav>
-                <!-- End of Topbar -->
-                <!-- Begin Page Content -->
-                <div class="container-fluid">
+						</li>
+						<li class="nav-item d-flex">
+							<a class="nav-link " asp-area="" asp-controller="account" asp-action="logout">
+								<span class="mr-2 d-none d-lg-inline text-white bg-primary btn-sm">Logout</span>
+							</a>
 
-                    @RenderBody()
+						</li>
 
-                </div>
-                <!-- /.container-fluid -->
+					</ul>
 
-            </div>
-            <!-- End of Main Content -->
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2021</span>
-                    </div>
-                </div>
-            </footer>
-            <!-- End of Footer -->
+				</nav>
+				<!-- End of Topbar -->
+				<!-- Begin Page Content -->
+				<div class="container-fluid">
 
-        </div>
-        <!-- End of Content Wrapper -->
+					@RenderBody()
 
-    </div>
-    <!-- End of Page Wrapper -->
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
+				</div>
+				<!-- /.container-fluid -->
 
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
-                </div>
-            </div>
-        </div>
-    </div>
+			</div>
+			<!-- End of Main Content -->
+			<!-- Footer -->
+			<footer class="sticky-footer bg-white">
+				<div class="container my-auto">
+					<div class="copyright text-center my-auto">
+						<span>Copyright &copy; Your Website 2021</span>
+					</div>
+				</div>
+			</footer>
+			<!-- End of Footer -->
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/media/jquery/jquery.min.js"></script>
-    <script src="~/media/bootstrap/bootstrap.bundle.min.js"></script>
+		</div>
+		<!-- End of Content Wrapper -->
 
-    <!-- Core plugin JavaScript-->
-    <script src="~/media/jquery/jquery.easing.min.js"></script>
+	</div>
+	<!-- End of Page Wrapper -->
+	<!-- Scroll to Top Button-->
+	<a class="scroll-to-top rounded" href="#page-top">
+		<i class="fas fa-angle-up"></i>
+	</a>
 
-    <!-- Custom scripts for all pages-->
-    <script src="~/media/js/sb-admin-2.min.js"></script>
-    <script src="~/media/datatables/js/jquery.dataTables.min.js"></script>
-    <script src="~/media/datatables/js/dataTables.bootstrap4.min.js"></script>
-    <script src="~/media/datatables/js/datatables-demo.js"></script>
+	<!-- Logout Modal-->
+	<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+		 aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+					<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+				<div class="modal-footer">
+					<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+					<a class="btn btn-primary" href="login.html">Logout</a>
+				</div>
+			</div>
+		</div>
+	</div>
 
-    <!-- Page level plugins -->
-    <script src="~/media/js/Chart.min.js"></script>
+	<!-- Bootstrap core JavaScript-->
+	<script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/media/jquery/jquery.min.js"></script>
+	<script src="~/media/bootstrap/bootstrap.bundle.min.js"></script>
 
-    <!-- DataTables  & Plugins -->
-    <script src="~/media1/js/jquery.dataTables.min.js"></script>
-    <script src="~/media1/js/dataTables.bootstrap4.min.js"></script>
-    <script src="~/media1/js/dataTables.responsive.min.js"></script>
-    <script src="~/media1/js/responsive.bootstrap4.min.js"></script>
-    <script src="~/media1/js/dataTables.buttons.min.js"></script>
-    <script src="~/media1/js/buttons.bootstrap4.min.js"></script>
-    <script src="~/media1/js/jszip.min.js"></script>
-    <script src="~/media1/js/pdfmake.min.js"></script>
-    <script src="~/media1/js/vfs_fonts.js"></script>
-    <script src="~/media1/js/buttons.html5.min.js"></script>
-    <script src="~/media1/js/buttons.print.min.js"></script>
-    <script src="~/media1/js/buttons.colVis.min.js"></script>
-    <!-- AdminLTE App -->
+	<!-- Core plugin JavaScript-->
+	<script src="~/media/jquery/jquery.easing.min.js"></script>
 
-    <!-- Page level custom scripts -->
-    <script src="~/media/js/chart-area-demo.js"></script>
-    <script src="~/media/js/chart-pie-demo.js"></script>
-    <script src="~/media/bootstrap/bootstrap-datepicker.min.js"></script>
-    <script src="https://kit.fontawesome.com/40d871c6c3.js" crossorigin="anonymous"></script>
+	<!-- Custom scripts for all pages-->
+	<script src="~/media/js/sb-admin-2.min.js"></script>
+	<script src="~/media/datatables/js/jquery.dataTables.min.js"></script>
+	<script src="~/media/datatables/js/dataTables.bootstrap4.min.js"></script>
+	<script src="~/media/datatables/js/datatables-demo.js"></script>
 
-    @await RenderSectionAsync("Scripts", required: false)
+	<!-- Page level plugins -->
+	<script src="~/media/js/Chart.min.js"></script>
+
+	<!-- DataTables  & Plugins -->
+	<script src="~/media1/js/jquery.dataTables.min.js"></script>
+	<script src="~/media1/js/dataTables.bootstrap4.min.js"></script>
+	<script src="~/media1/js/dataTables.responsive.min.js"></script>
+	<script src="~/media1/js/responsive.bootstrap4.min.js"></script>
+	<script src="~/media1/js/dataTables.buttons.min.js"></script>
+	<script src="~/media1/js/buttons.bootstrap4.min.js"></script>
+	<script src="~/media1/js/jszip.min.js"></script>
+	<script src="~/media1/js/pdfmake.min.js"></script>
+	<script src="~/media1/js/vfs_fonts.js"></script>
+	<script src="~/media1/js/buttons.html5.min.js"></script>
+	<script src="~/media1/js/buttons.print.min.js"></script>
+	<script src="~/media1/js/buttons.colVis.min.js"></script>
+	<!-- AdminLTE App -->
+	<!-- Page level custom scripts -->
+	<script src="~/media/js/chart-area-demo.js"></script>
+	<script src="~/media/js/chart-pie-demo.js"></script>
+	<script src="~/media/bootstrap/bootstrap-datepicker.min.js"></script>
+	<script src="https://kit.fontawesome.com/40d871c6c3.js" crossorigin="anonymous"></script>
+
+	@await RenderSectionAsync("Scripts", required: false)
 </body>
 
 </html>
