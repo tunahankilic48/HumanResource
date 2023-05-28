@@ -302,6 +302,10 @@ namespace HumanResource.Application.Services.CompanyManagerService
             {
                 await _userManager.AddToRoleAsync(user, "Manager");
             }
+            if (model.IsEmployee && (await IsManager(user.UserName)))
+            {
+                await _userManager.RemoveFromRoleAsync(user, "Manager");
+            }
 
 
             if (model.DistrictId != 0 && model.CityId != 0 && model.CountryId != 0)
