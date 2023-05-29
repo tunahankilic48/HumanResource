@@ -54,7 +54,7 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th class="text-center">@Html.DisplayNameFor(x=>x.Id)</th>
+                            <th hidden class="text-center">@Html.DisplayNameFor(x=>x.Id)</th>
                             <th class="text-center">@Html.DisplayNameFor(x=>x.Name)</th>
                             <th></th>
                         </tr>
@@ -64,7 +64,7 @@
                         {
 
                             <tr class="align-middle">
-                                <td class="text-center align-middle" type="date">@item.Id</td>
+                                <td hidden class="text-center align-middle" type="date">@item.Id</td>
                                 <td class="text-center align-middle" type="date">@item.Name</td>
                                 <td class="d-flex justify-content-around align-middle">
                                     @*<a class="btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#updateLeaveModal" data-id="@item.Id">İzni Güncelle</a>*@
