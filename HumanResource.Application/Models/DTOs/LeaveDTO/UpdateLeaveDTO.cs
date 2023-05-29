@@ -30,6 +30,7 @@ namespace HumanResource.Application.Models.DTOs.LeaveDTO
 
         [Required(ErrorMessage = "Leave period cannot be null.")]
         [Display(Name = "Leave Period")]
+        [Range(0, 731.99, ErrorMessage = "Please enter the total number of days off!")]
         public string LeavePeriod { get; set; }
 
         [Required(ErrorMessage = "Leave Type cannot be null.")]
