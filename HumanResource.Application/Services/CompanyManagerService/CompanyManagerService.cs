@@ -2,6 +2,7 @@
 using HumanResource.Application.Models.DTOs.CompanyDTO;
 using HumanResource.Application.Models.DTOs.CompanyManagerDTO;
 using HumanResource.Application.Models.VMs.CompanyManagerVMs;
+using HumanResource.Application.Models.VMs.ExpenseVM;
 using HumanResource.Application.Models.VMs.PersonelVM;
 using HumanResource.Application.Services.PersonelService;
 using HumanResource.Domain.Entities;
@@ -492,5 +493,40 @@ namespace HumanResource.Application.Services.CompanyManagerService
 
             return leaveTypeVM;
         }
-    }
+		public async Task<List<ExpenseTypePieVM>> ExpensesDistributionByExpensesType()
+		{
+			List<ExpenseTypePieVM> ExpensesDistributionByExpensesType = new List<ExpenseTypePieVM>();
+			var expenses = await _expenseRepository.GetFilteredList(
+				select: x => new ExpenseTypeVM()
+				{
+					PersonelName = x.User.UserName,
+					ExpenseTypeId = x.ExpenseTypeId
+				},
+				where: null,
+				orderby: x => x.OrderBy(x => x.ExpenseTypeId)
+				);
+			double expenseCount = expenses.Count;
+			for (int i = 1; i <= Enum.GetValues(typeof(ExpenseTypes)).Length; i++)
+			{
+				var tempExpenses = await _expenseRepository.GetFilteredList(
+				select: x => new ExpenseTypeVM()
+				{
+					PersonelName = x.User.UserName,
+					ExpenseTypeId = x.ExpenseTypeId,
+					ExpenseTypeName = x.ExpenseType.Name
+				},
+				where: x => x.ExpenseTypeId == i,
+				orderby: null,
+				include: x => x.Include(x => x.ExpenseType)
+				);
+
+				if (tempExpenses.Count != 0)
+				{
+					double ratio = (tempExpenses.Count / expenseCount) * 100;
+					ExpensesDistributionByExpensesType.Add(new ExpenseTypePieVM($"{tempExpenses[0].PersonelName} ({tempExpenses.Count})", Math.Round(ratio, 2)));
+				}
+			}
+			return ExpensesDistributionByExpensesType;
+		}
+	}
 }
