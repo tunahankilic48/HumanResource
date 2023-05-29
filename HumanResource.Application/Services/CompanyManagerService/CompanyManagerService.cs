@@ -495,7 +495,7 @@ namespace HumanResource.Application.Services.CompanyManagerService
 		{
 			List<ExpenseTypePieVM> ExpensesDistributionByExpensesType = new List<ExpenseTypePieVM>();
 			var expenses = await _expenseRepository.GetFilteredList(
-				select: x => new ExpenseTypeVM()
+				select: x => new ExpenseTypePie2VM()
 				{
 					PersonelName = x.User.UserName,
 					ExpenseTypeId = x.ExpenseTypeId
@@ -507,7 +507,7 @@ namespace HumanResource.Application.Services.CompanyManagerService
 			for (int i = 1; i <= Enum.GetValues(typeof(ExpenseTypes)).Length; i++)
 			{
 				var tempExpenses = await _expenseRepository.GetFilteredList(
-				select: x => new ExpenseTypeVM()
+				select: x => new ExpenseTypePie2VM()
 				{
 					PersonelName = x.User.UserName,
 					ExpenseTypeId = x.ExpenseTypeId,
