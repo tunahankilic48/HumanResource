@@ -27,13 +27,14 @@ namespace HumanResource.Presentation.Areas.CompanyManager.Controllers
 			_accountService = accountService;
 		}
 
-		public async Task<IActionResult> Company(Guid id)
+		public async Task<IActionResult> Company()
         {
-            ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
+            var personel = await _personelService.GetPersonel(User.Identity.Name);
+            ViewBag.Personel = personel;
 			ViewBag.Cities = new SelectList(await _addressService.GetCities(), "Id", "Name");
 			ViewBag.Districts = new SelectList(await _addressService.GetDistricts(), "Id", "Name");
-			id = await _personelService.GetPersonelId(User.Identity.Name);
-            return View(await _companyManagerService.GetCompany(id));
+			ViewBag.Countries = new SelectList(await _addressService.GetCountries(), "Id", "Name");
+            return View(await _companyManagerService.GetCompany(personel.CompanyId));
         }
 
         [HttpPost, ValidateAntiForgeryToken]

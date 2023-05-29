@@ -4,7 +4,6 @@ namespace HumanResource.Application.Models.VMs.CompanyManagerVMs
 {
     public class CompanyManagerRegisterRequestsVM
     {
-        public Guid UserId { get; set; }
         public int? CompanyId { get; set; }
 
         [Display(Name = "Company Name")]

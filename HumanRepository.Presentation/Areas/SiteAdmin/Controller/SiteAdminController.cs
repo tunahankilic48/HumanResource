@@ -68,7 +68,7 @@ namespace HumanResource.Presentation.Areas.SiteAdmin
         }
 
 
-        public async Task<IActionResult> Details(Guid id)
+        public async Task<IActionResult> Details(int id)
         {
             ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
             return View(await _siteAdminService.GetCompanyDetails(id));
@@ -76,16 +76,8 @@ namespace HumanResource.Presentation.Areas.SiteAdmin
         public async Task<IActionResult> List()
         {
             ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
-            var companies = await _siteAdminService.GetCompanies();
-            return View(companies);
+            return View(await _siteAdminService.GetCompanies());
         }
-
-        public async Task<IActionResult> GetDetails(string companyName)
-        {
-            ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
-            return View(await _siteAdminService.GetCompanyListDetails(companyName));
-        }
-
         public async Task<IActionResult> Dashboard()
         {
             ViewBag.Data = JsonConvert.SerializeObject(await _siteAdminService.CompaniesDistributionBySectors());

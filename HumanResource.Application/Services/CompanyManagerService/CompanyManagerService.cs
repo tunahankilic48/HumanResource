@@ -419,29 +419,27 @@ namespace HumanResource.Application.Services.CompanyManagerService
             return personelAdvanceRequests;
         }
 
-        public async Task<UpdateCompanyDTO> GetCompany(Guid id)
+        public async Task<UpdateCompanyDTO> GetCompany(int? id)
         {
-            UpdateCompanyDTO result = await _appUserRepository.GetFilteredFirstOrDefault(
+            UpdateCompanyDTO result = await _companyRepository.GetFilteredFirstOrDefault(
             select: x => new UpdateCompanyDTO
             {
-                UserId = x.Id,
-                CompanyId = x.Company.Id,
-                CompanyName = x.Company.CompanyName,
-                TaxNumber = x.Company.TaxNumber,
-                TaxOfficeName = x.Company.TaxOfficeName,
-                PhoneNumber = x.Company.PhoneNumber,
-                NumberOfEmployee = x.Company.NumberOfEmployee,
-                CityId = x.Company.Address.District.City.Id,
-                DistrictId = x.Company.Address.District.Id,
-                AddressDescription = x.Company.Address.Description,
-                ManagerName = x.FirstName + " " + x.LastName,
-                ImagePath = x.Company.ImagePath,
-
-
+                CompanyId = x.Id,
+                CompanyName = x.CompanyName,
+                TaxNumber = x.TaxNumber,
+                TaxOfficeName = x.TaxOfficeName,
+                PhoneNumber = x.PhoneNumber,
+                NumberOfEmployee = x.NumberOfEmployee,
+                CountryId = x.Address.District.City.CountryId,
+                CityId = x.Address.District.CityId,
+                DistrictId = x.Address.DistrictId,
+                AddressDescription = x.Address.Description,
+                ManagerName = x.CompanyRepresentative.FirstName + " " + x.CompanyRepresentative.LastName,
+                ImagePath = x.ImagePath
             },
             where: x => x.Id == id,
             orderby: null,
-            include: x => x.Include(x => x.Address).Include(x => x.Address.District).Include(x => x.Company)
+            include: x => x.Include(x => x.Address).Include(x => x.Address.District).Include(x => x.Address.District.City).Include(x=>x.CompanyRepresentative)
             );
             return result;
         }

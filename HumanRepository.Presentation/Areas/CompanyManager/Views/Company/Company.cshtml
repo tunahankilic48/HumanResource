@@ -41,9 +41,6 @@
 	<div class="row d-flex justify-content-center mt-3">
 		<input type="hidden" asp-for="CompanyId" />
 		<input type="hidden" asp-for="StatuId" />
-		<input type="hidden" asp-for="UserId" />
-		
-		
 
 		<div class="col-lg-10">
 			<h1>Update Company Information</h1>
@@ -94,20 +91,26 @@
 				</select>
 				<span class="text-danger" asp-validation-for="NumberOfEmployee"></span>
 			</div>
+
+			<div class="form-group">
+				<label asp-for="CountryId" class="form-label">@Html.DisplayNameFor(x=>x.CountryId)</label>
+				<select asp-for="CountryId" class="custom-select" asp-items="@ViewBag.Cities">
+				</select>
+				<span class="text-danger" asp-validation-for="CountryId"></span>
+			</div>
+			
+			<div class="form-group">
+				<label asp-for="CityId" class="form-label">@Html.DisplayNameFor(x=>x.CityId)</label>
+				<select asp-for="CityId" class="custom-select" asp-items="@ViewBag.Countries">
+				</select>
+				<span class="text-danger" asp-validation-for="CityId"></span>
+			</div>
 			
 			<div class="form-group">
 				<label asp-for="DistrictId" class="form-label">@Html.DisplayNameFor(x=>x.DistrictId)</label>
 				<select asp-for="DistrictId" class="custom-select" asp-items="@ViewBag.Districts">
-					<option>@Model.DistrictId</option>
 				</select>
 				<span class="text-danger" asp-validation-for="DistrictId"></span>
-			</div>
-			<div class="form-group">
-				<label asp-for="CityId" class="form-label">@Html.DisplayNameFor(x=>x.CityId)</label>
-				<select asp-for="CityId" class="custom-select" asp-items="@ViewBag.Cities">
-					<option>@Model.CityId</option>
-				</select>
-				<span class="text-danger" asp-validation-for="CityId"></span>
 			</div>
 
 			<div class="form-group">

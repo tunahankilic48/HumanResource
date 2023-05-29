@@ -8,7 +8,6 @@ namespace HumanResource.Application.Models.DTOs.CompanyDTO
 {
     public class UpdateCompanyDTO
     {
-        public Guid UserId { get; set; }
         [Display(Name = "Company Id")]
         public int CompanyId { get; set; }
 
@@ -36,12 +35,14 @@ namespace HumanResource.Application.Models.DTOs.CompanyDTO
         [Display(Name = "Number Of Employee")]
         public string NumberOfEmployee { get; set; }
         public DateTime ModifiedDate => DateTime.Now;
+        [Display(Name = "Country")]
+        public int? CountryId { get; set; }
 
         [Display(Name = ("City"))]
-        public int CityId { get; set; }
+        public int? CityId { get; set; }
 
         [Display(Name = ("District"))]
-        public int DistrictId { get; set; }
+        public int? DistrictId { get; set; }
 
         [Display(Name = ("Address Description"))]
         public string? AddressDescription { get; set; }

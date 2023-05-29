@@ -24,6 +24,8 @@ namespace HumanResource.Application.Models.VMs.CompanyVM
 
         [Display(Name = "Number Of Employee")]
         public string NumberOfEmployee { get; set; }
+        [Display(Name = "Country")]
+        public string Country { get; set; }
 
         [Display(Name = ("City"))]
         public string? City { get; set; }
@@ -33,6 +35,8 @@ namespace HumanResource.Application.Models.VMs.CompanyVM
 
         [Display(Name = ("Address Description"))]
         public string AddressDescription { get; set; }
+        [ValidateNever]
+        public string Statu { get; set; }
 
 
         [ValidateNever]

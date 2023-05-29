@@ -5,7 +5,6 @@ using HumanResource.Domain.Entities;
 using HumanResource.Domain.Enums;
 using HumanResource.Domain.Repositories;
 using HumanResource.Domain.Repositries;
-using HumanResource.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -28,63 +27,64 @@ namespace HumanResource.Application.Services.SiteAdminService
         public async Task<List<CompanyVM>> GetCompanies()
         {
             var company = await _companyRepository.GetFilteredList(
-     select: x => new CompanyVM()
-     {
-         UserId = x.CompanyRepresentativeId,
-         CompanyId = x.Id,
-         CompanyName = x.CompanyName,
-         FullName = x.CompanyRepresentative.FirstName + " " + x.CompanyRepresentative.LastName,
-         PhoneNumber = x.CompanyRepresentative.PhoneNumber,
-         Email = x.CompanyRepresentative.Email,
-         Statu = x.Statu.Name,
-     },
-     where: null,
-     orderby: x => x.OrderByDescending(x => x.CompanyName),
-     include: x => x.Include(x => x.Statu).Include(x => x.CompanyRepresentative)
-     );
+                 select: x => new CompanyVM()
+                 {
+                     UserId = x.CompanyRepresentativeId,
+                     CompanyId = x.Id,
+                     CompanyName = x.CompanyName,
+                     FullName = x.CompanyRepresentative.FirstName + " " + x.CompanyRepresentative.LastName,
+                     PhoneNumber = x.CompanyRepresentative.PhoneNumber,
+                     Email = x.CompanyRepresentative.Email,
+                     Statu = x.Statu.Name,
+                 },
+                 where: null,
+                 orderby: x => x.OrderByDescending(x => x.CompanyName),
+                 include: x => x.Include(x => x.Statu).Include(x => x.CompanyRepresentative)
+                 );
 
             return company;
         }
 
         public async Task<List<CompanyManagerRegisterRequestsVM>> GetCompanyManagerRequests()
         {
-            var companies = await _appUserRepository.GetFilteredList(
+            var companies = await _companyRepository.GetFilteredList(
                  select: x => new CompanyManagerRegisterRequestsVM()
                  {
-                     UserId = x.Id,
-                     CompanyId = x.CompanyId,
-                     CompanyName = x.Company.CompanyName,
-                     FullName = x.FirstName + " " + x.LastName,
+                     CompanyId = x.Id,
+                     CompanyName = x.CompanyName,
+                     FullName = x.CompanyRepresentative.FirstName + " " + x.CompanyRepresentative.LastName,
                      PhoneNumber = x.PhoneNumber,
-                     Email = x.Email,
-                     Sector = x.Company.CompanySector.Name,
+                     Email = x.CompanyRepresentative.Email,
+                     Sector = x.CompanySector.Name,
                  },
-                 where: x => x.Company.StatuId == Status.Awating_Approval.GetHashCode(),
+                 where: x => x.StatuId == Status.Awating_Approval.GetHashCode(),
                  orderby: x => x.OrderByDescending(x => x.CreatedDate),
-                 include: x => x.Include(x => x.Company)
+                 include: x => x.Include(x => x.CompanyRepresentative).Include(x=>x.CompanySector)
                  );
             return companies;
         }
-        public async Task<CompanyDetailsVM> GetCompanyDetails(Guid id)
+        public async Task<CompanyDetailsVM> GetCompanyDetails(int? id)
         {
-            var company = await _appUserRepository.GetFilteredFirstOrDefault(
+            var company = await _companyRepository.GetFilteredFirstOrDefault(
               select: x => new CompanyDetailsVM()
               {
-                  Id = x.Company.Id,
-                  FullName = x.FirstName + " " + x.LastName,
-                  CompanyName = x.Company.CompanyName,
-                  TaxNumber = x.Company.TaxNumber,
-                  TaxOfficeName = x.Company.TaxOfficeName,
-                  PhoneNumber = x.Company.PhoneNumber,
-                  NumberOfEmployee = x.Company.NumberOfEmployee,
-                  City = x.Company.Address.District.City.Name,
-                  District = x.Company.Address.District.Name,
-                  AddressDescription = x.Company.Address.Description,
+                  Id = x.Id,
+                  FullName = x.CompanyRepresentative.FirstName + " " + x.CompanyRepresentative.LastName,
+                  CompanyName = x.CompanyName,
+                  TaxNumber = x.TaxNumber,
+                  TaxOfficeName = x.TaxOfficeName,
+                  PhoneNumber = x.PhoneNumber,
+                  NumberOfEmployee = x.NumberOfEmployee,
+                  Country = x.Address.District.City.Country.Name,
+                  City = x.Address.District.City.Name,
+                  District = x.Address.District.Name,
+                  AddressDescription = x.Address.Description,
+                  Statu = x.Statu.Name
 
               },
-              where: x => x.Company.StatuId == Status.Awating_Approval.GetHashCode() && x.Id == id,
+              where: x => x.Id == id,
               orderby: null,
-              include: x => x.Include(x => x.Company).Include(x => x.Company.Address).Include(x => x.Company.Address.District)
+              include: x => x.Include(x => x.CompanyRepresentative).Include(x => x.Address).Include(x => x.Address.District).Include(x=>x.Statu).Include(x => x.Address.District.City).Include(x => x.Address.District.City.Country)
               );
             return company;
         }
@@ -103,29 +103,7 @@ namespace HumanResource.Application.Services.SiteAdminService
             var user = await _appUserRepository.GetDefault(x => x.CompanyId == company.Id);
             return new ProcessVM() { Result = await _companyRepository.Update(company), UserEmail = user.Email };
         }
-        public async Task<CompanyDetailsVM> GetCompanyListDetails(string companyName)
-        {
-            var company = await _appUserRepository.GetFilteredFirstOrDefault(
-              select: x => new CompanyDetailsVM()
-              {
-                  Id = x.Company.Id,
-                  CompanyName = x.Company.CompanyName,
-                  TaxNumber = x.Company.TaxNumber,
-                  TaxOfficeName = x.Company.TaxOfficeName,
-                  PhoneNumber = x.Company.PhoneNumber,
-                  NumberOfEmployee = x.Company.NumberOfEmployee,
-                  City = x.Company.Address.District.City.Name,
-                  District = x.Company.Address.District.Name,
-                  AddressDescription = x.Company.Address.Description,
-
-              },
-              where: x => x.Company.CompanyName == companyName,
-              orderby: null,
-              include: x => x.Include(x => x.Company).Include(x => x.Company.Address).Include(x => x.Company.Address.District)
-              );
-            return company;
-        }
-
+       
         public async Task<List<CompanySectorPieVM>> CompaniesDistributionBySectors()
         {
             List<CompanySectorPieVM> CompaniesDistributionBySectors = new List<CompanySectorPieVM>();
