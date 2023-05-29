@@ -15,7 +15,7 @@
 						<div class="col-lg-10">
 							<div class="form-group">
 								<label asp-for="ExpenseTypeId" class="form-label">@Html.DisplayNameFor(x=>x.ExpenseTypeId)</label>
-								<select asp-for="ExpenseTypeId" class="custom-select" asp-items="@Html.GetEnumSelectList<ExpenseTypeEnumVM>()">
+								<select asp-for="ExpenseTypeId" class="custom-select" asp-items="@ViewBag.ExpenseTypes">
 									<option>Please select a Expense Type</option>
 								</select>
 							</div>
@@ -23,13 +23,13 @@
 							<div class="form-group">
 								<label asp-for="ExpenseDate" class="form-label">Expense Date</label>
 								@*<input asp-for="ExpenseDate" class="form-control" data-date-end-date="0d" type="date" value="@DateTime.Now.ToString("yyyy.MM.DD")">*@
-								<input asp-for="ExpenseDate" class="form-control" data-provide="datepicker" data-date-end-date="0d" data-date-format="dd.mm.yyyy" type="text" value="@DateTime.Now.ToString("dd.mm.yyyy")">
+								<input asp-for="ExpenseDate" class="form-control" data-provide="datepicker" data-date-end-date="0d" data-date-format="dd.MM.yyyy" type="text" value="@DateTime.Now.ToString("dd.MM.yyyy")">
 								<span asp-validation-for="ExpenseDate"></span>
 							</div>
 							<div class="row">
-								<div class="form-group col-lg-6">
-									<label asp-for="Amount" class="form-label">Amount</label>
-									<input asp-for="Amount" class="form-control" pattern="\d*" type="text" placeholder="Amount">
+								<div class="form-group col-lg-6">							
+									<label asp-for="Amount" class="form-label">@Html.DisplayNameFor(x=>x.Amount)</label>
+									<input asp-for="Amount" class="form-control" type="text" placeholder="0" value="">
 									<span asp-validation-for="Amount"></span>
 								</div>
 

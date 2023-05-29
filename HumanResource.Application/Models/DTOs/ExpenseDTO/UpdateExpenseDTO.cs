@@ -8,12 +8,17 @@ namespace HumanResource.Application.Models.DTOs.ExpenseDTO
     {
         public int Id { get; set; }
         public Guid UserId { get; set; }
-        [EndDate]
+        [Display(Name = "Expense Date")]
+        [Required(ErrorMessage = "Expense date cannot be null.")]
+        [DataType(DataType.Date)]
         public DateTime ExpenseDate { get; set; }
         public DateTime Modified => DateTime.Now;
 
-        [Required(ErrorMessage = "Spend amount cannot be empty")]
-        [Display(Name = "Spending amount")]
+        [Required(ErrorMessage = "Amount field cannot be empty!")]
+        [Range(0, 99999.99, ErrorMessage = "Please enter between 0-99999.99!")]
+        //[RegularExpression(@"^\d+$", ErrorMessage = "No letters or symbols can be entered!")]
+        [Display(Name = "Amount")]
+        [Amount]
         public Decimal Amount { get; set; }
 
         [Required(ErrorMessage = "Description field cannot be null.")]

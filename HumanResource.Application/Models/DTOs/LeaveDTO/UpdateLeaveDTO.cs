@@ -28,6 +28,10 @@ namespace HumanResource.Application.Models.DTOs.LeaveDTO
         [DataType(DataType.Date)]
         public DateTime ReturnDate { get; set; }
 
+        [Required(ErrorMessage = "Leave period cannot be null.")]
+        [Display(Name = "Leave Period")]
+        public string LeavePeriod { get; set; }
+
         [Required(ErrorMessage = "Leave Type cannot be null.")]
         [Display(Name = "Leave Type")]
         public int LeaveTypeId { get; set; }

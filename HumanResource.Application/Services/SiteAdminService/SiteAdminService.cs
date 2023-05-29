@@ -6,6 +6,7 @@ using HumanResource.Domain.Enums;
 using HumanResource.Domain.Repositories;
 using HumanResource.Domain.Repositries;
 using HumanResource.Infrastructure.Repositories;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace HumanResource.Application.Services.SiteAdminService
@@ -15,33 +16,35 @@ namespace HumanResource.Application.Services.SiteAdminService
         private readonly ICompanyRepository _companyRepository;
         private readonly IMapper _mapper;
         private readonly IAppUserRepository _appUserRepository;
-        public SiteAdminService(ICompanyRepository companyRepository, IMapper mapper, IAppUserRepository appUserRepository)
+        private readonly UserManager<AppUser> _userManager;
+        public SiteAdminService(ICompanyRepository companyRepository, IMapper mapper, IAppUserRepository appUserRepository, UserManager<AppUser> userManager)
         {
             _companyRepository = companyRepository;
             _mapper = mapper;
             _appUserRepository = appUserRepository;
+            _userManager = userManager;
         }
 
         public async Task<List<CompanyVM>> GetCompanies()
         {
-            var companies = await _appUserRepository.GetFilteredList(
-                 select: x => new CompanyVM()
-                 {
-                     UserId = x.Id,
-                     CompanyId = x.CompanyId,
-                     CompanyName = x.Company.CompanyName,
-                     FullName = x.FirstName + " " + x.LastName,
-                     PhoneNumber = x.PhoneNumber,
-                     Email = x.Email,
-                     Statu = x.Company.Statu.Name,
-                 },
-                 where: x => x.Company.CompanyName != null,
-                 orderby: x => x.OrderByDescending(x => x.CreatedDate),
-                 include: x => x.Include(x => x.Statu) .Include(x => x.Company)
-                 );
-            return companies;
-        }
+            var company = await _companyRepository.GetFilteredList(
+     select: x => new CompanyVM()
+     {
+         UserId = x.CompanyRepresentativeId,
+         CompanyId = x.Id,
+         CompanyName = x.CompanyName,
+         FullName = x.CompanyRepresentative.FirstName + " " + x.CompanyRepresentative.LastName,
+         PhoneNumber = x.CompanyRepresentative.PhoneNumber,
+         Email = x.CompanyRepresentative.Email,
+         Statu = x.Statu.Name,
+     },
+     where: null,
+     orderby: x => x.OrderByDescending(x => x.CompanyName),
+     include: x => x.Include(x => x.Statu).Include(x => x.CompanyRepresentative)
+     );
 
+            return company;
+        }
 
         public async Task<List<CompanyManagerRegisterRequestsVM>> GetCompanyManagerRequests()
         {
@@ -53,7 +56,8 @@ namespace HumanResource.Application.Services.SiteAdminService
                      CompanyName = x.Company.CompanyName,
                      FullName = x.FirstName + " " + x.LastName,
                      PhoneNumber = x.PhoneNumber,
-                     Email= x.Email,
+                     Email = x.Email,
+                     Sector = x.Company.CompanySector.Name,
                  },
                  where: x => x.Company.StatuId == Status.Awating_Approval.GetHashCode(),
                  orderby: x => x.OrderByDescending(x => x.CreatedDate),
@@ -148,7 +152,7 @@ namespace HumanResource.Application.Services.SiteAdminService
                 orderby: null,
                 include: x => x.Include(x => x.CompanySector)
                 );
-                
+
                 if (tempCompanies.Count != 0)
                 {
                     double ratio = (tempCompanies.Count / companyCount) * 100;
@@ -167,6 +171,44 @@ namespace HumanResource.Application.Services.SiteAdminService
             return CompaniesDistributionBySectors;
         }
 
+        public async Task<List<CompanyStatuPieVM>> CompaniesDistributionByStatus()
+        {
+            List<CompanyStatuPieVM> CompaniesDistributionByStatus = new List<CompanyStatuPieVM>();
+            var companies = await _companyRepository.GetFilteredList(
+                select: x => new CompanyStatuVM()
+                {
+                    CompanyName = x.CompanyName,
+                    CompanyStatuId = x.StatuId
+                },
+                where: null,
+                orderby: x => x.OrderBy(x => x.StatuId)
+                );
+            double companyCount = companies.Count;
+            for (int i = 1; i <= Enum.GetValues(typeof(Status)).Length; i++)
+            {
+                var tempCompanies = await _companyRepository.GetFilteredList(
+                select: x => new CompanyStatuVM()
+                {
+                    CompanyName = x.CompanyName,
+                    CompanyStatuId = x.StatuId,
+                    CompanyStatuName = x.Statu.Name,
+                },
+                where: x => x.StatuId == i,
+                orderby: null,
+                include: x => x.Include(x => x.Statu)
+                );
+
+                if (tempCompanies.Count != 0)
+                {
+                    double ratio = (tempCompanies.Count / companyCount) * 100;
+                    CompaniesDistributionByStatus.Add(new CompanyStatuPieVM($"{tempCompanies[0].CompanyStatuName} ({tempCompanies.Count})", Math.Round(ratio, 2)));
+                }
+            }
+            return CompaniesDistributionByStatus;
+
+        }
         //To Do: 1 method kalacak cshtml tarafı düzeltilecek
+
+
     }
 }

@@ -36,6 +36,10 @@ namespace HumanResource.Application.Models.DTOs.CompanyManagerDTO
         [DataType(DataType.PhoneNumber)]
         public string PhoneNumber { get; set; }
 
+        [Display(Name = ("Country"))]
+        [Required(ErrorMessage = "Please select a country.")]
+        public int? CountryId { get; set; }
+
         [Display(Name = ("City"))]
         [Required(ErrorMessage = "Please select a city.")]
         public int? CityId { get; set; }
@@ -79,6 +83,8 @@ namespace HumanResource.Application.Models.DTOs.CompanyManagerDTO
         public int? TitleId { get; set; }
         [ValidateNever]
         public int CompanyId { get; set; }
+
+        public bool IsEmployee { get; set; }
 
         public DateTime CreatedDate => DateTime.Now;
         public int StatuId => Status.Active.GetHashCode();

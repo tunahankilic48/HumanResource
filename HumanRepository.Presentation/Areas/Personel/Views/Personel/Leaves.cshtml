@@ -52,6 +52,7 @@
                         <tr>
                             <th class="text-center">@Html.DisplayNameFor(x=>x.StartDate)</th>
                             <th class="text-center">@Html.DisplayNameFor(x=>x.EndDate)</th>
+                            <th class="text-center">@Html.DisplayNameFor(x=>x.LeavePeriod)</th>
                             <th class="text-center">@Html.DisplayNameFor(x=>x.ReturnDate)</th>
                             <th class="text-center">@Html.DisplayNameFor(x=>x.LeaveType)</th>
                             <th class="text-center">@Html.DisplayNameFor(x=>x.ManagerName)</th>
@@ -67,6 +68,7 @@
                             <tr class="align-middle">
                                 <td class="text-center align-middle" type="date">@item.StartDate</td>
                                 <td class="text-center align-middle" type="date">@item.EndDate</td>
+                                <td class="text-center align-middle" type="text">@item.LeavePeriod</td>
                                 <td class="text-center align-middle" type="date">@item.ReturnDate</td>
                                 <td class="text-center align-middle">@item.LeaveType</td>
                                 <td class="text-center align-middle" type="date">@item.ManagerName</td>
@@ -126,7 +128,7 @@
                 <form asp-action="delete" asp-controller="leave">
                     <input id="deleteLeaveInput" class="deleteLeave" type="hidden" name="id" />
                     <button id="delete" class="btn btn-danger m-2" type="submit">Delete</button>
-                    <a class="btn btn-primary m-2" asp-action="leaves" asp-controller="personel">Back to the List</a>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Back To The List</button>
                 </form>
             </div>
         </div>

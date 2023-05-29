@@ -15,6 +15,8 @@
 		public List<Title> Titles { get; set; }
 		public List<Expense> Expenses { get; set; }
 		public List<Company> Companies { get; set; }
+		public List<ExpenseType> ExpenseTypes { get; set; }
+		public List<LeaveType> LeaveTypes { get; set; }
 
 	}
 }

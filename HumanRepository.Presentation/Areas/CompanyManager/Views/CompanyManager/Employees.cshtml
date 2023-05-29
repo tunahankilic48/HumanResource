@@ -51,7 +51,7 @@
     <div class="ms-1 card shadow mb-1">
         <div class="card-body">
             <div class="table-responsive">
-                <table id="example1" class="table table-bordered" width=" 100%" cellspacing="0">
+                <table id="example1" class="table table-bordered" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th class="text-center">@Html.DisplayNameFor(x=>x.FullName)</th>
@@ -61,7 +61,7 @@
                             <th hidden class="text-center">@Html.DisplayNameFor(x=>x.Phone)</th>
                             <th hidden class="text-center">@Html.DisplayNameFor(x=>x.Email)</th>
                             <th hidden class="text-center">@Html.DisplayNameFor(x=>x.BirthDate)</th>
-                            
+
                             <th></th>
                         </tr>
                     </thead>
@@ -114,7 +114,7 @@
                 <form asp-action="delete" asp-controller="companymanager">
                     <input id="deleteEmployeeInput" class="deleteEmployee" type="hidden" name="id" />
                     <button id="delete" class="btn btn-danger m-2" type="submit">Delete</button>
-                    <a class="btn btn-primary m-2" asp-action="delete" asp-controller="companymanager">Back to the List</a>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Back to the List</button>
                 </form>
             </div>
         </div>
@@ -125,47 +125,43 @@
     <script>
         var exampleModal = document.getElementById('deleteEmployeeModal')
         exampleModal.addEventListener('show.bs.modal', function (event) {
-
             var button = event.relatedTarget
-
             var recipient = button.getAttribute('data-bs-whatever')
-
             document.getElementById("deleteEmployeeInput").value = recipient;
-
         })
     </script>
     <script>
-
         $(function () {
-
             $("#example1").DataTable({
-
                 "responsive": true, "lengthChange": false, "autoWidth": false,
+                buttons: [
+                    {
+                        extend: 'excel',
+                        footer: true,
+                        exportOptions: {
+                            columns: [0, 1, 2, 3]
+                        }
+                    },
+                    {
+                        extend: 'pdf',
+                        footer: false,
+                        exportOptions: {
+                            columns: [0, 1, 2, 3]
+                        }
 
-                "buttons": ["excel", "pdf", "colvis"]
-
-                //"buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+                    }
+                ]
             }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-
             $('#example2').DataTable({
-
                 "paging": true,
-
                 "lengthChange": false,
-
                 "searching": false,
-
                 "ordering": true,
-
                 "info": true,
-
                 "autoWidth": false,
-
                 "responsive": true,
             });
-
         });
-
     </script>
 
 }

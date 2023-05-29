@@ -19,12 +19,11 @@ namespace HumanResource.Infrastructure.SeedData
 
                 List<Statu> status = new List<Statu>();
                 List<BloodType> bloodTypes = new List<BloodType>();
-                List<LeaveType> LeaveTypes = new List<LeaveType>();
                 List<City> city = new List<City>();
                 List<District> district = new List<District>();
+                List<Country> countries = new List<Country>();
                 List<Department> department = new List<Department>();
                 List<CurrencyType> currencyTypes = new List<CurrencyType>();
-                List<ExpenseType> expenseTypes = new List<ExpenseType>();
                 List<CompanySector> companySectors = new List<CompanySector>();
 
                 if (!context.Status.Any())
@@ -78,21 +77,6 @@ namespace HumanResource.Infrastructure.SeedData
                     await context.SaveChangesAsync();
                 }
 
-                if (!context.LeaveTypes.Any())
-                {
-                    foreach (var item in Enum.GetValues(typeof(LeaveTypes)))
-                    {
-
-                        LeaveType leaveType = new LeaveType();
-                        leaveType.Name = String.Join(" ", item.ToString().Split("_"));
-                        leaveType.LeaveTypeEnumId = item.GetHashCode();
-                        LeaveTypes.Add(leaveType);
-                    }
-
-                    await context.LeaveTypes.AddRangeAsync(LeaveTypes);
-                    await context.SaveChangesAsync();
-                }
-
                 if (!context.CurrencyTypes.Any())
                 {
                     foreach (var item in Enum.GetValues(typeof(CurrencyTypes)))
@@ -105,21 +89,6 @@ namespace HumanResource.Infrastructure.SeedData
                     }
 
                     await context.CurrencyTypes.AddRangeAsync(currencyTypes);
-                    await context.SaveChangesAsync();
-                }
-
-                if (!context.ExpenseTypes.Any())
-                {
-                    foreach (var item in Enum.GetValues(typeof(ExpenseTypes)))
-                    {
-
-                        ExpenseType expenseType = new ExpenseType();
-                        expenseType.Name = String.Join(" ", item.ToString().Split("_"));
-                        expenseType.ExpenseTypeEnumId = item.GetHashCode();
-                        expenseTypes.Add(expenseType);
-                    }
-
-                    await context.ExpenseTypes.AddRangeAsync(expenseTypes);
                     await context.SaveChangesAsync();
                 }
 
@@ -142,12 +111,24 @@ namespace HumanResource.Infrastructure.SeedData
 
                 }
 
+                if (!context.Countries.Any())
+                {
+                    var countryFaker = new Faker<Country>()
+                       .RuleFor(x => x.Name, y => y.Address.City());
+
+                    countries = countryFaker.Generate(5);
+                    await context.Countries.AddRangeAsync(countries);
+                    await context.SaveChangesAsync();
+
+                }
+
                 if (!context.Cities.Any())
                 {
                     var cityFaker = new Faker<City>()
-                       .RuleFor(x => x.Name, y => y.Address.City());
+                       .RuleFor(x => x.Name, y => y.Address.City())
+                       .RuleFor(x => x.Country, y => y.PickRandom(context.Countries.ToList()));
 
-                    city = cityFaker.Generate(10);
+                    city = cityFaker.Generate(15);
                     await context.Cities.AddRangeAsync(city);
                     await context.SaveChangesAsync();
 
@@ -159,20 +140,8 @@ namespace HumanResource.Infrastructure.SeedData
                         .RuleFor(x => x.Name, y => y.Address.State())
                         .RuleFor(x => x.City, y => y.PickRandom(context.Cities.ToList()));
 
-                    district = districtFaker.Generate(30);
+                    district = districtFaker.Generate(50);
                     await context.Districts.AddRangeAsync(district);
-                    await context.SaveChangesAsync();
-
-                }
-
-                if (!context.Departments.Any())
-                {
-                    var departmentFaker = new Faker<Department>()
-                        .RuleFor(x => x.Name, y => y.Company.CompanyName())
-                        .RuleFor(x => x.StatuId, y => Status.Active.GetHashCode());
-
-                    department = departmentFaker.Generate(5);
-                    await context.Departments.AddRangeAsync(department);
                     await context.SaveChangesAsync();
 
                 }
@@ -184,6 +153,7 @@ namespace HumanResource.Infrastructure.SeedData
                     await roleStore.CreateAsync(new IdentityRole<Guid>() { Name = "SiteAdmin", NormalizedName = "SITEADMIN" });
                     await roleStore.CreateAsync(new IdentityRole<Guid>() { Name = "CompanyManager", NormalizedName = "COMPANYMANAGER" });
                     await roleStore.CreateAsync(new IdentityRole<Guid>() { Name = "Employee", NormalizedName = "EMPLOYEE" });
+                    await roleStore.CreateAsync(new IdentityRole<Guid>() { Name = "Manager", NormalizedName = "MANAGER" });
                     await context.SaveChangesAsync();
                 }
 

@@ -18,10 +18,11 @@ namespace HumanResource.Application.Services.DepartmentService
         }
 
 
-        public async Task<bool> Create(CreateDepartmentDTO model, string userName)
+        public async Task<bool> Create(CreateDepartmentDTO model, int? companyId)
         {
             Department department = _mapper.Map<Department>(model);
             department.StatuId = Status.Active.GetHashCode();
+            department.CompanyId = companyId;
             return await _departmentRepository.Add(department);
         }
 

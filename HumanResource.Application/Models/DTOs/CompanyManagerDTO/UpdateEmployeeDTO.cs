@@ -38,6 +38,9 @@ namespace HumanResource.Application.Models.DTOs.CompanyManagerDTO
         [DataType(DataType.PhoneNumber)]
         public string PhoneNumber { get; set; }
 
+        [Display(Name = ("Country"))]
+        public int? CountryId { get; set; }
+
         [Display(Name = ("City"))]
         public int? CityId { get; set; }
 
@@ -71,6 +74,8 @@ namespace HumanResource.Application.Models.DTOs.CompanyManagerDTO
 
         [Display(Name = "Title")]
         public int? TitleId { get; set; }
+
+        public bool IsEmployee { get; set; }
 
 
         public DateTime ModifiedDate => DateTime.Now;

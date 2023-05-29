@@ -19,6 +19,7 @@ namespace HumanResource.Infrastructure.DbContext
         public DbSet<Statu> Status { get; set; }
         public DbSet<Address> Addresses { get; set; }
         public DbSet<City> Cities { get; set; }
+        public DbSet<Country> Countries { get; set; }
         public DbSet<District> Districts { get; set; }
         public DbSet<BloodType> BloodTypes { get; set; }
         public DbSet<ExpenseType> ExpenseTypes { get; set; }
@@ -35,6 +36,7 @@ namespace HumanResource.Infrastructure.DbContext
                         .ApplyConfiguration(new AppUserConfig())
                         .ApplyConfiguration(new BloodTypeConfig())
                         .ApplyConfiguration(new CityConfig())
+                        .ApplyConfiguration(new CountryConfig())
                         .ApplyConfiguration(new DepartmentConfig())
                         .ApplyConfiguration(new DistrictConfig())
                         .ApplyConfiguration(new LeaveConfig())

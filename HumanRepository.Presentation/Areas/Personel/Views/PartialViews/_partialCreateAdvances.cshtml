@@ -15,13 +15,13 @@
                             
                             <div class="form-group">
                                 <label asp-for="Amount" class="form-label">@Html.DisplayNameFor(x=>x.Amount)</label>
-                                <input asp-for="Amount" thousandseperator="." class="form-control" pattern="\d*" type="text" placeholder="Amount">
+                                <input asp-for="Amount" class="form-control" type="text" placeholder="0" value="">
                                 <span asp-validation-for="Amount"></span>
                             </div>
 
                             <div class="form-group">
                                 <label asp-for="NumberOfInstallments" class="form-label">@Html.DisplayNameFor(x=>x.NumberOfInstallments)</label>
-                                <input asp-for="NumberOfInstallments" class="form-control" type="number">
+                                <input asp-for="NumberOfInstallments" class="form-control" type="number" placeholder="0" value="">
                                 <span asp-validation-for="NumberOfInstallments"></span>
                             </div>
 

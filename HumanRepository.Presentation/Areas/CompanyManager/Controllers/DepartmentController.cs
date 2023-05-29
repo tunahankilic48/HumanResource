@@ -25,7 +25,8 @@ namespace HumanResource.Presentation.Areas.CompanyManager.Controllers
 
             if (ModelState.IsValid)
             {
-                var result = await _departmentService.Create(model, User.Identity.Name);
+                var personel = await _personelService.GetPersonel(User.Identity.Name);
+                var result = await _departmentService.Create(model, personel.CompanyId);
                 if (result)
                 {
                     TempData["success"] = "Department was created successfully.";

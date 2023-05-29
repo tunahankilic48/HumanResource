@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 namespace HumanResource.Presentation.Areas.CompanyManager.Controllers
 {
     [Area("CompanyManager")]
-    [Authorize(Roles = "CompanyManager")]
+    [Authorize(Roles = "CompanyManager, Manager")]
     public class CompanyManagerController : Controller
     {
         private readonly ICompanyManagerService _companyManagerService;
@@ -48,12 +48,14 @@ namespace HumanResource.Presentation.Areas.CompanyManager.Controllers
 
         public async Task<IActionResult> Create()
         {
-            ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
-            ViewBag.Departments = new SelectList(await _companyManagerService.GetDepartments(), "Id", "Name");
-            ViewBag.Titles = new SelectList(await _companyManagerService.GetTitles(), "Id", "Name");
+            var personel = await _personelService.GetPersonel(User.Identity.Name);
+            ViewBag.Personel = personel;
+            ViewBag.Departments = new SelectList(await _companyManagerService.GetDepartments(personel.CompanyId), "Id", "Name");
+            ViewBag.Titles = new SelectList(await _companyManagerService.GetTitles(personel.CompanyId), "Id", "Name");
             ViewBag.CompanyManagers = new SelectList(await _companyManagerService.GetCompanyManagers(), "Id", "FullName");
             ViewBag.Cities = new SelectList(await _addressService.GetCities(), "Id", "Name");
             ViewBag.Districts = new SelectList(await _addressService.GetDistricts(), "Id", "Name");
+            ViewBag.Countries = new SelectList(await _addressService.GetCountries(), "Id", "Name");
             ViewBag.BaseUrl = Request.Scheme + "://" + HttpContext.Request.Host.ToString();
             return View();
         }
@@ -71,7 +73,7 @@ namespace HumanResource.Presentation.Areas.CompanyManager.Controllers
 
                         var conformationLink = Url.Action("ConfirmEmail", "Account", new { token = result.Token, email = result.Email, Area = "" }, Request.Scheme);
 
-                        var message = new Message(result.Email, "Conformation Email Link", $"Welcome to our human resources platform. Please click the link to activate your account. {conformationLink!}   You can use your email and the password below to login to the platform.     {result.Password}");
+                        var message = new Message(result.Email, "Conformation Email Link", $"Welcome to our human resources platform. Please <a href={conformationLink!}>click here</a> activate your account.   You can use your email and the password below to login to the platform.     {result.Password}");
                         _emailService.SendEmail(message);
 
                         return RedirectToAction("employees", "companymanager", new { Area = "companymanager" });
@@ -84,9 +86,10 @@ namespace HumanResource.Presentation.Areas.CompanyManager.Controllers
                 }
 
             }
-            ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
-            ViewBag.Departments = new SelectList(await _companyManagerService.GetDepartments(), "Id", "Name");
-            ViewBag.Titles = new SelectList(await _companyManagerService.GetTitles(), "Id", "Name");
+            var personel = await _personelService.GetPersonel(User.Identity.Name);
+            ViewBag.Personel = personel;
+            ViewBag.Departments = new SelectList(await _companyManagerService.GetDepartments(personel.CompanyId), "Id", "Name");
+            ViewBag.Titles = new SelectList(await _companyManagerService.GetTitles(personel.CompanyId), "Id", "Name");
             ViewBag.CompanyManagers = new SelectList(await _companyManagerService.GetCompanyManagers(), "Id", "FullName");
             ViewBag.Cities = new SelectList(await _addressService.GetCities(), "Id", "Name");
             ViewBag.Districts = new SelectList(await _addressService.GetDistricts(), "Id", "Name");
@@ -97,12 +100,14 @@ namespace HumanResource.Presentation.Areas.CompanyManager.Controllers
 
         public async Task<IActionResult> Update(Guid id)
         {
-            ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
-            ViewBag.Departments = new SelectList(await _companyManagerService.GetDepartments(), "Id", "Name");
-            ViewBag.Titles = new SelectList(await _companyManagerService.GetTitles(), "Id", "Name");
+            var personel = await _personelService.GetPersonel(User.Identity.Name);
+            ViewBag.Personel = personel;
+            ViewBag.Departments = new SelectList(await _companyManagerService.GetDepartments(personel.CompanyId), "Id", "Name");
+            ViewBag.Titles = new SelectList(await _companyManagerService.GetTitles(personel.CompanyId), "Id", "Name");
             ViewBag.CompanyManagers = new SelectList(await _companyManagerService.GetCompanyManagers(), "Id", "FullName");
             ViewBag.Cities = new SelectList(await _addressService.GetCities(), "Id", "Name");
             ViewBag.Districts = new SelectList(await _addressService.GetDistricts(), "Id", "Name");
+            ViewBag.Countries = new SelectList(await _addressService.GetCountries(), "Id", "Name");
             var model = await _companyManagerService.GetByUserName(id);
             model.BaseUrl = Request.Scheme + "://" + HttpContext.Request.Host.ToString();
             return View(model);
@@ -121,10 +126,10 @@ namespace HumanResource.Presentation.Areas.CompanyManager.Controllers
 
                 } 
             }
-
-            ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
-            ViewBag.Departments = new SelectList(await _companyManagerService.GetDepartments(), "Id", "Name");
-            ViewBag.Titles = new SelectList(await _companyManagerService.GetTitles(), "Id", "Name");
+            var personel = await _personelService.GetPersonel(User.Identity.Name);
+            ViewBag.Personel = personel;
+            ViewBag.Departments = new SelectList(await _companyManagerService.GetDepartments(personel.CompanyId), "Id", "Name");
+            ViewBag.Titles = new SelectList(await _companyManagerService.GetTitles(personel.CompanyId), "Id", "Name");
             ViewBag.CompanyManagers = new SelectList(await _companyManagerService.GetCompanyManagers(), "Id", "FullName");
             ViewBag.Cities = new SelectList(await _addressService.GetCities(), "Id", "Name");
             ViewBag.Districts = new SelectList(await _addressService.GetDistricts(), "Id", "Name");
@@ -143,15 +148,29 @@ namespace HumanResource.Presentation.Areas.CompanyManager.Controllers
 
         public async Task<IActionResult> Departments()
         {
+            var personel = await _personelService.GetPersonel(User.Identity.Name);
+            ViewBag.Personel = personel;
+            return View(await _companyManagerService.GetDepartments(personel.CompanyId));
+        }
+
+        public async Task<IActionResult> LeaveTypes()
+        {
             ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
-            return View(await _companyManagerService.GetDepartments());
+            return View(await _companyManagerService.GetLeaveTypes((ViewBag.Personel).CompanyId));
+        }
+
+        public async Task<IActionResult> ExpenseTypes()
+        {
+            ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
+            return View(await _companyManagerService.GetExpenseTypes((ViewBag.Personel).CompanyId));
         }
 
 
         public async Task<IActionResult> Titles()
         {
-            ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
-            return View(await _companyManagerService.GetTitles());
+            var personel = await _personelService.GetPersonel(User.Identity.Name);
+            ViewBag.Personel = personel;
+            return View(await _companyManagerService.GetTitles(personel.CompanyId));
         }
 
         public async Task<IActionResult> LeaveRequests()

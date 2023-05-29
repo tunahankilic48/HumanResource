@@ -25,7 +25,8 @@ namespace HumanResource.Presentation.Areas.CompanyManager.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await _titleService.Create(model, User.Identity.Name);
+                var personel = await _personelService.GetPersonel(User.Identity.Name);
+                var result = await _titleService.Create(model, personel.CompanyId);
                 if (result)
                 {
                     TempData["success"] = "Title was created successfully.";

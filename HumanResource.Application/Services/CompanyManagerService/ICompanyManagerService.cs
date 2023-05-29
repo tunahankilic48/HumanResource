@@ -9,8 +9,10 @@ namespace HumanResource.Application.Services.CompanyManagerService
     public interface ICompanyManagerService
     {
         Task<List<EmployeeVM>> GetEmployees(int companyId);
-        Task<List<DepartmentVM>> GetDepartments();
-        Task<List<TitleVM>> GetTitles();
+        Task<List<DepartmentVM>> GetDepartments(int? companyId);
+        Task<List<ExpenseTypeVM>> GetExpenseTypes(int? companyId);
+        Task<List<LeaveTypeVM>> GetLeaveTypes(int? companyId);
+        Task<List<TitleVM>> GetTitles(int? companyId);
         Task<CreateEmployeeVM> CreateEmployee(CreateEmployeeDTO model);
         Task<IdentityResult> UpdateEmployee(UpdateEmployeeDTO model);
         Task<List<CompanyManagerVM>> GetCompanyManagers();

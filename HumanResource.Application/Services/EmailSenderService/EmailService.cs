@@ -50,6 +50,7 @@ namespace HumanResource.Application.Services.EmailSenderService
             emailMessage.To.Add(message.To);
             emailMessage.Subject = message.Subject;
             emailMessage.Body = message.Content;
+            emailMessage.IsBodyHtml= true;
 
             return emailMessage;
         }
