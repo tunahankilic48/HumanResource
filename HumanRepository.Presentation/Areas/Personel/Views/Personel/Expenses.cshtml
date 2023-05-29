@@ -123,7 +123,7 @@
                 <form asp-action="delete" asp-controller="expense">
                     <input id="deleteExpenseInput" class="deleteExpense" type="hidden" name="id" />
                     <button id="delete" class="btn btn-danger m-2" type="submit">Delete</button>
-                    <a class="btn btn-primary m-2" asp-action="expense" asp-controller="personel">Back to the List</a>
+                    <a class="btn btn-primary m-2" asp-area="personel" asp-action="expenses" asp-controller="personel">Back to the List</a>
                 </form>
             </div>
         </div>
