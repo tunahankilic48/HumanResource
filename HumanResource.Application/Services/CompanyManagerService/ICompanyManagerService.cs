@@ -23,7 +23,7 @@ namespace HumanResource.Application.Services.CompanyManagerService
         Task<List<PersonelLeaveRequestVM>> GetPersonelLeaveRequests(Guid id);
         Task<List<PersonelAdvanceRequestVM>> GetPersonelAdvanceRequests(Guid id);
         Task<List<PersonelExpenseRequestVM>> GetPersonelExpenseRequests(Guid id);
-        Task<UpdateCompanyDTO> GetCompany(Guid id);
+        Task<UpdateCompanyDTO> GetCompany(int? id);
         Task <bool> UpdateCompany(UpdateCompanyDTO model);
         Task<List<ExpenseTypePieVM>> ExpensesDistributionByExpensesType();
 
