@@ -1,7 +1,4 @@
-﻿using Bogus.DataSets;
-using HumanResource.Domain.Entities;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel.DataAnnotations;
 
 namespace HumanResource.Application.Models.VMs.CompanyVM
@@ -44,5 +41,8 @@ namespace HumanResource.Application.Models.VMs.CompanyVM
 
         [Display(Name = "Manager")]
         public string FullName { get; set; }
+
+        [Display(Name="Activation Date")]
+        public string? ActivationDate { get; set; }
     }
 }

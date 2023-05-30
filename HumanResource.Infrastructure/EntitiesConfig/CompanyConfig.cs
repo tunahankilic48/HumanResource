@@ -31,6 +31,10 @@ namespace HumanResource.Infrastructure.EntitiesConfig
                 .IsRequired(false)
                 .HasColumnOrder(6);
 
+            builder.Property(x => x.ActivationDate)
+                .IsRequired(true)
+                .HasColumnOrder(7);
+
             // Foreign Key
 
             builder.HasMany(x => x.Departments)
