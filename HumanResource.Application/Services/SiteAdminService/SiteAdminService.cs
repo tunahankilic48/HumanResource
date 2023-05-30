@@ -79,8 +79,8 @@ namespace HumanResource.Application.Services.SiteAdminService
                   City = x.Address.District.City.Name,
                   District = x.Address.District.Name,
                   AddressDescription = x.Address.Description,
-                  Statu = x.Statu.Name
-
+                  Statu = x.Statu.Name,
+                  ActivationDate = x.ActivationDate.ToShortDateString()
               },
               where: x => x.Id == id,
               orderby: null,
@@ -92,6 +92,7 @@ namespace HumanResource.Application.Services.SiteAdminService
         {
             Company company = await _companyRepository.GetDefault(x => x.Id == id);
             company.StatuId = Status.Active.GetHashCode();
+            company.ActivationDate = DateTime.Now;
             var user = await _appUserRepository.GetDefault(x => x.CompanyId == company.Id);
             user.EmailConfirmed = true;
             return new ProcessVM() { Result = await _companyRepository.Update(company), UserEmail = user.Email };

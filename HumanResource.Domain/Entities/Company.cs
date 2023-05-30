@@ -13,6 +13,7 @@ namespace HumanResource.Domain.Entities
         public string? ImagePath { get; set; }
         public int CompanySectorId { get; set; }
         public Guid? CompanyRepresentativeId { get; set; }
+        public DateTime ActivationDate { get; set; }
 
         public int? StatuId { get; set; }
         public DateTime CreatedDate { get; set; }   
