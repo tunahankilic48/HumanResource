@@ -16,7 +16,7 @@ namespace HumanResource.Application.Services.CompanyManagerService
         Task<List<TitleVM>> GetTitles(int? companyId);
         Task<CreateEmployeeVM> CreateEmployee(CreateEmployeeDTO model);
         Task<IdentityResult> UpdateEmployee(UpdateEmployeeDTO model);
-        Task<List<CompanyManagerVM>> GetCompanyManagers();
+        Task<List<CompanyManagerVM>> GetCompanyManagers(int companyId);
         Task<bool> IsCompanyManager(string userName);
         Task<UpdateEmployeeDTO> GetByUserName(Guid id);
         Task Delete(Guid id);
