@@ -140,7 +140,7 @@ namespace HumanResource.Application.Services.CompanyManagerService
             }
         }
 
-        public async Task<List<CompanyManagerVM>> GetCompanyManagers()
+        public async Task<List<CompanyManagerVM>> GetCompanyManagers(int companyId)
         {
             var companyPersonels = await _appUserRepository.GetFilteredList(
               select: x => new CompanyManagerVM()
@@ -150,7 +150,7 @@ namespace HumanResource.Application.Services.CompanyManagerService
                   UserName = x.UserName,
                   Email = x.Email
               },
-              where: null,
+              where: x => x.CompanyId == companyId,
               orderby: x => x.OrderByDescending(x => x.FirstName)
               );
             List<CompanyManagerVM> companyManagers = new List<CompanyManagerVM>();
@@ -455,7 +455,7 @@ namespace HumanResource.Application.Services.CompanyManagerService
             company.PhoneNumber = model.PhoneNumber;
             company.NumberOfEmployee = model.NumberOfEmployee;
             company.ModifiedDate = model.ModifiedDate;
-            company.Address = await _addressRepository.GetDefault(x => x.DistrictId == model.DistrictId);
+            company.Address = await _addressRepository.GetDefault(x => x.Company.Address.District.Id == model.DistrictId);
 
             return await _companyRepository.Update(company);
         }
@@ -521,7 +521,7 @@ namespace HumanResource.Application.Services.CompanyManagerService
 				if (tempExpenses.Count != 0)
 				{
 					double ratio = (tempExpenses.Count / expenseCount) * 100;
-					ExpensesDistributionByExpensesType.Add(new ExpenseTypePieVM($"{tempExpenses[0].PersonelName} ({tempExpenses.Count})", Math.Round(ratio, 2)));
+					ExpensesDistributionByExpensesType.Add(new ExpenseTypePieVM($"{tempExpenses[0].ExpenseTypeName} ({tempExpenses.Count})", Math.Round(ratio, 2)));
 				}
 			}
 			return ExpensesDistributionByExpensesType;

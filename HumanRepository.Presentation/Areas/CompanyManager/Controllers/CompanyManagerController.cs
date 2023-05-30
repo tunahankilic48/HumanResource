@@ -52,10 +52,11 @@ namespace HumanResource.Presentation.Areas.CompanyManager.Controllers
         public async Task<IActionResult> Create()
         {
             var personel = await _personelService.GetPersonel(User.Identity.Name);
+            var company = await _companyManagerService.GetCompany(personel.CompanyId);
             ViewBag.Personel = personel;
             ViewBag.Departments = new SelectList(await _companyManagerService.GetDepartments(personel.CompanyId), "Id", "Name");
             ViewBag.Titles = new SelectList(await _companyManagerService.GetTitles(personel.CompanyId), "Id", "Name");
-            ViewBag.CompanyManagers = new SelectList(await _companyManagerService.GetCompanyManagers(), "Id", "FullName");
+            ViewBag.CompanyManagers = new SelectList(await _companyManagerService.GetCompanyManagers(company.CompanyId), "Id", "FullName");
             ViewBag.Cities = new SelectList(await _addressService.GetCities(), "Id", "Name");
             ViewBag.Districts = new SelectList(await _addressService.GetDistricts(), "Id", "Name");
             ViewBag.Countries = new SelectList(await _addressService.GetCountries(), "Id", "Name");
@@ -91,9 +92,11 @@ namespace HumanResource.Presentation.Areas.CompanyManager.Controllers
             }
             var personel = await _personelService.GetPersonel(User.Identity.Name);
             ViewBag.Personel = personel;
+            var company = await _companyManagerService.GetCompany(personel.CompanyId);
             ViewBag.Departments = new SelectList(await _companyManagerService.GetDepartments(personel.CompanyId), "Id", "Name");
             ViewBag.Titles = new SelectList(await _companyManagerService.GetTitles(personel.CompanyId), "Id", "Name");
-            ViewBag.CompanyManagers = new SelectList(await _companyManagerService.GetCompanyManagers(), "Id", "FullName");
+            ViewBag.CompanyManagers = new SelectList(await _companyManagerService.GetCompanyManagers(company.CompanyId), "Id", "FullName");
+            //ViewBag.CompanyManagers = new SelectList(await _companyManagerService.GetCompanyManagers(), "Id", "FullName");
             ViewBag.Cities = new SelectList(await _addressService.GetCities(), "Id", "Name");
             ViewBag.Districts = new SelectList(await _addressService.GetDistricts(), "Id", "Name");
             ViewBag.BaseUrl = Request.Scheme + "://" + HttpContext.Request.Host.ToString();
@@ -105,13 +108,16 @@ namespace HumanResource.Presentation.Areas.CompanyManager.Controllers
         {
             var personel = await _personelService.GetPersonel(User.Identity.Name);
             ViewBag.Personel = personel;
+            var company = await _companyManagerService.GetCompany(personel.CompanyId);
             ViewBag.Departments = new SelectList(await _companyManagerService.GetDepartments(personel.CompanyId), "Id", "Name");
             ViewBag.Titles = new SelectList(await _companyManagerService.GetTitles(personel.CompanyId), "Id", "Name");
-            ViewBag.CompanyManagers = new SelectList(await _companyManagerService.GetCompanyManagers(), "Id", "FullName");
+            ViewBag.CompanyManagers = new SelectList(await _companyManagerService.GetCompanyManagers(company.CompanyId), "Id", "FullName");
+            //ViewBag.CompanyManagers = new SelectList(await _companyManagerService.GetCompanyManagers(), "Id", "FullName");
             ViewBag.Cities = new SelectList(await _addressService.GetCities(), "Id", "Name");
             ViewBag.Districts = new SelectList(await _addressService.GetDistricts(), "Id", "Name");
             ViewBag.Countries = new SelectList(await _addressService.GetCountries(), "Id", "Name");
             var model = await _companyManagerService.GetByUserName(id);
+            model.ImagePath = personel.Image;
             model.BaseUrl = Request.Scheme + "://" + HttpContext.Request.Host.ToString();
             return View(model);
         }
@@ -131,9 +137,11 @@ namespace HumanResource.Presentation.Areas.CompanyManager.Controllers
             }
             var personel = await _personelService.GetPersonel(User.Identity.Name);
             ViewBag.Personel = personel;
+            var company = await _companyManagerService.GetCompany(personel.CompanyId);
             ViewBag.Departments = new SelectList(await _companyManagerService.GetDepartments(personel.CompanyId), "Id", "Name");
             ViewBag.Titles = new SelectList(await _companyManagerService.GetTitles(personel.CompanyId), "Id", "Name");
-            ViewBag.CompanyManagers = new SelectList(await _companyManagerService.GetCompanyManagers(), "Id", "FullName");
+            ViewBag.CompanyManagers = new SelectList(await _companyManagerService.GetCompanyManagers(company.CompanyId), "Id", "FullName");
+            //ViewBag.CompanyManagers = new SelectList(await _companyManagerService.GetCompanyManagers(), "Id", "FullName");
             ViewBag.Cities = new SelectList(await _addressService.GetCities(), "Id", "Name");
             ViewBag.Districts = new SelectList(await _addressService.GetDistricts(), "Id", "Name");
             model.BaseUrl = Request.Scheme + "://" + HttpContext.Request.Host.ToString();
