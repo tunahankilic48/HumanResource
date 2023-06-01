@@ -1,11 +1,4 @@
-﻿using HumanResource.Application.Models.DTOs.ExpenseDTO;
-using HumanResource.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace HumanResource.Application.Extensions
 {
@@ -19,7 +12,6 @@ namespace HumanResource.Application.Extensions
                 return new ValidationResult("please enter a non-zero (0) value");
             }
             return ValidationResult.Success;
-           // return base.IsValid(value, validationContext);
         }
     }
 }

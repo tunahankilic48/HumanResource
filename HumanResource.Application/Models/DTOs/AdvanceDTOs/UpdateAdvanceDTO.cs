@@ -15,7 +15,6 @@ namespace HumanResource.Application.Models.DTOs.AdvanceDTOs
 		public int Id { get; set; }
         [Required(ErrorMessage = "Amount field cannot be empty!")]
         [Range(0, 99999.99, ErrorMessage = "Please enter between 0-99999.99!")]
-        //[RegularExpression(@"^\d+$", ErrorMessage = "No letters or symbols can be entered!")]
         [Display(Name ="Amount")]
         [Amount]
         public decimal Amount { get; set; }
@@ -35,7 +34,5 @@ namespace HumanResource.Application.Models.DTOs.AdvanceDTOs
         public Guid UserId { get; set; }
         [ValidateNever]
         public int StatuId { get; set; }
-
-        //ToDo: Tarih kısıtlaması için attibute yazılacak.
     }
 }

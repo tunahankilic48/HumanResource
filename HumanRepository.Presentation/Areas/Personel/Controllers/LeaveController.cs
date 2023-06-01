@@ -33,8 +33,15 @@ namespace HumanResource.Presentation.Areas.Personel.Controllers
             if (ModelState.IsValid)
             {
                var result = await _leaveService.Create(model, User.Identity.Name);
-                if(result)
+                if(result.Result)
                 {
+
+                    var conformationLink = Url.Action("LeaveRequestDetail", "CompanyManager", new { id=result.RequestId, Area = "CompanyManager" }, Request.Scheme);
+
+                    var message = new Message(result.ManagerEmail, $"New Leave Request", $"New Leave Request was created by {result.EmployeeName}. Please <a href={conformationLink!}>click here</a> to display leave request.");
+                    _emailService.SendEmail(message);
+
+
                     TempData["success"] = "Leave request was created successfully.";
                     return RedirectToAction("leaves", "personel", new { Area = "personel" });
                 }
@@ -67,8 +74,14 @@ namespace HumanResource.Presentation.Areas.Personel.Controllers
             if (ModelState.IsValid)
             {
                 var result = await _leaveService.Update(model);
-                if (result)
+                if (result.Result)
                 {
+
+                    var conformationLink = Url.Action("LeaveRequestDetail", "CompanyManager", new { id = result.RequestId, Area = "CompanyManager" }, Request.Scheme);
+
+                    var message = new Message(result.ManagerEmail, $"Updated Leave Request", $"Leave Request was updated by {result.EmployeeName}. Please <a href={conformationLink!}>click here</a> to display leave request.");
+                    _emailService.SendEmail(message);
+
                     TempData["success"] = "Leave request was created successfully.";
                     return RedirectToAction("leaves", "personel", new { Area = "personel" });
                 }
@@ -91,7 +104,7 @@ namespace HumanResource.Presentation.Areas.Personel.Controllers
             return RedirectToAction("leaves", "personel", new { Area = "personel" });
         }
 
-        [HttpGet]
+        [HttpPost]
         public async Task<IActionResult> Approve(int id)
         {
             var result = await _leaveService.Approve(id);
@@ -106,7 +119,7 @@ namespace HumanResource.Presentation.Areas.Personel.Controllers
             return RedirectToAction("leaveRequests", "companymanager", new { Area = "companymanager" });
         }
 
-        [HttpGet]
+        [HttpPost]
         public async Task<IActionResult> Reject(int id)
         {
             var result = await _leaveService.Reject(id);

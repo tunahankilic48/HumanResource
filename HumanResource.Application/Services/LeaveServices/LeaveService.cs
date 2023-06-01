@@ -2,6 +2,7 @@
 using HumanResource.Application.Models.DTOs.LeaveDTO;
 using HumanResource.Application.Models.VMs.CompanyManagerVMs;
 using HumanResource.Application.Models.VMs.LeaveVM;
+using HumanResource.Application.Models.VMs.PersonelVM;
 using HumanResource.Application.Services.PersonelService;
 using HumanResource.Domain.Entities;
 using HumanResource.Domain.Enums;
@@ -34,12 +35,45 @@ namespace HumanResource.Application.Services.LeaveServices
             return new ProcessVM() { Result = await _leaveRepository.Update(leave), UserEmail = user.Email };
         }
 
-        public async Task<bool> Create(CreateLeaveDTO model, string userName)
+        public async Task<RequestVM> Create(CreateLeaveDTO model, string userName)
         {
             model.StatuId = Status.Awating_Approval.GetHashCode();
             Leave leave = _mapper.Map<Leave>(model);
             leave.UserId = await _personelService.GetPersonelId(userName);
-            return await _leaveRepository.Add(leave);
+            RequestVM result = new RequestVM();
+
+            result.Result = await _leaveRepository.Add(leave);
+            if (result.Result)
+            {
+
+                var user = await _appUserRepository.GetFilteredFirstOrDefault
+                    (
+                    select: x => new RequestVM
+                    {
+                        EmployeeName = x.FirstName + " " + x.LastName,
+                        ManagerEmail = x.Manager.Email
+                    },
+                    where: x=>x.UserName == userName,
+                    orderby: null,
+                    include: x=>x.Include(x=>x.Manager)
+                    );
+                result.EmployeeName = user.EmployeeName;
+                result.ManagerEmail = user.ManagerEmail;
+
+                var leaves = await _leaveRepository.GetFilteredFirstOrDefault(
+                    select: x => new Leave
+                    {
+                        Id = x.Id
+                    },
+                    where: x => x.User.UserName == userName,
+                    orderby: x => x.OrderByDescending(y => y.CreatedDate),
+                    include: x => x.Include(x => x.User)
+                    );
+                result.RequestId = leaves.Id;
+
+            }
+
+            return result;
         }
 
         public async Task Delete(int id)
@@ -113,10 +147,35 @@ namespace HumanResource.Application.Services.LeaveServices
             return new ProcessVM() { Result = await _leaveRepository.Update(leave), UserEmail = user.Email };
         }
 
-        public async Task<bool> Update(UpdateLeaveDTO model)
+        public async Task<RequestVM> Update(UpdateLeaveDTO model)
         {
             Leave leave = _mapper.Map<Leave>(model);
-            return await _leaveRepository.Update(leave);
+
+            RequestVM result = new RequestVM();
+
+            result.Result = await _leaveRepository.Update(leave);
+            if (result.Result)
+            {
+
+                var user = await _appUserRepository.GetFilteredFirstOrDefault
+                    (
+                    select: x => new RequestVM
+                    {
+                        EmployeeName = x.FirstName + " " + x.LastName,
+                        ManagerEmail = x.Manager.Email
+                    },
+                    where: x => x.Id == model.UserId,
+                    orderby: null,
+                    include: x => x.Include(x => x.Manager)
+                    );
+                result.EmployeeName = user.EmployeeName;
+                result.ManagerEmail = user.ManagerEmail;
+                result.RequestId = model.Id;
+
+            }
+
+            return result;
+
         }
     }
 }

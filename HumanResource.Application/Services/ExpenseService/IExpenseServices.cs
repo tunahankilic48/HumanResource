@@ -1,13 +1,14 @@
 ﻿using HumanResource.Application.Models.DTOs.ExpenseDTO;
 using HumanResource.Application.Models.VMs.CompanyManagerVMs;
 using HumanResource.Application.Models.VMs.ExpenseVM;
+using HumanResource.Application.Models.VMs.PersonelVM;
 
 namespace HumanResource.Application.Services.ExpenseService
 {
     public interface IExpenseServices
     {
-        Task<bool> Create(CreateExpenseDTO model, string UserName);
-        Task<bool> Update(UpdateExpenseDTO model);
+        Task<RequestVM> Create(CreateExpenseDTO model, string userName);
+        Task<RequestVM> Update(UpdateExpenseDTO model);
         Task Delete(int id);
         Task<UpdateExpenseDTO> GetById(int id);
         Task<List<ExpenseVM>> GetExpenseForPersonel(Guid id);
