@@ -165,9 +165,9 @@ namespace HumanResource.Infrastructure.Migrations
                     CompanyId = table.Column<int>(type: "int", nullable: true),
                     AppUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     StatuId = table.Column<int>(type: "int", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "smalldatetime", nullable: false),
-                    ModifiedDate = table.Column<DateTime>(type: "smalldatetime", nullable: true),
-                    DeletedDate = table.Column<DateTime>(type: "smalldatetime", nullable: true)
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -198,9 +198,9 @@ namespace HumanResource.Infrastructure.Migrations
                     AdvanceDate = table.Column<DateTime>(type: "date", nullable: false),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     StatuId = table.Column<int>(type: "int", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "smalldatetime", nullable: false),
-                    ModifiedDate = table.Column<DateTime>(type: "smalldatetime", nullable: true),
-                    DeletedDate = table.Column<DateTime>(type: "smalldatetime", nullable: true)
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -277,9 +277,9 @@ namespace HumanResource.Infrastructure.Migrations
                     SiteAdminId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     ImagePath = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     StatuId = table.Column<int>(type: "int", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "smalldatetime", nullable: false),
-                    ModifiedDate = table.Column<DateTime>(type: "smalldatetime", nullable: true),
-                    DeletedDate = table.Column<DateTime>(type: "smalldatetime", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -360,9 +360,9 @@ namespace HumanResource.Infrastructure.Migrations
                     CompanySectorId = table.Column<int>(type: "int", nullable: false),
                     CompanyRepresentativeId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     StatuId = table.Column<int>(type: "int", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "smalldatetime", nullable: false),
-                    ModifiedDate = table.Column<DateTime>(type: "smalldatetime", nullable: true),
-                    DeletedDate = table.Column<DateTime>(type: "smalldatetime", nullable: true)
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -509,9 +509,9 @@ namespace HumanResource.Infrastructure.Migrations
                     ShortDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ExpenseTypeId = table.Column<int>(type: "int", nullable: false),
                     StatuId = table.Column<int>(type: "int", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "smalldatetime", nullable: false),
-                    ModifiedDate = table.Column<DateTime>(type: "smalldatetime", nullable: true),
-                    DeletedDate = table.Column<DateTime>(type: "smalldatetime", nullable: true)
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -555,9 +555,9 @@ namespace HumanResource.Infrastructure.Migrations
                     LeaveTypeId = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     StatuId = table.Column<int>(type: "int", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "smalldatetime", nullable: false),
-                    ModifiedDate = table.Column<DateTime>(type: "smalldatetime", nullable: true),
-                    DeletedDate = table.Column<DateTime>(type: "smalldatetime", nullable: true)
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
