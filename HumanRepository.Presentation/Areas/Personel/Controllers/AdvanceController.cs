@@ -30,8 +30,14 @@ namespace HumanResource.Presentation.Areas.Personel.Controllers
             if (ModelState.IsValid)
             {
                 var result = await _advanceService.Create(model, User.Identity.Name);
-                if (result)
+                if (result.Result)
                 {
+
+                    var conformationLink = Url.Action("AdvanceRequestDetail", "CompanyManager", new { id = result.RequestId, Area = "CompanyManager" }, Request.Scheme);
+
+                    var message = new Message(result.ManagerEmail, $"New Advance Request", $"New Advance Request was created by {result.EmployeeName}. Please <a href={conformationLink!}>click here</a> to display advance request.");
+                    _emailService.SendEmail(message);
+
                     TempData["success"] = "advance request was created successfully.";
                     return RedirectToAction("advances", "personel", new { Area = "personel" });
                 }
@@ -62,8 +68,14 @@ namespace HumanResource.Presentation.Areas.Personel.Controllers
             if (ModelState.IsValid)
             {
                 var result = await _advanceService.Update(model);
-                if (result)
+                if (result.Result)
                 {
+
+                    var conformationLink = Url.Action("AdvanceRequestDetail", "CompanyManager", new { id = result.RequestId, Area = "CompanyManager" }, Request.Scheme);
+
+                    var message = new Message(result.ManagerEmail, $"Updated Advance Request", $"Advance Request was updated by {result.EmployeeName}. Please <a href={conformationLink!}>click here</a> to display advance request.");
+                    _emailService.SendEmail(message);
+
                     TempData["success"] = "advance request was created successfully.";
                     return RedirectToAction("advances", "personel", new { Area = "personel" });
                 }

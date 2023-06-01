@@ -2,11 +2,14 @@
 using HumanResource.Application.Models.DTOs.ExpenseDTO;
 using HumanResource.Application.Models.VMs.CompanyManagerVMs;
 using HumanResource.Application.Models.VMs.ExpenseVM;
+using HumanResource.Application.Models.VMs.LeaveVM;
+using HumanResource.Application.Models.VMs.PersonelVM;
 using HumanResource.Application.Services.PersonelService;
 using HumanResource.Domain.Entities;
 using HumanResource.Domain.Enums;
 using HumanResource.Domain.Repositories;
 using HumanResource.Domain.Repositries;
+using HumanResource.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace HumanResource.Application.Services.ExpenseService
@@ -33,12 +36,47 @@ namespace HumanResource.Application.Services.ExpenseService
             return new ProcessVM() { Result = await _expenseRepository.Update(expense), UserEmail = user.Email };
         }
 
-        public async Task<bool> Create(CreateExpenseDTO model, string UserName)
+        public async Task<RequestVM> Create(CreateExpenseDTO model, string userName)
         {
             model.StatuId = Status.Awating_Approval.GetHashCode();
             Expense expense = _mapper.Map<Expense>(model);
-            expense.UserId = await _personelService.GetPersonelId(UserName);
-            return await _expenseRepository.Add(expense);
+            expense.UserId = await _personelService.GetPersonelId(userName);
+
+
+            RequestVM result = new RequestVM();
+
+            result.Result = await _expenseRepository.Add(expense);
+            if (result.Result)
+            {
+
+                var user = await _appUserRepository.GetFilteredFirstOrDefault
+                    (
+                    select: x => new RequestVM
+                    {
+                        EmployeeName = x.FirstName + " " + x.LastName,
+                        ManagerEmail = x.Manager.Email
+                    },
+                    where: x => x.UserName == userName,
+                    orderby: null,
+                    include: x => x.Include(x => x.Manager)
+                    );
+                result.EmployeeName = user.EmployeeName;
+                result.ManagerEmail = user.ManagerEmail;
+
+                var expenses = await _expenseRepository.GetFilteredFirstOrDefault(
+                    select: x => new Expense
+                    {
+                        Id = x.Id
+                    },
+                    where: x => x.User.UserName == userName,
+                    orderby: x => x.OrderByDescending(y => y.CreatedDate),
+                    include: x => x.Include(x => x.User)
+                    );
+                result.RequestId = expenses.Id;
+
+            }
+
+            return result;
         }
 
         public async Task Delete(int id)
@@ -114,10 +152,32 @@ namespace HumanResource.Application.Services.ExpenseService
             return new ProcessVM() { Result = await _expenseRepository.Update(expense), UserEmail = user.Email };
         }
 
-        public async Task<bool> Update(UpdateExpenseDTO model)
+        public async Task<RequestVM> Update(UpdateExpenseDTO model)
         {
             Expense expense = _mapper.Map<Expense>(model);
-            return await _expenseRepository.Update(expense);
+            RequestVM result = new RequestVM();
+            result.Result = await _expenseRepository.Update(expense);
+            if (result.Result)
+            {
+
+                var user = await _appUserRepository.GetFilteredFirstOrDefault
+                    (
+                    select: x => new RequestVM
+                    {
+                        EmployeeName = x.FirstName + " " + x.LastName,
+                        ManagerEmail = x.Manager.Email
+                    },
+                    where: x => x.Id == model.UserId,
+                    orderby: null,
+                    include: x => x.Include(x => x.Manager)
+                    );
+                result.EmployeeName = user.EmployeeName;
+                result.ManagerEmail = user.ManagerEmail;
+                result.RequestId = model.Id;
+
+            }
+
+            return result;
         }
     }
 }

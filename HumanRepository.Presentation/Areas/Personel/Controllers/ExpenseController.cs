@@ -34,10 +34,15 @@ namespace HumanResource.Presentation.Areas.Personel.Controllers
 			if (ModelState.IsValid)
 			{
 				var result = await _expenseServices.Create(model, User.Identity.Name);
-				if (result)
+				if (result.Result)
 				{
-                    
-					TempData["success"] = "Expense request was created successfully.";
+
+                    var conformationLink = Url.Action("ExpenseRequestDetail", "CompanyManager", new { id = result.RequestId, Area = "CompanyManager" }, Request.Scheme);
+
+                    var message = new Message(result.ManagerEmail, $"New Expense Request", $"New Expense Request was created by {result.EmployeeName}. Please <a href={conformationLink!}>click here</a> to display expense request.");
+                    _emailService.SendEmail(message);
+
+                    TempData["success"] = "Expense request was created successfully.";
 					return RedirectToAction("expenses", "personel", new { Area = "personel" });
 				}
 				else
@@ -67,8 +72,14 @@ namespace HumanResource.Presentation.Areas.Personel.Controllers
             if (ModelState.IsValid)
             {
                 var result = await _expenseServices.Update(model);
-                if (result)
+                if (result.Result)
                 {
+
+                    var conformationLink = Url.Action("ExpenseRequestDetail", "CompanyManager", new { id = result.RequestId, Area = "CompanyManager" }, Request.Scheme);
+
+                    var message = new Message(result.ManagerEmail, $"Updated Expense Request", $"Expense Request was updated by {result.EmployeeName}. Please <a href={conformationLink!}>click here</a> to display expense request.");
+                    _emailService.SendEmail(message);
+
                     TempData["success"] = "Expense request was updated successfully.";
                     return RedirectToAction("expenses", "personel", new { Area = "personel" });
                 }
@@ -91,7 +102,7 @@ namespace HumanResource.Presentation.Areas.Personel.Controllers
             return RedirectToAction("expenses", "personel", new { Area = "personel" });
         }
 
-        [HttpGet]
+        [HttpPost]
         public async Task<IActionResult> Approve(int id)
         {
             var result = await _expenseServices.Approve(id);
@@ -106,7 +117,7 @@ namespace HumanResource.Presentation.Areas.Personel.Controllers
             return RedirectToAction("ExpenseRequests", "companymanager", new { Area = "companymanager" });
         }
 
-        [HttpGet]
+        [HttpPost]
         public async Task<IActionResult> Reject(int id)
         {
             var result = await _expenseServices.Reject(id);
