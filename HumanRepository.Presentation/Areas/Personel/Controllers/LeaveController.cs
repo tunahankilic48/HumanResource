@@ -82,7 +82,7 @@ namespace HumanResource.Presentation.Areas.Personel.Controllers
                     var message = new Message(result.ManagerEmail, $"Updated Leave Request", $"Leave Request was updated by {result.EmployeeName}. Please <a href={conformationLink!}>click here</a> to display leave request.");
                     _emailService.SendEmail(message);
 
-                    TempData["success"] = "Leave request was created successfully.";
+                    TempData["success"] = "Leave request was updated successfully.";
                     return RedirectToAction("leaves", "personel", new { Area = "personel" });
                 }
                 else
