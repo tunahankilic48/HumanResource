@@ -74,7 +74,7 @@ namespace HumanResource.Application.Models.DTOs.CompanyManagerDTO
 
         [Display(Name = "Title")]
         public int? TitleId { get; set; }
-
+        [Display(Name = "Company Position")]
         public bool IsEmployee { get; set; }
 
 

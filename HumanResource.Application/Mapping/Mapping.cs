@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using HumanResource.Application.Models.DTOs.AccountDTO;
 using HumanResource.Application.Models.DTOs.AdvanceDTOs;
+using HumanResource.Application.Models.DTOs.CompanyDTO;
 using HumanResource.Application.Models.DTOs.CompanyManagerDTO;
 using HumanResource.Application.Models.DTOs.DepartmentDTOs;
 using HumanResource.Application.Models.DTOs.ExpenseDTO;
@@ -44,6 +45,7 @@ namespace HumanResource.Application.Mapping
             CreateMap<AppUser, CreateEmployeeDTO>().ReverseMap();
 
             CreateMap<Company, CompanyDetailsVM>().ReverseMap();
+            CreateMap<Company, UpdateCompanyDTO>().ReverseMap();
 
             CreateMap<Company, RegisterDTO>().ReverseMap();
             CreateMap<Address, RegisterDTO>().ReverseMap();

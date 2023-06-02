@@ -30,13 +30,18 @@
         <!-- Sidebar -->
         <ul class="navbar-nav sidebar sidebar-dark accordion selectColor" id="accordionSidebar">
 
-            <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-                <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-laugh-wink"></i>@*ToDo : Şirket logosu konulabilir*@
-                </div>
-                <div class="sidebar-brand-text mx-3">Şirket Adı</div>@*ToDo : Şirket Adı konulabilir*@
-            </a>
+
+
+            <!-- Nav Item - User Information -->
+            <div class="nav-item d-flex">
+                <a class="nav-link">
+                    <img class="img-profile rounded-circle ms-3"
+                         src="@((ViewBag.Personel).CompanyLogo)">
+                    <span class="mr-2 d-none d-lg-inline">@((ViewBag.Personel).CompanyName)</span>
+
+                </a>
+
+            </div>
 
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
@@ -45,7 +50,7 @@
             <li class="nav-item active ms-3">
                 <a class="nav-link" href="index.html">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Human Resources</span>@*ToDo : Uygulama adı konulabilir*@
+                    <span>Human Resources</span>
                 </a>
             </li>
 
@@ -93,7 +98,7 @@
                     <span>Expenses</span>
                 </a>
             </li>
-            @if (User.IsInRole("Employee"))
+            @if ((User.IsInRole("Employee") || User.IsInRole("Manager")) && !User.IsInRole("CompanyManager"))
             {
                 <li class="nav-item ms-3">
                     <a class="nav-link collapsed" asp-area="personel" asp-controller="personel" asp-action="Employees">
@@ -308,7 +313,7 @@
             collection[0].classList.add("bg-gradient-primary")
         </script>
     }
-    @if(User.IsInRole("CompanyManager"))
+    @if (User.IsInRole("CompanyManager"))
     {
         <script>
             const collection = document.getElementsByClassName("selectColor");

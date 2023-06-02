@@ -130,11 +130,12 @@ namespace HumanResource.Application.Services.LeaveServices
                     LeavePeriod = x.LeavePeriod,
                     LeaveType = x.LeaveType.Name,
                     PersonelName = x.User.FirstName + " " + x.User.LastName,
-                    CreatedDate = x.CreatedDate.ToShortDateString()
+                    CreatedDate = x.CreatedDate.ToShortDateString(),
+                    Statu = x.Statu.Name
                 },
                 where: x => x.Id == id,
                 orderby: null,
-                include: x => x.Include(x => x.User).Include(x=>x.LeaveType)
+                include: x => x.Include(x => x.User).Include(x=>x.LeaveType).Include(x => x.Statu)
                 );
             return advance;
         }

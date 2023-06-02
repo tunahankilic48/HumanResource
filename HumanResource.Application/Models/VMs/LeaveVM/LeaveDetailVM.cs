@@ -1,4 +1,4 @@
-﻿using Bogus.DataSets;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel.DataAnnotations;
 
 namespace HumanResource.Application.Models.VMs.LeaveVM
@@ -22,6 +22,8 @@ namespace HumanResource.Application.Models.VMs.LeaveVM
         public string LeaveType { get; set; }
         [Display(Name ="Description")]
         public string Description { get; set; }
+        [ValidateNever]
+        public string Statu { get; set; }
 
     }
 }

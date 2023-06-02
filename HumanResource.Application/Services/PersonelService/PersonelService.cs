@@ -34,11 +34,13 @@ namespace HumanResource.Application.Services.PersonelService
                    LastName = x.LastName,
                    Image = x.ImagePath == null ? "/media/images/noImage.png" : x.ImagePath,
                    FullName = x.FirstName + " " + x.LastName,
-                   CompanyId = x.CompanyId
+                   CompanyId = x.CompanyId,
+                   CompanyName = x.Company.CompanyName,
+                   CompanyLogo = x.Company.ImagePath
                },
                where: x => x.UserName == userName,
                orderby: null,
-               include: x => x.Include(x => x.Department)
+               include: x => x.Include(x => x.Department).Include(x=>x.Company)
                );
 
             return personel;

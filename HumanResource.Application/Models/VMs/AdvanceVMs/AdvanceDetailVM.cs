@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations;
 
 namespace HumanResource.Application.Models.VMs.AdvanceVMs
 {
@@ -17,6 +18,8 @@ namespace HumanResource.Application.Models.VMs.AdvanceVMs
         public string PersonelName { get; set; }
         [Display(Name ="Created Date")]
         public string CreatedDate { get; set; }
+        [ValidateNever]
+        public string Statu { get; set; }
 
     }
 }
