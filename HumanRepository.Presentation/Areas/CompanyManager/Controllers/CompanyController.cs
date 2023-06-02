@@ -34,6 +34,8 @@ namespace HumanResource.Presentation.Areas.CompanyManager.Controllers
 			ViewBag.Cities = new SelectList(await _addressService.GetCities(), "Id", "Name");
 			ViewBag.Districts = new SelectList(await _addressService.GetDistricts(), "Id", "Name");
 			ViewBag.Countries = new SelectList(await _addressService.GetCountries(), "Id", "Name");
+            ViewBag.CompanyManagers = new SelectList(await _companyManagerService.GetCompanyManagers(personel.CompanyId), "Id", "FullName");
+            ViewBag.BaseUrl = Request.Scheme + "://" + HttpContext.Request.Host.ToString();
             return View(await _companyManagerService.GetCompany(personel.CompanyId));
         }
 
@@ -54,7 +56,13 @@ namespace HumanResource.Presentation.Areas.CompanyManager.Controllers
                     TempData["error"] = "Something goes wrong, Company could not be created.";
                 }
             }
-            ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
+            var personel = await _personelService.GetPersonel(User.Identity.Name);
+            ViewBag.Personel = personel;
+            ViewBag.Cities = new SelectList(await _addressService.GetCities(), "Id", "Name");
+            ViewBag.Districts = new SelectList(await _addressService.GetDistricts(), "Id", "Name");
+            ViewBag.Countries = new SelectList(await _addressService.GetCountries(), "Id", "Name");
+            ViewBag.CompanyManagers = new SelectList(await _companyManagerService.GetCompanyManagers(personel.CompanyId), "Id", "FullName");
+            ViewBag.BaseUrl = Request.Scheme + "://" + HttpContext.Request.Host.ToString();
             return View(model);
         }
     }

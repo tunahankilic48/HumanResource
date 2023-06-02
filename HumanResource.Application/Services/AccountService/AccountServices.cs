@@ -113,6 +113,8 @@ namespace HumanResource.Application.Services.AccountServices
 
             IdentityResult resultUser = await _userManager.CreateAsync(user, model.Password);
             await _userManager.AddToRoleAsync(user, "CompanyManager");
+            await _userManager.AddToRoleAsync(user, "Manager");
+            await _userManager.AddToRoleAsync(user, "Employee");
             bool resultCompany = await _companyRepository.Add(company);
             if (resultCompany && resultUser.Succeeded)
             {
@@ -183,8 +185,6 @@ namespace HumanResource.Application.Services.AccountServices
 
                 user.ImagePath = $"/media/images/{guid}.jpg";
             }
-            else
-                user.ImagePath = model.ImagePath;
             user.FirstName = model.FirstName;
             user.LastName = model.LastName;
             user.PhoneNumber = model.PhoneNumber;

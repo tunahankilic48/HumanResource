@@ -114,7 +114,7 @@ namespace HumanResource.Application.Services.SiteAdminService
                     CompanyName = x.CompanyName,
                     CompanySectorId = x.CompanySectorId
                 },
-                where: null,
+                where: x=>x.StatuId == Status.Active.GetHashCode(),
                 orderby: x => x.OrderBy(x => x.CompanySectorId)
                 );
             double companyCount = companies.Count;
@@ -127,7 +127,7 @@ namespace HumanResource.Application.Services.SiteAdminService
                     CompanySectorId = x.CompanySectorId,
                     CompanySectorName = x.CompanySector.Name,
                 },
-                where: x => x.CompanySectorId == i,
+                where: x => x.CompanySectorId == i && x.StatuId == Status.Active.GetHashCode(),
                 orderby: null,
                 include: x => x.Include(x => x.CompanySector)
                 );

@@ -20,16 +20,15 @@
 
                         <div class="col-lg-10">
                             <input asp-for="Id" type="hidden" />
-                            <input asp-for="DistrictId" type="hidden" />
-
                             @if (!String.IsNullOrEmpty(Model.ImagePath))
                             {
-                                <img src="@Model.ImagePath" class="rounded-circle mx-auto d-block" style="height:250px " />
+                                <img src="@Model.ImagePath" class="img-profile rounded-circle mx-auto d-block mb-3" alt="Cinque Terre" width="190" height="215">
 
                             }
+                            
                             else
                             {
-                                <img src="~/media/images/noImage.png" class="rounded-circle mx-auto d-block" />
+                                <img src="~/media/images/noImage.png" class="img-profile rounded-circle mx-auto d-block mb-3" alt="Cinque Terre" width="190" height="215" />
                             }
 
                             <div class="form-group">
@@ -73,7 +72,12 @@
                                 <span class="text-danger" asp-validation-for="DepartmentId"></span>
                             </div>
 
-
+                            <div class="form-group">
+                                <label asp-for="TitleId" class="form-label">@Html.DisplayNameFor(x=>x.TitleId)</label>
+                                <select asp-for="TitleId" class="custom-select" asp-items="@ViewBag.Titles">
+                                </select>
+                                <span class="text-danger" asp-validation-for="TitleId"></span>
+                            </div>
                         </div>
 
 
@@ -94,14 +98,7 @@
 
                     <div class="row d-flex justify-content-center">
                         <div class="col-lg-10">
-
-                            <div class="form-group">
-                                <label asp-for="TitleId" class="form-label">@Html.DisplayNameFor(x=>x.TitleId)</label>
-                                <select asp-for="TitleId" class="custom-select" asp-items="@ViewBag.Titles">
-                                </select>
-                                <span class="text-danger" asp-validation-for="TitleId"></span>
-                            </div>
-
+                                                      
                             <div class="form-group">
                                 <label asp-for="BloodTypeId" class="form-label">@Html.DisplayNameFor(x=>x.BloodTypeId)</label>
                                 <select asp-for="BloodTypeId" class="custom-select" asp-items="@Html.GetEnumSelectList<BloodTypeEnumVM>()">
@@ -141,7 +138,7 @@
 
                             <div class="form-group">
                                 <label asp-for="CountryId" class="form-label">@Html.DisplayNameFor(x=>x.CountryId)</label>
-                                <select asp-for="CountryId" class="custom-select mt-1" id="countryList" asp-items="@ViewBag.Countries">
+                                <select asp-for="CountryId" class="custom-select" id="countryList" asp-items="@ViewBag.Countries">
                                     <option value="">Please select a Country</option>
                                 </select>
                                 <span class="text-danger" asp-validation-for="CountryId"></span>
@@ -149,7 +146,7 @@
 
                             <div class="form-group">
                                 <label asp-for="CityId" class="form-label">@Html.DisplayNameFor(x=>x.CityId)</label>
-                                <select asp-for="CityId" class="custom-select mt-1" id="cityList" asp-items="@ViewBag.Cities" disabled>
+                                <select asp-for="CityId" class="custom-select" id="cityList" asp-items="@ViewBag.Cities" disabled>
                                     <option value="">Please select a City</option>
                                 </select>
                                 <span class="text-danger" asp-validation-for="CityId"></span>
@@ -165,7 +162,7 @@
 
                             <div class="form-group">
                                 <label asp-for="AddressDescription" class="form-label">@Html.DisplayNameFor(x=>x.AddressDescription)</label>
-                                <textarea asp-for="AddressDescription" class="form-control" rows="4" style="resize:none"></textarea>
+                                <textarea asp-for="AddressDescription" class="form-control" rows="7" style="resize:none"></textarea>
                                 <span class="text-danger" asp-validation-for="AddressDescription"></span>
                             </div>
 

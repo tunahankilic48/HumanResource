@@ -44,6 +44,11 @@
                                 </select>
                             </div>
 
+                            <div class="form-group">
+                                <label asp-for="LeavePeriod" class="form-label">Leave Period</label>
+                                <input  class="form-control" type="number" placeholder="Total Number of Leave Days" step="0.5">
+                                <span asp-validation-for="LeavePeriod"></span>
+                            </div>
 
                         </div>
                     </div>

@@ -11,6 +11,7 @@ using HumanResource.Domain.Repositories;
 using HumanResource.Domain.Repositries;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace HumanResource.Application.Services.CompanyManagerService
 {
@@ -140,7 +141,7 @@ namespace HumanResource.Application.Services.CompanyManagerService
             }
         }
 
-        public async Task<List<CompanyManagerVM>> GetCompanyManagers(int companyId)
+        public async Task<List<CompanyManagerVM>> GetCompanyManagers(int? companyId)
         {
             var companyPersonels = await _appUserRepository.GetFilteredList(
               select: x => new CompanyManagerVM()
@@ -156,7 +157,7 @@ namespace HumanResource.Application.Services.CompanyManagerService
             List<CompanyManagerVM> companyManagers = new List<CompanyManagerVM>();
             foreach (var personel in companyPersonels)
             {
-                if (await IsCompanyManager(personel.UserName))
+                if (await IsManager(personel.UserName))
                 {
                     companyManagers.Add(personel);
                 }
@@ -287,8 +288,6 @@ namespace HumanResource.Application.Services.CompanyManagerService
 
                 user.ImagePath = $"/media/images/{guid}.jpg";
             }
-            else
-                user.ImagePath = model.ImagePath;
             user.BirthDate = model.BirthDate;
             user.BloodTypeId = model.BloodTypeId;
             user.FirstName = model.FirstName;
@@ -309,25 +308,27 @@ namespace HumanResource.Application.Services.CompanyManagerService
             }
 
 
-            if (model.DistrictId != 0 && model.CityId != 0 && model.CountryId != 0)
+            Address address = await _addressRepository.GetDefault(x => x.AppUserId == model.Id);
+            if (user.Address != null)
             {
-                if (user.Address == null)
+                if (model.DistrictId != address.DistrictId || model.AddressDescription != address.Description)
                 {
-                    user.Address = new Address()
-                    {
-                        CreatedDate = DateTime.Now,
-                        Description = model.AddressDescription,
-                        DistrictId = model.DistrictId,
-                    };
-
-                }
-                else
-                {
-                    user.Address.ModifiedDate = DateTime.Now;
-                    user.Address.DistrictId = model.DistrictId;
-                    user.Address.Description = model.AddressDescription;
+                    address.DistrictId = model.DistrictId;
+                    address.Description = model.AddressDescription;
+                    await _addressRepository.Update(address);
                 }
             }
+            else
+            {
+                user.Address = new Address()
+                {
+                    CreatedDate = DateTime.Now,
+                    Description = model.AddressDescription,
+                    DistrictId = model.DistrictId,
+                };
+            }
+
+          
             if (errorEmail.Description == null && errorUserName.Description == null)
                 return await _userManager.UpdateAsync(user);
             else
@@ -435,7 +436,7 @@ namespace HumanResource.Application.Services.CompanyManagerService
                 CityId = x.Address.District.CityId,
                 DistrictId = x.Address.DistrictId,
                 AddressDescription = x.Address.Description,
-                ManagerName = x.CompanyRepresentative.FirstName + " " + x.CompanyRepresentative.LastName,
+                ManagerId = x.CompanyRepresentativeId,
                 ImagePath = x.ImagePath
             },
             where: x => x.Id == id,
@@ -446,17 +447,31 @@ namespace HumanResource.Application.Services.CompanyManagerService
         }
         public async Task<bool> UpdateCompany(UpdateCompanyDTO model)
         {
+            Company company = await _companyRepository.GetDefault(x=>x.Id == model.CompanyId);
+            if (model.Image != null)
+            {
+                using var image = Image.Load(model.Image.OpenReadStream());
 
-            Company company = await _companyRepository.GetDefault(x => x.Id == model.CompanyId);
-            company.ImagePath = model.ImagePath;
+                Guid guid = Guid.NewGuid();
+                image.Save($"wwwroot/media/images/{guid}.jpg");
+
+				company.ImagePath = $"/media/images/{guid}.jpg";
+            }
             company.CompanyName = model.CompanyName;
-            company.TaxNumber = model.TaxNumber;
-            company.TaxOfficeName = model.TaxOfficeName;
             company.PhoneNumber = model.PhoneNumber;
             company.NumberOfEmployee = model.NumberOfEmployee;
-            company.ModifiedDate = model.ModifiedDate;
-            company.Address = await _addressRepository.GetDefault(x => x.Company.Address.District.Id == model.DistrictId);
 
+
+            Address address = await _addressRepository.GetDefault(x => x.CompanyId == model.CompanyId);
+
+            if(model.DistrictId != address.DistrictId || model.AddressDescription != address.Description)
+            {
+                address.DistrictId = model.DistrictId;
+                address.Description = model.AddressDescription;
+                await _addressRepository.Update(address);
+            }
+
+            company.CompanyRepresentativeId = model.ManagerId;
             return await _companyRepository.Update(company);
         }
 

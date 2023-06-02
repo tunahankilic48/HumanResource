@@ -2,14 +2,12 @@
 using HumanResource.Application.Models.DTOs.ExpenseDTO;
 using HumanResource.Application.Models.VMs.CompanyManagerVMs;
 using HumanResource.Application.Models.VMs.ExpenseVM;
-using HumanResource.Application.Models.VMs.LeaveVM;
 using HumanResource.Application.Models.VMs.PersonelVM;
 using HumanResource.Application.Services.PersonelService;
 using HumanResource.Domain.Entities;
 using HumanResource.Domain.Enums;
 using HumanResource.Domain.Repositories;
 using HumanResource.Domain.Repositries;
-using HumanResource.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace HumanResource.Application.Services.ExpenseService
@@ -107,11 +105,12 @@ namespace HumanResource.Application.Services.ExpenseService
                     ExpenseType = x.ExpenseType.Name,
                     ExpenseDate = x.ExpenseDate.ToShortDateString(),
                     PersonelName = x.User.FirstName + " " + x.User.LastName,
-                    CreatedDate = x.CreatedDate.ToShortDateString()
+                    CreatedDate = x.CreatedDate.ToShortDateString(),
+                    Statu = x.Statu.Name
                 },
                 where: x => x.Id == id,
                 orderby: null,
-                include: x => x.Include(x => x.User).Include(x=>x.CurrencyType).Include(x=>x.ExpenseType)
+                include: x => x.Include(x => x.User).Include(x=>x.CurrencyType).Include(x=>x.ExpenseType).Include(x => x.Statu)
                 );
             return expense;
         }

@@ -48,13 +48,7 @@ namespace HumanResource.Application.Models.DTOs.CompanyDTO
         public string? AddressDescription { get; set; }
 
         [Display(Name = "Manager")]
-        public string? ManagerName { get; set; }
-
-        //[Display(Name = "Department")]
-        //public int? DepartmentId { get; set; }
-
-        //[Display(Name = "Title")]
-        //public int? TitleId { get; set; }
+        public Guid? ManagerId { get; set; }
 
         [ValidateNever]
         public IFormFile? Image { get; set; }

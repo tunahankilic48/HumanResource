@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations;
 
 namespace HumanResource.Application.Models.VMs.ExpenseVM
 {
@@ -25,5 +26,7 @@ namespace HumanResource.Application.Models.VMs.ExpenseVM
         public string PersonelName { get; set; }
         [Display(Name = "Created Date")]
         public string CreatedDate { get; set; }
+        [ValidateNever]
+        public string Statu { get; set; }
     }
 }

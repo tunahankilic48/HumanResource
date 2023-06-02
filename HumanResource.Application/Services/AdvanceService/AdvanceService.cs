@@ -39,11 +39,12 @@ namespace HumanResource.Application.Services.AdvanceService
                     Description = x.Description,
                     AdvanceDate = x.AdvanceDate.ToShortDateString(),
                     PersonelName = x.User.FirstName + " " + x.User.LastName,
-                    CreatedDate = x.CreatedDate.ToShortDateString()
+                    CreatedDate = x.CreatedDate.ToShortDateString(),
+                    Statu = x.Statu.Name
                 },
                 where: x => x.Id == id,
                 orderby: null,
-                include: x => x.Include(x => x.User)
+                include: x => x.Include(x => x.User).Include(x=>x.Statu)
                 );
             return advance;
         }
