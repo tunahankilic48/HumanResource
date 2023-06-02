@@ -59,7 +59,7 @@ namespace HumanResource.Application.Models.DTOs.CompanyManagerDTO
         [Required(ErrorMessage = "Please select a department.")]
         public int? DepartmentId { get; set; }
 
-        [Display(Name = "Birt Date")]
+        [Display(Name = "Birth Date")]
         [Required(ErrorMessage = "Birth date cannot be null")]
         public DateTime? BirthDate { get; set; }
 
@@ -84,6 +84,7 @@ namespace HumanResource.Application.Models.DTOs.CompanyManagerDTO
         [ValidateNever]
         public int CompanyId { get; set; }
 
+        [Display(Name = "Company Position")]
         public bool IsEmployee { get; set; }
 
         public DateTime CreatedDate => DateTime.Now;

@@ -14,7 +14,7 @@ namespace HumanResource.Application.Models.DTOs.AdvanceDTOs
     {
 
         [Required(ErrorMessage = "Amount field cannot be empty!")]
-        [Range(0, 99999.99, ErrorMessage = "Please enter between 0-99999.99!")]
+        [Range(0, 9999999.99, ErrorMessage = "Please enter between 0-10000000!")]
         //[RegularExpression(@"^\d+$", ErrorMessage = "No letters or symbols can be entered!")]
         [Display(Name = "Amount")]
         [Amount]
