@@ -76,7 +76,7 @@ namespace HumanResource.Presentation.Areas.Personel.Controllers
                     var message = new Message(result.ManagerEmail, $"Updated Advance Request", $"Advance Request was updated by {result.EmployeeName}. Please <a href={conformationLink!}>click here</a> to display advance request.");
                     _emailService.SendEmail(message);
 
-                    TempData["success"] = "advance request was created successfully.";
+                    TempData["success"] = "advance request was updated successfully.";
                     return RedirectToAction("advances", "personel", new { Area = "personel" });
                 }
                 else
