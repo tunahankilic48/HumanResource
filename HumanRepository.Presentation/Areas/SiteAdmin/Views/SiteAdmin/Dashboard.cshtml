@@ -29,7 +29,7 @@
                 legendText: "{label}",
                 indexLabel: "{label} - {y}%",
                 dataPoints: @Html.Raw(ViewBag.Data2)
-                                                                                                        }]
+        }]
         });
         chart.render();
         var chart = new CanvasJS.Chart("chartContainer", {
@@ -50,7 +50,7 @@
                 legendText: "{label}",
                 indexLabel: "{label} - {y}%",
                 dataPoints: @Html.Raw(ViewBag.Data)
-                                                                                        }]
+        }]
         });
         chart.render();
     }
