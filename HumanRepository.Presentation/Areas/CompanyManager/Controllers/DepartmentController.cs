@@ -61,7 +61,7 @@ namespace HumanResource.Presentation.Areas.CompanyManager.Controllers
                 var result = await _departmentService.Update(model);
                 if (result)
                 {
-                    TempData["success"] = "Department was created successfully.";
+                    TempData["success"] = "Department was updated successfully.";
                     return RedirectToAction("departments", "companymanager", new { Area = "companymanager" });
                 }
                 else
