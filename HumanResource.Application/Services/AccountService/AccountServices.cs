@@ -185,11 +185,17 @@ namespace HumanResource.Application.Services.AccountServices
 
                 user.ImagePath = $"/media/images/{guid}.jpg";
             }
+
             user.FirstName = model.FirstName;
             user.LastName = model.LastName;
             user.PhoneNumber = model.PhoneNumber;
             user.BirthDate = model.BirthDate;
             user.BloodTypeId = model.BloodTypeId;
+            user.DepartmentId = model.DepartmentId;
+            user.TitleId = model.TitleId;
+            user.ManagerId = model.ManagerId;
+            user.BirthDate = model.BirthDate;
+            user.RecruitmentDate = model.RecruitmentDate;
 
             if (model.DistrictId != 0 && model.CityId != 0)
             {

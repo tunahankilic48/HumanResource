@@ -19,13 +19,8 @@
                         <div class="col-lg-10">
                             <input asp-for="Id" type="hidden" />
                             <input asp-for="DistrictId" type="hidden" />
-                            <input asp-for="FirstName" type="hidden" />
-                            <input asp-for="LastName" type="hidden" />
-                            <input asp-for="DepartmentId" type="hidden" />
-                            <input asp-for="TitleId" type="hidden" />
-                            <input asp-for="ManagerId" type="hidden" />
-                            <input asp-for="BirthDate" type="hidden" />
-                            <input asp-for="RecruitmentDate" type="hidden" />
+
+
 
                             @if (!String.IsNullOrEmpty(Model.ImagePath))
                             {
@@ -44,6 +39,8 @@
 
                             @if ((User.IsInRole("Employee") || User.IsInRole("Manager")) && !User.IsInRole("CompanyManager"))
                             {
+                                <input asp-for="FirstName" type="hidden" />
+                                <input asp-for="LastName" type="hidden" />
                                 <div class="form-group">
                                     <label asp-for="FirstName" class="form-label">@Html.DisplayNameFor(x=>x.FirstName)</label>
                                     <input asp-for="FirstName" class="form-control" readonly>
@@ -105,7 +102,7 @@
                                 <span class="text-danger" asp-validation-for="PhoneNumber"></span>
                             </div>
 
-                           
+
 
 
                         </div>
@@ -118,7 +115,7 @@
             </div>
         </div>
 
-        
+
 
         <div class="col-lg-6">
             <div class="card shadow mb-4">
@@ -131,6 +128,11 @@
 
                             @if ((User.IsInRole("Employee") || User.IsInRole("Manager")) && !User.IsInRole("CompanyManager"))
                             {
+                                <input asp-for="DepartmentId" type="hidden" />
+                                <input asp-for="TitleId" type="hidden" />
+                                <input asp-for="ManagerId" type="hidden" />
+                                <input asp-for="BirthDate" type="hidden" />
+                                <input asp-for="RecruitmentDate" type="hidden" />
                                 <div class="form-group">
                                     <label asp-for="DepartmentId" class="form-label">@Html.DisplayNameFor(x=>x.DepartmentId)</label>
                                     <select asp-for="DepartmentId" class="custom-select" disabled asp-items="@ViewBag.Departments">
@@ -167,42 +169,42 @@
                             }
                             @if (User.IsInRole("CompanyManager"))
                             {
-                            <div class="form-group">
-                                <label asp-for="DepartmentId" class="form-label">@Html.DisplayNameFor(x=>x.DepartmentId)</label>
-                                <select asp-for="DepartmentId" class="custom-select" asp-items="@ViewBag.Departments">
-                                </select>
-                                <span class="text-danger" asp-validation-for="DepartmentId"></span>
-                            </div>
+                                <div class="form-group">
+                                    <label asp-for="DepartmentId" class="form-label">@Html.DisplayNameFor(x=>x.DepartmentId)</label>
+                                    <select asp-for="DepartmentId" class="custom-select" asp-items="@ViewBag.Departments">
+                                    </select>
+                                    <span class="text-danger" asp-validation-for="DepartmentId"></span>
+                                </div>
 
-                            <div class="form-group">
-                                <label asp-for="TitleId" class="form-label">@Html.DisplayNameFor(x=>x.TitleId)</label>
-                                <select asp-for="TitleId" class="custom-select" asp-items="@ViewBag.Titles">
-                                </select>
-                                <span class="text-danger" asp-validation-for="TitleId"></span>
-                            </div>
+                                <div class="form-group">
+                                    <label asp-for="TitleId" class="form-label">@Html.DisplayNameFor(x=>x.TitleId)</label>
+                                    <select asp-for="TitleId" class="custom-select" asp-items="@ViewBag.Titles">
+                                    </select>
+                                    <span class="text-danger" asp-validation-for="TitleId"></span>
+                                </div>
 
-                            <div class="form-group">
-                                <label asp-for="BirthDate" class="form-label">@Html.DisplayNameFor(x=>x.BirthDate)</label>
-                                <input asp-for="BirthDate" class="form-control" type="date">
-                                <span class="text-danger" asp-validation-for="BirthDate"></span>
-                            </div>
+                                <div class="form-group">
+                                    <label asp-for="BirthDate" class="form-label">@Html.DisplayNameFor(x=>x.BirthDate)</label>
+                                    <input asp-for="BirthDate" class="form-control" type="date">
+                                    <span class="text-danger" asp-validation-for="BirthDate"></span>
+                                </div>
 
 
-                            <div class="form-group">
-                                <label asp-for="RecruitmentDate" class="form-label">@Html.DisplayNameFor(x=>x.RecruitmentDate)</label>
-                                <input asp-for="RecruitmentDate" class="form-control" type="date">
-                                <span class="text-danger" asp-validation-for="RecruitmentDate"></span>
-                            </div>
+                                <div class="form-group">
+                                    <label asp-for="RecruitmentDate" class="form-label">@Html.DisplayNameFor(x=>x.RecruitmentDate)</label>
+                                    <input asp-for="RecruitmentDate" class="form-control" type="date">
+                                    <span class="text-danger" asp-validation-for="RecruitmentDate"></span>
+                                </div>
 
-                            <div class="form-group">
-                                <label asp-for="ManagerId" class="form-label">@Html.DisplayNameFor(x=>x.ManagerId)</label>
-                                <select asp-for="ManagerId" class="custom-select" asp-items="@ViewBag.CompanyManagers">
-                                </select>
-                                <span class="text-danger" asp-validation-for="ManagerId"></span>
-                            </div>
+                                <div class="form-group">
+                                    <label asp-for="ManagerId" class="form-label">@Html.DisplayNameFor(x=>x.ManagerId)</label>
+                                    <select asp-for="ManagerId" class="custom-select" asp-items="@ViewBag.CompanyManagers">
+                                    </select>
+                                    <span class="text-danger" asp-validation-for="ManagerId"></span>
+                                </div>
                             }
 
-                            
+
 
                             <div class="form-group">
                                 <label asp-for="BloodTypeId" class="form-label">@Html.DisplayNameFor(x=>x.BloodTypeId)</label>
