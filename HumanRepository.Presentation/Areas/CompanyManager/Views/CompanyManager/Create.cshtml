@@ -81,7 +81,14 @@
                                 <label asp-for="Image" class="form-label">Select Image</label>
                                 <input asp-for="Image" type="file" class="form-control">
                             </div>
-                           
+
+                            <div class="form-group">
+                                <label asp-for="BloodTypeId" class="form-label">@Html.DisplayNameFor(x=>x.BloodTypeId)</label>
+                                <select asp-for="BloodTypeId" class="custom-select" asp-items="@Html.GetEnumSelectList<BloodTypeEnumVM>()">
+                                    <option value="">Please select a Blood Type</option>
+                                </select>
+                                <span class="text-danger" asp-validation-for="BloodTypeId"></span>
+                            </div>
 
                         </div>
                     </div>
@@ -99,14 +106,6 @@
 
                     <div class="row d-flex justify-content-center">
                         <div class="col-lg-10">
-
-                            <div class="form-group">
-                                <label asp-for="BloodTypeId" class="form-label">@Html.DisplayNameFor(x=>x.BloodTypeId)</label>
-                                <select asp-for="BloodTypeId" class="custom-select" asp-items="@Html.GetEnumSelectList<BloodTypeEnumVM>()">
-                                    <option value="">Please select a Blood Type</option>
-                                </select>
-                                <span class="text-danger" asp-validation-for="BloodTypeId"></span>
-                            </div>
                                                        
                             <div class="form-group">
                                 <label asp-for="BirthDate" class="form-label">@Html.DisplayNameFor(x=>x.BirthDate)</label>
@@ -141,7 +140,7 @@
 
                             <div class="form-group">
                                 <label asp-for="CountryId" class="form-label">@Html.DisplayNameFor(x=>x.CountryId)</label>
-                                <select asp-for="CountryId" class="custom-select mt-1" id="countryList" asp-items="@ViewBag.Countries">
+                                <select asp-for="CountryId" class="custom-select" id="countryList" asp-items="@ViewBag.Countries">
                                     <option value="">Please select a Country</option>
                                 </select>
                                 <span class="text-danger" asp-validation-for="CountryId"></span>
@@ -158,14 +157,14 @@
 
                             <div class="form-group">
                                 <label asp-for="DistrictId" class="form-label">@Html.DisplayNameFor(x=>x.DistrictId)</label>
-                                <select asp-for="DistrictId" class="custom-select" id="districtList" asp-items="@ViewBag.Districts" disabled>
+                                <select asp-for="DistrictId" class="custom-select mt-1" id="districtList" asp-items="@ViewBag.Districts" disabled>
                                 </select>
                                 <span class="text-danger" asp-validation-for="DistrictId"></span>
                             </div>
 
                             <div class="form-group">
                                 <label asp-for="AddressDescription" class="form-label">@Html.DisplayNameFor(x=>x.AddressDescription)</label>
-                                <textarea asp-for="AddressDescription" class="form-control" rows="4" style="resize:none"></textarea>
+                                <textarea asp-for="AddressDescription" class="form-control mt-1" rows="4" style="resize:none"></textarea>
                                 <span class="text-danger" asp-validation-for="AddressDescription"></span>
                             </div>
                             <input id="url" type="hidden" value="@(ViewBag.BaseUrl)" />
