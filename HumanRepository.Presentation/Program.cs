@@ -34,20 +34,11 @@ builder.Services.AddIdentity<AppUser, IdentityRole<Guid>>(options =>
     
 }).AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 
-//builder.Services.AddAuthentication(options =>
-//{
-//    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-//    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-//    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-//});
 
 var emailConfig = builder.Configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>();
 builder.Services.AddSingleton(emailConfig);
 builder.Services.AddScoped<IEmailService, EmailService>();
 
-
-
-//builder.Services.AddSingleton<IEmailSender, EmailSender>();
 
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 

@@ -1,7 +1,4 @@
-﻿using MimeKit;
-using System.Net.Mail;
-
-namespace HumanResource.Application.Models.VMs.EmailVM
+﻿namespace HumanResource.Application.Models.VMs.EmailVM
 {
     public class Message
     {

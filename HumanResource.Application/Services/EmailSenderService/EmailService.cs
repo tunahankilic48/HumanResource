@@ -1,5 +1,4 @@
 ﻿using HumanResource.Application.Models.VMs.EmailVM;
-
 using System.Net;
 using System.Net.Mail;
 
