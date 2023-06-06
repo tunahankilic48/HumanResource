@@ -306,7 +306,7 @@
     <script src="~/media/bootstrap/bootstrap-datepicker.min.js"></script>
     <script src="https://kit.fontawesome.com/40d871c6c3.js" crossorigin="anonymous"></script>
 
-    @if (User.IsInRole("Employee"))
+    @if (User.IsInRole("Employee") && !User.IsInRole("CompanyManager"))
     {
         <script>
             const collection = document.getElementsByClassName("selectColor");
