@@ -197,24 +197,24 @@ namespace HumanResource.Application.Services.AccountServices
             user.BirthDate = model.BirthDate;
             user.RecruitmentDate = model.RecruitmentDate;
 
-            if (model.DistrictId != 0 && model.CityId != 0)
+            Address address = await _addressRepository.GetDefault(x => x.AppUserId == model.Id);
+            if (user.Address != null)
             {
-                if (user.Address == null)
+                if (model.DistrictId != address.DistrictId || model.AddressDescription != address.Description)
                 {
-                    user.Address = new Address()
-                    {
-                        CreatedDate = DateTime.Now,
-                        Description = model.AddressDescription,
-                        DistrictId = model.DistrictId,
-                    };
-
+                    address.DistrictId = model.DistrictId;
+                    address.Description = model.AddressDescription;
+                    await _addressRepository.Update(address);
                 }
-                else
+            }
+            else
+            {
+                user.Address = new Address()
                 {
-                    user.Address.ModifiedDate = DateTime.Now;
-                    user.Address.DistrictId = model.DistrictId;
-                    user.Address.Description = model.AddressDescription;
-                }
+                    CreatedDate = DateTime.Now,
+                    Description = model.AddressDescription,
+                    DistrictId = model.DistrictId,
+                };
             }
 
             await _userManager.UpdateAsync(user);
