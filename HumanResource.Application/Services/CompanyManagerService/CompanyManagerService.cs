@@ -506,17 +506,17 @@ namespace HumanResource.Application.Services.CompanyManagerService
 
             return leaveTypeVM;
         }
-		public async Task<List<ExpenseTypePieVM>> ExpensesDistributionByExpensesType()
+		public async Task<List<ExpenseTypePieVM>> ExpensesDistributionByExpensesType(int? companyId)
 		{
 			List<ExpenseTypePieVM> ExpensesDistributionByExpensesType = new List<ExpenseTypePieVM>();
 			var expenses = await _expenseRepository.GetFilteredList(
 				select: x => new ExpenseTypePie2VM()
 				{
-					PersonelName = x.User.UserName,
 					ExpenseTypeId = x.ExpenseTypeId
 				},
-				where: null,
-				orderby: x => x.OrderBy(x => x.ExpenseTypeId)
+				where: x=>x.User.CompanyId == companyId,
+				orderby: x => x.OrderBy(x => x.ExpenseTypeId),
+                include: x=>x.Include(x=>x.User)
 				);
 			double expenseCount = expenses.Count;
 			for (int i = 1; i <= Enum.GetValues(typeof(ExpenseTypes)).Length; i++)
@@ -524,13 +524,12 @@ namespace HumanResource.Application.Services.CompanyManagerService
 				var tempExpenses = await _expenseRepository.GetFilteredList(
 				select: x => new ExpenseTypePie2VM()
 				{
-					PersonelName = x.User.UserName,
 					ExpenseTypeId = x.ExpenseTypeId,
 					ExpenseTypeName = x.ExpenseType.Name
 				},
-				where: x => x.ExpenseTypeId == i,
+				where: x => x.ExpenseTypeId == i && x.User.CompanyId == companyId,
 				orderby: null,
-				include: x => x.Include(x => x.ExpenseType)
+				include: x => x.Include(x => x.ExpenseType).Include(x=>x.User)
 				);
 
 				if (tempExpenses.Count != 0)

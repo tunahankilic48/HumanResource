@@ -25,7 +25,7 @@ namespace HumanResource.Application.Services.CompanyManagerService
         Task<List<PersonelExpenseRequestVM>> GetPersonelExpenseRequests(Guid id);
         Task<UpdateCompanyDTO> GetCompany(int? id);
         Task <bool> UpdateCompany(UpdateCompanyDTO model);
-        Task<List<ExpenseTypePieVM>> ExpensesDistributionByExpensesType();
+        Task<List<ExpenseTypePieVM>> ExpensesDistributionByExpensesType(int? companyId);
 
 	}
 }

@@ -94,7 +94,11 @@ namespace HumanResource.Presentation.Areas.CompanyManager.Controllers
             ViewBag.CompanyManagers = new SelectList(await _companyManagerService.GetCompanyManagers(personel.CompanyId), "Id", "FullName");
             ViewBag.Cities = new SelectList(await _addressService.GetCities(), "Id", "Name");
             ViewBag.Districts = new SelectList(await _addressService.GetDistricts(), "Id", "Name");
+            ViewBag.Countries = new SelectList(await _addressService.GetCountries(), "Id", "Name");
             ViewBag.BaseUrl = Request.Scheme + "://" + HttpContext.Request.Host.ToString();
+            model.CityId = 0;
+            model.CountryId = 0;
+            model.DistrictId = 0;
             return View(model);
         }
 
@@ -110,7 +114,6 @@ namespace HumanResource.Presentation.Areas.CompanyManager.Controllers
             ViewBag.Districts = new SelectList(await _addressService.GetDistricts(), "Id", "Name");
             ViewBag.Countries = new SelectList(await _addressService.GetCountries(), "Id", "Name");
             var model = await _companyManagerService.GetByUserName(id);
-            model.ImagePath = personel.Image;
             model.BaseUrl = Request.Scheme + "://" + HttpContext.Request.Host.ToString();
             return View(model);
         }
@@ -224,8 +227,9 @@ namespace HumanResource.Presentation.Areas.CompanyManager.Controllers
         }
 		public async Task<IActionResult> DashboardExpenseType()
 		{
-			ViewBag.ExpenseType = JsonConvert.SerializeObject(await _companyManagerService.ExpensesDistributionByExpensesType());
-			ViewBag.Personel = await _personelService.GetPersonel(User.Identity.Name);
+            var personel = await _personelService.GetPersonel(User.Identity.Name);
+            ViewBag.Personel = personel;
+			ViewBag.ExpenseType = JsonConvert.SerializeObject(await _companyManagerService.ExpensesDistributionByExpensesType(personel.CompanyId));
 			return View();
 		}
 	}
