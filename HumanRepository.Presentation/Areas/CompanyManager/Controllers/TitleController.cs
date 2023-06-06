@@ -60,7 +60,7 @@ namespace HumanResource.Presentation.Areas.CompanyManager.Controllers
                 var result = await _titleService.Update(model);
                 if (result)
                 {
-                    TempData["success"] = "Title was created successfully.";
+                    TempData["success"] = "Title was updated successfully.";
                     return RedirectToAction("titles", "companymanager", new { Area = "companymanager" });
                 }
                 else

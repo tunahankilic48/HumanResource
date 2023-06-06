@@ -16,7 +16,7 @@ namespace HumanResource.Domain.Enums
 		[Display(Name = "Clothing Expenses")]
 		Clothing_Expenses,
 		[Display(Name = "Energy and Communication Invoice Expenses")]
-		Energyand_Communication_Invoice_Expenses,
+		Energy_and_Communication_Invoice_Expenses,
 		[Display(Name = "Rental and Dues Expenses")]
 		Rentaland_Dues_Expenses,
 		[Display(Name = "Office Expenses")]

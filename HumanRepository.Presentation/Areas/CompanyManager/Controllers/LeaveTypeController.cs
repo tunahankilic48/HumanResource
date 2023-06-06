@@ -62,7 +62,7 @@ namespace HumanResource.Presentation.Areas.CompanyManager.Controllers
                 var result = await _leaveTypeService.Update(model);
                 if (result)
                 {
-                    TempData["success"] = "Leave type was created successfully.";
+                    TempData["success"] = "Leave type was updated successfully.";
                     return RedirectToAction("leavetypes", "companymanager", new { Area = "companymanager" });
                 }
                 else

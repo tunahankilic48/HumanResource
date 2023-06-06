@@ -61,7 +61,7 @@ namespace HumanResource.Presentation.Areas.CompanyManager.Controllers
                 var result = await _expenseTypeService.Update(model);
                 if (result)
                 {
-                    TempData["success"] = "Expense type was created successfully.";
+                    TempData["success"] = "Expense type was updated successfully.";
                     return RedirectToAction("expensetypes", "companymanager", new { Area = "companymanager" });
                 }
                 else

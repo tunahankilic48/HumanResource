@@ -21,35 +21,6 @@
 	<link rel="stylesheet" href="~/media1/css/dataTables.bootstrap4.min.css">
 	<link rel="stylesheet" href="~/media1/css/responsive.bootstrap4.min.css">
 	<link rel="stylesheet" href="~/media1/css/buttons.bootstrap4.min.css">
-
-    @*<script>
-        window.onload = function () {
-
-            var chart = new CanvasJS.Chart("chartContainer", {
-                theme: "light1", // "light1", "light2", "dark1", "dark2"
-                exportEnabled: true,
-                animationEnabled: true,
-                title: {
-                    text: "Company Distribution on Sectors"
-                },
-                subtitles: [{
-                    text: ""
-                }],
-                data: [{
-                    type: "pie",
-                    startAngle: 180,
-                    toolTipContent: "<b>{label}</b>: {y}%",
-                    showInLegend: "true",
-                    legendText: "{label}",
-                    indexLabel: "{label} - {y}%",
-                    dataPoints: @Html.Raw(ViewBag.Data)
-            }]
-            });
-            chart.render();
-
-        }
-    </script>*@
-
 </head>
 <body id="page-top">
 
@@ -62,9 +33,9 @@
 			<!-- Sidebar - Brand -->
 			<a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
 				<div class="sidebar-brand-icon rotate-n-15">
-					<i class="fas fa-laugh-wink text-black"></i>@*ToDo : Şirket logosu konulabilir*@
+					<i class="fas fa-laugh-wink text-black"></i>
 				</div>
-				<div class="sidebar-brand-text text-black mx-3">Admin</div>@*ToDo : Şirket Adı konulabilir*@
+				<div class="sidebar-brand-text text-black mx-3">Admin</div>
 			</a>
 
 			<!-- Divider -->
@@ -72,9 +43,9 @@
 
 			<!-- Nav Item - Dashboard -->
 			<li class="nav-item active ms-3">
-				<a class="nav-link" href="index.html">
+				<a class="nav-link">
 					<i class="fas fa-fw fa-tachometer-alt text-black"></i>
-					<span class="text-black">İnsan Kaynakları</span>@*ToDo : Uygulama adı konulabilir*@
+					<span class="text-black">Human Resources</span>
 				</a>
 			</li>
 
@@ -106,9 +77,6 @@
 					<span class="text-black">Dashboard</span>
 				</a>
 			</li>
-
-
-
 
 		</ul>
 		<!-- End of Sidebar -->
