@@ -224,7 +224,7 @@
                             <div class="form-group">
                                 <label asp-for="CityId" class="form-label">@Html.DisplayNameFor(x=>x.CityId)</label>
                                 <select asp-for="CityId" class="custom-select mt-1" id="cityList" asp-items="@ViewBag.Cities" disabled>
-                                    <option value="">Please select a City</option>
+                                    <option value="">Please select a Country</option>
                                 </select>
                                 <span class="text-danger" asp-validation-for="CityId"></span>
                             </div>
@@ -233,6 +233,7 @@
                             <div class="form-group">
                                 <label asp-for="DistrictId" class="form-label">@Html.DisplayNameFor(x=>x.DistrictId)</label>
                                 <select asp-for="DistrictId" class="custom-select" id="districtList" asp-items="@ViewBag.Districts" disabled>
+                                    <option value="">Please select a City</option>
                                 </select>
                                 <span class="text-danger" asp-validation-for="DistrictId"></span>
                             </div>

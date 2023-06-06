@@ -1,5 +1,14 @@
 ﻿@model IEnumerable<CompanyManagerRegisterRequestsVM>
 
+@if (TempData["success"] is not null)
+{
+    <div class="ms-4 me-4 alert alert-dismissible alert-success" id="myAlert1">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <h4 class="alert-heading">Successfully</h4>
+        <p class="mb-0">@TempData["success"]</p>
+    </div>
+}
+
 <div class="row d-flex justify-content-between">
     <h3 class="card-header bg-dark text-white border-3">Company Registration Requests</h3>
     <div class="card shadow mb-1" width="100%">
@@ -58,7 +67,8 @@
                     },
                     {
                         extend: 'colvis',
-                        footer: false}
+                        footer: false
+                    }
                 ]
             }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
             $('#example2').DataTable({

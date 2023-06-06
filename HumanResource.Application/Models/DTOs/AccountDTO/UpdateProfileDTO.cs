@@ -62,7 +62,7 @@ namespace HumanResource.Application.Models.DTOs.AccountDTO
         [Display(Name = "Department")]
         public int? DepartmentId { get; set; }
 
-        [Display(Name = "Birt Date")]
+        [Display(Name = "Birth Date")]
         public DateTime? BirthDate { get; set; }
 
         [Display(Name = "Recruitment Date")]
