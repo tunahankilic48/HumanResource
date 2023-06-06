@@ -3,7 +3,23 @@
     Layout = "~/Areas/Personel/Views/Shared/_LayoutPersonel.cshtml";
 }
 
+@if (TempData["error"] is not null)
+{
+    <div class="ms-4 me-4 alert alert-dismissible alert-danger ps-0" id="myAlert2">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <h4 class="alert-heading ms-4 ps-0">Something goes wrong!</h4>
+        <p class="mb-0">@TempData["error"]</p>
+    </div>
+}
 
+@if (TempData["success"] is not null)
+{
+    <div class="ms-4 me-4 alert alert-dismissible alert-success" id="myAlert3">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <h4 class="alert-heading">Successfully</h4>
+        <p class="mb-0">@TempData["success"]</p>
+    </div>
+}
 <h1 class="m-0 font-weight-bold text-primary mb-4">Update Profile</h1>
 <form asp-action="profile" asp-controller="account" asp-area="" enctype="multipart/form-data">
     <div class="row">

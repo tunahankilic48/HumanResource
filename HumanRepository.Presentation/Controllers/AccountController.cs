@@ -129,8 +129,10 @@ namespace HumanResource.Presentation.Controllers
             if (ModelState.IsValid)
             {
                 await _accountServices.UpdateUser(model);
+                TempData["success"] = "Profile was updated successfully.";
                 return RedirectToAction("profile");
             }
+            TempData["error"] = "Something goes wrong.";
             var personel = await _personelService.GetPersonel(User.Identity.Name);
             ViewBag.Personel = personel;
             ViewBag.Departments = new SelectList(await _companyManagerService.GetDepartments(personel.CompanyId), "Id", "Name");
