@@ -65,13 +65,11 @@ namespace HumanResource.Application.Services.AddressService
                     select: x => new DistrictVM
                     {
                         Id = x.Id,
-                        Name = x.Name,
-                        CityId = x.CityId
+                        Name = x.Name
 
                     },
                     where: null,
-                    orderby: x => x.OrderBy(x => x.Name),
-                    include: null
+                    orderby: x => x.OrderBy(x => x.Name)
                     );
 
             return districts.ToList();
@@ -83,8 +81,7 @@ namespace HumanResource.Application.Services.AddressService
                     select: x => new DistrictVM
                     {
                         Id = x.Id,
-                        Name = x.Name,
-                        CityId = x.CityId
+                        Name = x.Name
                         
                     },
                     where: x=>x.CityId == cityId,

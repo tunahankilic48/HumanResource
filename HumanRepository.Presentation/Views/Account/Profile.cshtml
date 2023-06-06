@@ -18,9 +18,7 @@
 
                         <div class="col-lg-10">
                             <input asp-for="Id" type="hidden" />
-                            <input asp-for="DistrictId" type="hidden" />
-
-
+                            <input asp-for="DistrictId" type="hidden" id="tempDistrictId" />
 
                             @if (!String.IsNullOrEmpty(Model.ImagePath))
                             {
@@ -346,20 +344,11 @@
                         success: function (districts) {
 
                             $("#districtList").empty();
-                            //for (var i = 0; i <data.length; i++){
-                            //    $('#districtList2').append("<option value='" + data[i].Id + "'>" + data[i].Name + "</options>");
-                            //}
                             $("#districtList").removeAttr("disabled");
-
+                            $("#tempDistrictId").remove();
                             $.each(districts, function () {
                                 $('#districtList').append('<option value=' + this.id + '>' + this.name + '</option>');
                             });
-                            //$.each(districts, function (index, district) {
-                            //        $('#districtList2').append($('<option/>', {
-                            //            value: district.Id,
-                            //            text: district.Name
-                            //        }));
-                            //    });
                         },
                         error: function () {
                             /*Bu metod ile Ajax işlemi başarısız
